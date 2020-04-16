@@ -1,0 +1,17 @@
+<section class="container-fluid">
+    <div class="skn-search-box">
+        <div class="pt-1 w-100 align-self-center">
+            <input class="form-control col-auto" type="search" name="inputSearch" [(ngModel)]="novelFilter.searchName" id="searchName" name="searchName" autocomplete="on" placeholder="Busca por titulo">
+        </div>
+        <div class="skn-search-box-genres row">
+            <div class="form-check" *ngFor="let genre of genres">
+                <mat-checkbox color="primary" [(ngModel)]="genre.check" (change)="getGenresFilterArray()">{{genre.genre_name}}</mat-checkbox>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <section>
+        <app-novel-card [novels]="novels" [clickRoute]="'novel'" [novelFilter]="novelFilter"></app-novel-card>
+    </section>
+</div>

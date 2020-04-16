@@ -1,0 +1,161 @@
+body[theme=dark] {
+    // Angular material styles
+    .mat-bottom-sheet-container {
+        background-color: #1E2228!important;
+    }
+    .mat-dialog-container {
+        background-color: #1E2228!important;
+        // overflow: unset!important;
+    }
+    .mat-form-field {
+        color: #626973!important;
+    }
+    .mat-checkbox-frame {
+        border: 2px solid #d32f2f;
+    }
+    .mat-form-field-label {
+        color: #626973;
+    }
+    // Skynovels styles
+    .regular-wrapper {
+        background-color: #1E2228!important;
+    }
+    .skn-cancel-button {
+        background-color: #23282f!important;
+        color: #626973!important;
+    }
+    .skn-novel-presentation-image-mobile {
+        color: #d32f2f!important;
+    }
+    .skn-like {
+        color: #626973;
+    }
+    .skn-chp-main-panel {
+        background-color: #121519!important;
+    }
+    .skn-main {
+        background-color: #1E2228!important;
+    }
+    .skn-logo {
+        background-image: url('./assets/img/008 - SkyNovels V.1/logo/2x/logotipo_rojos@2x.png');
+    }
+    .skn-reading-navbar-logo {
+        background-image: url('./assets/img/008 - SkyNovels V.1/logo/1x/SN_rojos.png');
+    }
+    .skn-chp-novel-portrait-signing-img {
+        background-image: url('./assets/img/008 - SkyNovels V.1/logo/1x/simbolo_rojos.png');
+    }
+    .skn-main-hover:hover {
+        background-color: #242a31!important;
+    }
+    .skn-secondary {
+        background-color: #242a31!important;
+    }
+    .skn-text {
+        color: #626973!important;
+    }
+    .skn-circle-buttons {
+        i {
+            color: #626973;
+            background-color: #37404a;
+            -webkit-user-select: none;
+            /* Safari */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* IE10+/Edge */
+            user-select: none;
+            /* Standard */
+            box-shadow: 2px 2px 6px -1px rgba(0, 0, 0, 1);
+        }
+        i:hover {
+            background-color: #495461;
+        }
+        i:active {
+            background-color: #333b44;
+        }
+        i.pinned {
+            background-color: #DB3836;
+        }
+        i.pinned:hover {
+            background-color: #ed3a37;
+        }
+        i.pinned:active {
+            background-color: #bf2e2c;
+        }
+    }
+    .skn-text-area {
+        background-color: #1b1f25;
+        border: 1px solid #585e67;
+    }
+    .skn-text-area:focus {
+        background-color: #1b1f25;
+        border: 1px solid #585e67;
+    }
+    .rating {
+        color: wheat!important;
+    }
+    // Bootstrap
+    .modal-header {
+        border-bottom: 1px solid #626973!important;
+    }
+    .modal-footer {
+        border-top: 1px solid #626973!important;
+    }
+    .nav-link {
+        color: #626973;
+    }
+    .nav-link-selected {
+        color: #d32f2f!important;
+    }
+    .nav-link:hover {
+        color: #626973;
+    }
+    .nav-tabs .nav-link.active {
+        color: #626973!important;
+        background-color: #1e2228!important;
+        border-color: #626973 #626973 #1e2228!important;
+    }
+    .nav-tabs .nav-link.active:hover {
+        border-color: #626973 #626973 rgba(0, 0, 0, 0.0)!important;
+    }
+    .nav-tabs .nav-link:hover {
+        border-color: #626973;
+    }
+    .nav-tabs {
+        border-bottom: 1px solid #626973!important;
+    }
+    // HTML standard 
+    p {
+        color: #626973!important;
+    }
+    strong {
+        color: #626973!important;
+    }
+    hr {
+        background-color: #626973!important;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        color: #d32f2f!important;
+    }
+    small {
+        color: #54585d!important;
+    }
+}
+
+body[theme=dark] main[role="main"] {
+    background: #FFF;
+}
+
+body[theme=dark] {
+    background: #131E2C;
+    color: #626973;
+}
+
+body[theme=dark] .top-title {
+    color: #DB3836 !important;
+}

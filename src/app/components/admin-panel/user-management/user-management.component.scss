@@ -1,0 +1,55 @@
+@import "../../../common.scss";
+.skn-user-management-search-box {
+    text-align: center;
+    margin: 15px;
+    display: inline;
+    ul {
+        margin-left: -40px !important;
+    }
+}
+
+.skn-user-management-users-box {
+    width: 80%;
+    box-shadow: 0 1.1px 1.5px rgba(0, 0, 0, 0.123), 0 3.6px 5.7px rgba(0, 0, 0, 0.149), 0 16px 17px rgba(0, 0, 0, 0.19);
+    padding: 15px;
+    margin: 10px auto;
+    .skn-user-management-user-card {
+        cursor: pointer;
+        padding: 6px;
+        width: 90%;
+        display: flex;
+        border: 1px solid;
+        border-radius: 5px;
+        margin: 5px auto;
+    }
+    .skn-user-management-user-card:hover {
+        background-color: #e6e6e6;
+    }
+    .skn-user-management-user-buttons {
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        div {
+            button {
+                margin: 5px;
+                @include mobile {
+                    div {
+                        span {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.skn-user-management-user-data {
+    div {
+        margin: 5px 0px;
+    }
+    @include mobile {
+        text-align: center;
+    }
+}

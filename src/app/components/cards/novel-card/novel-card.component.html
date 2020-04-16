@@ -1,0 +1,50 @@
+<div class="row" style="justify-content: center;">
+    <div *ngFor="let novel of novels | novelFilter:novelFilter.searchName:novelFilter.searchGenres">
+        <div class="skn-nvl-card" (click)="goToNovel(novel)">
+            <div class="skn-nvl-card-img">
+                <img [src]="novel.nvl_img" alt="">
+            </div>
+            <ul class="skn-nvl-card-info">
+                <li>
+                    <div class="skn-nvl-card-title">
+                        <strong>{{novel.nvl_title}}</strong>
+                    </div>
+                </li>
+                <li>
+                    <div class="skn-nvl-card-genres" style="margin-bottom: 8px;">
+                        <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:3">{{genre.genre_name}}</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="skn-nvl-card-votes">
+                        <span>
+                    <ngb-rating [(rate)]='novel.nvl_rating' max='5' [readonly]="true">
+                        <ng-template let-fill="fill" let-index="index">
+                            <span class="star" [class.filled]="fill === 100"[class.nfilled]="fill !== 100">
+                                <span class="half" [style.width.%]="fill">
+                                    <i class="material-icons"></i>
+                                </span>
+                        </span>
+                        </ng-template>
+                        </ngb-rating>
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <div class="skn-nvl-card-description">
+                        <p [innerHTML]="_hs.setContent(novel.nvl_content,118)"></p>
+                    </div>
+                </li>
+            </ul>
+            <div class="skn-nvl-card-update-time skn-tertiary">
+                <div style="display: flex;">
+                    <i class="material-icons">access_time</i>
+                    <div style="margin-left: 5px;">
+                        {{novel.date_data?.message}}
+                    </div>
+                </div>
+                <div class="skn-nvl-card-status" [ngStyle]="{'color':novel.nvl_status === 'Activa' || novel.nvl_status === 'Finalizada' ? 'green' : 'red' }">{{novel.nvl_status}}</div>
+            </div>
+        </div>
+    </div>
+</div>

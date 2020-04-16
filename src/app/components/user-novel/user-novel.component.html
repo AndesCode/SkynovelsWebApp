@@ -1,0 +1,340 @@
+<div class="alert" [ngClass]="{'alert-success':alertStatus === 'success', 'alert-danger':alertStatus === 'danger'}" *ngIf="AlertMessage">
+    {{AlertMessage}}
+</div>
+
+<div class="container" *ngIf="!chapterEdition">
+    <button class="btn btn-danger" (click)="goBackToMyNovels(false)">Regresar</button>
+    <br/>
+
+    <section *ngIf="editable_novel">
+        <form autocomplete="off" #novelForm="ngForm">
+            <div class="row">
+                <div class="col-md-4 text-center" text-right>
+                    <img src={{this.imgURL}} class="novel_page_img img-thumbnail rounded mx-auto d-block " id="novel_image_preview">
+                    <button class="btn btn-primary" (click)="file.click()">Añadir imagen</button>
+                </div>
+                <div class="col-md-8 ">
+                    <div class="form-group">
+                        <label>Nombre de novela</label>
+                        <input [(ngModel)]="novel.nvl_title" id="title" name="nvl_title" type="text" class="form-control" #nvl_title="ngModel" placeholder="Nombre de la novela" required minlength="5" pattern="^[a-zA-Z0-9\u00d1\u00f1À-ÿ]{1}(?=.{2,45}$)(?![0-9])[a-zA-Z0-9`´'’ \u00d1\u00f1À-ÿ,.]+$">
+                        <div *ngIf="nvl_title?.errors?.pattern" class="form-control-feedback">
+                            Intenta algo como pablo o pablo123
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Autor de la novela</label>
+                        <input [(ngModel)]="novel.nvl_writer" name="nvl_writer" type="text" class="form-control" placeholder="Autor de la novela" required pattern="^[a-zA-Z0-9\u00d1\u00f1À-ÿ]{1}(?=.{2,25}$)(?![0-9])[a-zA-Z0-9`´'’ \u00d1\u00f1À-ÿ,.]+$">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select [(ngModel)]="novel.nvl_status" name="nvl_status" class="form-control" required [disabled]="!novelStatusEditable">
+                          <option value="Finalizada">Finalizada</option>
+                          <option value="Publicada">Publicada</option>
+                          <option value="Oculta">Oculta</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" disabled hidden>
+                        <input #file type="file" accept='image/*' (change)="fileChangeEvent($event)" hidden>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group" style="width: 100%; margin-bottom: 3em;">
+                    <label>Sinopsis</label>
+                    <textarea [(ngModel)]="novel.nvl_content" id="content" name="nvl_content" type="text" class="form-control" #nvl_content="ngModel" required minlength="15" pattern="[^><]+" style="height: 21em;"></textarea>
+                    <div *ngIf="nvl_content?.errors?.pattern" class="form-control-feedback">
+                        Intenta algo como pablo o pablo123
+                    </div>
+                </div>
+            </div>
+        </form>
+        <label>Generos</label>
+        <div class="skn-novel-form-genres" style="padding: 15px;">
+            <form #genreForm="ngForm" class="row">
+                <div *ngFor="let genre of genres; let i = index" style="margin: 10px;">
+                    <input type="checkbox" [(ngModel)]="genre.check" id="genre_{{i}}" name="genre_{{i}}"> {{genre.genre_name}}
+                </div>
+            </form>
+        </div>
+        <div class="row" style="margin-top: 30px;">
+            <div class="skn-novel-form-buttons">
+                <div>
+                    <button type="submit" class="btn btn-outline-primary skn-novel-form-button" *ngIf="novel.id" [disabled]="uploading || (!novelForm.dirty && !genreForm.dirty && !fileToUpload && collaborators.length === novel.collaborators.length)" (click)="save(novelForm, genreForm)">
+                        Guardar cambios
+                    </button>
+                    <button type="submit" class="btn btn-outline-success skn-novel-form-button" *ngIf="!novel.id" [disabled]="uploading" (click)="save(novelForm, genreForm)">
+                        Crear Novela
+                    </button>
+                    <button class="btn btn-outline-success skn-novel-form-button" (click)="openSm(collaborator_modal)" *ngIf="novel.id">
+                        Administrar Colaboradores
+                    </button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline-danger skn-novel-form-button" (click)="openSm(content)" *ngIf="novel.id">
+                        Eliminar novela
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+
+
+    <div class="col-md-8 ">
+        <table class="table">
+            <tbody>
+                <tr *ngFor="let collaborator of collaborators">
+                    <th scope="row">{{collaborator.user_collaborator_login}}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div class="row " style="margin-bottom: 40px; " *ngIf="!editable_novel">
+        <div class="col-md-4 text-center " text-right>
+            <img src={{this.imgURL}} class="novel_page_img img-thumbnail rounded mx-auto d-block " id="novel_image_preview">
+        </div>
+        <div class="col-md-8 ">
+            <h3>{{novel.nvl_title}}</h3>
+            <div class="col">
+                <h3>Sinopsis</h3>
+                <br> {{novel.nvl_content}}
+                <h3>Estado de la novela</h3>
+                <br> {{novel.nvl_status}}
+                <br>
+            </div>
+            <br>
+            <label>Colaboradores</label>
+            <table class="table">
+                <tbody>
+                    <tr *ngFor="let collaborator of collaborators">
+                        <th scope="row">{{collaborator.user_collaborator_login}}</th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+            <label>Generos</label>
+            <div class="skn-novel-form-genres">
+                <div *ngFor="let genre of novel.genres">
+                    <span>{{genre.genre_name}}</span>
+                </div>
+            </div>
+
+            <br>
+            <label>Generos</label>
+            <div *ngFor="let genre of novel.genres">
+                <ul>
+                    <li>
+                        {{genre.genre_name}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <section *ngIf="novel.id" style="text-align: center;">
+        <h2>Lista de capitulos</h2>
+        <a class="btn btn-primary" (click)="goToChapterEdition('nuevo')">Nuevo capitulo</a>
+
+        <div class="row">
+            <div class="skn-novel-form-chapters-card" *ngFor="let chapter of novel.chapters" (click)="goToChapterEdition(chapter.id)">
+                {{chapter.chp_title}}
+            </div>
+        </div>
+        <!--<ul class="list-group" *ngFor="let chapter of novel.chapters;">
+            <li class="list-group-item" (click)="goToChapterEdition(chapter.id)"></li>
+        </ul>-->
+    </section>
+
+    <ng-template #collaborator_modal let-modal>
+        <div class="modal-header">
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click'); cleanInvitationForm()">
+                        <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="col">
+                <h3>Colaboradores</h3>
+                <table class="table">
+                    <tbody>
+                        <tr *ngFor="let collaborator of collaborators| paginate: {itemsPerPage: 5, currentPage: p}">
+                            <th scope="row">{{collaborator.user_login}}</th>
+                            <td><button class="btn btn-danger" (click)="deleteCollaborator(collaborator)">X</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls responsive="true" class="my-pagination" maxSize="5" (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+        <div class="modal-header">
+            <h4 class="modal-title">Invita un colaborador</h4>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="sendUserInvitation(inviteUserName)" #invite_user_form="ngForm">
+                <div class="form-group">
+                    <label>Nombre del usuario</label>
+                    <input [(ngModel)]="inviteUserName.	user_login" name="	user_login" id="	user_login" type="text" class="form-control" placeholder="Nombre de usuario" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-outline-primary">
+                              Invitar
+                    </button>
+                </div>
+            </form>
+            <div class="alert alert-danger mx-auto" role="alert" *ngIf="this.invitation_error">
+                {{this.invitation_error}}
+            </div>
+            <div class="alert alert-success mx-auto" role="alert" *ngIf="this.invitation_message">
+                {{this.invitation_message}}
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close('Close click'); cleanInvitationForm()" id="close_button">Close</button>
+        </div>
+    </ng-template>
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Eliminar novela</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <p>¿Seguro que deseas eliminar la novela?</p>
+            <p>Las novelas eliminadas no se pueden recuperar, podrias ocultar la novela como alternativa</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close('Close click')" id="close_button">Close</button>
+            <button type="button" class="btn btn-danger" (click)="deleteNovel(); modal.close('Close click')">Eliminar</button>
+        </div>
+    </ng-template>
+
+    <ng-template #unsavedNovelModal let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Regresar</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+              </button>
+        </div>
+        <div class="modal-body">
+            <p>¿Seguro que deseas regresar?</p>
+            <p>Perderas los cambios en la novela si no salvas antes de regresar</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close('Close click')" id="close_button">Cancelar</button>
+            <button type="button" class="btn btn-danger" (click)="goBackToMyNovels(true); modal.close('Close click')">Regresar</button>
+        </div>
+    </ng-template>
+</div>
+
+
+<div class="container" *ngIf="chapterEdition">
+
+    <div class="row " style="margin-bottom: 40px; ">
+        <div class="col-md-12 ">
+            <img src="../../../assets/img/23.jpg " class="novel_page_img img-thumbnail rounded mx-auto d-block ">
+            <button class="btn btn-danger" (click)="goToNovelEdition(false)">Regresar</button>
+            <form (ngSubmit)="saveChapter(chapterForm)" #chapterForm="ngForm">
+
+                <div class="form-group">
+                    <label>Titulo de capitulo</label>
+                    <input [(ngModel)]="chapter.chp_title" name="chp_title" type="text" class="form-control" placeholder="Titulo de capitulo" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Contenido</label>
+                    <textarea [(ngModel)]="chapter.chp_content" name="chp_content" type="text" class="form-control">
+
+                </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Pensamientos del escritor</label>
+                    <textarea [(ngModel)]="chapter.chp_review" name="chp_review" type="text" class="form-control">
+
+                </textarea>
+                </div>
+
+                <div class="form-group" *ngIf="!this.chapter.id">
+                    <label>Numero de capitulo nuevo</label>
+                    <input [(ngModel)]="chapter.chp_number" name="chp_number" type="number" class="form-control" placeholder="Numero" required min="1" max="{{this.novel.chapters.length + 1}}">
+                </div>
+
+                <div class="form-group" *ngIf="this.chapter.id">
+                    <label>Numero de capitulo</label>
+                    <input [(ngModel)]="chapter.chp_number" name="chp_number" type="number" class="form-control" placeholder="Numero" required min="1" max="{{this.novel.chapters.length}}">
+                </div>
+
+
+
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select [(ngModel)]="chapter.chp_status" name="chp_status" class="form-control" required>
+                        <option value="Oculto">Oculto</option>
+                        <option value="Publicado">Publicado</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-outline-primary" *ngIf="chapter.id !== ''" [disabled]="!chapterForm.dirty">
+                        Guardar cambios
+                    </button>
+                    <button type="submit" class="btn btn-outline-success" *ngIf="chapter.id === ''">
+                        Crear capitulo
+                    </button>
+                </div>
+
+
+
+
+
+            </form>
+            <button class="btn btn-outline-danger mb-2 mr-2" (click)="openSm(deleteChapterConfirmationModal)" *ngIf="(chapter.chp_author === this.user || this.user === novel.nvl_author) && this.chapter.id !== ''">
+                  Eliminar capitulo
+          </button>
+        </div>
+    </div>
+
+    <ng-template #unsavedChapterModal let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Regresar</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+              </button>
+        </div>
+        <div class="modal-body">
+            <p>¿Seguro que deseas regresar?</p>
+            <p>Podrías perder los cambios en el capitulo si no salvas antes de regresar</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close('Close click')" id="close_button">Cancelar</button>
+            <button type="button" class="btn btn-danger" (click)="goToNovelEdition(true); modal.close('Close click')">Regresar</button>
+        </div>
+    </ng-template>
+
+    <ng-template #deleteChapterConfirmationModal let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Eliminar capitulo</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+              </button>
+        </div>
+        <div class="modal-body">
+            <p>¿Seguro que deseas eliminar el capitulo?</p>
+            <p>Los capitulos eliminados no se pueden recuperar, podrias ocultar el capitulo a la vista publica como alternativa</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close('Close click')" id="close_button">Cancelar</button>
+            <button type="button" class="btn btn-danger" (click)="deleteChapter(); modal.close('Close click')">Eliminar</button>
+        </div>
+    </ng-template>
+
+</div>

@@ -1,0 +1,83 @@
+body,
+html {
+    animation: 0.5s ease slideIn;
+    height: 100%;
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        width: 0px;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+body {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 240px auto;
+    grid-template-rows: 100%;
+    grid-template-areas: "navbar disabled";
+}
+
+body:hover {
+    grid-template-columns: 240px auto;
+}
+
+.skn-mobile-navbar {
+    animation: 0.5s ease slideInFromLeft;
+    height: 100%;
+    grid-area: navbar;
+    background-color: white;
+    .skn-admin-card-content {
+        height: 100%;
+        width: 100%;
+        text-align: left;
+        padding: 1em;
+        hr {
+            display: block;
+            color: #626973;
+            background-color: #626973;
+        }
+        .skn-admin-card-header {
+            margin: 10px 1.2rem;
+            display: inline-flex;
+            h4 {
+                margin: auto auto auto 4px;
+            }
+        }
+        .skn-admin-card-section {
+            display: inline-flex;
+            cursor: pointer;
+            i {
+                margin: 0px 8px 0px 0px;
+                font-size: 27px;
+            }
+            a {
+                display: contents;
+                span {
+                    display: block;
+                    white-space: nowrap;
+                }
+            }
+            a:hover {
+                color: white;
+                transition: all .3s ease;
+            }
+        }
+    }
+}
+
+.skn-mobile-navbar-disabled-content {
+    grid-area: disabled;
+}

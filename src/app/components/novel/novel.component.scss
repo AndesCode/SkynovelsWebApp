@@ -1,0 +1,242 @@
+@import "../../common.scss";
+.skn-novel-presentation-image-mobile {
+    position: relative;
+    height: 100vw;
+    background-size: 100% 100%;
+    -webkit-box-shadow: inset 0px -200px 44px -33px rgba(0, 0, 0, 0.59);
+    -moz-box-shadow: inset 0px -200px 44px -33px rgba(0, 0, 0, 0.59);
+    box-shadow: inset 0px -200px 44px -33px rgba(0, 0, 0, 0.59);
+    .skn-novel-presentation-image-mobile-info-stats-box {
+        z-index: 5;
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        padding-bottom: 5px;
+    }
+}
+
+.skn-share-novel-rating {
+    display: flex;
+    justify-content: space-between;
+    @include mobile {
+        justify-content: center;
+    }
+}
+
+section {
+    margin-top: 25px;
+    @include mobile {
+        margin-top: 3px;
+    }
+}
+
+.nav-tabs {
+    @include mobile {
+        justify-content: center;
+    }
+}
+
+.skn-nvl-user-rating-info-togler {
+    cursor: pointer;
+}
+
+.skn-nvl-user-rating-info-togler:hover {
+    cursor: pointer;
+    text-decoration: underline
+}
+
+.skn-novel-presentation-info-stats-mobile {
+    border-radius: 15px;
+    padding: 5px;
+    justify-content: center;
+    width: 100%;
+    margin: 10px 0px;
+    div {
+        margin: 2px 10px;
+        display: flex;
+        white-space: nowrap;
+        span {
+            margin-right: 2px;
+        }
+    }
+}
+
+.skn-nvl-card-genres {
+    span {
+        font-size: 13px;
+        padding: 1px 6px 3px 6px;
+        margin-right: 5px;
+        margin-top: 3px;
+        border: color(primary) solid 1px;
+        border-radius: 15px;
+        white-space: nowrap;
+        box-shadow: 4px 4px 9px -4px rgba(0, 0, 0, 0.67);
+    }
+}
+
+.skn-novel-presentation {
+    display: flex;
+    .skn-novel-presentation-image {
+        width: 308px;
+        height: 412px;
+        img {
+            border-radius: 10px 10px 0px 0px;
+            width: 100%;
+            height: 90%;
+        }
+        div {
+            height: 10%;
+            text-align: center;
+            padding: 10px;
+            border-radius: 0px 0px 10px 10px;
+        }
+        @include tablet {
+            width: 245.26px;
+            height: 360px;
+        }
+    }
+    .skn-novel-presentation-info {
+        flex: auto;
+        padding-left: 1.5em;
+        .skn-novel-presentation-info-stats-box {
+            height: 90%;
+            padding-top: 5px;
+            div {
+                margin-bottom: 15px;
+            }
+            .skn-novel-presentation-info-title {
+                margin-bottom: 10px;
+                @include tablet {
+                    text-align: center;
+                    margin-top: 10px;
+                }
+            }
+            .skn-novel-presentation-info-stats {
+                border-radius: 15px;
+                padding: 5px;
+                justify-content: center;
+                div {
+                    margin: 2px 10px;
+                    display: flex;
+                    white-space: nowrap;
+                    span {
+                        margin-right: 2px;
+                    }
+                }
+            }
+            .skn-novel-acronym {
+                background-color: #d32f2f;
+                border-radius: 15px;
+                padding: 2px;
+                margin: 3px;
+                text-transform: uppercase;
+                color: black;
+            }
+        }
+        .skn-novel-presentation-info-user-buttons-box {
+            height: 10%;
+            margin-top: -15px;
+            button {
+                margin-right: 7px;
+            }
+        }
+    }
+    @include tablet {
+        display: block;
+        .skn-novel-presentation-image {
+            margin: auto;
+        }
+        .skn-novel-presentation-info {
+            padding-left: 0px;
+        }
+    }
+}
+
+.skn-nvl-user-rating {
+    border-radius: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    padding: 20px 8px;
+    .skn-nvl-user-rating-login {
+        display: flex;
+        justify-content: space-between;
+        .skn-nvl-user-rating-login-name {
+            @include mobile {
+                padding: 13px 0px;
+                margin-left: 6px;
+            }
+        }
+        @include mobile {
+            margin-bottom: 10px;
+        }
+    }
+    .skn-nvl-user-rating-user-image {
+        width: 50px;
+        min-width: 50px;
+        img {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+        }
+        @include mobile {
+            display: none;
+        }
+    }
+    .skn-nvl-user-rating-user-image-mobile {
+        width: 50px;
+        min-width: 50px;
+        display: none;
+        img {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+        }
+        @include mobile {
+            display: block;
+        }
+    }
+    .skn-nvl-user-rating-user-rating {
+        padding: 15px 0px 0px 10px;
+        flex: auto;
+        width: min-content;
+    }
+}
+
+.skn-nvl-vlm-chapters-container {
+    justify-content: center;
+    .skn-nvl-chp-element {
+        display: flex;
+        border-bottom: 1px solid #DB3836;
+        padding: 10px;
+        width: 420px;
+        margin: 5px;
+        cursor: pointer;
+        .skn-nvl-chp-element-chp-number-index {
+            min-width: 30px;
+            text-decoration: solid;
+        }
+    }
+    .skn-nvl-chp-element:hover {
+        .skn-nvl-chp-element-title {
+            text-decoration: underline;
+        }
+    }
+}
+
+.skn-nvl-rating-comment-textarea {
+    display: flex;
+    padding-left: 1px;
+    margin-bottom: 20px;
+    .skn-nvl-rating-comment-textarea-input {
+        flex: auto;
+    }
+    .skn-nvl-rating-comment-textarea-button {
+        color: black;
+        height: 35px;
+        margin-top: 10px;
+    }
+}
+
+.skn-nvl-info {
+    margin-top: 15px;
+}

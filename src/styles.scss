@@ -1,1 +1,234 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$skynovelsApp-primary: mat-palette($mat-red, 700);
+$skynovelsApp-accent: mat-palette($mat-grey, 900);
+// The warn palette is optional (defaults to red).
+$skynovelsApp-warn: mat-palette($mat-deep-orange, A700);
+// Create the theme object (a Sass map containing all of the palettes).
+$skynovelsApp-theme: mat-light-theme($skynovelsApp-primary, $skynovelsApp-accent, $skynovelsApp-warn);
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($skynovelsApp-theme);
+
 /* You can add global styles to this file, and also import other style files */
+
+@import "./theme-light.scss";
+@import "./theme-dark.scss";
+@import "../node_modules/swiper/css/swiper.min.css";
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+@import url(//db.onlinewebfonts.com/c/e269265e3d9716bd97a0d7503d3428ca?family=JaapokkiRegular);
+.button:active,
+button:active,
+.button:focus,
+button:focus,
+.button:hover,
+button:hover {
+    border: none !important;
+    outline: none !important;
+}
+
+.ck-editor__main {
+    border: none !important;
+    outline: none !important;
+}
+
+.mat-raised-button {
+    color: black;
+}
+
+.mat-raised-button.mat-primary {
+    color: black;
+}
+
+blockquote {
+    margin-bottom: 10px !important;
+    padding: 10px !important;
+    background-color: #d5d5d5 !important;
+    border-left: 2px solid #dc3545 !important;
+}
+
+.skn-circle-buttons {
+    display: flex;
+    height: 30px;
+    i {
+        padding: 2px;
+        border-radius: 50%;
+        margin-left: 10px;
+        cursor: pointer;
+        border: 1px solid;
+    }
+}
+
+.mat-bottom-sheet-container {
+    width: 73vh!important;
+    min-width: unset!important;
+    max-width: unset!important;
+}
+
+.mat-input-element {
+    min-height: 22px!important;
+}
+
+.modal-footer {
+    flex-wrap: unset!important;
+}
+
+.skn-link {
+    cursor: pointer;
+}
+
+.skn-link:hover {
+    text-decoration: underline!important;
+}
+
+.skn-bottomSheet-buttons {
+    padding: 1rem 1rem;
+    button {
+        color: black;
+        height: 41px;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+.ck-editor__editable_inline {
+    blockquote {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #d5d5d5 !important;
+        border-left: 2px solid #dc3545 !important;
+    }
+    overflow: auto;
+    height: 150px;
+}
+
+
+/*.my-pagination /deep/ .ngx-pagination {
+    margin-left: -40px;
+}*/
+
+.skn-forum-bar {
+    width: 100%;
+    height: 55px;
+    background-color: #f7f7f7;
+    display: flex;
+    margin-bottom: 10px;
+    padding-left: 6%;
+    div {
+        margin: auto 0px auto 10px;
+        span {
+            cursor: pointer;
+        }
+    }
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: "JaapokkiRegular";
+}
+
+.novel_page_img {
+    width: 200px;
+    height: 280px;
+}
+
+.form-control-borderless {
+    border: none;
+}
+
+.form-control-borderless:hover,
+.form-control-borderless:active,
+.form-control-borderless:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.nav-text {
+    padding-left: 10px;
+}
+
+.sticky-top {
+    z-index: 500!important;
+}
+
+.skn-loading {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.skn-hide {
+    display: none;
+    height: 0px;
+    font-size: 0px;
+    width: 0px;
+}
+
+.profile-card {
+    display: none;
+}
+
+#user-box {
+    display: list-item;
+}
+
+
+/* VARIABLES */
+
+.skn-tertiary {
+    background-color: #242a31!important;
+}
+
+$primary: #DB3836;
+.modal-dialog {
+    display: flex;
+    justify-content: center;
+    height: calc(100% - 65px);
+    bottom: 65px;
+    .modal-content {
+        margin: auto;
+    }
+}
+
+.skn-red-text {
+    color: #d32f2f;
+}
+
+// Likes
+.skn-like.liked {
+    color: #d32f2f!important;
+}
+
+.text-star {
+    text-align: right;
+}
+
+.star {
+    font-size: 1.5rem;
+    span {
+        color: sandybrown;
+    }
+}
+
+.filled .material-icons::before {
+    content: "star";
+}
+
+.nfilled .material-icons::before {
+    content: "star_border";
+}

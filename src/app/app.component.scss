@@ -1,0 +1,22 @@
+body,
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 65px auto;
+    grid-template-areas: "navbar" "app";
+}
+
+.app-nav-bar {
+    grid-area: navbar;
+    z-index: 500;
+}
+
+.app {
+    grid-area: app;
+    overflow: auto;
+}

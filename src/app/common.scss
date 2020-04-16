@@ -1,0 +1,134 @@
+// navigation grid
+$desktop: 1152px;
+$tablet: 680px;
+$mobile: 679px;
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: #{$tablet}) and (max-width: #{$desktop - 1}) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (max-width: #{$mobile}) {
+        @content;
+    }
+}
+
+$breakpoints: ( mobile: 0px, tablet: 680px, desktop: 1152px);
+//  mixin to print out media queries (based on map keys passed) 
+@mixin plus-media($keys...) {
+    @each $key in $keys {
+        @media (min-width: map-get($breakpoints, $key)) {
+            @content
+        }
+    }
+}
+
+;
+@mixin subtract-media($keys...) {
+    @each $key in $keys {
+        @media (max-width: map-get($breakpoints, $key) - 1) {
+            @content
+        }
+    }
+}
+
+;
+// GRID SECTION
+$grid-breakpoints: ( // Extra small screen / phone
+xs: 0, // Small screen / phone
+sm: 576px, // Medium screen / tablet
+md: 768px, // Large screen / desktop
+lg: 992px, // Extra large screen / wide desktop
+xl: 1200px);
+$container-max-widths: ( sm: 540px, md: 720px, lg: 960px, xl: 1140px);
+@mixin media-break-down($breakpoint) {
+    // If the breakpoint exists in the map.
+    @if map-has-key($grid-breakpoints, $breakpoint) {
+        // Get the breakpoint value.
+        $breakpoint-value: map-get($grid-breakpoints, $breakpoint);
+        // Write the media query.
+        @media (min-width: $breakpoint-value) {
+            @content;
+        }
+        // If the breakpoint doesn't exist in the map.
+    }
+    @else {
+        // Log a warning.
+        @warn 'Invalid breakpoint: #{$breakpoint}.';
+    }
+}
+
+@mixin media-break-up($breakpoint) {
+    // If the breakpoint exists in the map.
+    @if map-has-key($container-max-widths, $breakpoint) {
+        // Get the breakpoint value.
+        $breakpoint-value: map-get($container-max-widths, $breakpoint);
+        // Write the media query.
+        @media (max-width: $breakpoint-value) {
+            @content;
+        }
+        // If the breakpoint doesn't exist in the map.
+    }
+    @else {
+        // Log a warning.
+        @warn 'Invalid breakpoint: #{$breakpoint}.';
+    }
+}
+
+@mixin media-break($breakpoint-min, $breakpoint-max) {
+    // If the breakpoint exists in the map.
+    @if map-has-key($grid-breakpoints, $breakpoint-min) && map-has-key($container-max-widths, $breakpoint-max) {
+        // Get the breakpoint value.
+        $breakpoint-min-value: map-get($grid-breakpoints, $breakpoint-min);
+        $breakpoint-max-value: map-get($container-max-widths, $breakpoint-max);
+        // Write the media query.
+        @media (min-width: $breakpoint-min-value) and (max-width: $breakpoint-max-value) {
+            @content;
+        }
+        // If the breakpoint doesn't exist in the map.
+    }
+    @else {
+        // Log a warning.
+        @warn 'Invalid breakpoint: #{$breakpoint}.';
+    }
+}
+
+// COLORS 
+$colors: ( primary: #DB3836, secondary: #131E2C, seconday-light: lighten(#131E2C, 40%), primary-ligh: lighten(#DB3836, 40%), primary-dark: darken(#DB3836, 40%), negative-background: #1E2228, negative-font: #626973);
+@function color($color-name) {
+    @return map-get($colors, $color-name)
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(1px);
+    }
+    25% {
+        transform: translateY(-3px);
+    }
+    50% {
+        transform: translateY(-1px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeBackgroundColor {
+    0% {
+        background-color: rgba($color: #000000, $alpha: 0.3);
+    }
+    50% {
+        background-color: rgba($color: #000000, $alpha: 0.6);
+    }
+    100% {
+        background-color: rgba($color: #000000, $alpha: 0.8);
+    }
+}

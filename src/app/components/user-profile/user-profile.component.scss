@@ -1,0 +1,110 @@
+@import "../../common.scss";
+.active {
+    background-color: color(primary) !important;
+    color: black !important;
+}
+
+.skn-user-profile-tabs {
+    border: 1px solid #636363;
+    cursor: pointer;
+}
+
+.skn-user-profile {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .skn-user-profile-image {
+        padding: 25px;
+        .skn-user-profile-image-box {
+            border: 1px solid;
+            border-radius: 2px;
+            padding: 8px;
+            width: 210px;
+            height: 210px;
+            text-align: center;
+            img {
+                width: 100%;
+                height: 85%;
+                margin-bottom: 10px;
+            }
+            span {
+                height: 15%;
+            }
+        }
+    }
+    .skn-user-profile-info {
+        .skn-user-profile-info-name {
+            width: 100%;
+        }
+    }
+    .skn-user-profile-info-stats {
+        padding-top: 25px;
+        .skn-user-profile-info-stats-top {
+            display: flex;
+            justify-content: space-around;
+        }
+        .skn-user-profile-info-stats-list {
+            display: flex;
+            justify-content: center;
+            ul {
+                list-style: none;
+                padding: 0px;
+                margin-top: -7px;
+                li {
+                    margin: 8px 0px;
+                }
+            }
+            span {
+                display: flex;
+            }
+            i {
+                margin-right: 5px;
+            }
+        }
+    }
+    @include subtract-media(desktop) {
+        display: block;
+        .skn-user-profile-image {
+            justify-content: center;
+            display: flex;
+        }
+        .skn-user-profile-info {
+            .skn-user-profile-info-name {
+                .skn-user-profile-info-name-login {
+                    text-align: center;
+                }
+            }
+        }
+        .skn-user-profile-info-stats {
+            margin: auto;
+        }
+    }
+    @include desktop {
+        .skn-user-profile-info {
+            padding-top: 25px;
+            display: flex;
+            width: min-content;
+            flex: auto;
+            padding-right: 35px;
+            .skn-user-profile-info-name {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.skn-user-activity {
+    .skn-user-activity-title {
+        display: flex;
+        .skn-user-activity-title-name {
+            cursor: pointer;
+        }
+    }
+    .skn-user-activity-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .skn-user-activity-description {
+        width: 95%;
+    }
+}

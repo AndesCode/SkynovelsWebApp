@@ -1,0 +1,141 @@
+<ng-template #createRatingModal style="width: 8500px;">
+    <!--First div defines custom widht for the modal dialog-->
+    <div style="width: 85vh;"></div>
+    <div class="modal-header">
+        <h4 class="modal-title">Tu calificación</h4>
+    </div>
+    <div class="modal-body">
+        <form autocomplete="off">
+            <div style="display: flex;">
+                <span style="margin-right: 5px" class="skn-text">Puntuación:</span>
+                <ngb-rating [(rate)]="newRating.rate_value" [max]="5" [(ngModel)]="newRating.rate_value" name="rate_value" style="border: none !important; outline: none !important;">
+                    <ng-template let-fill="fill" let-index="index">
+                        <span class="star" [class.filled]="fill === 100" [class.nfilled]="fill !== 100">
+                            <span class="half" [style.width.%]="fill">
+                                <i class="material-icons"></i>
+                            </span>
+                        </span>
+                    </ng-template>
+                </ngb-rating>
+            </div>
+            <mat-form-field style="width: 100%;">
+                <mat-label>Comentario</mat-label>
+                <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" placeholder="Escribe un comentario" [(ngModel)]="newRating.rate_comment" [ngModelOptions]="{standalone: true}"></textarea>
+            </mat-form-field>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+        <button mat-raised-button color="primary" style="color: black;" (click)="createNovelRating(); dialog.closeAll()" [disabled]="newRating.rate_value === 0 || newRating.rate_comment.length < 15" matTooltip="Info about the action">Publicar</button>
+    </div>
+</ng-template>
+<ng-template #deleteBookmark>
+    <div class="modal-header">
+        <h4 class="modal-title">Eliminar de lista de lectura</h4>
+    </div>
+    <div class="skn-bottomSheet-buttons" style="padding: 1rem 1rem">
+        <div>
+            <button mat-raised-button class="skn-cancel-button" (click)="bottomSheet.dismiss()">Cancelar</button>
+        </div>
+        <div>
+            <button mat-raised-button color="warn" (click)="switchBookMark(); bottomSheet.dismiss()">Eliminar</button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #allChapters>
+    <div style="max-width: 25em!important; max-height: 72vh!important;">
+        <div class="modal-header">
+            <h4 class="modal-title">Todos los capitulos</h4>
+        </div>
+        <div class="modal-body">
+            <div class="skn-nvl-vlm-chapters-container row">
+                <div class="skn-nvl-chp-element skn-text skn-main-hover" *ngFor="let chapter of novel.chapters" (click)="loadNovelDataChapters(chapter.id); dialog.closeAll();">
+                    <div class="skn-nvl-chp-element-chp-number-index">
+                        {{chapter.chp_number}}
+                    </div>
+                    <div>
+                        <div class="skn-nvl-chp-element-title"> {{hs.setContent(chapter.chp_index_title, 69)}}</div>
+                        <small>{{hs.getRelativeTime(chapter.createdAt).message}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<div class="skn-chp-main-panel" #mainpanel>
+    <nav class="sticky-top skn-main skn-reading-navbar" *ngIf="LoadedChapters.length > 0">
+        <div class="skn-reading-navbar-logo-container">
+            <div class="skn-reading-navbar-logo" (click)="goToHome()"></div>
+        </div>
+        <div class="skn-reading-navbar-elements">
+            <div class="skn-navbar-left-elements">
+                <h3 class="skn-link" style="margin-right: 5px;" (click)="goToNovel()" *ngIf="!mobile">{{novel.nvl_title}} -</h3>
+                <h3 *ngIf="!mobile">{{novel.nvl_currentChapter}}</h3>
+                <small class="skn-link" *ngIf="mobile" (click)="goToNovel()" style="margin-top: 5px;"><strong>{{novel.nvl_acronym}} / {{novel.nvl_currentChapterN}}</strong></small>
+            </div>
+            <div class="skn-navbar-right-elements">
+                <button mat-raised-button color="primary" style="color: black;" (click)="openDialogSheet(allChapters)"><span class="material-icons">format_list_numbered</span></button>
+                <button mat-raised-button color="primary" style="color: black;" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()"><span class="material-icons">add</span></button>
+                <button mat-raised-button color="primary" style="color: black;" *ngIf="user && novel.user_bookmark" class="skn-bookmarked" (click)="openBottomSheet(deleteBookmark)"><span class="material-icons">add</span></button>
+                <button mat-raised-button color="primary" style="color: black;" (click)="openDialogSheet(createRatingModal)" *ngIf="user && !novel.nvl_rated && !mobile"><span class="material-icons">star</span></button>
+                <button mat-raised-button color="primary" style="color: black;" *ngIf="!user && !mobile" (click)="openLoginForm()">Iniciar Sesión</button>
+                <button mat-raised-button color="primary" style="color: black;" *ngIf="!user && mobile" (click)="openLoginForm()"><span class="material-icons">person</span></button>
+            </div>
+        </div>
+    </nav>
+    <div class="container skn-main" #infiniteScroll infiniteScroll [infiniteScrollDistance]="0" [infiniteScrollThrottle]="50" [infiniteScrollContainer]="selector" [fromRoot]="true" (scrolledUp)="onScrollUp()" *ngIf="LoadedChapters.length > 0">
+        <div class="skn-chapter-loading" *ngIf="loading || LoadedChapters.length === 0">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div class="skn-chp-novel-portrait" *ngIf="loadPortrait">
+            <div class="skn-chp-novel-portrait-image">
+                <img src="../../../assets/img/23.jpg" alt="">
+            </div>
+            <div>
+                <h2>{{novel.nvl_title}}</h2>
+            </div>
+            <div>
+                <h2>Autor: {{novel.nvl_writer}}</h2>
+            </div>
+            <div class="skn-chp-novel-portrait-signing">
+                <div class="skn-chp-novel-portrait-signing-img"></div>
+                <div>
+                    <h4 style="margin: 0px;">SkyNovels</h4>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div #chaptersElement class="skn-chp-chapter" *ngFor="let LoadedChapter of LoadedChapters;">
+            <div class="skn-hide">
+                <div>
+                    <div>{{LoadedChapter.chp_name}}</div>
+                    <div>{{LoadedChapter.chp_index_title}}</div>
+                </div>
+                <div>
+                    <div>{{LoadedChapter.id}}</div>
+                    <div>{{LoadedChapter.chp_number}}</div>
+                </div>
+            </div>
+            <div class="skn-chp-chapter-title">
+                <h1>{{LoadedChapter.chp_title}}</h1>
+            </div>
+            <div class="skn-chp-chapter-translator" *ngIf="LoadedChapter.chp_translator">
+                <small>Traductor: <strong>{{LoadedChapter.chp_translator}}</strong></small>
+            </div>
+            <div class="skn-chp-chapter-translator_eng" *ngIf="LoadedChapter.chp_translator_eng">
+                <small>Traductor al ingles: <strong>{{LoadedChapter.chp_translator_eng}}</strong></small>
+            </div>
+            <div class="skn-chp-chapter-content">
+                <p [innerHTML]="LoadedChapter.chp_content"></p>
+            </div>
+            <hr>
+        </div>
+        <div class="skn-chapter-loading" *ngIf="loading">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div inViewport [inViewportOptions]="{ threshold: 0 }" (inViewportAction)="onScrollDown($event)" style="height: 150px;" *ngIf="LoadedChapters.length > 0"></div>
+    </div>
+    <div class="skn-loading" *ngIf="LoadedChapters.length === 0">
+        <mat-spinner></mat-spinner>
+    </div>
+</div>

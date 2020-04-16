@@ -1,0 +1,16 @@
+<div class="main-panel" #mainpanel>
+    <div class="container" #infiniteScroll infiniteScroll [infiniteScrollDistance]="0" [infiniteScrollThrottle]="50" [infiniteScrollContainer]="selector" [fromRoot]="true" (scrolledUp)="onScrollUp()">
+        <div #test [ngClass]="{'visible': user.estilo}" class="card" style="width: 18rem; margin: auto;" *ngFor="let user of users;">
+            <div style="display: none;">
+                <div>{{user.id}}</div>
+                <div>{{user.user_login}}</div>
+            </div>
+            <div class="card-body" style="min-height: calc(101vh - 65px);">
+                <h5 class="card-title">{{user.user_login}}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div inViewport [inViewportOptions]="{ threshold: 0 }" (inViewportAction)="onScrollDown($event)" style="height: 150px;"></div>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<body style="position: fixed; z-index:9999; background-color: rgba(0,0,0,0.6); width: 100%; height: 100%;" *ngIf="open">
+    <section class="skn-mobile-navbar skn-main">
+        <div class="skn-admin-card-content">
+            <div class="skn-admin-card-header">
+                <img src="../../../assets/img/008 - SkyNovels V.1/logo/1x/simbolo_rojos.png" height="55" width="50">
+                <h4>SkyNovels</h4>
+            </div>
+            <hr>
+            <div class="skn-admin-card-section">
+                <a routerLink="" (click)="closeMobileNavbarForm()">
+                    <i class="material-icons">home</i>
+                    <span>Inicio</span>
+                </a>
+            </div>
+            <hr>
+            <div class="skn-admin-card-section">
+                <a routerLink="novelas" (click)="closeMobileNavbarForm()">
+                    <i class="material-icons">menu_book</i>
+                    <span>Novelas</span>
+                </a>
+            </div>
+            <hr>
+            <div class="skn-admin-card-section">
+                <a routerLink="foro" (click)="closeMobileNavbarForm()">
+                    <i class="material-icons">forum</i>
+                    <span>foro</span>
+                </a>
+            </div>
+            <hr>
+            <div class="skn-admin-card-section">
+                <a (click)="toggleTheme()">
+                    <span>Tema</span>
+                </a>
+            </div>
+            <hr>
+            <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
+                <a routerLink="mis-novelas" (click)="closeMobileNavbarForm()">
+                    <i class="material-icons">create</i>
+                    <span>Mis novelas</span>
+                </a>
+            </div>
+            <hr *ngIf="_us.userIsLoged()">
+            <div class="skn-admin-card-section" *ngIf="!_us.userIsLoged()">
+                <a (click)="openLoginForm(); closeMobileNavbarForm()">
+                    <i class="material-icons">face</i>
+                    <span>Iniciar Sesión</span>
+                </a>
+            </div>
+            <hr *ngIf="!_us.userIsLoged()">
+            <div class="skn-admin-card-section" *ngIf="!_us.userIsLoged()">
+                <a (click)="openRegisterForm(); closeMobileNavbarForm()">
+                    <i class="material-icons">account_box</i>
+                    <span>Registrarse</span>
+                </a>
+            </div>
+            <hr *ngIf="!_us.userIsLoged()">
+            <div class="skn-admin-card-section" *ngIf="this._as.userIsAdmin()">
+                <a routerLink="panel" (click)="closeMobileNavbarForm()">
+                    <i class="material-icons">settings</i>
+                    <span>Panel de control</span>
+                </a>
+            </div>
+            <hr *ngIf="this._as.userIsAdmin()">
+            <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
+                <a (click)="logout()">
+                    <i class="material-icons">block</i>
+                    <span>Cerrar sesión</span>
+                </a>
+            </div>
+            <hr *ngIf="_us.userIsLoged()">
+            <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
+                <a (click)="closeMobileNavbarForm(); goToMyProfile()">
+                    <i class="material-icons">create</i>
+                    <span>Perfil</span>
+                </a>
+            </div>
+            <hr *ngIf="_us.userIsLoged()">
+        </div>
+    </section>
+    <section class="skn-mobile-navbar-disabled-content" (click)="closeMobileNavbarForm()">
+
+    </section>
+</body>

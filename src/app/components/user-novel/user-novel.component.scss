@@ -1,0 +1,49 @@
+@import "../../common.scss";
+.dark-modal .modal-content {
+    background-color: #292b2c;
+    color: white;
+}
+
+.dark-modal .close {
+    color: white;
+}
+
+.light-blue-backdrop {
+    background-color: #5cb3fd;
+}
+
+.skn-novel-form-genres {
+    border: 1px solid;
+    border-radius: 5px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.skn-novel-form-buttons {
+    justify-content: space-between;
+    display: flex;
+    width: 100%;
+    @include mobile {
+        display: block;
+        div {
+            margin-bottom: 2em;
+        }
+    }
+}
+
+.skn-novel-form-button {
+    margin: 5px;
+    @include mobile {
+        width: 100%;
+    }
+}
+
+.skn-novel-form-chapters-card {
+    border: 1px solid;
+    padding: 7px;
+    border-radius: 6px;
+    margin: 5px;
+    cursor: pointer;
+}

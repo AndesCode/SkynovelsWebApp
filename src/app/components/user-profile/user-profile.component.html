@@ -1,0 +1,130 @@
+<main class="container">
+    <hr>
+    <section>
+        <div class="skn-user-profile">
+            <div class="skn-user-profile-image">
+                <div class="skn-user-profile-image-box">
+                    <img src="../../../../../assets/img/008 - SkyNovels V.1/logo/1x/simbolo_rojos.png" alt="">
+                    <span *ngIf="user_data?.user?.user_rol === 'admin'">Administrador</span>
+                </div>
+            </div>
+            <div class="skn-user-profile-info">
+                <div class="skn-user-profile-info-name">
+                    <div class="skn-user-profile-info-name-login">
+                        <h2>{{user_data?.user?.user_login}}</h2>
+                    </div>
+                    <div class="skn-user-profile-info-name-description">
+                        <p [innerHTML]="user_data?.user?.user_description"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="skn-user-profile-info-stats">
+                <div class="skn-user-profile-info-stats-list">
+                    <ul>
+                        <li>
+                            <span>
+                                <i class="material-icons">menu_book</i>
+                                {{user_data?.novels?.length}} Novelas publicadas
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <i class="material-icons">create</i>
+                                {{user_data?.chapters?.length}} Capitulos publicados
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <i class="material-icons">people</i>
+                                {{user_data?.user?.collaborations?.length}} Colaboraciones
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <i class="material-icons">forum</i>
+                                {{user_data?.forum_posts?.length}} Publicaciones en el foro
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <i class="material-icons">comment</i>
+                                {{user_data?.posts_comments?.length}} Comentarios escritos
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section>
+        <div class="skn-user-profile-statistics">
+            <div class="skn-user-profile-statistics-header">
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item">
+                        <a class="nav-link skn-user-profile-tabs" (click)="switchTab('novels')" [ngClass]="{'active':active_tab === 'novels'}">Novelas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link skn-user-profile-tabs" (click)="switchTab('activity')" [ngClass]="{'active':active_tab === 'activity'}">Actividad</a>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+        </div>
+    </section>
+    <section *ngIf="active_tab === 'novels'">
+        <app-novel-card [novels]="user_data.novels"></app-novel-card>
+    </section>
+    <section *ngIf="active_tab === 'activity'">
+        <div class="skn-user-activity" *ngFor="let activity of user_data.activityArray">
+            <hr>
+            <div class="skn-user-activity-header">
+                <div *ngIf="activity.activity_type === 'posts_comments'">
+                    <small>Ha comentado en una publicación:</small>
+                </div>
+                <div *ngIf="activity.activity_type === 'chapter'">
+                    <small>Ha publicado un capitulo:</small>
+                </div>
+                <div *ngIf="activity.activity_type === 'forum_post'">
+                    <small>Ha publicado en el foro {{activity.forum_category.category_title}}:</small>
+                </div>
+                <div *ngIf="activity.activity_type === 'novels'">
+                    <small>Ha publicado una novela:</small>
+                </div>
+                <div class="skn-user-activity-title-relative-time">
+                    <small>{{activity.date_data?.message}}</small>
+                </div>
+            </div>
+            <div class="skn-user-activity-title">
+                <div class="skn-user-activity-title-name" *ngIf="activity.activity_type === 'posts_comments'" [routerLink]="['/foro', activity.post.forum_category.category_name, activity.post.forum_category.id, activity.post.post_name, activity.post.id]">
+                    {{activity?.post.post_title}}
+                </div>
+                <div class="skn-user-activity-title-name" *ngIf="activity.activity_type === 'chapter'">
+                    {{activity?.chp_title}}
+                </div>
+                <div class="skn-user-activity-title-name" *ngIf="activity.activity_type === 'forum_post'" [routerLink]="['/foro', activity.forum_category.category_name, activity.forum_category.id, activity.post_name, activity.id]">
+                    {{activity?.post_title}}
+                </div>
+                <div class="skn-user-activity-title-name" *ngIf="activity.activity_type === 'novels'" [routerLink]="['/novela', activity.id, activity.nvl_name]">
+                    {{activity?.nvl_title}}
+                </div>
+            </div>
+            <br>
+            <div class="skn-user-activity-description">
+                <div class="skn-user-activity-title-name" *ngIf="activity.activity_type === 'posts_comments'">
+                    <div [innerHTML]="_hs.setContent(activity.comment_content, 1518)"></div>
+                </div>
+                <div class="skn-user-activity-title-name" *ngIf="activity.activity_type === 'chapter'">
+                    <p>Capitulo publicado en la novela {{activity.novel.nvl_title}}</p>
+                </div>
+                <div class="skn-user-activity-title-name" *ngIf="activity.activity_type === 'forum_post'">
+                    <div [innerHTML]="_hs.setContent(activity.post_content, 1518)"></div>
+                </div>
+                <div class="skn-user-activity-title-name" *ngIf="activity.activity_type === 'novels'">
+                    <div [innerHTML]="_hs.setContent(activity.nvl_content, 1518)"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>

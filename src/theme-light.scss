@@ -1,0 +1,87 @@
+body[theme=light] {
+    // Angular material styles with themes
+    .mat-bottom-sheet-container {
+        background-color: white!important;
+    }
+    .mat-dialog-container {
+        background-color: white!important;
+        // overflow: unset!important;
+    }
+    .mat-form-field {
+        color: #212529!important;
+    }
+    .skn-cancel-button {
+        background-color: #dedede!important;
+    }
+    .nav-link {
+        color: #d32f2f;
+    }
+    .nav-link:hover {
+        color: #d32f2f;
+    }
+    .nav-link-selected {
+        color: black!important;
+    }
+    .skn-chp-main-panel {
+        background-color: #ececec!important;
+    }
+    .skn-main {
+        background-color: white!important;
+    }
+    .skn-novel-presentation-image-mobile {
+        color: white!important;
+    }
+    .skn-main-hover:hover {
+        background-color: #ececec!important;
+    }
+    .skn-secondary {
+        background-color: #ececec!important;
+    }
+    .skn-text {
+        color: #212529!important;
+    }
+    .skn-like {
+        cursor: pointer;
+    }
+    .skn-logo {
+        background-image: url('./assets/img/008 - SkyNovels V.1/logo/2x/logotipo_preferente@2x.png');
+    }
+    .skn-reading-navbar-logo {
+        background-image: url('./assets/img/008 - SkyNovels V.1/logo/1x/SN_preferente.png');
+    }
+    .skn-chp-novel-portrait-signing-img {
+        background-image: url('./assets/img/008 - SkyNovels V.1/logo/1x/simbolo_azules.png');
+    }
+    .skn-circle-buttons {
+        i {
+            background-color: #f7f7f7;
+            -webkit-user-select: none;
+            /* Safari */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* IE10+/Edge */
+            user-select: none;
+            /* Standard */
+            box-shadow: 2px 2px 6px -1px rgba(0, 0, 0, 1);
+        }
+        i:hover {
+            background-color: #e0e0e0;
+        }
+        i:active {
+            background-color: #c4c4c4;
+        }
+        i.pinned {
+            background-color: #DB3836;
+        }
+        i.pinned:hover {
+            background-color: #ed3a37;
+        }
+        i.pinned:active {
+            background-color: #bf2e2c;
+        }
+    }
+    small {
+        color: #272529ba!important;
+    }
+}
