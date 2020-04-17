@@ -102,6 +102,26 @@ export class NovelsService {
       return this.http.delete(url, this.GlobalhttpOptions);
     }
 
+    createChapterComment(chapterComment: any) {
+      const url = `${ this.urlnovelsdb }/create-chapter-comment`;
+      return this.http.post(url, chapterComment, this.GlobalhttpOptions);
+    }
+
+    getChapterComments(id: number) {
+      const url = `${ this.urlnovelsdb }/get-chapters-comments/${id}`;
+      return this.http.get(url);
+    }
+
+    updateChapterComment(chapterComment: any) {
+      const url = `${ this.urlnovelsdb }/update-chapter-comment`;
+      return this.http.put(url , chapterComment, this.GlobalhttpOptions);
+    }
+
+    deleteChapterComment(id: string) {
+      const url = `${ this.urlnovelsdb }/delete-chapter-comment/${id}`;
+      return this.http.delete(url, this.GlobalhttpOptions);
+    }
+
     createNovelRating(rate: any) {
       const url = `${ this.urlnovelsdb }/create-novel-rating`;
       return this.http.post(url, rate, this.GlobalhttpOptions);
@@ -123,8 +143,7 @@ export class NovelsService {
     }
 
     getNovelRatingComments(id: number) {
-      let url = ``;
-      url = `${ this.urlnovelsdb }/get-novel-rating-comments/${id}`;
+      const url = `${ this.urlnovelsdb }/get-novel-rating-comments/${id}`;
       return this.http.get(url);
     }
 

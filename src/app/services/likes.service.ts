@@ -19,9 +19,9 @@ export class LikesService {
     this.urlnovelsdb = '/api';
   }
 
-  createNovelRatingLike(novel_rating_id: any) {
+  createNovelRatingLike(novelRatingId: any) {
     const like = {
-      novel_rating_id: novel_rating_id
+      novel_rating_id: novelRatingId
     };
     const url = `${ this.urlnovelsdb }/create-novel-rating-like`;
     console.log(url);
@@ -33,9 +33,9 @@ export class LikesService {
     return this.http.delete(url, this.GlobalhttpOptions);
   }
 
-  createNovelRatingCommentLike(novel_rating_comment_id: any) {
+  createNovelRatingCommentLike(novelRatingCommentId: any) {
     const like = {
-      novel_rating_comment_id: novel_rating_comment_id
+      novel_rating_comment_id: novelRatingCommentId
     };
     const url = `${ this.urlnovelsdb }/create-novel-rating-comment-like`;
     console.log(url);
@@ -44,6 +44,20 @@ export class LikesService {
 
   deleteNovelRatingCommentLike(id: string) {
     const url = `${this.urlnovelsdb}/delete-novel-rating-comment-like/${id}`;
+    return this.http.delete(url, this.GlobalhttpOptions);
+  }
+
+  createChapterCommentLike(chapterCommentId: any) {
+    const like = {
+      chapter_comment_id: chapterCommentId
+    };
+    const url = `${ this.urlnovelsdb }/create-chapter-comment-like`;
+    console.log(url);
+    return this.http.post(url, like, this.GlobalhttpOptions);
+  }
+
+  deleteChapterCommentLike(id: string) {
+    const url = `${this.urlnovelsdb}/delete-chapter-comment-like/${id}`;
     return this.http.delete(url, this.GlobalhttpOptions);
   }
 }

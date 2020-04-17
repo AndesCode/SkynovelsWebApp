@@ -69,7 +69,13 @@ blockquote {
     }
 }
 
+.mat-dialog-container {
+    padding: 3%!important;
+}
+
 .mat-bottom-sheet-container {
+    padding: 1%!important;
+    max-height: 100vh!important;
     width: 73vh!important;
     min-width: unset!important;
     max-width: unset!important;
