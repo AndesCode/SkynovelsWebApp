@@ -1,10 +1,26 @@
 <section class="container">
+    <h1>Lista de Novelas</h1>
     <div class="skn-search-box">
         <div class="pt-1 w-100 align-self-center">
             <input class="form-control col-auto" type="search" name="inputSearch" [(ngModel)]="novelFilter.searchName" id="searchName" name="searchName" autocomplete="on" placeholder="Busca por titulo">
         </div>
+        <div class="skn-status" *ngIf="!mobile">
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle value="bold">Cualquiera</mat-button-toggle>
+                <mat-button-toggle value="italic">Activa</mat-button-toggle>
+                <mat-button-toggle value="underline">Inactiva</mat-button-toggle>
+                <mat-button-toggle value="underline">Completada</mat-button-toggle>
+            </mat-button-toggle-group>
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle value="bold">Nombre</mat-button-toggle>
+                <mat-button-toggle value="italic">Popularidad</mat-button-toggle>
+                <mat-button-toggle value="underline">Capítulos</mat-button-toggle>
+                <mat-button-toggle value="underline">Antiguedad</mat-button-toggle>
+                <mat-button-toggle value="underline">Votos</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
         <div class="skn-search-box-genres row">
-            <mat-form-field>
+            <mat-form-field class="genres-list">
                 <mat-label>Géneros</mat-label>
                 <mat-select [formControl]="genres" multiple>
                   <mat-option *ngFor="let genre of genres" [value]="genre.genre_name" [(ngModel)]="genre.check" (change)="getGenresFilterArray()">{{genre.genre_name}}</mat-option>

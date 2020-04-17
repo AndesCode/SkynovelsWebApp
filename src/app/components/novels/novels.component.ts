@@ -4,6 +4,7 @@ import { NovelsService } from '../../services/novels.service';
 import { UsersService } from '../../services/users.service';
 import { HelperService } from '../../services/helper.service';
 import { Location } from '@angular/common';
+import { BreakpointObserver,BreakpointState } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-novels',
@@ -21,11 +22,13 @@ export class NovelsComponent implements OnInit {
   };
   genres: any[] = [];
   smallScreen = false;
+  mobile: boolean;
 
   constructor(private router: Router,
               private _ns: NovelsService,
               public _hs: HelperService,
-              private location: Location) { }
+              private location: Location,
+              private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
     this._ns.getNovels().subscribe((data: any) => {
@@ -33,6 +36,17 @@ export class NovelsComponent implements OnInit {
       // this.setImg();
       console.log(this.novels);
       this.allGenres();
+    });
+
+    this.breakpointObserver
+    .observe('(max-width: 679px)')
+    .subscribe((state: BreakpointState) => {
+      if (state.matches) {
+        this.mobile = true;
+        console.log(this.mobile);
+      } else {
+        this.mobile = false;
+      }
     });
   }
 
