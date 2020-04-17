@@ -20,8 +20,8 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OverlayModule } from '@angular/cdk/overlay';
-
-import {OverlayContainer} from '@angular/cdk/overlay';
+import { MatSelectModule } from '@angular/material/select';
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { CdkOverlayContainer } from './cdk-overlay-container-extension';
 import { CdkOverlayDirective } from './cdk-overlay.directive';
 // Components
@@ -123,6 +123,7 @@ const config: SwiperConfigInterface = {
     MatDialogModule,
     MatBottomSheetModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
     // bootstrap
     NgbModule,
     // Installations

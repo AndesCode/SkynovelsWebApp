@@ -145,17 +145,16 @@ body[theme=dark] {
     small {
         color: #54585d!important;
     }
+    .hide-light {
+        display:none;
+    }
+    .top-title {
+        color: #DB3836 !important;
+    }
 }
 
-body[theme=dark] main[role="main"] {
-    background: #FFF;
-}
 
 body[theme=dark] {
     background: #131E2C;
     color: #626973;
-}
-
-body[theme=dark] .top-title {
-    color: #DB3836 !important;
 }

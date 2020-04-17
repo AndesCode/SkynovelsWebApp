@@ -38,6 +38,8 @@ nav {
     display: flex;
     justify-self: right;
     width: auto;
+    font-weight: 600;
+    font-size:1.2rem;
 }
 
 .skn-nav-link {
@@ -68,78 +70,21 @@ nav {
         /* Standard */
     }
 }
+.nav-link {
+    user-select: none;
+    cursor:pointer;
+  }
 
+  .material-icons.md-18 { font-size: 18px; }
+  .material-icons.md-24 { font-size: 24px; }
+  .material-icons.md-30 { font-size: 30px; }
+  .material-icons.md-36 { font-size: 36px; }
+  .material-icons.md-48 { font-size: 48px; }
 
-/*nav {
-    padding: auto;
-    width: 100vw!important;
-}
+  .hide-light {
+      color:#54585d;
+  }
 
-*,
-*::after,
-*::before {
-    box-sizing: border-box;
-}
-
-.bg-custom-1 {
-    background-color: #85144b;
-}
-
-.bg-custom-2 {
-    background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
-}
-
-.navbar-toggler,
-.material-icons {
-    color: #FFFF;
-}
-
-//        MainNavElement
-.mainNavElemen {
-    display: inline-flex;
-    width: 100vw;
-    //        TogglerButton
-    *:focus {
-        outline: 0;
-    }
-    .tButton {
-        i {
-            font-size: 2em;
-            transition: all 0.5s ease-in;
-        }
-        i.rotate {
-            transform: rotate(90deg);
-        }
-    }
-    //        MainDivCollapseContainer
-    .collapseContainer {
-        width: 100%;
-    }
-    li {
-        margin-left: 10px;
-        &:nth-child(0) {
-            margin: 0;
-        }
-    }
-    .navUl {
-        width: 100%;
-        display: flex;
-        li:nth-child(3) {
-            margin-right: auto;
-            display: flex;
-            justify-content: space-evenly;
-        }
-    }
-}
-
-.collapsing,
-.show {
-    transition: all 0.5s ease-out;
-    ul,
-    li {
-        justify-content: center;
-        margin: auto auto auto 13px;
-        padding: 0;
-        text-align: left;
-    }
-}*/
+  .hide-dark {
+      color:#d32f2f;
+  }
