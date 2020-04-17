@@ -1,17 +1,19 @@
 <section class="container">
-    <h1>Lista de Novelas</h1>
+    <div class="index-title">
+        <h1>Catálogo de Novelas</h1>
+    </div>
     <div class="skn-search-box">
         <div class="pt-1 w-100 align-self-center">
-            <input class="form-control col-auto" type="search" name="inputSearch" [(ngModel)]="novelFilter.searchName" id="searchName" name="searchName" autocomplete="on" placeholder="Busca por titulo">
+            <input class="form-control col-auto" type="search" name="inputSearch" [(ngModel)]="novelFilter.searchName" id="searchName" name="searchName" autocomplete="on" placeholder="Busca lo que quieras">
         </div>
-        <div class="skn-status" *ngIf="!mobile">
-            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+        <div class="skn-filters" *ngIf="!mobile">
+            <mat-button-toggle-group class="button-status-novel" name="fontStyle" aria-label="Font Style">
                 <mat-button-toggle value="bold">Cualquiera</mat-button-toggle>
                 <mat-button-toggle value="italic">Activa</mat-button-toggle>
                 <mat-button-toggle value="underline">Inactiva</mat-button-toggle>
                 <mat-button-toggle value="underline">Completada</mat-button-toggle>
             </mat-button-toggle-group>
-            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle-group class="button-sort-novel" name="fontStyle" aria-label="Font Style">
                 <mat-button-toggle value="bold">Nombre</mat-button-toggle>
                 <mat-button-toggle value="italic">Popularidad</mat-button-toggle>
                 <mat-button-toggle value="underline">Capítulos</mat-button-toggle>
