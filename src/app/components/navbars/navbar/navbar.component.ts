@@ -82,10 +82,10 @@ export class NavbarComponent implements OnInit {
   }
 
   goToHome() {
-    if (!this.mobile) {
+    {
       this.router.navigate(['']);
       this.closeMobileNavbarForm();
-    } else {
+    }{
       return;
     }
   }
