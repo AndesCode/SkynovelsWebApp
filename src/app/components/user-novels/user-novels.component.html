@@ -1,20 +1,20 @@
-<main class="container">
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link active" style="cursor: pointer;" (click)="switchTab('novel')">Mis novelas</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" style="cursor: pointer;" (click)="switchTab('collaboration')">Colaboraciones</a>
-        </li>
-    </ul>
-    <hr>
-    <section class="row" style="justify-content: center;" *ngIf="currentTab === 'novel'">
-        <app-novel-card [novels]="userNovels" [clickRoute]="'userNovel'"></app-novel-card>
-    </section>
-    <section class="row" style="justify-content: center;" *ngIf="currentTab === 'collaboration'">
-        <app-novel-card [novels]="userCollaborations" [clickRoute]="'userNovel'"></app-novel-card>
-    </section>
-</main>
+<mat-tab-group style="align-items: center;" dynamicHeight>
+    <mat-tab label="Mis novelas">
+        <div class="container">
+            <section class="row" style="justify-content: center;">
+                <app-novel-card [novels]="userNovels" [clickRoute]="'userNovel'"></app-novel-card>
+            </section>
+        </div>
+    </mat-tab>
+    <mat-tab label="Colaboraciones">
+        <div class="container">
+            <section class="row" style="justify-content: center;">
+                <app-novel-card [novels]="userCollaborations" [clickRoute]="'userNovel'"></app-novel-card>
+            </section>
+        </div>
+    </mat-tab>
+</mat-tab-group>
+
 
 <!--<div class="content">
     <div class="navbar">

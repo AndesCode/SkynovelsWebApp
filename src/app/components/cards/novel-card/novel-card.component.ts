@@ -17,46 +17,50 @@ export class NovelCardComponent implements OnChanges {
     searchGenres: []
   };
 
-  constructor(public _hs: HelperService,
-              private _ns: NovelsService,
+  constructor(public hs: HelperService,
+              private ns: NovelsService,
               private router: Router) { }
 
   ngOnChanges() {
     console.log(this.novelFilter);
     if (this.novels) {
-      for (let i = 0; i < this.novels.length; i++) {
+      for (const novel of this.novels) {
         // tslint:disable-next-line: max-line-length
-        this.novels[i].date_data = this._hs.getRelativeTime(this.novels[i].nvl_last_update);
-        if (this.novels[i].nvl_status === 'Finished') {
-          this.novels[i].nvl_status = 'Finalizada';
+        novel.date_data = this.hs.getRelativeTime(novel.nvl_last_update);
+        if (novel.nvl_status === 'Finished') {
+          novel.nvl_status = 'Finalizada';
         } else {
-          if (this.novels[i].date_data.seconds > 1296000) {
-            this.novels[i].nvl_status = 'Inactiva';
+          if (novel.date_data.seconds === 0) {
+            novel.nvl_status = 'Oculta';
           } else {
-            this.novels[i].nvl_status = 'Activa';
+            if (novel.date_data.seconds > 1296000) {
+              novel.nvl_status = 'Inactiva';
+            } else {
+              novel.nvl_status = 'Activa';
+            }
           }
         }
 
       }
-      this.novels = this.novels.sort(this._hs.dateDataSorter);
-      for (let i = 0; i < this.novels.length; i++) {
-        if (this.novels[i].nvl_img !== ''
-        && this.novels[i].nvl_img !== null
-        && this.novels[i].nvl_img !== undefined) {
-          this._ns.getNovelImage(this.novels[i].nvl_img).subscribe((data: any) => {
+      this.novels = this.novels.sort(this.hs.dateDataSorter);
+      for (const novel of this.novels) {
+        if (novel.nvl_img !== ''
+        && novel.nvl_img !== null
+        && novel.nvl_img !== undefined) {
+          this.ns.getNovelImage(novel.nvl_img).subscribe((data: any) => {
             console.log(data);
             const reader = new FileReader();
             reader.addEventListener('load', () => {
-              this.novels[i].nvl_img = reader.result;
+              novel.nvl_img = reader.result;
             }, false);
             if (data) {
                 reader.readAsDataURL(data);
             }
           }, error => {
-            this.novels[i].nvl_img = '../../../assets/img/noimage.jpg';
+            novel.nvl_img = '../../../assets/img/noimage.jpg';
           });
         } else {
-          this.novels[i].nvl_img = '../../../assets/img/noimage.jpg';
+          novel.nvl_img = '../../../assets/img/noimage.jpg';
         }
       }
       console.log(this.novels);

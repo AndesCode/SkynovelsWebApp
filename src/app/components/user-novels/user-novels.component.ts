@@ -26,7 +26,7 @@ export class UserNovelsComponent implements OnInit {
   ngOnInit() {
     this._us.getUserNovels().subscribe((data: any) => {
       this.userNovels = data.novels;
-      this.userCollaborations = data.user.collaborations;
+      this.userCollaborations = data.collaborations;
       console.log(data);
       /*for (let i = 0; i < this.user_novels.length; i++) {
         const datesDataFiltered = this._ns.getDiferenceInDaysBetweenDays(this.user_novels[i].createdAt, this.user_novels[i].updatedAt);
@@ -45,6 +45,7 @@ export class UserNovelsComponent implements OnInit {
   switchTab(tab: string) {
     this.currentTab = tab;
     this.searchText = '';
+    console.log(tab)
   }
 
   goToCreateNovel() {

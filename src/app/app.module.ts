@@ -25,6 +25,8 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { CdkOverlayContainer } from './cdk-overlay-container-extension';
 import { CdkOverlayDirective } from './cdk-overlay.directive';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
 // Components
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbars/navbar/navbar.component';
@@ -126,6 +128,8 @@ const config: SwiperConfigInterface = {
     MatProgressSpinnerModule,
     MatSelectModule,
     MatButtonToggleModule,
+    MatTabsModule,
+    MatMenuModule,
     // bootstrap
     NgbModule,
     // Installations
