@@ -13,6 +13,9 @@ body[theme=dark] {
     .mat-checkbox-frame {
         border: 2px solid #d32f2f;
     }
+    .mat-tab-label-content {
+        color: #626973!important;
+    }
     .mat-form-field-label {
         color: #626973;
     }
@@ -146,23 +149,22 @@ body[theme=dark] {
         color: #54585d!important;
     }
     .hide-light {
-        display:none;
+        display: none;
     }
     .top-title {
         color: #DB3836 !important;
     }
     .mat-select-value {
-        color:#626973;
+        color: #626973;
     }
     .mat-select-arrow {
-        color:#626973;
+        color: #626973;
     }
 }
 
 // Navbar Mobile
-
 .nav-mobile-text {
-    color:#626973;
+    color: #626973;
 }
 
 body[theme=dark] {
