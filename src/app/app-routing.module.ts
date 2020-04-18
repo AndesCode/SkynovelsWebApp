@@ -15,6 +15,7 @@ import { ForumCategoryComponent } from './components/forum/forum-category/forum-
 import { ForumPostComponent } from './components/forum/forum-category/forum-post/forum-post.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ChaptersComponent } from './components/chapters/chapters.component';
+import { UserChapterComponent } from './components/user-novel/user-chapter/user-chapter.component';
 // Test
 import { TestComponent } from './components/test/test.component';
 
@@ -57,8 +58,6 @@ const routes: Routes = [
     ]
     /*children: [
       {path: 'analisis', component: AnalyticsComponent},
-      {path: 'administracion-de-usuarios', component: UserManagementComponent},
-      {path: 'administracion-de-usuarios/:id', component: UserManagementComponent},
       {path: 'administracion-de-novelas', component: NovelManagementComponent},
       {path: 'administracion-de-novelas/:id', component: NovelAdminEditionComponent},
       {path: 'administracion-de-novelas/:id/editar-capitulo/:chp', component: NovelAdminEditionComponent},
@@ -66,8 +65,11 @@ const routes: Routes = [
       { path: '**', pathMatch: 'full', redirectTo: '' }
     ]*/
   },
+  // novel edition
   { path: 'mis-novelas', component: UserNovelsComponent, canActivate: [GuardService] },
-  { path: 'mi-novela/:id', component: UserNovelComponent },
+  { path: 'mi-novela/:id', component: UserNovelComponent, canActivate: [GuardService] },
+  { path: 'mi-novela/:nid/:ntitle/:cid/ctitle', component: UserChapterComponent, canActivate: [GuardService] },
+  // forum
   { path: 'foro', component: ForumComponent },
   { path: 'foro/:category/:cid', component: ForumCategoryComponent },
   { path: 'foro/:category/:cid/:post/:id', component: ForumPostComponent },

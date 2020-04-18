@@ -45,7 +45,6 @@ export class UserNovelsComponent implements OnInit {
   switchTab(tab: string) {
     this.currentTab = tab;
     this.searchText = '';
-    console.log(tab)
   }
 
   goToCreateNovel() {

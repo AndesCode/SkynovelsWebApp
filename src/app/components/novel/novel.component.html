@@ -255,7 +255,7 @@
                         <p [innerHTML]="rating.rate_comment" *ngIf="(rating.show_more || rating.rate_comment.length < 360) && !rating.edition"></p>
                         <form autocomplete="off" #updateRatingForm="ngForm">
                             <div class="form-group" *ngIf="rating.edition" style="width: 100%;">
-                                <textarea class="form-control skn-text-area" id="exampleFormControlTextarea1" #rate_comment="ngModel" name="rating.rate_comment" [(ngModel)]="rating.rate_comment" rows="3"></textarea>
+                                <textarea class="form-control skn-text-area" #rate_comment="ngModel" name="rating.rate_comment" [(ngModel)]="rating.rate_comment" rows="3"></textarea>
                             </div>
                         </form>
                     </div>

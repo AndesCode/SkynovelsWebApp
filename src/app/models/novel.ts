@@ -29,7 +29,7 @@ export class NovelModel {
     nvl_img: any;
     nvl_status: string;
     genres: Array<any>;
-    chapters: Array<any>;
+    volumes: Array<any>;
     collaborators: Array<any>;
     author: any;
     createdAt: Date;

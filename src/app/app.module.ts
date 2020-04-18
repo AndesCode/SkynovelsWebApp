@@ -27,6 +27,7 @@ import { CdkOverlayDirective } from './cdk-overlay.directive';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTreeModule } from '@angular/material/tree';
 // Components
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbars/navbar/navbar.component';
@@ -41,6 +42,7 @@ import { ForumPostComponent } from './components/forum/forum-category/forum-post
 import { ForumManagementComponent } from './components/admin-panel/forum-management/forum-management.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ChaptersComponent } from './components/chapters/chapters.component';
+import { UserChapterComponent } from './components/user-novel/user-chapter/user-chapter.component';
 // bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Pipes
@@ -102,7 +104,8 @@ const config: SwiperConfigInterface = {
     UserProfileComponent,
     TestComponent,
     ChaptersComponent,
-    CdkOverlayDirective
+    CdkOverlayDirective,
+    UserChapterComponent
   ],
   imports: [
     // Angular
@@ -130,6 +133,7 @@ const config: SwiperConfigInterface = {
     MatButtonToggleModule,
     MatTabsModule,
     MatMenuModule,
+    MatTreeModule,
     // bootstrap
     NgbModule,
     // Installations
