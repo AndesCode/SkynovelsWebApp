@@ -1,4 +1,4 @@
-body,
+nav, 
 html {
     animation: 0.5s ease slideIn;
     height: 100%;
@@ -22,7 +22,7 @@ html {
     }
 }
 
-body {
+nav {
     margin: 0;
     display: grid;
     grid-template-columns: 240px auto;
@@ -30,7 +30,7 @@ body {
     grid-template-areas: "navbar disabled";
 }
 
-body:hover {
+nav:hover {
     grid-template-columns: 240px auto;
 }
 
@@ -80,4 +80,16 @@ body:hover {
 
 .skn-mobile-navbar-disabled-content {
     grid-area: disabled;
+}
+
+.material-icons {
+    color:#DB3836;
+}
+
+.hide-light {
+    color:#54585d;
+}
+
+.hide-dark {
+    color:#d32f2f;
 }

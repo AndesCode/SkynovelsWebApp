@@ -26,11 +26,11 @@
             <div class="skn-nav-link">
                 <a class="nav-link" [routerLink]="['/perfil', this._us.getUserLoged().user_login, this._us.getUserLoged().id]" *ngIf="_us.userIsLoged()" style="cursor: pointer;" routerLinkActive="black">Perfil</a>
             </div>
+        </div>
+        <div class="skn-nav-links" *ngIf="mobile">
             <div class="skn-nav-link">
                 <a class="nav-link" (click)="toggleTheme()"><span class="material-icons md-30 hide-light">brightness_2</span><span class="material-icons md-30 hide-dark">brightness_7</span></a>
             </div>
-        </div>
-        <div class="skn-nav-links" *ngIf="mobile">
             <div class="skn-btn skn-text" (click)="openMobileNavbarForm()" *ngIf="!mobileNavbar" style="cursor: pointer;">
                 <i class="material-icons" unselectable="on">
                         menu
