@@ -35,6 +35,10 @@ body {
     font-family: 'Muli', sans-serif!important;
 }
 
+p {
+    overflow-wrap: break-word;
+}
+
 .button:active,
 button:active,
 .button:focus,
