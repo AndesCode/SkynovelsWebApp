@@ -28,6 +28,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatExpansionModule } from '@angular/material/expansion';
 // Components
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbars/navbar/navbar.component';
@@ -134,6 +135,7 @@ const config: SwiperConfigInterface = {
     MatTabsModule,
     MatMenuModule,
     MatTreeModule,
+    MatExpansionModule,
     // bootstrap
     NgbModule,
     // Installations

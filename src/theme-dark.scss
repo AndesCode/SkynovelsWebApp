@@ -19,6 +19,17 @@ body[theme=dark] {
     .mat-option-text {
         color: #626973;
     }
+    .mat-expansion-panel {
+        background-color: #242a31!important;
+        color: #626973!important;
+        .mat-expansion-panel-header-title {
+            color: #626973!important;
+        }
+    }
+    .mat-mini-fab {
+        color: #626973!important;
+        background-color: #2b323a!important;
+    }
     .mat-pseudo-checkbox {
         color: #626973;
     }

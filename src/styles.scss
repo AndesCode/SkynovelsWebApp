@@ -10,7 +10,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $skynovelsApp-primary: mat-palette($mat-red, 700);
-$skynovelsApp-accent: mat-palette($mat-grey, 900);
+$skynovelsApp-accent: mat-palette($mat-grey, 50);
 // The warn palette is optional (defaults to red).
 $skynovelsApp-warn: mat-palette($mat-deep-orange, A700);
 // Create the theme object (a Sass map containing all of the palettes).
@@ -62,6 +62,10 @@ button:hover {
     color: black;
 }
 
+mat-menu {
+    position: absolute;
+}
+
 .mat-tab-body-wrapper {
     width: 100%;
 }
@@ -89,6 +93,17 @@ blockquote {
     padding: 3%!important;
 }
 
+.mat-mini-fab {
+    color: black!important;
+    width: 30px!important;
+    height: 30px!important;
+    line-height: unset !important;
+    .mat-button-wrapper {
+        padding: 0px!important;
+        line-height: unset!important;
+    }
+}
+
 .mat-bottom-sheet-container {
     padding: 1%!important;
     max-height: 100vh!important;
@@ -111,6 +126,13 @@ blockquote {
 
 .skn-link:hover {
     text-decoration: underline!important;
+}
+
+.skn-list-style-none ul,
+.skn-list-style-none li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
 }
 
 .skn-bottomSheet-buttons {
