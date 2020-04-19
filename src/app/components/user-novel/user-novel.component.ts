@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NovelModel } from 'src/app/models/novel';
-import { AuthService } from '../../services/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChapterModel } from 'src/app/models/chapter';
 import { Location } from '@angular/common';
@@ -10,6 +9,12 @@ import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { NovelsService } from '../../services/novels.service';
 import { HelperService } from 'src/app/services/helper.service';
+import { MatDialog } from '@angular/material/dialog';
+
+
+
+
+
 
 @Component({
   selector: 'app-user-novel',
@@ -17,6 +22,8 @@ import { HelperService } from 'src/app/services/helper.service';
   styleUrls: ['./user-novel.component.scss']
 })
 export class UserNovelComponent implements OnInit {
+
+
 
   inviteUserName: any = {
     user_login: ''
@@ -37,9 +44,6 @@ export class UserNovelComponent implements OnInit {
   // Colaboradores
   collaborators: any[] = [];
   // Configuración de paginación
-  p = 1;
-  // Configuración de paginación
-  date_data: any;
   // Alertas y loading
   AlertMessage = null;
   alertStatus = null;
@@ -48,79 +52,74 @@ export class UserNovelComponent implements OnInit {
 
   // Probando nuevo modelo
   novel: NovelModel = new NovelModel();
+  volumes: any = []
   editable_novel = false;
+  panelOpenState = false;
   user: any;
   genres: any = []; // Generos existentes en Skynovels
   uploading = false;
   chapter: ChapterModel = new ChapterModel();
   chapterEdition = false;
-  current_page = 1;
-  @ViewChild('novelForm') novelFormRef;
-  @ViewChild('genreForm') genreFormRef;
-  @ViewChild('unsavedNovelModal') unsavedNovelModalRef;
-  @ViewChild('chapterForm') chapterFormRef;
-  @ViewChild('unsavedChapterModal') unsavedChapterModalRef;
+
 
     constructor( private activatedRoute: ActivatedRoute,
-                public _ns: NovelsService,
-                public _hs: HelperService,
-                private router: Router,
-                private location: Location,
-                private modalService: NgbModal) {}
+                 public ns: NovelsService,
+                 public hs: HelperService,
+                 private router: Router,
+                 private location: Location,
+                 public dialog: MatDialog) {}
 
   // modal service.
-  openSm(content: any) {
-    this.modalService.open(content, { size: 'sm' });
+  openDialogSheet(item): void {
+    this.dialog.open(item);
   }
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     console.log(id);
-    const chp = this.activatedRoute.snapshot.paramMap.get('chp');
-    console.log(chp);
     // cargamos los generos existentes en Skynovels
-    this._ns.getGenres().subscribe((genres: any) => {
+    this.ns.getGenres().subscribe((genres: any) => {
       this.genres = genres.genres;
     });
     if (id !== 'nuevo') {
-      this._ns.getNovel(Number(id), 'edition').subscribe((novelData: any) => {
+      this.ns.getNovel(Number(id), 'edition').subscribe((novelData: any) => {
         if (novelData.authorized_user) {
           this.user = novelData.authorized_user;
-          this.novel = novelData.novel;
-          this.novel.chapters = novelData.chapters;
+          this.novel = novelData.novel[0];
+          // this.novel.chapters = novelData.chapters;
           console.log(this.novel);
           if (this.user === this.novel.nvl_author) {
             this.editable_novel = true;
             console.log(this.novel.collaborators);
             this.collaborators = this.novel.collaborators.slice();
-            for (let i = 0; i < this.genres.length; i++) {
+            for (const genre of this.genres) {
               // agregamos a cada genero un atributo check inicializado en falso que controlara el estado del checkbox
-              this.genres[i].check = false;
+              genre.check = false;
             }
-            for (let i = 0; i < this.novel.genres.length; i++) {
-              for (let j = 0; j < this.genres.length; j++) {
+            for (const novelGenre of this.novel.genres ) {
+              for (const genre of this.genres) {
                 /* comparamos la lista de generos con la lista de generos asignados en la novela,
                 si sus IDs coinciden, el atributo check pasa a true y se chequea
                   el genero */
-                if (this.novel.genres[i].id === this.genres[j].id) {
-                  this.genres[j].check = true;
+                if (novelGenre.id === genre.id) {
+                  genre.check = true;
                 }
               }
             }
           }
-          if (this.novel.chapters.length > 0) {
-            this.novel.chapters.sort(this._hs.chpNumberSorter);
-          }
-          this.evaluateEditableNovelStatus();
+          /*if (this.novel.chapters.length > 0) {
+            this.novel.chapters.sort(this.hs.chpNumberSorter);
+          }*/
+          // his.evaluateEditableNovelStatus();
           // comprobamos si la novela tiene una imagen asignada, en caso contrario ponemos la imagen por defecto.
           if (this.novel.nvl_img !== '') {
             this.imgURL = 'http://localhost:3000/api/novel/image/' + this.novel.nvl_img + '/false';
           }
-          if (chp) {
+          /*if (chp) {
             this.goToChapterEdition(chp);
           } else {
             console.log('no hay capitulo seleccionado');
-          }
+          }*/
 
         } else {
           console.log('no autorizado');
@@ -137,6 +136,8 @@ export class UserNovelComponent implements OnInit {
     }
   }
 
+
+
   save(novelForm: NgForm, genreForm: NgForm) {
     /*if ( form.invalid ) {
       console.log('Formulario no válido');
@@ -147,16 +148,16 @@ export class UserNovelComponent implements OnInit {
     let request: Observable<any>;
     this.novel.genres = [];
     this.novel.collaborators = this.collaborators.map(collaborator => collaborator.id);
-    for (let i = 0; i < this.genres.length; i++) {
-      if (this.genres[i].check === true) {
-        this.novel.genres.push(this.genres[i].id);
+    for (const genre of  this.genres) {
+      if (genre.check === true) {
+        this.novel.genres.push(genre);
       }
     }
     console.log(this.novel);
     if ( this.novel.id ) {
-      request = this._ns.updateNovel(this.novel);
+      request = this.ns.updateNovel(this.novel);
     } else {
-      request = this._ns.createNovel(this.novel);
+      request = this.ns.createNovel(this.novel);
     }
     request.subscribe( resp => {
       console.log(resp);
@@ -166,7 +167,7 @@ export class UserNovelComponent implements OnInit {
         || this.novel.id === null) {
           this.novel.id = resp.novel.id;
           this.novel.nvl_name = resp.novel.nvl_name;
-          this.novel.chapters = [];
+          this.novel.volumes = [];
           this.novel.collaborators = [];
       }
       novelForm.reset(novelForm.value);
@@ -177,7 +178,7 @@ export class UserNovelComponent implements OnInit {
 
       if ( this.fileToUpload ) {
         console.log('Hay archivo a subir, se ejecuta consulta al servidor');
-        this._hs.uploadImage(this.novel.id,
+        this.hs.uploadImage(this.novel.id,
         this.fileToUpload,
         this.novel.nvl_img,
         'novel')
@@ -200,7 +201,7 @@ export class UserNovelComponent implements OnInit {
 
   deleteNovel() {
     if (this.editable_novel && this.novel.id) {
-      this._ns.deleteNovel(this.novel.id).subscribe((data: any) => {
+      this.ns.deleteNovel(this.novel.id).subscribe((data: any) => {
         this.router.navigate(['mis-novelas']);
       });
     } else {
@@ -209,18 +210,18 @@ export class UserNovelComponent implements OnInit {
     }
   }
 
-  saveChapter(chaperForm: NgForm) {
-    /*if ( form.invalid ) {
+  /*saveChapter(chaperForm: NgForm) {
+    if ( form.invalid ) {
       console.log('Formulario no válido');
       return;
-    }*/
+    }
     // this.uploading = true;
     console.log(chaperForm);
     let request: Observable<any>;
     if ( this.chapter.id !== '' ) {
-      request = this._ns.updateChapter(this.chapter);
+      request = this.ns.updateChapter(this.chapter);
     } else {
-      request = this._ns.createChapter(this.chapter);
+      request = this.ns.createChapter(this.chapter);
     }
     request.subscribe( resp => {
       console.log(resp);
@@ -234,15 +235,15 @@ export class UserNovelComponent implements OnInit {
           this.chapter.chp_author = resp.chapter.chp_author;
           this.novel.chapters.push(this.chapter);
       }
-      this.evaluateEditableNovelStatus();
+      //this.evaluateEditableNovelStatus();
       // this.refreshChapterList();
       // this.uploading = false;
     }, error => {
       console.log(error);
     });
-  }
+  }*/
 
-  evaluateEditableNovelStatus() {
+  /*evaluateEditableNovelStatus() {
     const chapter_status = this.novel.chapters.map(
       chapterStatus => chapterStatus.chp_status);
     if (chapter_status.includes('Publicado')) {
@@ -250,19 +251,19 @@ export class UserNovelComponent implements OnInit {
     } else {
       this.hideNovelFormPublic();
     }
-  }
+  }*/
 
-  deleteChapter() {
-      this._ns.deleteChapter(this.chapter.id).subscribe((data: any) => {
+  /*deleteChapter() {
+      this.ns.deleteChapter(this.chapter.id).subscribe((data: any) => {
         this.novel.chapters.splice(this.novel.chapters.findIndex(chapter => chapter.id === data.chapter.id), 1);
         this.goToNovelEdition(true);
       }, error => {
         console.log(error);
         // this.uploading = false;
       });
-  }
+  }*/
 
-  goToNovelEdition(confirmed: boolean) {
+  /*goToNovelEdition(confirmed: boolean) {
     if ((this.chapterFormRef.dirty) && !confirmed) {
       this.openSm(this.unsavedChapterModalRef);
     } else {
@@ -271,9 +272,9 @@ export class UserNovelComponent implements OnInit {
       this.location.go('/mi-novela/' + this.novel.nvl_name);
       return;
     }
-  }
+  }*/
 
-  goToChapterEdition(chapter_id: any) {
+  /*goToChapterEdition(chapter_id: any) {
     if (chapter_id !== 'nuevo') {
       this.chapter = this.novel.chapters.find(x => x.id === Number(chapter_id));
       if (this.chapter) {
@@ -299,7 +300,7 @@ export class UserNovelComponent implements OnInit {
       this.location.go('/mi-novela/' + this.novel.nvl_name + '/editar-capitulo/nuevo');
       this.chapterEdition = true;
     }
-  }
+  }*/
 
   fileChangeEvent(fileInput: any) {
     if (fileInput.target.files.length > 0) {
@@ -334,7 +335,7 @@ export class UserNovelComponent implements OnInit {
       invitation_to_id: user.id,
       invitation_novel: this.novel.id
     };
-    this._ns.sendInvitation(invitation).subscribe((data: any) => {
+    this.ns.sendInvitation(invitation).subscribe((data: any) => {
       console.log(data.invitation);
       this.invitation_message = '¡Invitación enviada!';
     }, error => {
@@ -351,28 +352,28 @@ export class UserNovelComponent implements OnInit {
   }
 
   deleteCollaborator(collaborator: any) {
-    this.collaborators.splice(this.collaborators.findIndex(deleted_collaborator => deleted_collaborator.id === collaborator.id), 1);
+    this.collaborators.splice(this.collaborators.findIndex(deletedCollaborator => deletedCollaborator.id === collaborator.id), 1);
   }
 
   hideNovelFormPublic() {
     console.log('Ocultando novela');
-    const novel_update = {
+    const novelUpdate = {
       id: this.novel.id,
       nvl_status: 'Oculta'
     };
-    this._ns.updateNovel(novel_update).subscribe((data: any) => {
+    this.ns.updateNovel(novelUpdate).subscribe((data: any) => {
       this.novel.nvl_status = 'Oculta';
       this.novelStatusEditable = false;
     });
   }
 
-  goBackToMyNovels(confirmed: boolean) {
+  /*goBackToMyNovels(confirmed: boolean) {
     if ((this.novelFormRef.dirty || this.genreFormRef.dirty || this.fileToUpload) && !confirmed) {
       this.openSm(this.unsavedNovelModalRef);
     } else {
       this.router.navigate(['mis-novelas']);
       return;
     }
-  }
+  }*/
 }
 

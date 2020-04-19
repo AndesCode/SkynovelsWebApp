@@ -22,9 +22,22 @@ body[theme=dark] {
     .mat-expansion-panel {
         background-color: #242a31!important;
         color: #626973!important;
+        .mat-expansion-panel-header {
+            background-color: #242a31!important;
+        }
+        .mat-expansion-panel-header:hover {
+            background-color: #1f252b!important;
+        }
         .mat-expansion-panel-header-title {
             color: #626973!important;
         }
+    }
+    .mat-card {
+        background-color: #242a31!important;
+    }
+    .mat-card-hover:hover {
+        background-color: #1f252b!important;
+        cursor: pointer;
     }
     .mat-mini-fab {
         color: #626973!important;
@@ -73,6 +86,10 @@ body[theme=dark] {
     }
     .skn-secondary {
         background-color: #242a31!important;
+    }
+    .skn-secondary-hover:hover {
+        background-color: #293038 !important;
+        cursor: pointer;
     }
     .skn-text {
         color: #626973!important;

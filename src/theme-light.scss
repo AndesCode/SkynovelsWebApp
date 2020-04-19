@@ -13,6 +13,10 @@ body[theme=light] {
     .skn-cancel-button {
         background-color: #dedede!important;
     }
+    .mat-card-hover:hover {
+        background-color: rgba(0, 0, 0, 0.04)!important;
+        cursor: pointer;
+    }
     .nav-link {
         color: #d32f2f;
     }
@@ -25,17 +29,21 @@ body[theme=light] {
     .skn-chp-main-panel {
         background-color: #ececec!important;
     }
-    .skn-main {
-        background-color: white!important;
-    }
     .skn-novel-presentation-image-mobile {
         color: white!important;
+    }
+    .skn-main {
+        background-color: white!important;
     }
     .skn-main-hover:hover {
         background-color: #ececec!important;
     }
     .skn-secondary {
         background-color: #ececec!important;
+    }
+    .skn-secondary-hover:hover {
+        background-color: #d8d8d8!important;
+        cursor: pointer;
     }
     .skn-text {
         color: #212529!important;
@@ -85,6 +93,6 @@ body[theme=light] {
         color: #272529ba!important;
     }
     .hide-dark {
-        display:none;
+        display: none;
     }
 }

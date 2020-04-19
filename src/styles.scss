@@ -58,8 +58,8 @@ button:hover {
     color: black;
 }
 
-.mat-raised-button.mat-primary {
-    color: black;
+.mat-raised-button {
+    color: black!important;
 }
 
 mat-menu {
@@ -110,6 +110,10 @@ blockquote {
     width: 73vh!important;
     min-width: unset!important;
     max-width: unset!important;
+}
+
+.mat-expansion-indicator::after {
+    color: unset!important;
 }
 
 .mat-input-element {
