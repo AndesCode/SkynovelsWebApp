@@ -16,16 +16,17 @@ nav {
 .skn-content {
     padding: 4px;
     height: 100%;
-    margin: auto 5%;
+    margin: auto 2%;
     display: grid;
-    grid-template-columns: 13em auto;
+    grid-template-columns: 11em auto;
     grid-template-rows: 100%;
     grid-template-areas: "logo links";
 }
 
 .skn-logo {
     grid-area: logo;
-    margin-top: 10px;
+    margin-top: 12px;
+    margin-bottom: 2px;
     background-size: 100% 100%;
     @include plus-media(desktop) {
         cursor: pointer;
@@ -39,7 +40,7 @@ nav {
     justify-self: right;
     width: auto;
     font-weight: 600;
-    font-size:1.2rem;
+    font-size: 1.2rem;
 }
 
 .skn-nav-link {
@@ -70,21 +71,36 @@ nav {
         /* Standard */
     }
 }
+
 .nav-link {
     user-select: none;
-    cursor:pointer;
-  }
+    cursor: pointer;
+}
 
-  .material-icons.md-18 { font-size: 18px; }
-  .material-icons.md-24 { font-size: 24px; }
-  .material-icons.md-30 { font-size: 30px; }
-  .material-icons.md-36 { font-size: 36px; }
-  .material-icons.md-48 { font-size: 48px; }
+.material-icons.md-18 {
+    font-size: 18px;
+}
 
-  .hide-light {
-      color:#54585d;
-  }
+.material-icons.md-24 {
+    font-size: 24px;
+}
 
-  .hide-dark {
-      color:#d32f2f;
-  }
+.material-icons.md-30 {
+    font-size: 30px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+.hide-light {
+    color: #54585d;
+}
+
+.hide-dark {
+    color: #d32f2f;
+}
