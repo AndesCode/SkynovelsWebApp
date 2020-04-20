@@ -1,6 +1,6 @@
 <main class="container">
     <section>
-        <form>
+        <form #novelForm="ngForm">
             <div class="skn-novel-edition-presentation">
                 <div class="skn-novel-edition-presentation-image">
                     <img src="../../../assets/img/23.jpg" alt="">
@@ -9,36 +9,46 @@
                 <div class="skn-novel-edition-main-form">
                     <mat-form-field class="skn-novel-edition-input-100">
                         <mat-label>Titulo de novela*</mat-label>
-                        <input matInput>
+                        <input matInput [(ngModel)]="novel.nvl_title" #nvl_title="ngModel" name="novel.nvl_title">
                     </mat-form-field>
                     <mat-form-field class="skn-novel-edition-input-100">
                         <mat-label>Autor de novela*</mat-label>
-                        <input matInput>
+                        <input matInput [(ngModel)]="novel.nvl_writer" #nvl_writer="ngModel" name="novel.nvl_writer">
                     </mat-form-field>
                     <mat-form-field class="skn-novel-edition-input-100">
                         <mat-label>Generos*</mat-label>
-                        <mat-select multiple>
-                            <mat-option *ngFor="let genre of genres" [value]="genre.genre_name">{{genre.genre_name}}</mat-option>
+                        <mat-select multiple [(ngModel)]="novel.genres" name="novel.genres">
+                            <mat-option *ngFor="let genre of genres" [value]="genre.id">{{genre.genre_name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="skn-novel-edition-input-100">
+                        <mat-label>Estado de publicación*</mat-label>
+                        <mat-select [(ngModel)]="novel.nvl_status" #nvl_status="ngModel" name="novel.nvl_status">
+                            <mat-option value="Disabled">Oculta</mat-option>
+                            <mat-option value="Active">Publicada</mat-option>
+                            <mat-option value="Finished" disabled>Finalizada</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
                         <mat-label>Acronimo</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                    <mat-form-field class="skn-novel-edition-input-100">
-                        <mat-label>Traductor</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                    <mat-form-field class="skn-novel-edition-input-100">
-                        <mat-label>Traductor al Ingles</mat-label>
-                        <input matInput>
+                        <input matInput [(ngModel)]="novel.nvl_acronym" #nvl_acronym="ngModel" name="novel.nvl_acronym">
                     </mat-form-field>
                 </div>
+            </div>
+            <div class="row skn-novel-edition-translators-form">
+                <mat-form-field>
+                    <mat-label>Traductor</mat-label>
+                    <input matInput [(ngModel)]="novel.nvl_translator" #nvl_translator="ngModel" name="novel.nvl_translator">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Traductor al Ingles</mat-label>
+                    <input matInput [(ngModel)]="novel.nvl_translator_eng" #nvl_translator_eng="ngModel" name="novel.nvl_translator_eng">
+                </mat-form-field>
             </div>
             <div class="skn-novel-edition-big-form">
                 <div class="form-group skn-novel-edition-input-100">
                     <label for="skn-novel-sinopsis">Sinopsis*</label>
-                    <textarea class="form-control skn-text-area" id="skn-novel-sinopsis" rows="5"></textarea>
+                    <textarea class="form-control skn-text-area" id="skn-novel-sinopsis" rows="15" [(ngModel)]="novel.nvl_content" #nvl_content="ngModel" name="novel.nvl_content"></textarea>
                 </div>
             </div>
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -99,14 +109,41 @@
                 </div>
                 <div class="modal-footer">
                     <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                    <button mat-raised-button color="primary" style="color: black;" (click)="dialog.closeAll()">Añadir</button>
+                    <button mat-raised-button color="primary" (click)="dialog.closeAll()">Añadir</button>
                 </div>
             </ng-template>
         </mat-card>
+        <!--<div>
+            <button mat-raised-button color="primary" (click)="openMatSnackBar(testModal)">Guardar cambios</button>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let volume of novel.volumes" style="margin: 15px 0px;">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <button mat-raised-button color="warn">Eliminar novela</button>
+            </mat-expansion-panel>
+        </div>-->
     </section>
 </main>
+<ng-template #testModal>
+    <div style="width: 100%; height: 100%; background-color: red; border-radius: 5px; padding: 14px 16px;">
+        <div class="modal-header">
+            <h4 class="modal-title">Busca un colaborador</h4>
+        </div>
+        <div class="modal-body">
+            <mat-form-field class="skn-novel-edition-input-100">
+                <mat-label>Colaborador</mat-label>
+                <input matInput placeholder="Busca por usuario o correo electronico">
+            </mat-form-field>
+        </div>
+        <div class="modal-footer">
+            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+            <button mat-raised-button color="primary" style="color: black;" (click)="dialog.closeAll()">Añadir</button>
+        </div>
+    </div>
+</ng-template>
 <ng-template #addCollaboratorModal>
-    <div style="width: 85vh;"></div>
+    <div style="width: 85vw; max-width: 25em;"></div>
     <div class="modal-header">
         <h4 class="modal-title">Busca un colaborador</h4>
     </div>

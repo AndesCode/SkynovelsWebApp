@@ -29,6 +29,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 // Components
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbars/navbar/navbar.component';
@@ -136,6 +137,7 @@ const config: SwiperConfigInterface = {
     MatMenuModule,
     MatTreeModule,
     MatExpansionModule,
+    MatSnackBarModule,
     // bootstrap
     NgbModule,
     // Installations
