@@ -36,8 +36,12 @@ export class MobileNavbarComponent implements OnInit {
   }
 
   closeMobileNavbarForm() {
+    this._hs.openExternalFunction('closeSideNavBar');
+  }
+
+  navigate() {
+    this._hs.openExternalFunction('closeSideNavBarAndScrollNull');
     this.open = false;
-    this._hs.openExternalFunction('closeSideNavBarCall');
   }
 
   toggleTheme() {

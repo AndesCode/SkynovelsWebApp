@@ -1,6 +1,6 @@
-nav, 
+nav,
 html {
-    animation: 0.5s ease slideIn;
+    animation: 0.4s ease slideIn;
     height: 100%;
 }
 
@@ -35,7 +35,7 @@ nav:hover {
 }
 
 .skn-mobile-navbar {
-    animation: 0.5s ease slideInFromLeft;
+    animation: 0.4s ease slideInFromLeft;
     height: 100%;
     grid-area: navbar;
     background-color: white;
@@ -83,13 +83,13 @@ nav:hover {
 }
 
 .material-icons {
-    color:#DB3836;
+    color: #DB3836;
 }
 
 .hide-light {
-    color:#54585d;
+    color: #54585d;
 }
 
 .hide-dark {
-    color:#d32f2f;
+    color: #d32f2f;
 }

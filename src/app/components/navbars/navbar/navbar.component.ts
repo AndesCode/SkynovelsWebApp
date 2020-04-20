@@ -59,7 +59,7 @@ export class NavbarComponent implements OnInit {
       console.log(this.currentComponent);
     });
     this._hs.invokeExternalFunction.subscribe((data: any) => {
-      if (data === 'closeSideNavBarCall') {
+      if (data === 'closeSideNavBar' || data === 'closeSideNavBarAndScrollNull') {
         this.mobileNavbar = false;
       }
     });
@@ -82,12 +82,9 @@ export class NavbarComponent implements OnInit {
   }
 
   goToHome() {
-    {
       this.router.navigate(['']);
       this.closeMobileNavbarForm();
-    }{
       return;
-    }
   }
 
   openLoginForm() {
