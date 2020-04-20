@@ -25,12 +25,12 @@ body[theme=dark] {
         .mat-expansion-panel-header {
             background-color: #242a31!important;
         }
-        .mat-expansion-panel-header:hover {
-            background-color: #1f252b!important;
-        }
         .mat-expansion-panel-header-title {
             color: #626973!important;
         }
+    }
+    .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
+        background-color: #1f252b!important;
     }
     .mat-card {
         background-color: #242a31!important;
