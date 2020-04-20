@@ -65,6 +65,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { InViewportModule } from 'ng-in-viewport';
 // Test Eliminar
 import { TestComponent } from './components/test/test.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 
@@ -107,7 +108,8 @@ const config: SwiperConfigInterface = {
     TestComponent,
     ChaptersComponent,
     CdkOverlayDirective,
-    UserChapterComponent
+    UserChapterComponent,
+    FooterComponent
   ],
   imports: [
     // Angular
