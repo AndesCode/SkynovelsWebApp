@@ -58,8 +58,8 @@
                             <div *ngIf="novel.nvl_chapters > 1"> <span class="material-icons">format_align_left</span> {{novel.nvl_chapters}} Capitulos</div>
                             <div> <span class="material-icons">access_time</span> {{_hs.getRelativeTime(novel.nvl_last_update).message}}</div>
                         </div>
-                        <div class="skn-nvl-card-genres row" style="margin-bottom: 8px; margin-left: 0px;" *ngFor="let genre of novel.genres | slice: 0:5">
-                            <span class="skn-secondary skn-text">{{genre.genre_name}}</span>
+                        <div class="skn-nvl-card-genres row" style="margin-bottom: 8px; margin-left: 0px;">
+                            <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:5">{{genre.genre_name}}</span>
                         </div>
                         <div class="skn-text">Autor: <strong>{{novel.nvl_writer}}</strong></div>
                         <div class="skn-text" *ngIf="novel.nvl_translator">Traductor: <strong>{{novel.nvl_translator}}</strong></div>
@@ -140,8 +140,8 @@
                 <hr>
                 <div class="skn-text" *ngIf="novel.nvl_translator">Traductor: <strong>{{novel.nvl_translator}}</strong></div>
                 <div class="skn-text" *ngIf="novel.nvl_translator_eng">Traductor al ingles: <strong>{{novel.nvl_translator_eng}}</strong></div>
-                <div class="skn-nvl-card-genres row" style="margin-bottom: 8px; margin-left: 0px;" *ngFor="let genre of novel.genres | slice: 0:5">
-                    <span class="skn-secondary skn-text">{{genre.genre_name}}</span>
+                <div class="skn-nvl-card-genres row" style="margin-bottom: 8px; margin-left: 0px;">
+                    <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:5">{{genre.genre_name}}</span>
                 </div>
             </div>
             <hr>

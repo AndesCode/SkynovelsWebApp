@@ -1,6 +1,6 @@
 <html>
 
-<body #skynovelBody theme="light" [ngStyle]="{'grid-template-rows':currentComponent !== 'ChaptersComponent' ? '65px auto' : '0px auto' }" id="content-container">
+<body #skynovelBody theme="light" id="content-container">
     <div class="app-nav-bar skn-main" *ngIf="currentComponent !== 'ChaptersComponent'">
         <app-navbar></app-navbar>
     </div>
@@ -8,9 +8,8 @@
         <app-login style="position: absolute;"></app-login>
         <app-mobile-navbar style="position: absolute;"></app-mobile-navbar>
         <router-outlet (activate)='onActivate($event)'></router-outlet>
-        <app-footer></app-footer>
     </div>
-
+    <app-footer></app-footer>
 </body>
 
 </html>

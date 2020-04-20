@@ -1,22 +1,15 @@
-body,
-html {
-    height: 100%;
-}
-
 body {
     margin: 0;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 65px auto;
-    grid-template-areas: "navbar" "app";
 }
 
 .app-nav-bar {
-    grid-area: navbar;
+    position: sticky;
+    top: 0;
+    height: 65px;
     z-index: 500;
 }
 
 .app {
-    grid-area: app;
     overflow: auto;
+    min-height: calc(100vh - 65px);
 }
