@@ -28,6 +28,13 @@
             </div>
             <hr>
             <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
+                <a (click)="closeMobileNavbarForm(); goToMyProfile()">
+                    <i class="material-icons">create</i>
+                    <span class="nav-mobile-text">Perfil</span>
+                </a>
+            </div>
+            <hr *ngIf="_us.userIsLoged()">
+            <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
                 <a routerLink="mis-novelas" (click)="closeMobileNavbarForm()">
                     <i class="material-icons">create</i>
                     <span class="nav-mobile-text">Mis novelas</span>
@@ -59,13 +66,6 @@
                 <a (click)="logout()">
                     <i class="material-icons">block</i>
                     <span class="nav-mobile-text">Cerrar sesión</span>
-                </a>
-            </div>
-            <hr *ngIf="_us.userIsLoged()">
-            <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
-                <a (click)="closeMobileNavbarForm(); goToMyProfile()">
-                    <i class="material-icons">create</i>
-                    <span class="nav-mobile-text">Perfil</span>
                 </a>
             </div>
             <hr *ngIf="_us.userIsLoged()">
