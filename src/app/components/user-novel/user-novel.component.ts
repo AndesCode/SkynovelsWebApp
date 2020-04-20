@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { NovelsService } from '../../services/novels.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -67,45 +68,48 @@ export class UserNovelComponent implements OnInit {
                  public hs: HelperService,
                  private router: Router,
                  private location: Location,
-                 public dialog: MatDialog) {}
+                 public dialog: MatDialog,
+                 private matSnackBar: MatSnackBar) {}
 
   // modal service.
   openDialogSheet(item): void {
     this.dialog.open(item);
   }
 
+  openMatSnackBar(item): void {
+    this.matSnackBar.openFromTemplate(item, { duration: 99000});
+  }
+
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     console.log(id);
     // cargamos los generos existentes en Skynovels
-    this.ns.getGenres().subscribe((genres: any) => {
-      this.genres = genres.genres;
+    this.ns.getGenres().subscribe((data: any) => {
+      this.genres = data.genres;
+      for (const genre of this.genres) {
+        // agregamos a cada genero un atributo check inicializado en falso que controlara el estado del checkbox
+        genre.selected = false;
+      }
     });
     if (id !== 'nuevo') {
       this.ns.getNovel(Number(id), 'edition').subscribe((novelData: any) => {
         if (novelData.authorized_user) {
           this.user = novelData.authorized_user;
           this.novel = novelData.novel[0];
+          this.novel.genres = this.novel.genres.map(genre => genre.id);
           // this.novel.chapters = novelData.chapters;
           console.log(this.novel);
           if (this.user === this.novel.nvl_author) {
             this.editable_novel = true;
             console.log(this.novel.collaborators);
             this.collaborators = this.novel.collaborators.slice();
-            for (const genre of this.genres) {
-              // agregamos a cada genero un atributo check inicializado en falso que controlara el estado del checkbox
-              genre.check = false;
-            }
-            for (const novelGenre of this.novel.genres ) {
+            /*for (const novelGenre of this.novel.genres ) {
               for (const genre of this.genres) {
-                /* comparamos la lista de generos con la lista de generos asignados en la novela,
-                si sus IDs coinciden, el atributo check pasa a true y se chequea
-                  el genero */
                 if (novelGenre.id === genre.id) {
-                  genre.check = true;
+                  genre.selected = true;
                 }
               }
-            }
+            }*/
           }
           /*if (this.novel.chapters.length > 0) {
             this.novel.chapters.sort(this.hs.chpNumberSorter);
@@ -146,13 +150,13 @@ export class UserNovelComponent implements OnInit {
     // this.uploading = true;
     this.novel.nvl_title = this.novel.nvl_title.replace(/^\s+|\s+$|\s+(?=\s)/g, '');
     let request: Observable<any>;
-    this.novel.genres = [];
+    // this.novel.genres = [];
     this.novel.collaborators = this.collaborators.map(collaborator => collaborator.id);
-    for (const genre of  this.genres) {
+    /*for (const genre of  this.genres) {
       if (genre.check === true) {
-        this.novel.genres.push(genre);
+        this.novel.genres.push(genre.id);
       }
-    }
+    }*/
     console.log(this.novel);
     if ( this.novel.id ) {
       request = this.ns.updateNovel(this.novel);

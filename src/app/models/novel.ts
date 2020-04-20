@@ -23,11 +23,14 @@ export class NovelModel {
     id: string;
     nvl_author: string;
     nvl_title: string;
+    nvl_acronym: string;
     nvl_name: string;
     nvl_content: string;
     nvl_writer: string;
     nvl_img: any;
     nvl_status: string;
+    nvl_translator_eng: string;
+    nvl_translator: string;
     genres: Array<any>;
     volumes: Array<any>;
     collaborators: Array<any>;

@@ -2,6 +2,7 @@
 .skn-novel-edition-presentation {
     margin-top: 3em;
     display: flex;
+    margin-bottom: 15px;
     .skn-novel-edition-presentation-image {
         width: 290px;
         height: 412px;
@@ -30,11 +31,21 @@
         flex: auto;
         @include subtract-media(desktop) {
             width: 100%;
+            margin-top: 15px;
             flex: unset;
         }
     }
     @include subtract-media(desktop) {
         display: block;
+    }
+}
+
+.skn-novel-edition-translators-form {
+    justify-content: space-between;
+    margin-right: unset;
+    margin-left: unset;
+    mat-form-field {
+        width: 45%;
     }
 }
 
