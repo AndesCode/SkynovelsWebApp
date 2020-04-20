@@ -1,21 +1,33 @@
 .page-footer {
-    background: darkgray;
+    background: #131E2C;
     margin-top: 1em;
+    color: #DB3836;
 }
 
 .footer-background{
-    background: gray;
+    background: #131E2C;
 }
 
 .icons {
-    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .material-icons {
     margin:1rem;
-    background:white;
+    background: white;
     border-radius:1em;
     padding:0.1em;
     user-select: none;
     cursor: pointer;
+    color:#DB3836;
+}
+
+.logo-f {
+    margin:1rem;
+}
+
+.py-5 {
+    padding-bottom:0!important;
 }
