@@ -59,7 +59,7 @@ export class NavbarComponent implements OnInit {
       console.log(this.currentComponent);
     });
     this._hs.invokeExternalFunction.subscribe((data: any) => {
-      if (data === 'closeSideNavBar' || data === 'closeSideNavBarAndScrollNull') {
+      if (data === 'closeSideNavBarCall') {
         this.mobileNavbar = false;
       }
     });

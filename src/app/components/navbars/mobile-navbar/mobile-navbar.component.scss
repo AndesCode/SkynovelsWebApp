@@ -30,6 +30,11 @@ nav {
     grid-template-areas: "navbar disabled";
 }
 
+hr {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 nav:hover {
     grid-template-columns: 240px auto;
 }

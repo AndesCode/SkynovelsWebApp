@@ -28,14 +28,14 @@
             </div>
             <hr>
             <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
-                <a (click)="closeMobileNavbarForm(); goToMyProfile()">
+                <a (click)="navigate(); goToMyProfile()">
                     <i class="material-icons">create</i>
                     <span class="nav-mobile-text">Perfil</span>
                 </a>
             </div>
             <hr *ngIf="_us.userIsLoged()">
             <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
-                <a routerLink="mis-novelas" (click)="closeMobileNavbarForm()">
+                <a routerLink="mis-novelas" (click)="navigate()">
                     <i class="material-icons">create</i>
                     <span class="nav-mobile-text">Mis novelas</span>
                 </a>
