@@ -8,63 +8,63 @@
             <hr>
             <div class="skn-admin-card-section">
                 <a routerLink="" (click)="navigate()">
-                    <i class="material-icons">home</i>
+                    <span class="material-icons md-30">home</span>
                     <span class="nav-mobile-text">Inicio</span>
                 </a>
             </div>
             <hr>
             <div class="skn-admin-card-section">
                 <a routerLink="novelas" (click)="navigate()">
-                    <i class="material-icons">menu_book</i>
+                    <span class="material-icons md-30">library_books</span>
                     <span class="nav-mobile-text">Novelas</span>
                 </a>
             </div>
             <hr>
             <div class="skn-admin-card-section">
                 <a routerLink="foro" (click)="navigate()">
-                    <i class="material-icons">forum</i>
+                    <span class="material-icons md-30">forum</span>
                     <span class="nav-mobile-text">Foro</span>
                 </a>
             </div>
             <hr>
             <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
                 <a (click)="navigate(); goToMyProfile()">
-                    <i class="material-icons">create</i>
+                    <span class="material-icons md-30">account_circle</span>
                     <span class="nav-mobile-text">Perfil</span>
                 </a>
             </div>
             <hr *ngIf="_us.userIsLoged()">
             <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
                 <a routerLink="mis-novelas" (click)="navigate()">
-                    <i class="material-icons">create</i>
+                    <span class="material-icons md-30">create</span>
                     <span class="nav-mobile-text">Mis novelas</span>
                 </a>
             </div>
             <hr *ngIf="_us.userIsLoged()">
             <div class="skn-admin-card-section" *ngIf="!_us.userIsLoged()">
                 <a (click)="openLoginForm(); closeMobileNavbarForm()">
-                    <i class="material-icons">face</i>
+                    <span class="material-icons md-30">face</span>
                     <span class="nav-mobile-text">Iniciar Sesión</span>
                 </a>
             </div>
             <hr *ngIf="!_us.userIsLoged()">
             <div class="skn-admin-card-section" *ngIf="!_us.userIsLoged()">
                 <a (click)="openRegisterForm(); navigate()">
-                    <i class="material-icons">account_box</i>
+                    <span class="material-icons md-30">account_box</span>
                     <span class="nav-mobile-text">Registrarse</span>
                 </a>
             </div>
             <hr *ngIf="!_us.userIsLoged()">
             <div class="skn-admin-card-section" *ngIf="this._as.userIsAdmin()">
                 <a routerLink="panel" (click)="navigate()">
-                    <i class="material-icons">settings</i>
+                    <span class="material-icons md-30">settings</span>
                     <span class="nav-mobile-text"> Panel de control</span>
                 </a>
             </div>
             <hr *ngIf="this._as.userIsAdmin()">
             <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
                 <a (click)="logout()">
-                    <i class="material-icons">block</i>
+                    <span class="material-icons md-30">block</span>
                     <span class="nav-mobile-text">Cerrar sesión</span>
                 </a>
             </div>
