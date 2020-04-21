@@ -12,7 +12,7 @@
                 <a class="nav-link" routerLink="mis-novelas" *ngIf="_us.userIsLoged()" routerLinkActive="nav-link-selected">Mis novelas</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" (click)="openLoginForm()" *ngIf="!_us.userIsLoged()" routerLinkActive="nav-link-selected" style="cursor: pointer;">Iniciar sesión</a>
+                <a class="nav-link" (click)="openDialogSheet(loginModal)" *ngIf="!_us.userIsLoged()" routerLinkActive="nav-link-selected" style="cursor: pointer;">Iniciar sesión</a>
             </div>
             <div class="skn-nav-link">
                 <a class="nav-link" *ngIf="!_us.userIsLoged()" (click)="openRegisterForm()" routerLinkActive="nav-link-selected" style="cursor: pointer;">Registrarse</a>
@@ -48,208 +48,33 @@
     </section>
 </nav>
 
+<ng-template #loginModal>
+    <div class="skn-login">
+        <div class="skn-login-logo">
+            <div class="skn-login-logo-image">
 
-
-
-
-
-<!--<nav class="navbar navbar-expand-md mainNavElemen">
-    <a class="navbar-brand" routerLink="/"><span>S</span><span>N</span></a>
-    <button (click)="rotate()" class="navbar-toggler tButton" type="button" data-toggle="collapse" data-target="#navbar-list-2" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="material-icons" [ngClass]="{'rotate' : rotating}">
-            reorder
-            </i>
-    </button>
-    <div class="collapse navbar-collapse collapseContainer" id="navbar-list-2">
-        <ul class="navbar-nav navUl">
-            <li>
-                <a class="nav-link" routerLink="novelas">Novelas</a>
-            </li>
-            <li>
-                <a class="nav-link" routerLink="foro">Foro</a>
-            </li>
-            <li>
-                <a class="nav-link" routerLink="mis-novelas" *ngIf="_us.userIsLoged()">Mis Novelas</a>
-            </li>
-            <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right" *ngIf="_us.userIsLoged()">
-                <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown1" role="button" (click)="showUserInvitations()" *ngIf="!_us.userIsLoged()">
-                    Invitaciones
-                </a>
-                <div ngbDropdownMenu aria-labelledby="navbarDropdown1" id="navbarDropdown1" class="dropdown-menu dropdown-menu-right" [ngClass]="dropDown ? 'hide' : 'show'">
-                    <div *ngIf="this.user_invitations.length > 0">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Usuario</th>
-                                    <th scope="col">Novela</th>
-                                    <th scope="col">Fecha</th>
-                                    <th scope="col">Estado</th>
-                                    <th scope="col">¿Aceptar?</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let invitation of user_invitations">
-                                    <th scope="row">{{invitation.invitation_from_login}}</th>
-                                    <td>{{invitation.invitation_novel_name}}</td>
-                                    <td>{{invitation.creation_date}}</td>
-                                    <td>{{invitation.invitation_status}}</td>
-                                    <td *ngIf="invitation.invitation_status === 'Pendiente'; then thenBlockInvitation else elseBlockInvitation">
-                                    </td>
-                                    <ng-template #thenBlockInvitation>
-                                        <button (click)="acceptInvitation(invitation)">:D SI!</button>
-                                        <button (click)="declineInvitation(invitation)">:( nah</button>
-                                    </ng-template>
-                                    <ng-template #elseBlockInvitation>
-                                        X
-                                    </ng-template>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <footer>
-                            <a routerLink="invitaciones" (click)="dropDownClose()">Ver todo</a>
-                        </footer>
-                    </div>
-                    <a class="nav-link" *ngIf="this.user_invitations.length == 0 || this.user_invitations.length == null">
-                        No tienes invitaciones
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" (click)="openLoginForm()" *ngIf="!_us.userIsLoged()" style="cursor: pointer;">
-                    Iniciar Sesión
-                </a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" routerLink="panel" *ngIf="this._as.userIsAdmin()">
-                    Panel de control
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link theme-chooser" (click)="toggleNav()">
-                    <i class="fas fa-sun"> </i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" *ngIf="!_us.userIsLoged()" (click)="openRegisterForm()">Registrarse</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" *ngIf="_us.userIsLoged()">Perfil</a>
-            </li>
-            <li class="nav-item logout">
-                <a class="nav-link" (click)="logout()" *ngIf="_us.userIsLoged()">Cerrar sesión</a>
-            </li>
-            <li class="nav-item navbar-collapse" [class.collapse]="collapsed" id="user-box" *ngIf="this._us.userIsLoged()" ngbDropdown display="dynamic" placement="bottom-right">
-                <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button">
-                    <i class="fas fa-user"></i>
-                </a>
-                <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
-                    <a class="nav-link" (click)="goToMyProfile()">Perfil</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="nav-link" (click)="logout()">Cerrar sesión</a>
-                </div>
-            </li>
-
-        </ul>
-
-    </div>
-</nav>-->
-
-<!-- <header>
-    <nav id="mainMenuBar" class="navbar navbar-expand-md fixed-top">
-        <a class="navbar-brand" routerLink="/"><span>S</span><span>N</span></a>
-        <button class="navbar-toggler" (click)="cambiarMenu();">
-            <div class="menu cross">
-                <i class="material-icons">menu</i>
             </div>
-        </button>
-        <div class="container-fluid navbar-items" id="mainMenuBarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" routerLink="/">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="novelas">Novelas</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="mis-novelas" *ngIf="_us.userIsLoged()">Mis
-                        Novelas</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="foro">Foro</a></li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
-                    <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown1" role="button" (click)="showUserInvitations()" *ngIf="!_us.userIsLoged()">
-                        Invitaciones
-                    </a>
-                    <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu dropdown-menu-right" [ngClass]="dropDown ? 'hide' : 'show'">
-                        <div *ngIf="this.user_invitations.length > 0">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Usuario</th>
-                                        <th scope="col">Novela</th>
-                                        <th scope="col">Fecha</th>
-                                        <th scope="col">Estado</th>
-                                        <th scope="col">¿Aceptar?</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let invitation of user_invitations">
-                                        <th scope="row">{{invitation.invitation_from_login}}</th>
-                                        <td>{{invitation.invitation_novel_name}}</td>
-                                        <td>{{invitation.creation_date}}</td>
-                                        <td>{{invitation.invitation_status}}</td>
-                                        <td *ngIf="invitation.invitation_status === 'Pendiente'; then thenBlockInvitation else elseBlockInvitation">
-                                        </td>
-                                        <ng-template #thenBlockInvitation>
-                                            <button (click)="acceptInvitation(invitation)">:D SI!</button>
-                                            <button (click)="declineInvitation(invitation)">:( nah</button>
-                                        </ng-template>
-                                        <ng-template #elseBlockInvitation>
-                                            X
-                                        </ng-template>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <footer>
-                                <a routerLink="invitaciones" (click)="dropDownClose()">Ver todo</a>
-                            </footer>
-                        </div>
-                        <a class="nav-link" *ngIf="this.user_invitations.length == 0 || this.user_invitations.length == null">
-                            No tienes invitaciones
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" (click)="openLoginForm()" *ngIf="!_us.userIsLoged()" style="cursor: pointer;">
-                        Iniciar Sesión
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" routerLink="panel" *ngIf="this._auth.userIsAdmin()">
-                        Panel de control
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link theme-chooser" (click)="toggleNav()">
-                        <i class="fas fa-sun"> </i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" *ngIf="!_us.userIsLoged()" (click)="openRegisterForm()">Registrarse</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" *ngIf="_us.userIsLoged()">Perfil</a>
-                </li>
-                <li class="nav-item logout">
-                    <a class="nav-link" (click)="logout()" *ngIf="_us.userIsLoged()">Logout</a>
-                </li>
-                <li class="nav-item navbar-collapse" [class.collapse]="collapsed" id="user-box" *ngIf="this._auth.userIsLoged()" ngbDropdown display="dynamic" placement="bottom-right">
-                    <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button">
-                        <i class="fas fa-user"></i>
-                    </a>
-                    <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
-                        <a class="nav-link" (click)="goToMyProfile()">Perfil</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="nav-link" (click)="logout()">Cerrar sesión</a>
-                    </div>
-                </li>
-            </ul>
-
         </div>
-    </nav>
-</header> -->
+        <div class="skn-login-form">
+            <form [formGroup]="loginForm">
+                <mat-form-field class="w-100 skn-mat-label-center">
+                    <mat-label>Usuario o correo electronico</mat-label>
+                    <input matInput formControlName="user_login">
+                </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="user_pass">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <span class="material-icons">{{hide ? 'visibility_off' : 'visibility'}}</span>
+                    </button>
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="skn-login-button">
+            <button mat-raised-button color="primary" (click)="login()">Iniciar sesión</button>
+        </div>
+        <div class="skn-login-switcher">
+            <p class="skn-link">¿No tienes cuenta? ¡Registrate aquí!</p>
+        </div>
+    </div>
+</ng-template>

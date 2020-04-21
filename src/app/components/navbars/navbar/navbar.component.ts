@@ -1,10 +1,12 @@
-import { Component, OnInit, EventEmitter, ElementRef, Renderer2, ViewChild, Directive } from '@angular/core';
+import { Component, OnInit, EventEmitter, ElementRef, TemplateRef, Renderer2, ViewChild, Directive } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../../services/users.service';
 import { AdminService } from '../../../services/admin.service';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import { HelperService } from '../../../services/helper.service';
+import { MatDialog } from '@angular/material/dialog';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -15,7 +17,7 @@ import { HelperService } from '../../../services/helper.service';
 
 export class NavbarComponent implements OnInit {
 
-
+  @ViewChild('loginModal') loginModalRef: TemplateRef<any>;
   currentComponent = null;
   forgot_password_form = false;
   loginButton = false;
@@ -27,7 +29,15 @@ export class NavbarComponent implements OnInit {
   user: any = {};
   mobile = false;
   show = false;
+  hide = true;
   mobileNavbar = false;
+
+  // login
+  registerCompleted = false;
+  loginForm = new FormGroup({
+    user_login: new FormControl(''),
+    user_pass: new FormControl(''),
+  });
 
   constructor(public _auth: AuthService,
               public _us: UsersService,
@@ -37,7 +47,8 @@ export class NavbarComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               public breakpointObserver: BreakpointObserver,
               public el:ElementRef,
-              public r: Renderer2) {}
+              public r: Renderer2,
+              public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.breakpointObserver
@@ -62,8 +73,36 @@ export class NavbarComponent implements OnInit {
       if (data === 'closeSideNavBarCall') {
         this.mobileNavbar = false;
       }
+      if (data === 'loginForm') {
+        this.dialog.open(this.loginModalRef);
+      }
     });
   }
+
+  openDialogSheet(item): void {
+    this.dialog.open(item);
+  }
+
+  login() {
+    console.log(this.loginForm);
+    if (this.loginForm.valid) {
+      this._us.logIn(this.loginForm.value).subscribe((data: any) => {
+        console.log(data);
+        if (data.sknvl_s) {
+          localStorage.setItem('sknvl_s', data.sknvl_s);
+        }
+        this._hs.openExternalFunction('reloadUser');
+        this.dialog.closeAll();
+        this.registerCompleted = false;
+        // Acciones a tomar tras logearse en distintos componentes.
+      }, error => {
+        console.log(error);
+        // this.displayMessage(error.error.message, true);
+      });
+    } else {
+      // this.displayMessage('Debes escribir un usuario y contraseña', true);
+    }
+}
 
   logout() {
     this._us.logOut().subscribe((data: any) => {

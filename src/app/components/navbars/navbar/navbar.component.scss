@@ -84,3 +84,33 @@ nav {
 .hide-dark {
     color: #d32f2f;
 }
+
+.skn-login {
+    text-align: center;
+    .skn-login-logo {
+        height: 3.3em;
+        width: 100%;
+        display: flex;
+        .skn-login-logo-image {
+            margin: auto;
+            width: 50px;
+            height: 50px;
+            background-size: 100% 100%;
+        }
+    }
+    .skn-login-form {
+        padding: 0px 5%;
+    }
+    .skn-login-button {
+        text-align: center;
+        button {
+            width: 16em;
+        }
+    }
+    .skn-login-switcher {
+        margin-top: 10px;
+    }
+    /*.skn-mat-label-center /deep/ .mat-form-field-label {
+        text-align: center!important;
+    }*/
+}

@@ -38,6 +38,7 @@ html {
 body {
     height: 100%;
     min-height: 100vh;
+    font-family: 'Muli', sans-serif!important;
 }
 
 p {
@@ -57,10 +58,6 @@ button:hover {
 .ck-editor__main {
     border: none !important;
     outline: none !important;
-}
-
-.mat-raised-button {
-    color: black;
 }
 
 .mat-raised-button {

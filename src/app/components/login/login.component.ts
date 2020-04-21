@@ -35,13 +35,13 @@ export class LoginComponent implements OnInit {
     * ejecuta la función
     */
       this._hs.invokeExternalFunction.subscribe((data: any) => {
-        if (data === 'loginForm') {
+        /* (data === 'loginForm') {
           this.loginbutton();
         }
         if (data === 'registerForm') {
           this.loginbutton();
           this.currentForm = 'register';
-        }
+        }*/
       });
     /* Se subscribe al emisor sendCurrentComponnent y recibe el componente actual en el que se mueve la aplicación
     * desde el router-outlet
