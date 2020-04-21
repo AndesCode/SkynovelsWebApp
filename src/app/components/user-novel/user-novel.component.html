@@ -119,19 +119,12 @@
     </section>
 </main>
 <ng-template #testModal>
-    <div style="width: 100%; height: 100%; background-color: red; border-radius: 5px; padding: 14px 16px;">
-        <div class="modal-header">
-            <h4 class="modal-title">Busca un colaborador</h4>
-        </div>
-        <div class="modal-body">
-            <mat-form-field class="skn-novel-edition-input-100">
-                <mat-label>Colaborador</mat-label>
-                <input matInput placeholder="Busca por usuario o correo electronico">
-            </mat-form-field>
-        </div>
-        <div class="modal-footer">
-            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-            <button mat-raised-button color="primary" style="color: black;" (click)="dialog.closeAll()">Añadir</button>
+    <div class="skn-snack-notification">
+        <div class="skn-snack-notification-text">¡Cambios guardados!</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
         </div>
     </div>
 </ng-template>

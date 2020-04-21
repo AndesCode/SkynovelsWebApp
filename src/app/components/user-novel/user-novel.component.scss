@@ -57,7 +57,20 @@
     width: 100%;
 }
 
-.save-button{
-    float:right;
-    margin:1rem;
+.save-button {
+    float: right;
+    margin: 1rem;
+}
+
+.skn-snack-notification {
+    width: 100%;
+    height: 100%;
+    background-color: green;
+    border-radius: 5px;
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    .skn-snack-notification-text {
+        margin: auto 0px;
+    }
 }

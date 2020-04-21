@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NovelModel } from 'src/app/models/novel';
@@ -69,15 +69,15 @@ export class UserNovelComponent implements OnInit {
                  private router: Router,
                  private location: Location,
                  public dialog: MatDialog,
-                 private matSnackBar: MatSnackBar) {}
+                 public matSnackBar: MatSnackBar) {}
 
   // modal service.
-  openDialogSheet(item): void {
-    this.dialog.open(item);
+  openDialogSheet(template: TemplateRef<any>): void {
+    this.dialog.open(template);
   }
 
-  openMatSnackBar(item): void {
-    this.matSnackBar.openFromTemplate(item, { duration: 99000});
+  openMatSnackBar(template: TemplateRef<any>): void {
+    this.matSnackBar.openFromTemplate(template, { duration: 1000, verticalPosition: 'top'});
   }
 
   ngOnInit(): void {
