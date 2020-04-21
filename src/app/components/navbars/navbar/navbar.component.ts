@@ -31,13 +31,13 @@ export class NavbarComponent implements OnInit {
   show = false;
   hide = true;
   mobileNavbar = false;
+  currentForm = 'login';
+  loginForm;
+  registerForm;
+  passwordRecoveryForm;
 
   // login
   registerCompleted = false;
-  loginForm = new FormGroup({
-    user_login: new FormControl(''),
-    user_pass: new FormControl(''),
-  });
 
   constructor(public _auth: AuthService,
               public _us: UsersService,
@@ -48,7 +48,27 @@ export class NavbarComponent implements OnInit {
               public breakpointObserver: BreakpointObserver,
               public el:ElementRef,
               public r: Renderer2,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog) {
+
+              this.loginForm = new FormGroup({
+                user_login: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(12)]),
+                user_pass: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]),
+              });
+
+              this.registerForm = new FormGroup({
+                user_login: new FormControl('', [Validators.required,
+                                            Validators.pattern('^[a-zA-Z\u00d1\u00f1]{3}(?=.{2,12}$)(?![0-9])[a-zA-Z0-9\\u00d1\\u00f1]+$'),
+                                            Validators.minLength(5), Validators.maxLength(12)]),
+                user_email: new FormControl('', [Validators.required, Validators.email]),
+                user_pass: new FormControl('', [Validators.required,
+                                                Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z_.\\d]{8,16}$'),
+                                                Validators.minLength(8), Validators.maxLength(16)]),
+              });
+
+              this.passwordRecoveryForm = new FormGroup({
+                user_email: new FormControl('', [Validators.required, Validators.email])
+              });
+  }
 
   ngOnInit(): void {
     this.breakpointObserver
@@ -74,13 +94,22 @@ export class NavbarComponent implements OnInit {
         this.mobileNavbar = false;
       }
       if (data === 'loginForm') {
-        this.dialog.open(this.loginModalRef);
+        this.openDialogSheet(this.loginModalRef, true, false);
+      }
+      if (data === 'registerForm') {
+        this.openDialogSheet(this.loginModalRef, false, true);
       }
     });
   }
 
-  openDialogSheet(item): void {
+  openDialogSheet(item: TemplateRef<any>, login?: boolean, register?: boolean): void {
     this.dialog.open(item);
+    if (login) {
+      this.currentForm = 'login';
+    }
+    if (register) {
+      this.currentForm = 'register';
+    }
   }
 
   login() {
@@ -102,7 +131,11 @@ export class NavbarComponent implements OnInit {
     } else {
       // this.displayMessage('Debes escribir un usuario y contraseña', true);
     }
-}
+  }
+
+  swichtTab(tab: string) {
+    this.currentForm = tab;
+  }
 
   logout() {
     this._us.logOut().subscribe((data: any) => {
@@ -124,14 +157,6 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['']);
       this.closeMobileNavbarForm();
       return;
-  }
-
-  openLoginForm() {
-    this._hs.openExternalFunction('loginForm');
-  }
-
-  openRegisterForm() {
-    this._hs.openExternalFunction('registerForm');
   }
 
   openMobileNavbarForm() {

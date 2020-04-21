@@ -12,10 +12,10 @@
                 <a class="nav-link" routerLink="mis-novelas" *ngIf="_us.userIsLoged()" routerLinkActive="nav-link-selected">Mis novelas</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" (click)="openDialogSheet(loginModal)" *ngIf="!_us.userIsLoged()" routerLinkActive="nav-link-selected" style="cursor: pointer;">Iniciar sesión</a>
+                <a class="nav-link" (click)="openDialogSheet(loginModal, true, false)" *ngIf="!_us.userIsLoged()" routerLinkActive="nav-link-selected" style="cursor: pointer;">Iniciar sesión</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" *ngIf="!_us.userIsLoged()" (click)="openRegisterForm()" routerLinkActive="nav-link-selected" style="cursor: pointer;">Registrarse</a>
+                <a class="nav-link" *ngIf="!_us.userIsLoged()" (click)="openDialogSheet(loginModal, false, true)" routerLinkActive="nav-link-selected" style="cursor: pointer;">Registrarse</a>
             </div>
             <div class="skn-nav-link">
                 <a class="nav-link" routerLink="panel" *ngIf="this._as.userIsAdmin()" routerLinkActive="nav-link-selected">Panel de control</a>
@@ -55,7 +55,8 @@
 
             </div>
         </div>
-        <div class="skn-login-form">
+        <div class="skn-login-form" *ngIf="currentForm === 'login'">
+            <hr>
             <form [formGroup]="loginForm">
                 <mat-form-field class="w-100 skn-mat-label-center">
                     <mat-label>Usuario o correo electronico</mat-label>
@@ -70,11 +71,51 @@
                 </mat-form-field>
             </form>
         </div>
+        <div class="skn-login-form" *ngIf="currentForm === 'register'">
+            <hr>
+            <form [formGroup]="registerForm">
+                <mat-form-field class="w-100 skn-mat-label-center">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput formControlName="user_login">
+                    <mat-error *ngIf="registerForm.get('user_login').hasError('pattern')">Invalido</mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100 skn-mat-label-center">
+                    <mat-label>Correo electronico</mat-label>
+                    <input matInput formControlName="user_email">
+                    <mat-error *ngIf="registerForm.get('user_email').hasError('email')">Invalido</mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="user_pass">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <span class="material-icons">{{hide ? 'visibility_off' : 'visibility'}}</span>
+                    </button>
+                    <mat-error *ngIf="registerForm.get('user_pass').hasError('pattern')">Invalido</mat-error>
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="skn-login-form" *ngIf="currentForm === 'passwordRecovery'">
+            <hr>
+            <form [formGroup]="passwordRecoveryForm">
+                <mat-form-field class="w-100 skn-mat-label-center">
+                    <mat-label>Correo electronico</mat-label>
+                    <input matInput formControlName="user_email">
+                    <mat-error *ngIf="passwordRecoveryForm.get('user_email').hasError('email')">Invalido</mat-error>
+                </mat-form-field>
+            </form>
+        </div>
         <div class="skn-login-button">
-            <button mat-raised-button color="primary" (click)="login()">Iniciar sesión</button>
+            <button mat-raised-button color="primary" (click)="login()" *ngIf="currentForm === 'login'" [disabled]="loginForm.invalid">Iniciar sesión</button>
+            <button mat-raised-button color="primary" *ngIf="currentForm === 'register'" [disabled]="registerForm.invalid">Registrarse</button>
+            <button mat-raised-button color="primary" *ngIf="currentForm === 'passwordRecovery'" [disabled]="passwordRecoveryForm.invalid">Enviar correo</button>
         </div>
         <div class="skn-login-switcher">
-            <p class="skn-link">¿No tienes cuenta? ¡Registrate aquí!</p>
+            <p class="skn-link" *ngIf="currentForm === 'login'" (click)="swichtTab('register')">¿No tienes cuenta? ¡Registrate aquí!</p>
+            <p class="skn-link" *ngIf="currentForm === 'register'" (click)="swichtTab('login')">Regresar a inicio</p>
+        </div>
+        <div class="skn-login-switcher">
+            <p class="skn-link" *ngIf="currentForm === 'login'" (click)="swichtTab('passwordRecovery')">¿Olvidaste tu contraseña?</p>
+            <p class="skn-link" *ngIf="currentForm === 'passwordRecovery'" (click)="swichtTab('login')">Regresar a inicio</p>
         </div>
     </div>
 </ng-template>

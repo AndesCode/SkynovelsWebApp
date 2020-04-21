@@ -59,6 +59,7 @@ export class AppComponent implements AfterViewInit {
 
   onActivate(event: any) {
     console.log(event);
+    window.scrollTo(0, 0);
     this.currentComponent = event.__proto__.constructor.name;
     this.hs.getCurrentComponent(this.currentComponent); // modificando aqui
   }

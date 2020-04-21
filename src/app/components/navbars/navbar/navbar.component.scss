@@ -87,19 +87,23 @@ nav {
 
 .skn-login {
     text-align: center;
+    width: 85vw;
+    max-width: 25em;
     .skn-login-logo {
         height: 3.3em;
         width: 100%;
         display: flex;
+        margin-bottom: 1rem;
         .skn-login-logo-image {
             margin: auto;
-            width: 50px;
-            height: 50px;
+            width: 3rem;
+            height: 3rem;
             background-size: 100% 100%;
         }
     }
     .skn-login-form {
         padding: 0px 5%;
+        margin-bottom: 1rem;
     }
     .skn-login-button {
         text-align: center;
