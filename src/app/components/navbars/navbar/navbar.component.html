@@ -55,7 +55,7 @@
 
             </div>
         </div>
-        <div class="skn-login-form" *ngIf="currentForm === 'login'">
+        <div class="skn-login-form" *ngIf="currentForm === 'login'" (keyup.enter)="login()">
             <hr>
             <form [formGroup]="loginForm">
                 <mat-form-field class="w-100 skn-mat-label-center">
