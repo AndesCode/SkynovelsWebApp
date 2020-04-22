@@ -58,8 +58,8 @@ export class NovelsService {
       return this.http.post(url, novel, this.GlobalhttpOptions);
     }
 
-    updateNovel(novel: any) {
-      const novelPayload = {
+    updateNovel(novel: Novel) {
+      /*const novelPayload = {
         id: novel.id,
         nvl_title: novel.nvl_title,
         nvl_content: novel.nvl_content,
@@ -67,9 +67,9 @@ export class NovelsService {
         nvl_status: novel.nvl_status,
         genres: novel.genres,
         collaborators: novel.collaborators
-      };
+      };*/
       const url = `${ this.urlnovelsdb }/update-novel`;
-      return this.http.put(url , novelPayload, this.GlobalhttpOptions);
+      return this.http.put(url , novel, this.GlobalhttpOptions);
     }
 
     deleteNovel(id: string) {

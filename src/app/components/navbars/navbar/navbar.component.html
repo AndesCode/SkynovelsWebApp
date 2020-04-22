@@ -49,18 +49,21 @@
 </nav>
 
 <ng-template #loginModal>
+    <div class="skn-modal-top-close-button">
+        <button mat-icon-button (click)="dialog.closeAll()">
+            <span class="material-icons">close</span>
+        </button>
+    </div>
     <div class="skn-login">
         <div class="skn-login-logo">
-            <div class="skn-login-logo-image">
-
-            </div>
+            <div class="skn-login-logo-image"></div>
         </div>
         <div class="skn-login-form" *ngIf="currentForm === 'login'" (keyup.enter)="login()">
             <hr>
             <form [formGroup]="loginForm">
                 <mat-form-field class="w-100 skn-mat-label-center">
                     <mat-label>Usuario o correo electronico</mat-label>
-                    <input matInput formControlName="user_login">
+                    <input matInput formControlName="user_login" cdkFocusInitial>
                 </mat-form-field>
                 <mat-form-field class="w-100">
                     <mat-label>Contraseña</mat-label>
@@ -76,7 +79,7 @@
             <form [formGroup]="registerForm">
                 <mat-form-field class="w-100 skn-mat-label-center">
                     <mat-label>Usuario</mat-label>
-                    <input matInput formControlName="user_login">
+                    <input matInput formControlName="user_login" cdkFocusInitial>
                     <mat-error *ngIf="registerForm.get('user_login').hasError('pattern')">Invalido</mat-error>
                 </mat-form-field>
                 <mat-form-field class="w-100 skn-mat-label-center">
@@ -105,9 +108,9 @@
             </form>
         </div>
         <div class="skn-login-button">
-            <button mat-raised-button color="primary" (click)="login()" *ngIf="currentForm === 'login'" [disabled]="loginForm.invalid">Iniciar sesión</button>
-            <button mat-raised-button color="primary" *ngIf="currentForm === 'register'" [disabled]="registerForm.invalid">Registrarse</button>
-            <button mat-raised-button color="primary" *ngIf="currentForm === 'passwordRecovery'" [disabled]="passwordRecoveryForm.invalid">Enviar correo</button>
+            <button mat-raised-button color="primary" (click)="login()" *ngIf="currentForm === 'login'" [disabled]="loginForm.invalid || loginFormLoading">Iniciar sesión</button>
+            <button mat-raised-button color="primary" *ngIf="currentForm === 'register'" [disabled]="registerForm.invalid || loginFormLoading">Registrarse</button>
+            <button mat-raised-button color="primary" *ngIf="currentForm === 'passwordRecovery'" [disabled]="passwordRecoveryForm.invalid || loginFormLoading">Enviar correo</button>
         </div>
         <div class="skn-login-switcher">
             <p class="skn-link" *ngIf="currentForm === 'login'" (click)="swichtTab('register')">¿No tienes cuenta? ¡Registrate aquí!</p>

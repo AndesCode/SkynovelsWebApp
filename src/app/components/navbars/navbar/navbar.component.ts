@@ -35,6 +35,7 @@ export class NavbarComponent implements OnInit {
   loginForm;
   registerForm;
   passwordRecoveryForm;
+  loginFormLoading = false;
 
   // login
   registerCompleted = false;
@@ -114,6 +115,7 @@ export class NavbarComponent implements OnInit {
 
   login() {
     console.log(this.loginForm);
+    this.loginFormLoading = true;
     if (this.loginForm.valid) {
       this._us.logIn(this.loginForm.value).subscribe((data: any) => {
         console.log(data);
@@ -123,9 +125,12 @@ export class NavbarComponent implements OnInit {
         this._hs.openExternalFunction('reloadUser');
         this.dialog.closeAll();
         this.registerCompleted = false;
+        this.loginFormLoading = false;
+        this.loginForm.reset();
         // Acciones a tomar tras logearse en distintos componentes.
       }, error => {
         console.log(error);
+        this.loginFormLoading = false;
         // this.displayMessage(error.error.message, true);
       });
     } else {
