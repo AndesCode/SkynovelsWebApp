@@ -32,9 +32,9 @@ export class NavbarComponent implements OnInit {
   hide = true;
   mobileNavbar = false;
   currentForm = 'login';
-  loginForm;
-  registerForm;
-  passwordRecoveryForm;
+  loginForm: FormGroup;
+  registerForm: FormGroup;
+  passwordRecoveryForm: FormGroup;
   loginFormLoading = false;
 
   // login

@@ -1,16 +1,15 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { NovelModel } from 'src/app/models/novel';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Novel } from 'src/app/models/novel';
 import { ChapterModel } from 'src/app/models/chapter';
-import { Location } from '@angular/common';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { NovelsService } from '../../services/novels.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Location } from '@angular/common';
 
 
 
@@ -29,8 +28,10 @@ export class UserNovelComponent implements OnInit {
   inviteUserName: any = {
     user_login: ''
   };
-
-
+  @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
+  @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
+  public successSnackMessage: string;
+  public errorSnackMessage: string;
   // declaraciones
   public fileToUpload: File = null;
   public image_selected: string;
@@ -52,24 +53,37 @@ export class UserNovelComponent implements OnInit {
 
 
   // Probando nuevo modelo
-  novel: NovelModel = new NovelModel();
-  volumes: any = []
-  editable_novel = false;
+  novel: Novel;
+  volumes: any = [];
+  editableNovel = false;
   panelOpenState = false;
   user: any;
   genres: any = []; // Generos existentes en Skynovels
   uploading = false;
   chapter: ChapterModel = new ChapterModel();
   chapterEdition = false;
+  novelForm: FormGroup;
 
 
     constructor( private activatedRoute: ActivatedRoute,
                  public ns: NovelsService,
                  public hs: HelperService,
                  private router: Router,
-                 private location: Location,
                  public dialog: MatDialog,
-                 public matSnackBar: MatSnackBar) {}
+                 public matSnackBar: MatSnackBar,
+                 private location: Location) {
+                    this.novelForm = new FormGroup({
+                      nvl_title: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(60)]),
+                      nvl_writer: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]),
+                      genres: new FormControl('', Validators.required),
+                      nvl_status: new FormControl('Disabled', [Validators.required, Validators.minLength(6), Validators.maxLength(8)]),
+                      nvl_acronym: new FormControl('', [Validators.maxLength(8)]),
+                      nvl_translator: new FormControl('', [Validators.minLength(2), Validators.maxLength(25)]),
+                      nvl_translator_eng: new FormControl('', [Validators.minLength(2), Validators.maxLength(25)]),
+                      nvl_content: new FormControl('', [Validators.required, Validators.minLength(15), Validators.maxLength(1500)]),
+                    });
+
+    }
 
   // modal service.
   openDialogSheet(template: TemplateRef<any>): void {
@@ -100,63 +114,54 @@ export class UserNovelComponent implements OnInit {
           // this.novel.chapters = novelData.chapters;
           console.log(this.novel);
           if (this.user === this.novel.nvl_author) {
-            this.editable_novel = true;
+            this.editableNovel = true;
             console.log(this.novel.collaborators);
             this.collaborators = this.novel.collaborators.slice();
-            /*for (const novelGenre of this.novel.genres ) {
-              for (const genre of this.genres) {
-                if (novelGenre.id === genre.id) {
-                  genre.selected = true;
-                }
-              }
-            }*/
           }
-          /*if (this.novel.chapters.length > 0) {
-            this.novel.chapters.sort(this.hs.chpNumberSorter);
-          }*/
-          // his.evaluateEditableNovelStatus();
           // comprobamos si la novela tiene una imagen asignada, en caso contrario ponemos la imagen por defecto.
-          if (this.novel.nvl_img !== '') {
+          if (this.novel.nvl_img) {
             this.imgURL = 'http://localhost:3000/api/novel/image/' + this.novel.nvl_img + '/false';
           }
-          /*if (chp) {
-            this.goToChapterEdition(chp);
-          } else {
-            console.log('no hay capitulo seleccionado');
-          }*/
+
 
         } else {
           console.log('no autorizado');
           this.router.navigate(['mis-novelas']);
         }
+        // Fill actual existing novel
+        this.novelForm.setValue({
+          nvl_title: this.novel.nvl_title,
+          nvl_writer: this.novel.nvl_writer,
+          genres: this.novel.genres,
+          nvl_status: this.novel.nvl_status,
+          nvl_acronym: this.novel.nvl_acronym,
+          nvl_translator: this.novel.nvl_translator,
+          nvl_translator_eng: this.novel.nvl_translator_eng,
+          nvl_content: this.novel.nvl_content
+        });
       }, error => {
         console.log('no autorizado');
         console.log(error);
         this.router.navigate(['mis-novelas']);
       });
     } else {
-      this.editable_novel = true;
-      this.novel.nvl_status = 'Oculta';
+      this.editableNovel = true;
+      this.novel.nvl_status = 'Disabled';
     }
   }
 
 
 
-  save(novelForm: NgForm, genreForm: NgForm) {
-    /*if ( form.invalid ) {
+  save() {
+    if ( this.novelForm.invalid ) {
       console.log('Formulario no válido');
       return;
-    }*/
+    }
     // this.uploading = true;
     this.novel.nvl_title = this.novel.nvl_title.replace(/^\s+|\s+$|\s+(?=\s)/g, '');
     let request: Observable<any>;
-    // this.novel.genres = [];
     this.novel.collaborators = this.collaborators.map(collaborator => collaborator.id);
-    /*for (const genre of  this.genres) {
-      if (genre.check === true) {
-        this.novel.genres.push(genre.id);
-      }
-    }*/
+    console.log(this.novelForm.valid);
     console.log(this.novel);
     if ( this.novel.id ) {
       request = this.ns.updateNovel(this.novel);
@@ -174,10 +179,10 @@ export class UserNovelComponent implements OnInit {
           this.novel.volumes = [];
           this.novel.collaborators = [];
       }
-      novelForm.reset(novelForm.value);
+      this.novelForm.reset(this.novelForm.value);
       if (!this.novelStatusEditable) {
         console.log('hago algo');
-        this.novel.nvl_status = 'Oculta';
+        this.novel.nvl_status = 'Disabled';
       }
 
       if ( this.fileToUpload ) {
@@ -191,20 +196,27 @@ export class UserNovelComponent implements OnInit {
           console.log(img);
           this.fileToUpload = null;
           this.uploading = false;
+          this.openMatSnackBar(this.successSnackRef);
+          this.successSnackMessage = '¡Cambios guardados!';
           return;
         }).catch(error => {
           console.log(error);
+          this.openMatSnackBar(this.errorSnackRef);
+          this.errorSnackMessage = error.message;
         });
       } else {
         this.uploading = false;
+        this.successSnackMessage = '¡Cambios guardados!';
       }
     }, error => {
       console.log(error);
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = error.message;
     });
   }
 
   deleteNovel() {
-    if (this.editable_novel && this.novel.id) {
+    if (this.editableNovel && this.novel.id) {
       this.ns.deleteNovel(this.novel.id).subscribe((data: any) => {
         this.router.navigate(['mis-novelas']);
       });
@@ -361,12 +373,12 @@ export class UserNovelComponent implements OnInit {
 
   hideNovelFormPublic() {
     console.log('Ocultando novela');
-    const novelUpdate = {
+    const novelStatus: Novel = {
       id: this.novel.id,
-      nvl_status: 'Oculta'
+      nvl_status: 'Disabled'
     };
-    this.ns.updateNovel(novelUpdate).subscribe((data: any) => {
-      this.novel.nvl_status = 'Oculta';
+    this.ns.updateNovel(novelStatus).subscribe((data: any) => {
+      this.novel.nvl_status = 'Disabled';
       this.novelStatusEditable = false;
     });
   }

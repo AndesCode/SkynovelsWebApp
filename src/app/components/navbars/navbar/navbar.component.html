@@ -50,7 +50,7 @@
 
 <ng-template #loginModal>
     <div class="skn-modal-top-close-button">
-        <button mat-icon-button (click)="dialog.closeAll()">
+        <button mat-icon-button (click)="dialog.closeAll()" [attr.aria-label]="'close'">
             <span class="material-icons skn-text">close</span>
         </button>
     </div>
