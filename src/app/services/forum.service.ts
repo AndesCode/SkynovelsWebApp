@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter  } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User, UpdatePass } from '../models/user';
+import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { Novel } from '../models/novel';
 import { Chapter } from '../models/chapter';

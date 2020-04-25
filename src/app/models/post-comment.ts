@@ -1,3 +1,4 @@
+// tslint:disable: variable-name
 export interface PostComment {
     comment_content: string;
     forum_post_id: string;

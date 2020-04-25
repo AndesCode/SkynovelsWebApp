@@ -83,10 +83,10 @@
                         </div>
                     </div>
                     <div class="skn-novel-presentation-info-user-buttons-box">
-                        <button mat-raised-button color="primary" style="color: black; height: 41px;" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Añadir a la biblioteca</button>
-                        <button mat-raised-button color="primary" style="color: black; height: 41px;" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>
-                        <button mat-raised-button color="primary" style="color: black; height: 41px;" *ngIf="!novel.user_bookmark || novel.user_bookmark.bkm_chapter <= 1">Leer</button>
-                        <button mat-raised-button color="primary" style="color: black; height: 41px;" *ngIf="novel.user_bookmark && novel.user_bookmark.bkm_chapter > 1">Continuar leyendo</button>
+                        <button mat-raised-button color="primary" style="height: 41px;" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Añadir a la biblioteca</button>
+                        <button mat-raised-button color="primary" style="height: 41px;" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>
+                        <button mat-raised-button color="primary" style="height: 41px;" *ngIf="!novel.user_bookmark || novel.user_bookmark.bkm_chapter <= 1">Leer</button>
+                        <button mat-raised-button color="primary" style="height: 41px;" *ngIf="novel.user_bookmark && novel.user_bookmark.bkm_chapter > 1">Continuar leyendo</button>
                         <p *ngIf="!user">Incia sesíon para agregar esta novela a tu biblioteca</p>
                     </div>
                 </div>
@@ -265,10 +265,10 @@
                         </form>
                     </div>
                     <div *ngIf="rating.rate_comment.length > 360 && !rating.show_more && !rating.edition">
-                        <span class="skn-nvl-user-rating-info-togler skn-text" (click)="showMoreRating(rating)"><strong>...Ver más</strong></span>
+                        <strong class="skn-nvl-user-rating-info-togler skn-text" (click)="showMoreRating(rating)">...Ver más</strong>
                     </div>
                     <div *ngIf="rating.show_more && rating.rate_comment.length > 360 && !rating.edition">
-                        <span class="skn-nvl-user-rating-info-togler skn-text" (click)="showMoreRating(rating)"><strong>...Mostrar menos</strong></span>
+                        <strong class="skn-nvl-user-rating-info-togler skn-text" (click)="showMoreRating(rating)">...Mostrar menos</strong>
                     </div>
                     <br>
 
@@ -277,8 +277,10 @@
                             <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="getNovelRatingComments(rating)" *ngIf="!rating.show_replys">Comentarios</span>
                             <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="hideNovelRatingComments(rating)" *ngIf="rating.show_replys">Ocultar Comentarios</span>
                         </div>
-                        <div style="display: flex; margin-bottom: 5px;" class="skn-like" (click)="switchRatingLike(rating)" [ngClass]="{'liked': rating.liked}">
-                            <span class="material-icons" style="margin-right: 5px;">thumb_up</span>
+                        <div style="display: flex; align-items: center;">
+                            <button mat-icon-button aria-label="like" (click)="switchRatingLike(rating)">
+                                <span class="material-icons skn-like" [ngClass]="{'liked': rating.liked}">thumb_up</span>
+                            </button>
                             <div style="margin-top: 3px;">{{rating.likes?.length}}</div>
                         </div>
                     </div>
@@ -346,13 +348,15 @@
 
                                     </div>
                                     <div *ngIf="rating_comment.novel_rating_comment.length > 360 && !rating_comment.show_more && !rating_comment.edition">
-                                        <span class="skn-nvl-user-rating-info-togler" (click)="showMoreRating(rating_comment)">...Ver más</span>
+                                        <strong class="skn-nvl-user-rating-info-togler" (click)="showMoreRating(rating_comment)">...Ver más</strong>
                                     </div>
                                     <div *ngIf="rating_comment.show_more && rating_comment.novel_rating_comment.length > 360 && !rating_comment.edition">
-                                        <span class="skn-nvl-user-rating-info-togler" (click)="showMoreRating(rating_comment)">...Mostrar menos</span>
+                                        <strong class="skn-nvl-user-rating-info-togler" (click)="showMoreRating(rating_comment)">...Mostrar menos</strong>
                                     </div>
-                                    <div style="display: flex; margin-bottom: 5px;" class="skn-like" [ngClass]="{'liked': rating_comment.liked}" (click)="switchRatingCommentLike(rating_comment)">
-                                        <span class="material-icons" style="margin-right: 5px;">thumb_up</span>
+                                    <div style="display: flex; align-items: center;">
+                                        <button mat-icon-button aria-label="like" (click)="switchRatingCommentLike(rating_comment)">
+                                            <span class="material-icons skn-like" [ngClass]="{'liked': rating_comment.liked}">thumb_up</span>
+                                        </button>
                                         <div style="margin-top: 3px;">{{rating_comment.likes?.length}}</div>
                                     </div>
                                 </div>

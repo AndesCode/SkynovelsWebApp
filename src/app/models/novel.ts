@@ -1,6 +1,7 @@
+// tslint:disable: variable-name
 export class Novel {
 
-    id: string;
+    id?: number;
     nvl_author?: string;
     nvl_title?: string;
     nvl_acronym?: string;

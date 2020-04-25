@@ -1,3 +1,4 @@
+// tslint:disable: variable-name
 export interface Post {
     /* nvl_author: string;
      */

@@ -1,3 +1,4 @@
+// tslint:disable: variable-name
 export interface NovelRating {
     user_id: string;
     novel_id: string;

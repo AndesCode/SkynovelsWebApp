@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Invitation } from 'src/app/models/invitation';
+import { Novel } from 'src/app/models/novel';
+import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -19,19 +22,19 @@ export class UsersService {
   }
 
   getUserLoged() {
-    const token = localStorage.getItem('sknvl_s');
-    if (token) {
-      const jwtData = token.split('.')[1];
+    const Localtoken = localStorage.getItem('sknvl_s');
+    if (Localtoken) {
+      const jwtData = Localtoken.split('.')[1];
       if (window.atob(jwtData)) {
         const decodedJwtJsonData = window.atob(jwtData);
         const decodedJwtData = JSON.parse(decodedJwtJsonData);
         if (decodedJwtData.sub) {
-          const user = {
+          const user: User = {
             id: decodedJwtData.sub,
             user_forum_auth: decodedJwtData.user_forum_auth,
             user_login: decodedJwtData.user_login,
             user_profile_image: decodedJwtData.user_profile_image,
-            token: token
+            token: Localtoken
           };
           return user;
         } else {
@@ -105,17 +108,17 @@ export class UsersService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': token
+        Authorization: token
       })
     };
     const url = `${ this.urlnovelsdb}/password-reset-request`;
     return this.http.post(url, password, httpOptions);
   }
 
-  createUserBookmark(nvl_id: any) {
+  createUserBookmark(nvlId: any) {
     const url = `${this.urlnovelsdb}/create-user-bookmark`;
     const bookmark = {
-      nvl_id: nvl_id,
+      nvl_id: nvlId,
     };
     return this.http.post(url, bookmark, this.GlobalhttpOptions);
   }
@@ -138,5 +141,20 @@ export class UsersService {
   getUserImage(user_profile_image: string) {
     const url = `${ this.urlnovelsdb }/user-profile-img/${user_profile_image}/false`;
     return this.http.get( url, {responseType: 'blob'});
+  }
+
+  sendInvitation(userLogin: string, novelId: number) {
+    const invitation: Invitation = {
+      user_login: userLogin,
+      invitation_novel: novelId
+    };
+    console.log(invitation);
+    const url = `${ this.urlnovelsdb }/create-user-invitation`;
+    return this.http.post(url, invitation, this.GlobalhttpOptions);
+  }
+
+  updateUserInvitation(invitation: any) {
+    const url = `${ this.urlnovelsdb }/update-user-invitation`;
+    return this.http.put(url , invitation, this.GlobalhttpOptions);
   }
 }

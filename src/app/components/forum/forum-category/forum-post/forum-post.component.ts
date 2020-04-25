@@ -1,9 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Post } from 'src/app/models/post';
-import { AppService } from 'src/app/services/app.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
 import { PostComment } from 'src/app/models/post-comment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ForumService } from '../../../../services/forum.service';

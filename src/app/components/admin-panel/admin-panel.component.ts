@@ -1,7 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AppService } from '../../services/app.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { AdminService } from '../../services/admin.service';
 import { UsersService } from '../../services/users.service';
 
@@ -16,8 +14,7 @@ export class AdminPanelComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               public _router: Router,
               private _us: UsersService,
-              private _as: AdminService,
-              private _auth: AuthService) { }
+              private _as: AdminService) { }
   adminVerificated = false;
   currentView = 'panel';
   ngOnInit(): void {

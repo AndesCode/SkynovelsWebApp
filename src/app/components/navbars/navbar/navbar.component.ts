@@ -1,12 +1,11 @@
 import { Component, OnInit, EventEmitter, ElementRef, TemplateRef, Renderer2, ViewChild, Directive } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../../services/users.service';
 import { AdminService } from '../../../services/admin.service';
-import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { HelperService } from '../../../services/helper.service';
 import { MatDialog } from '@angular/material/dialog';
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -40,8 +39,7 @@ export class NavbarComponent implements OnInit {
   // login
   registerCompleted = false;
 
-  constructor(public _auth: AuthService,
-              public _us: UsersService,
+  constructor(public _us: UsersService,
               public _as: AdminService,
               private router: Router,
               private _hs: HelperService,

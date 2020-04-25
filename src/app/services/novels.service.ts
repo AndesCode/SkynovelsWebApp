@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Novel } from '../models/novel';
+import { Volume } from '../models/volume';
 import { Chapter } from '../models/chapter';
 
 
@@ -43,16 +44,6 @@ export class NovelsService {
       return this.http.get( url );
     }
 
-    sendInvitation(invitation: any) {
-      const url = `${ this.urlnovelsdb }/create-user-invitation`;
-      return this.http.post(url, invitation, this.GlobalhttpOptions);
-    }
-
-    updateUserInvitation(invitation: any) {
-      const url = `${ this.urlnovelsdb }/update-user-invitation`;
-      return this.http.put(url , invitation, this.GlobalhttpOptions);
-    }
-
     createNovel(novel: Novel) {
       const url = `${ this.urlnovelsdb }/create-novel`;
       return this.http.post(url, novel, this.GlobalhttpOptions);
@@ -72,7 +63,7 @@ export class NovelsService {
       return this.http.put(url , novel, this.GlobalhttpOptions);
     }
 
-    deleteNovel(id: string) {
+    deleteNovel(id: number) {
       const url = `${ this.urlnovelsdb }/delete-novel/${id}`;
       return this.http.delete(url, this.GlobalhttpOptions);
     }
@@ -162,4 +153,24 @@ export class NovelsService {
       return this.http.get( url, {responseType: 'blob'});
     }
 
+    createNovelVolume(vlmTitle: string, nvlId: number) {
+      const volume: Volume = {
+        vlm_title: vlmTitle,
+        nvl_id: nvlId
+      };
+      console.log(volume);
+      const url = `${ this.urlnovelsdb }/create-novel-volume`;
+      return this.http.post(url, volume, this.GlobalhttpOptions);
+    }
+
+    updateNovelVolume(volume: Volume) {
+      console.log(volume);
+      const url = `${ this.urlnovelsdb }/update-novel-volume`;
+      return this.http.put(url , volume, this.GlobalhttpOptions);
+    }
+
+    deleteNovelVolume(id: number) {
+      const url = `${ this.urlnovelsdb }/delete-novel-volume/${id}`;
+      return this.http.delete(url, this.GlobalhttpOptions);
+    }
 }

@@ -100,6 +100,7 @@ blockquote {
     width: 30px!important;
     height: 30px!important;
     line-height: unset !important;
+    padding-left: 1px!important;
     .mat-button-wrapper {
         padding: 0px!important;
         line-height: unset!important;
@@ -116,6 +117,10 @@ blockquote {
 
 .mat-expansion-indicator::after {
     color: unset!important;
+}
+
+.mat-placeholder-required {
+    display: none!important;
 }
 
 .mat-snack-bar-container {
@@ -228,11 +233,39 @@ blockquote {
 }
 
 .skn-loading {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     justify-content: center;
     display: flex;
     align-items: center;
+}
+
+.skn-snack-success-notification {
+    width: 100%;
+    height: 100%;
+    background-color: #07ab07;
+    border-radius: 3px;
+    padding: 8px 10px;
+    display: flex;
+    color: black;
+    justify-content: space-between;
+    .skn-snack-notification-text {
+        margin: auto 0px;
+    }
+}
+
+.skn-snack-error-notification {
+    width: 100%;
+    height: 100%;
+    background-color: #dd2c00;
+    border-radius: 3px;
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    color: black;
+    .skn-snack-notification-text {
+        margin: auto 0px;
+    }
 }
 
 .skn-hide {

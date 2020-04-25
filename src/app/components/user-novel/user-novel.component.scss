@@ -7,7 +7,6 @@
         width: 290px;
         height: 412px;
         border-radius: 5px;
-        border: 1px solid;
         padding: 2px;
         margin-right: 15px;
         @include subtract-media(desktop) {
@@ -60,17 +59,4 @@
 .save-button {
     float: right;
     margin: 1rem;
-}
-
-.skn-snack-notification {
-    width: 100%;
-    height: 100%;
-    background-color: green;
-    border-radius: 5px;
-    padding: 8px 10px;
-    display: flex;
-    justify-content: space-between;
-    .skn-snack-notification-text {
-        margin: auto 0px;
-    }
 }

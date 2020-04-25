@@ -22,6 +22,9 @@ body[theme=dark] {
     .mat-select-panel {
         background-color: #242a31!important;
     }
+    .mat-input-element:disabled {
+        color: #626973!important;
+    }
     .mat-option-text {
         color: #626973!important;
     }
@@ -213,7 +216,7 @@ body[theme=dark] {
         color: #626973;
     }
     .material-icons.md-30 {
-        color:#DB3836;
+        color: #DB3836;
     }
 }
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
 import { ForumService } from '../../../services/forum.service';
 import { HelperService } from '../../../services/helper.service';
 import { UsersService } from '../../../services/users.service';
@@ -33,7 +32,6 @@ export class ForumCategoryComponent implements OnInit {
     constructor(
       private activatedRoute: ActivatedRoute,
       private router: Router,
-      public _auth: AuthService,
       private _fs: ForumService,
       private _hs: HelperService,
       public _us: UsersService,

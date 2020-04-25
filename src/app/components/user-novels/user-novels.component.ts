@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { AppService } from 'src/app/services/app.service';
 import { Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { HelperService } from '../../services/helper.service';
@@ -17,9 +15,7 @@ export class UserNovelsComponent implements OnInit {
   searchText: String;
   currentTab: any = 'novel';
 
-  constructor(public _auth: AuthService,
-              public _ns: AppService,
-              public _hs: HelperService,
+  constructor(public _hs: HelperService,
               private router: Router,
               private _us: UsersService) {}
 

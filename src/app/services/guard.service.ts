@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot } from '@angular/router';
 import { CanActivate } from '@angular/router';
-import { AppService } from './app.service';
 import { UsersService } from './users.service';
 import { AdminService } from './admin.service';
 
@@ -11,7 +10,6 @@ import { AdminService } from './admin.service';
 export class GuardService implements CanActivate {
 
   constructor(private _router: Router,
-              private _ns: AppService,
               private _us: UsersService,
               private _as: AdminService) { }
 
@@ -35,7 +33,7 @@ export class GuardService implements CanActivate {
       route.routeConfig.path === 'registrarse'
       ) {
       if (!this._us.userIsLoged()) {
-        this._ns.openExternalFunction('registerForm');
+        // this._ns.openExternalFunction('registerForm');
         this._router.navigate(['']);
         return true;
       } else {

@@ -1,3 +1,4 @@
+// tslint:disable: variable-name
 export interface Chapter {
     id: string;
     nvl_id: string;
