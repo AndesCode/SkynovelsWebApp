@@ -49,7 +49,7 @@
         <div class="skn-novel-edition-big-form">
             <div class="form-group w-100">
                 <label for="skn-novel-sinopsis">Contenido*</label>
-                <textarea class="form-control skn-text-area" id="skn-novel-sinopsis" rows="25" #chp_content="ngModel" name="chapter.chp_content" [(ngModel)]="chapter.chp_content" required minlength="15" maxlength="1500" [disabled]="!editableChapter" autocomplete="off"></textarea>
+                <textarea class="form-control skn-text-area" id="skn-novel-sinopsis" rows="25" #chp_content="ngModel" name="chapter.chp_content" [(ngModel)]="chapter.chp_content" required minlength="15" maxlength="65535" [disabled]="!editableChapter" autocomplete="off"></textarea>
             </div>
         </div>
         <div class="skn-novel-edition-big-form">
