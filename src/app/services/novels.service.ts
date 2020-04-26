@@ -78,6 +78,11 @@ export class NovelsService {
       return this.http.get(url);
     }
 
+    getNovelChapterEdition(id: number) {
+      const url = `${ this.urlnovelsdb }/novel-chapter-edition/${id}`;
+      return this.http.get(url);
+    }
+
     getNovelChapters(id: number) {
       const url = `${ this.urlnovelsdb }/novel-chapters/${id}`;
       return this.http.get(url);
@@ -88,7 +93,7 @@ export class NovelsService {
       return this.http.put(url , chapter, this.GlobalhttpOptions);
     }
 
-    deleteChapter(id: string) {
+    deleteChapter(id: number) {
       const url = `${ this.urlnovelsdb }/delete-chapter/${id}`;
       return this.http.delete(url, this.GlobalhttpOptions);
     }

@@ -8,7 +8,7 @@
                 <div class="skn-novel-edition-presentation-image">
                     <img src={{this.imgURL}} [ngStyle]="{height: editableNovel ? '90%' : '100%'}">
                     <input #file type="file" accept='image/*' (change)="fileChangeEvent($event)" hidden>
-                    <button mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()" *ngIf="editableNovel">Subir imagen</button>
+                    <button mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()" *ngIf="editableNovel">Subir imagen (.jpg)</button>
                 </div>
                 <div class="skn-novel-edition-main-form">
                     <mat-form-field class="skn-novel-edition-input-100">
@@ -30,7 +30,7 @@
                     </mat-form-field>
                     <mat-form-field class="skn-novel-edition-input-100">
                         <mat-label>Estado de publicación*</mat-label>
-                        <mat-select #nvl_status="ngModel" name="novel.nvl_status" [(ngModel)]="novel.nvl_status" [disabled]="!novel?.id || !editableNovel" required required minlength="6" maxlength="8">
+                        <mat-select #nvl_status="ngModel" name="novel.nvl_status" [(ngModel)]="novel.nvl_status" [disabled]="!novel?.id || !editableNovel" required minlength="6" maxlength="8">
                             <mat-option value="Disabled">Oculta</mat-option>
                             <mat-option value="Active">Publicada</mat-option>
                             <mat-option value="Finished" [disabled]="novel?.nvl_status !== 'Active'">Finalizada</mat-option>
@@ -62,129 +62,144 @@
                 </div>
             </div>
         </form>
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="editableNovel">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Colaboradores
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let collaborator of collaborators" style="margin-bottom: 4px;">
+        <div *ngIf="novel?.id">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="editableNovel">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        {{collaborator.user_login}}
+                        Colaboradores
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <button mat-raised-button color="warn" (click)="openDialogSheet(deleteCollaboratorModal)">Eliminar</button>
-                <ng-template #deleteCollaboratorModal>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Eliminar colaborador</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>¿Seguro que deseas eliminar al colaborador {{collaborator.user_login}}?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                        <button mat-raised-button color="warn" style="color: black;" (click)="dialog.closeAll()">Eliminar</button>
-                    </div>
-                </ng-template>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let collaborator of collaborators" style="margin-bottom: 4px;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{collaborator.user_login}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <button mat-raised-button color="warn" (click)="openDialogSheet(deleteCollaboratorModal)">Eliminar</button>
+                    <ng-template #deleteCollaboratorModal>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Eliminar colaborador</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Seguro que deseas eliminar al colaborador {{collaborator.user_login}}?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                            <button mat-raised-button color="warn" (click)="dialog.closeAll()">Eliminar</button>
+                        </div>
+                    </ng-template>
+                </mat-expansion-panel>
+                <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="openDialogSheet(addCollaboratorModal)">Añadir un colaborador</button>
             </mat-expansion-panel>
-            <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="openDialogSheet(addCollaboratorModal)">Añadir un colaborador</button>
-        </mat-expansion-panel>
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="!editableNovel">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Colaboradores
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-card class="mat-card-hover" style="margin-bottom: 4px;" *ngFor="let collaborator of collaborators">
-                <p>{{collaborator.user_login}}</p>
-            </mat-card>
-        </mat-expansion-panel>
-        <mat-card style="margin-top: 15px;">
-            <p>Capitulos*</p>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let volume of novel?.volumes" style="margin-bottom: 5px;">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="!editableNovel">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <h4>{{volume.vlm_title}}</h4>
+                        Colaboradores
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div *ngFor="let chapter of volume.chapters">
-                    <mat-card class="mat-card-hover" style="margin-bottom: 4px;">
-                        <p>{{chapter.chp_number}} - {{chapter.chp_index_title}}</p>
-                    </mat-card>
-                </div>
-                <div style="margin-top: 6px; display: flex; justify-content: space-between;">
-                    <div>
-                        <button mat-raised-button color="primary" style="margin-right: 4px;">Añadir capitulo</button>
+                <mat-card class="mat-card-hover" style="margin-bottom: 4px;" *ngFor="let collaborator of collaborators">
+                    <p>{{collaborator.user_login}}</p>
+                </mat-card>
+            </mat-expansion-panel>
+            <mat-card style="margin-top: 15px;">
+                <p>Capitulos*</p>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let volume of novel?.volumes" style="margin-bottom: 5px;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h4 style="margin: unset;">{{volume.vlm_title}}</h4>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div style="margin-bottom: 6px;" class="d-flex justify-content-between">
+                        <div>
+                            <button mat-raised-button color="primary" style="margin-right: 4px;" (click)="goToChapterEdition(true, volume)">Añadir capitulo</button>
+                        </div>
+                        <div>
+                            <button mat-mini-fab *ngIf="editableNovel || volume.user_id === user" [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
+                            <mat-menu #userMenu="matMenu">
+                                <button mat-menu-item (click)="openDialogSheet(editVolumeModal)">
+                                  <span>Editar</span>
+                                </button>
+                                <button mat-menu-item (click)="openDialogSheet(deleteVolumeModal)">
+                                  <span>Eliminar</span>
+                                </button>
+                            </mat-menu>
+                        </div>
                     </div>
-                    <div>
-                        <button mat-mini-fab *ngIf="editableNovel || volume.user_id === user" [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
-                        <mat-menu #userMenu="matMenu">
-                            <button mat-menu-item (click)="openDialogSheet(editVolumeModal)">
-                              <span>Editar</span>
-                            </button>
-                            <button mat-menu-item (click)="openDialogSheet(deleteVolumeModal)">
-                              <span>Eliminar</span>
-                            </button>
-                        </mat-menu>
+                    <div *ngFor="let chapter of volume.chapters">
+                        <mat-card class="mat-card-hover" style="margin-bottom: 4px;" (click)="goToChapterEdition(false, volume, chapter)">
+                            <p>{{chapter.chp_number}} - {{chapter.chp_index_title}}</p>
+                        </mat-card>
                     </div>
-                </div>
-                <ng-template #editVolumeModal>
+                    <ng-template #editVolumeModal>
+                        <div style="width: 85vw; max-width: 25em;"></div>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Editar volumen</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form #editVolumeForm="ngForm">
+                                <mat-form-field class="skn-novel-edition-input-100">
+                                    <mat-label>Titulo</mat-label>
+                                    <input matInput #vlm_title="ngModel" name="volume.vlm_title" [(ngModel)]="volume.vlm_title" required minlength="4" maxlength="65">
+                                </mat-form-field>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                            <button mat-raised-button color="primary" (click)="updateVolume(volume, editVolumeForm)" [disabled]="editVolumeForm.invalid || uploading">Guardar</button>
+                        </div>
+                    </ng-template>
+                    <ng-template #deleteVolumeModal>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Eliminar</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Seguro que deseas eliminar el {{volume.vlm_title}}?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                            <button mat-raised-button color="warn" (click)="deleteVolume(volume)" [disabled]="uploading">Eliminar</button>
+                        </div>
+                    </ng-template>
+                </mat-expansion-panel>
+                <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="openDialogSheet(addVolumeModal)">Añadir un volumen o libro</button>
+                <ng-template #addVolumeModal>
                     <div style="width: 85vw; max-width: 25em;"></div>
                     <div class="modal-header">
-                        <h4 class="modal-title">Editar volumen</h4>
+                        <h4 class="modal-title">Añadir un volumen o libro</h4>
                     </div>
                     <div class="modal-body">
-                        <form #editVolumeForm="ngForm">
+                        <form [formGroup]="volumeForm">
                             <mat-form-field class="skn-novel-edition-input-100">
                                 <mat-label>Titulo</mat-label>
-                                <input matInput #vlm_title="ngModel" name="volume.vlm_title" [(ngModel)]="volume.vlm_title" required minlength="4" maxlength="65">
+                                <input matInput formControlName="vlm_title">
                             </mat-form-field>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                        <button mat-raised-button color="primary" (click)="updateVolume(volume, editVolumeForm)" [disabled]="editVolumeForm.invalid || uploading">Guardar</button>
+                        <button mat-raised-button color="primary" (click)="createVolume()" [disabled]="volumeForm.invalid || uploading">Añadir</button>
                     </div>
                 </ng-template>
-                <ng-template #deleteVolumeModal>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Eliminar</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>¿Seguro que deseas eliminar el {{volume.vlm_title}}?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                        <button mat-raised-button color="warn" style="color: black;" (click)="deleteVolume(volume)" [disabled]="uploading">Eliminar</button>
-                    </div>
-                </ng-template>
-            </mat-expansion-panel>
-            <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="openDialogSheet(addVolumeModal)">Añadir un volumen o libro</button>
-            <ng-template #addVolumeModal>
-                <div style="width: 85vw; max-width: 25em;"></div>
-                <div class="modal-header">
-                    <h4 class="modal-title">Añadir un volumen o libro</h4>
-                </div>
-                <div class="modal-body">
-                    <form [formGroup]="volumeForm">
-                        <mat-form-field class="skn-novel-edition-input-100">
-                            <mat-label>Titulo</mat-label>
-                            <input matInput formControlName="vlm_title">
-                        </mat-form-field>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                    <button mat-raised-button color="primary" (click)="createVolume()" [disabled]="volumeForm.invalid || uploading">Añadir</button>
-                </div>
-            </ng-template>
-        </mat-card>
+            </mat-card>
+        </div>
         <div>
-            <button class="save-button" mat-raised-button color="primary" (click)="save(novelForm)" [disabled]="this.novelForm.invalid || !this.novelForm.dirty || uploading" *ngIf="editableNovel">Guardar cambios</button>
+            <button class="save-button" mat-raised-button color="primary" (click)="save(novelForm)" *ngIf="editableNovel" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">{{novel?.id ? 'Guardar cambios' : 'Crear novela'}}</button>
+            <button class="save-button" mat-raised-button color="warn" (click)="openDialogSheet(deletenovelModal)" *ngIf="editableNovel && novel.id">Eliminar novela</button>
         </div>
     </section>
 </main>
+<ng-template #deletenovelModal>
+    <div class="modal-header">
+        <h4 class="modal-title">Eliminar</h4>
+    </div>
+    <div class="modal-body">
+        <p>¿Seguro que deseas eliminar la novela?</p>
+    </div>
+    <div class="modal-footer">
+        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+        <button mat-raised-button color="warn" (click)="deleteNovel()" [disabled]="uploading">Eliminar</button>
+    </div>
+</ng-template>
 <ng-template #addCollaboratorModal>
     <div style="width: 85vw; max-width: 25em;"></div>
     <div class="modal-header">
@@ -200,7 +215,7 @@
     </div>
     <div class="modal-footer">
         <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cerrar</button>
-        <button mat-raised-button color="primary" style="color: black;" (click)="createUserInvitation()">Añadir</button>
+        <button mat-raised-button color="primary" (click)="createUserInvitation()">Añadir</button>
     </div>
 </ng-template>
 <ng-template #successSnack>

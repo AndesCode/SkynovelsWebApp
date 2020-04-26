@@ -69,7 +69,7 @@ export class NovelCardComponent implements OnChanges {
 
   goToNovel(novel) {
     if (this.clickRoute === 'userNovel') {
-      this.router.navigate(['/mi-novela/' , novel.id]);
+      this.router.navigate(['/mis-novelas/', novel.id, novel.nvl_name]);
     } else {
       this.router.navigate(['/novelas/' , novel.id, novel.nvl_name]);
     }

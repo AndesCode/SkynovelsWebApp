@@ -1,8 +1,7 @@
 // tslint:disable: variable-name
 export class Novel {
-
     id?: number;
-    nvl_author?: string;
+    nvl_author?: number;
     nvl_title?: string;
     nvl_acronym?: string;
     nvl_name?: string;
@@ -15,6 +14,7 @@ export class Novel {
     nvl_rating?: number;
     nvl_publication_date?: Date;
     nvl_chapters?: number;
+    chapters?: Array<any>;
     genres?: Array<any>;
     volumes?: Array<any>;
     bookmarks?: Array<any>;
@@ -22,5 +22,4 @@ export class Novel {
     author?: any;
     createdAt?: Date;
     updatedAt?: Date;
-
 }

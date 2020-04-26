@@ -67,8 +67,10 @@ const routes: Routes = [
   },
   // novel edition
   { path: 'mis-novelas', component: UserNovelsComponent, canActivate: [GuardService] },
-  { path: 'mi-novela/:id', component: UserNovelComponent, canActivate: [GuardService] },
-  { path: 'mi-novela/:nid/:ntitle/:cid/ctitle', component: UserChapterComponent, canActivate: [GuardService] },
+  { path: 'mis-novelas/:nid', component: UserNovelComponent, canActivate: [GuardService] },
+  { path: 'mis-novelas/:nid/:ntitle', component: UserNovelComponent, canActivate: [GuardService] },
+  { path: 'mis-novelas/:nid/:ntitle/:vid/:cid', component: UserChapterComponent, canActivate: [GuardService] },
+  { path: 'mis-novelas/:nid/:ntitle/:vid/:cid/:ctitle', component: UserChapterComponent, canActivate: [GuardService] },
   // forum
   { path: 'foro', component: ForumComponent },
   { path: 'foro/:category/:cid', component: ForumCategoryComponent },

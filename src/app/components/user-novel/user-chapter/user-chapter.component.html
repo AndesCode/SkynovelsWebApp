@@ -1,1 +1,96 @@
-<p>user-chapter works!</p>
+<div class="skn-loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</div>
+<main class="container" *ngIf="!loading">
+    <form #chapterForm="ngForm">
+        <mat-form-field class="w-100">
+            <mat-label>Titulo del capitulo*</mat-label>
+            <input matInput placeholder="Ej. El ascenso a un increible mundo" #chp_title="ngModel" name="chapter.chp_title" [(ngModel)]="chapter.chp_title" minlength="2" maxlength="25" [disabled]="!editableChapter" autocomplete="off">
+            <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+        </mat-form-field>
+        <div class="row skn-novel-edition-translators-form">
+            <mat-form-field>
+                <mat-label>Titulo indice del capitulo*</mat-label>
+                <input matInput placeholder="Ej. SKNW - Capitulo 1" #chp_index_title="ngModel" name="chapter.chp_index_title" [(ngModel)]="chapter.chp_index_title" minlength="2" maxlength="25" [disabled]="!editableChapter" autocomplete="off">
+                <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Numero de capitulo</mat-label>
+                <input matInput type="number" #chp_number="ngModel" name="chapter.chp_number" [(ngModel)]="chapter.chp_number" [disabled]="!editableChapter" required autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="row skn-novel-edition-translators-form">
+            <mat-form-field>
+                <mat-label>Volumen o libro*</mat-label>
+                <mat-select #vlm_id="ngModel" name="chapter.vlm_id" [(ngModel)]="chapter.vlm_id" [disabled]="!editableChapter" required autocomplete="off" (ngModelChange)="swichtVolume(vlm_id.value)">
+                    <mat-option *ngFor="let volume of novel.volumes" [value]="volume.id">{{volume.vlm_title}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Estado de publicación*</mat-label>
+                <mat-select #chp_status="ngModel" name="chapter.chp_status" [(ngModel)]="chapter.chp_status" [disabled]="!editableChapter" required minlength="6" maxlength="8" autocomplete="off">
+                    <mat-option value="Disabled">{{novel.nvl_status === 'Active' ? 'Oculto' : 'Inactivo'}}</mat-option>
+                    <mat-option value="Active">{{novel.nvl_status === 'Active' ? 'Publicado' : 'Activo'}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row skn-novel-edition-translators-form">
+            <mat-form-field>
+                <mat-label>Traductor*</mat-label>
+                <input matInput #chp_translator="ngModel" name="chapter.chp_translator" [(ngModel)]="chapter.chp_translator" minlength="2" maxlength="25" [disabled]="!editableChapter" autocomplete="off">
+                <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Traductor al ingles*</mat-label>
+                <input matInput #chp_translator_eng="ngModel" name="chapter.chp_translator_eng" [(ngModel)]="chapter.chp_translator_eng" minlength="2" maxlength="25" [disabled]="!editableChapter" autocomplete="off">
+                <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+            </mat-form-field>
+        </div>
+        <div class="skn-novel-edition-big-form">
+            <div class="form-group w-100">
+                <label for="skn-novel-sinopsis">Contenido*</label>
+                <textarea class="form-control skn-text-area" id="skn-novel-sinopsis" rows="25" #chp_content="ngModel" name="chapter.chp_content" [(ngModel)]="chapter.chp_content" required minlength="15" maxlength="1500" [disabled]="!editableChapter" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="skn-novel-edition-big-form">
+            <div class="form-group w-100">
+                <label for="skn-novel-sinopsis">Comentarios del traductor/escritor</label>
+                <textarea class="form-control skn-text-area" id="skn-novel-sinopsis" rows="7" #chp_contchp_reviewent="ngModel" name="chapter.chp_review" [(ngModel)]="chapter.chp_review" minlength="15" maxlength="1500" [disabled]="!editableChapter" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <button class="save-button" mat-raised-button color="primary" (click)="saveChapter(chapterForm)" *ngIf="editableChapter" [disabled]="uploading || chapterForm.invalid || !chapterForm.dirty">{{chapter?.id ? 'Guardar cambios' : 'Crear capitulo'}}</button>
+        <button class="save-button" mat-raised-button color="warn" (click)="openDialogSheet(deleteChapterModal)" *ngIf="editableChapter && chapter.id">Eliminar capitulo</button>
+    </form>
+</main>
+<ng-template #deleteChapterModal>
+    <div class="modal-header">
+        <h4 class="modal-title">Eliminar</h4>
+    </div>
+    <div class="modal-body">
+        <p>¿Seguro que deseas eliminar el capitulo?</p>
+    </div>
+    <div class="modal-footer">
+        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+        <button mat-raised-button color="warn" (click)="deleteChapter()" [disabled]="uploading">Eliminar</button>
+    </div>
+</ng-template>
+<ng-template #successSnack>
+    <div class="skn-snack-success-notification">
+        <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #errorSnack>
+    <div class="skn-snack-error-notification">
+        <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>
