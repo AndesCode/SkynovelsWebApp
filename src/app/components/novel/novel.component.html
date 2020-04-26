@@ -115,7 +115,7 @@
                 <p [innerHTML]="novel.nvl_content"></p>
             </div>
             <div class="skn-nvl-info" *ngIf="currentTab === 'content'">
-                <p><strong>Ultimo capitulo: </strong><a class="skn-link">{{novel.nvl_last_chapter.chp_index_title}}</a><small> {{novel.nvl_last_chapter.date_data.message}}</small></p>
+                <p><strong>Ultimo capitulo: </strong><a class="skn-link">{{novel.nvl_last_chapter?.chp_index_title}}</a><small> {{novel.nvl_last_chapter?.date_data.message}}</small></p>
                 <hr>
                 <div *ngFor="let volume of novel.volumes">
                     <h5>{{volume.vlm_title}}</h5>
