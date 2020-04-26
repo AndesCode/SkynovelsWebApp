@@ -3,6 +3,9 @@
 </div>
 <main class="container" *ngIf="!loading">
     <form #chapterForm="ngForm">
+        <div class="w-100" style="margin: 2rem 0px;">
+            <button mat-raised-button color="primary" (click)="goBackToNovel(chapterForm)"><span class="material-icons">keyboard_return</span>Regresar</button>
+        </div>
         <mat-form-field class="w-100">
             <mat-label>Titulo del capitulo*</mat-label>
             <input matInput placeholder="Ej. El ascenso a un increible mundo" #chp_title="ngModel" name="chapter.chp_title" [(ngModel)]="chapter.chp_title" minlength="2" maxlength="25" [disabled]="!editableChapter" autocomplete="off">
@@ -58,9 +61,12 @@
                 <textarea class="form-control skn-text-area" id="skn-novel-sinopsis" rows="7" #chp_contchp_reviewent="ngModel" name="chapter.chp_review" [(ngModel)]="chapter.chp_review" minlength="15" maxlength="1500" [disabled]="!editableChapter" autocomplete="off"></textarea>
             </div>
         </div>
-        <button class="save-button" mat-raised-button color="primary" (click)="saveChapter(chapterForm)" *ngIf="editableChapter" [disabled]="uploading || chapterForm.invalid || !chapterForm.dirty">{{chapter?.id ? 'Guardar cambios' : 'Crear capitulo'}}</button>
-        <button class="save-button" mat-raised-button color="warn" (click)="openDialogSheet(deleteChapterModal)" *ngIf="editableChapter && chapter.id">Eliminar capitulo</button>
+        <button mat-raised-button color="primary" (click)="saveChapter(chapterForm)" *ngIf="editableChapter" [disabled]="uploading || chapterForm.invalid || !chapterForm.dirty">{{chapter?.id ? 'Guardar cambios' : 'Crear capitulo'}}</button>
+        <button mat-raised-button color="warn" (click)="openDialogSheet(deleteChapterModal)" *ngIf="editableChapter && chapter.id">Eliminar capitulo</button>
     </form>
+    <div>
+        <ckeditor [editor]="Editor"></ckeditor>
+    </div>
 </main>
 <ng-template #deleteChapterModal>
     <div class="modal-header">
@@ -72,6 +78,18 @@
     <div class="modal-footer">
         <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
         <button mat-raised-button color="warn" (click)="deleteChapter()" [disabled]="uploading">Eliminar</button>
+    </div>
+</ng-template>
+<ng-template #confirmExitComponentModal>
+    <div class="modal-header">
+        <h4 class="modal-title">Salir</h4>
+    </div>
+    <div class="modal-body">
+        <p>Tienes cambios sin guardar ¿Seguro que deseas salir?</p>
+    </div>
+    <div class="modal-footer">
+        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+        <button mat-raised-button color="primary" (click)="goBackToNovel(null, true); dialog.closeAll()">Regresar</button>
     </div>
 </ng-template>
 <ng-template #successSnack>

@@ -55,9 +55,24 @@ button:hover {
     outline: none !important;
 }
 
+.ck-focused {
+    border-color: #d32f2f!important;
+}
+
 .ck-editor__main {
     border: none !important;
     outline: none !important;
+}
+
+.ck-editor__editable_inline {
+    blockquote {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #d5d5d5 !important;
+        border-left: 2px solid #dc3545 !important;
+    }
+    overflow: auto;
+    height: 150px;
 }
 
 .mat-raised-button {
@@ -70,13 +85,6 @@ mat-menu {
 
 .mat-tab-body-wrapper {
     width: 100%;
-}
-
-blockquote {
-    margin-bottom: 10px !important;
-    padding: 10px !important;
-    background-color: #d5d5d5 !important;
-    border-left: 2px solid #dc3545 !important;
 }
 
 .skn-circle-buttons {
@@ -168,17 +176,6 @@ blockquote {
         width: 100%;
         margin-bottom: 15px;
     }
-}
-
-.ck-editor__editable_inline {
-    blockquote {
-        margin-bottom: 10px;
-        padding: 10px;
-        background-color: #d5d5d5 !important;
-        border-left: 2px solid #dc3545 !important;
-    }
-    overflow: auto;
-    height: 150px;
 }
 
 

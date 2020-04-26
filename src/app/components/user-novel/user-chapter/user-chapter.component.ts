@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-user-chapter',
@@ -17,8 +18,10 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class UserChapterComponent implements OnInit {
 
+  public Editor = ClassicEditor;
   @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
   @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
+  @ViewChild('confirmExitComponentModal') confirmExitComponentModalref: TemplateRef<any>;
   public successSnackMessage: string;
   public errorSnackMessage: string;
   user: number = null;
@@ -141,17 +144,19 @@ export class UserChapterComponent implements OnInit {
           console.log('creando caputlo');
           console.log(resp);
           this.chapter.id = resp.chapter.id;
-          this.chapter.chp_name = resp.chapter.chp_name;
           this.volume.chapters.push(this.chapter);
           this.openMatSnackBar(this.successSnackRef);
           this.successSnackMessage = '¡Capitulo creado!';
-          this.location.replaceState('/mis-novelas/' + this.novel.id + '/' +
-          this.novel.nvl_name + '/' + this.volume.id + '/' + this.chapter.id + '/' + this.chapter.chp_name);
           console.log(this.chapter);
       } else {
         this.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Cambios guardados!';
       }
+      this.chapter.chp_title = resp.chapter.chp_title;
+      this.chapter.chp_name = resp.chapter.chp_name;
+      this.chapter.chp_index_title = resp.chapter.chp_index_title;
+      this.location.replaceState('/mis-novelas/' + this.novel.id + '/' +
+      this.novel.nvl_name + '/' + this.volume.id + '/' + this.chapter.id + '/' + this.chapter.chp_name);
       chapterForm.form.markAsPristine();
       this.uploading = false;
     }, error => {
@@ -173,6 +178,15 @@ export class UserChapterComponent implements OnInit {
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'No autorizado';
       return;
+    }
+  }
+
+  goBackToNovel(chapterForm?: NgForm, confirmed?: boolean) {
+    console.log(chapterForm?.dirty);
+    if (chapterForm?.dirty && !confirmed) {
+      this.dialog.open(this.confirmExitComponentModalref);
+    } else {
+      this.router.navigate(['mis-novelas', this.novel.id, this.novel.nvl_name]);
     }
   }
 }

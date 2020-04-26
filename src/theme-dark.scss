@@ -1,4 +1,7 @@
 body[theme=dark] {
+     ::placeholder {
+        color: #6269736b!important;
+    }
     // Angular material styles
     .mat-bottom-sheet-container {
         background-color: #1E2228!important;
@@ -66,6 +69,23 @@ body[theme=dark] {
     }
     .mat-form-field-label {
         color: #626973;
+    }
+    // Ck Editor
+    .ck-button {
+        color: #626973!important;
+    }
+    .ck-toolbar,
+    .ck-toolbar__items,
+    .ck-content {
+        border-color: #585e67!important;
+        background-color: #1b1f25!important;
+    }
+    .ck-toolbar__separator {
+        background-color: #585e67!important;
+        border-color: #585e67!important;
+    }
+    .ck-content.ck-focused {
+        border-color: #d32f2f!important;
     }
     // Skynovels styles
     .regular-wrapper {
@@ -189,6 +209,12 @@ body[theme=dark] {
     }
     strong {
         color: #626973;
+    }
+    blockquote {
+        margin-bottom: 10px !important;
+        padding: 10px !important;
+        background-color: #1E2228!important;
+        border-left: 2px solid #d32f2f!important;
     }
     hr {
         background-color: #626973;

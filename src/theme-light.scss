@@ -95,4 +95,10 @@ body[theme=light] {
     .hide-dark {
         display: none;
     }
+    blockquote {
+        margin-bottom: 10px !important;
+        padding: 10px !important;
+        background-color: #d5d5d5 !important;
+        border-left: 2px solid #d32f2f!important;
+    }
 }
