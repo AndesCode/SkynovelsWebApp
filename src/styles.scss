@@ -79,7 +79,14 @@ button:hover {
 
 .skn-ck-editor-chapter-content {
     .ck-editor__editable_inline {
-        min-height: 650px!important;
+        min-height: 40rem !important;
+        height: unset!important;
+    }
+}
+
+.skn-ck-editor-novel-content {
+    .ck-editor__editable_inline {
+        min-height: 25rem !important;
         height: unset!important;
     }
 }

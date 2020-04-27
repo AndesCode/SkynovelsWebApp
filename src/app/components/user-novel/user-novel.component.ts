@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { UsersService } from '../../services/users.service';
 import { Volume } from 'src/app/models/volume';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 
@@ -27,8 +28,9 @@ export class UserNovelComponent implements OnInit {
 
 
 
-  inviteUserName: any = {
-    user_login: ''
+  public Editor = ClassicEditor;
+  public ckEditorConfig = {
+    toolbar: [ 'heading', '|', 'bold', 'italic' ]
   };
   @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
   @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
@@ -41,8 +43,6 @@ export class UserNovelComponent implements OnInit {
   public message: string;
   novelStatusEditable = false;
   collaborators: any[] = [];
-  AlertMessage = null;
-  alertStatus = null;
   loading = true;
   novel: Novel;
   editableNovel = false;
@@ -213,39 +213,6 @@ export class UserNovelComponent implements OnInit {
     }
   }
 
-  /*saveChapter(chaperForm: NgForm) {
-    if ( form.invalid ) {
-      console.log('Formulario no válido');
-      return;
-    }
-    // this.uploading = true;
-    console.log(chaperForm);
-    let request: Observable<any>;
-    if ( this.chapter.id !== '' ) {
-      request = this.ns.updateChapter(this.chapter);
-    } else {
-      request = this.ns.createChapter(this.chapter);
-    }
-    request.subscribe( resp => {
-      console.log(resp);
-      this.location.go('/mi-novela/' + this.novel.nvl_name + '/editar-capitulo/' + resp.chapter.id);
-      this.chapterFormRef.reset(this.chapterFormRef.value);
-      this.chapter.chp_title = resp.chapter.chp_title;
-      if (this.chapter.id === ''
-        || this.chapter.id === undefined
-        || this.chapter.id === null) {
-          this.chapter.id = resp.chapter.id;
-          this.chapter.chp_author = resp.chapter.chp_author;
-          this.novel.chapters.push(this.chapter);
-      }
-      //this.evaluateEditableNovelStatus();
-      // this.refreshChapterList();
-      // this.uploading = false;
-    }, error => {
-      console.log(error);
-    });
-  }*/
-
   /*evaluateEditableNovelStatus() {
     const chapter_status = this.novel.chapters.map(
       chapterStatus => chapterStatus.chp_status);
@@ -253,55 +220,6 @@ export class UserNovelComponent implements OnInit {
       this.novelStatusEditable = true;
     } else {
       this.hideNovelFormPublic();
-    }
-  }*/
-
-  /*deleteChapter() {
-      this.ns.deleteChapter(this.chapter.id).subscribe((data: any) => {
-        this.novel.chapters.splice(this.novel.chapters.findIndex(chapter => chapter.id === data.chapter.id), 1);
-        this.goToNovelEdition(true);
-      }, error => {
-        console.log(error);
-        // this.uploading = false;
-      });
-  }*/
-
-  /*goToNovelEdition(confirmed: boolean) {
-    if ((this.chapterFormRef.dirty) && !confirmed) {
-      this.openSm(this.unsavedChapterModalRef);
-    } else {
-      this.chapterFormRef.reset(this.chapterFormRef.value);
-      this.chapterEdition = false;
-      this.location.go('/mi-novela/' + this.novel.nvl_name);
-      return;
-    }
-  }*/
-
-  /*goToChapterEdition(chapter_id: any) {
-    if (chapter_id !== 'nuevo') {
-      this.chapter = this.novel.chapters.find(x => x.id === Number(chapter_id));
-      if (this.chapter) {
-        console.log(this.chapter);
-        this.chapterEdition = true;
-        this.location.go('/mi-novela/' + this.novel.nvl_name + '/editar-capitulo/' + this.chapter.id);
-      } else {
-        console.log ('cap no valido');
-        this.location.go('/mi-novela/' + this.novel.nvl_name);
-        console.log(this.chapter);
-      }
-    } else {
-      this.chapter = {
-        id: '',
-        nvl_id: this.novel.id,
-        chp_number: this.novel.chapters.length + 1,
-        chp_author: '',
-        chp_title: '',
-        chp_content: '',
-        chp_review: '',
-        chp_status: 'Oculto'
-      };
-      this.location.go('/mi-novela/' + this.novel.nvl_name + '/editar-capitulo/nuevo');
-      this.chapterEdition = true;
     }
   }*/
 

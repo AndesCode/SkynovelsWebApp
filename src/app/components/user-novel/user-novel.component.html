@@ -58,7 +58,9 @@
             <div class="skn-novel-edition-big-form">
                 <div class="form-group skn-novel-edition-input-100">
                     <label for="skn-novel-sinopsis">Sinopsis*</label>
-                    <textarea class="form-control skn-text-area" id="skn-novel-sinopsis" rows="15" #nvl_content="ngModel" name="novel.nvl_content" [(ngModel)]="novel.nvl_content" required minlength="15" maxlength="1500" [disabled]="!editableNovel"></textarea>
+                    <ckeditor id="skn-novel-sinopsis" #nvl_content="ngModel" [(ngModel)]="novel.nvl_content" data="{{novel.nvl_content}}" name="novel.nvl_content" [config]="ckEditorConfig" [editor]="Editor" class="skn-ck-editor-novel-content" [disabled]="!editableNovel"
+                        required minlength="15" maxlength="1500" autocomplete="off">
+                    </ckeditor>
                 </div>
             </div>
         </form>
