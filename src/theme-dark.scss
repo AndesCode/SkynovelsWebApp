@@ -74,6 +74,20 @@ body[theme=dark] {
     .ck-button {
         color: #626973!important;
     }
+    .ck-button:hover:not(.ck-on) {
+        background-color: #1E2228!important;
+    }
+    .ck-button.ck-on {
+        background-color: #49525f !important;
+        color: black!important;
+    }
+    .ck-reset {
+        background-color: #1E2228!important;
+        border-color: #585e67!important;
+    }
+    .ck-list__item:hover {
+        background-color: #242a31!important;
+    }
     .ck-toolbar,
     .ck-toolbar__items,
     .ck-content {

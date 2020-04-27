@@ -59,9 +59,29 @@ button:hover {
     border-color: #d32f2f!important;
 }
 
+.ck-button {
+    border-style: none!important;
+    box-shadow: unset!important;
+}
+
+.ck-toolbar {
+    border-radius: 4px 4px 0px 0px!important;
+}
+
+.ck-content {
+    border-radius: 0px 0px 4px 4px!important;
+}
+
 .ck-editor__main {
     border: none !important;
     outline: none !important;
+}
+
+.skn-ck-editor-chapter-content {
+    .ck-editor__editable_inline {
+        min-height: 650px!important;
+        height: unset!important;
+    }
 }
 
 .ck-editor__editable_inline {
@@ -77,6 +97,7 @@ button:hover {
 
 .mat-raised-button {
     color: black!important;
+    padding: 0 12px!important;
 }
 
 mat-menu {

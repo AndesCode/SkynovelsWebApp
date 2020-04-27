@@ -182,9 +182,9 @@
                 </ng-template>
             </mat-card>
         </div>
-        <div>
-            <button class="save-button" mat-raised-button color="primary" (click)="save(novelForm)" *ngIf="editableNovel" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">{{novel?.id ? 'Guardar cambios' : 'Crear novela'}}</button>
-            <button class="save-button" mat-raised-button color="warn" (click)="openDialogSheet(deletenovelModal)" *ngIf="editableNovel && novel.id">Eliminar novela</button>
+        <div class="d-flex justify-content-end" style="margin-top: 15px;">
+            <button mat-raised-button color="warn" style="margin-right: 5px;" (click)="openDialogSheet(deletenovelModal)" *ngIf="editableNovel && novel.id">Eliminar novela</button>
+            <button mat-raised-button color="primary" (click)="save(novelForm)" *ngIf="editableNovel" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">{{novel?.id ? 'Guardar cambios' : 'Crear novela'}}</button>
         </div>
     </section>
 </main>

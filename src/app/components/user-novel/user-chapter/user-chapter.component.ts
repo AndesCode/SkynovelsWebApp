@@ -19,6 +19,9 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export class UserChapterComponent implements OnInit {
 
   public Editor = ClassicEditor;
+  public ckEditorConfig = {
+    toolbar: [ 'heading', '|', 'bold', 'italic' ]
+  };
   @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
   @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
   @ViewChild('confirmExitComponentModal') confirmExitComponentModalref: TemplateRef<any>;

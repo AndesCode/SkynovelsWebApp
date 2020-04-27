@@ -51,22 +51,24 @@
         </div>
         <div class="skn-novel-edition-big-form">
             <div class="form-group w-100">
-                <label for="skn-novel-sinopsis">Contenido*</label>
-                <textarea class="form-control skn-text-area" id="skn-novel-sinopsis" rows="25" #chp_content="ngModel" name="chapter.chp_content" [(ngModel)]="chapter.chp_content" required minlength="15" maxlength="65535" [disabled]="!editableChapter" autocomplete="off"></textarea>
+                <label>Contenido*</label>
+                <ckeditor #chp_content="ngModel" [(ngModel)]="chapter.chp_content" data="{{chapter.chp_content}}" name="chapter.chp_content" [config]="ckEditorConfig" [editor]="Editor" class="skn-ck-editor-chapter-content" [disabled]="!editableChapter" required minlength="15"
+                    maxlength="65535" autocomplete="off">
+                </ckeditor>
             </div>
         </div>
         <div class="skn-novel-edition-big-form">
             <div class="form-group w-100">
-                <label for="skn-novel-sinopsis">Comentarios del traductor/escritor</label>
-                <textarea class="form-control skn-text-area" id="skn-novel-sinopsis" rows="7" #chp_contchp_reviewent="ngModel" name="chapter.chp_review" [(ngModel)]="chapter.chp_review" minlength="15" maxlength="1500" [disabled]="!editableChapter" autocomplete="off"></textarea>
+                <label>Comentarios del traductor/escritor</label>
+                <ckeditor #chp_review="ngModel" [(ngModel)]="chapter.chp_review" data="{{chapter.chp_review}}" name="chapter.chp_review" [config]="ckEditorConfig" [editor]="Editor" [disabled]="!editableChapter" minlength="15" maxlength="1500" autocomplete="off">
+                </ckeditor>
             </div>
         </div>
-        <button mat-raised-button color="primary" (click)="saveChapter(chapterForm)" *ngIf="editableChapter" [disabled]="uploading || chapterForm.invalid || !chapterForm.dirty">{{chapter?.id ? 'Guardar cambios' : 'Crear capitulo'}}</button>
-        <button mat-raised-button color="warn" (click)="openDialogSheet(deleteChapterModal)" *ngIf="editableChapter && chapter.id">Eliminar capitulo</button>
+        <div class="d-flex justify-content-end">
+            <button mat-raised-button color="warn" style="margin-right: 15px;" (click)="openDialogSheet(deleteChapterModal)" *ngIf="editableChapter && chapter.id">Eliminar capitulo</button>
+            <button mat-raised-button color="primary" (click)="saveChapter(chapterForm)" *ngIf="editableChapter" [disabled]="uploading || chapterForm.invalid || !chapterForm.dirty">{{chapter?.id ? 'Guardar cambios' : 'Crear capitulo'}}</button>
+        </div>
     </form>
-    <div>
-        <ckeditor [editor]="Editor"></ckeditor>
-    </div>
 </main>
 <ng-template #deleteChapterModal>
     <div class="modal-header">
