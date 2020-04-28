@@ -23,3 +23,16 @@ export class Novel {
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+export class NovelFilter {
+    searchName: string;
+    searchStatus: 'All'| 'Activa' | 'Inactiva' | 'Finalizada';
+    searchGenres: Array<any>;
+}
+
+export class Genre {
+    id?: number;
+    genre_name?: string;
+}
+
+

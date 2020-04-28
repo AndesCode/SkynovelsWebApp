@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Invitation } from 'src/app/models/invitation';
-import { Novel } from 'src/app/models/novel';
+import { Novel } from '../models/models';
 import { User } from 'src/app/models/user';
 
 @Injectable({

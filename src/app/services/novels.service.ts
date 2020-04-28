@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Novel } from '../models/novel';
+import { Novel } from '../models/models';
 import { Volume } from '../models/volume';
 import { Chapter } from '../models/chapter';
 

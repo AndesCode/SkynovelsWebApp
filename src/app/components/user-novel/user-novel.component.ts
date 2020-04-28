@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { Novel } from 'src/app/models/novel';
-import { Chapter } from 'src/app/models/chapter';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { NovelsService } from '../../services/novels.service';
@@ -13,6 +11,9 @@ import { Location } from '@angular/common';
 import { UsersService } from '../../services/users.service';
 import { Volume } from 'src/app/models/volume';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { User } from 'src/app/models/user';
+import { Novel, Genre } from 'src/app/models/models';
+import { Chapter } from 'src/app/models/chapter';
 
 
 
@@ -42,13 +43,13 @@ export class UserNovelComponent implements OnInit {
   public imgURL: any  = '../../../assets/img/noimage.jpg';
   public message: string;
   novelStatusEditable = false;
-  collaborators: any[] = [];
+  collaborators: Array<User> = [];
   loading = true;
   novel: Novel;
   editableNovel = false;
   panelOpenState = false;
   user: number = null;
-  genres: any = [];
+  genres: Array<Genre> = [];
   uploading = false;
   chapterEdition = false;
   collaboratorForm: FormGroup;
@@ -88,10 +89,10 @@ export class UserNovelComponent implements OnInit {
     // cargamos los generos existentes en Skynovels
     this.ns.getGenres().subscribe((data: any) => {
       this.genres = data.genres;
-      for (const genre of this.genres) {
+     /* for (const genre of this.genres) {
         // agregamos a cada genero un atributo check inicializado en falso que controlara el estado del checkbox
         genre.selected = false;
-      }
+      }*/
     });
     if (nid !== 'nuevo') {
       this.ns.getNovel(Number(nid), 'edition').subscribe((novelData: any) => {

@@ -4,7 +4,8 @@ import { NovelsService } from '../../services/novels.service';
 import { UsersService } from '../../services/users.service';
 import { HelperService } from '../../services/helper.service';
 import { Location } from '@angular/common';
-import { BreakpointObserver,BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { Genre, NovelFilter } from 'src/app/models/models';
 
 @Component({
   selector: 'app-novels',
@@ -16,11 +17,12 @@ export class NovelsComponent implements OnInit {
   novels: any;
   bookmarks = false;
   user_reading_list: any[] = [];
-  novelFilter = {
+  novelFilter: NovelFilter = {
     searchName: '',
+    searchStatus: 'All',
     searchGenres: []
   };
-  genres: any[] = [];
+  genres: Array<Genre> = [];
   smallScreen = false;
   mobile: boolean;
 
@@ -62,16 +64,6 @@ export class NovelsComponent implements OnInit {
     this._ns.getGenres().subscribe((genres: any) => {
       this.genres = genres.genres;
     });
-  }
-
-  getGenresFilterArray() {
-    this.novelFilter.searchGenres = [];
-    for (let i = 0; i < this.genres.length; i++) {
-      if (this.genres[i].check === true) {
-        this.novelFilter.searchGenres.push(this.genres[i].id);
-      }
-    }
-    console.log(this.novelFilter);
   }
 
   goToLastChapter(novelName: any, chpNmber: number) {

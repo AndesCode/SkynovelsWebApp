@@ -8,7 +8,7 @@
         <app-mobile-navbar style="position: absolute;"></app-mobile-navbar>
         <router-outlet (activate)='onActivate($event)'></router-outlet>
     </div>
-    <app-footer></app-footer>
+    <app-footer *ngIf="currentComponent !== 'ChaptersComponent'"></app-footer>
 </body>
 
 </html>

@@ -4,22 +4,22 @@
 <main class="container" *ngIf="!loading">
     <form #chapterForm="ngForm">
         <div class="w-100" style="margin: 2rem 0px;">
-            <button mat-raised-button color="primary" (click)="goBackToNovel(chapterForm)"><span class="material-icons">keyboard_return</span>Regresar</button>
+            <button type="button" mat-raised-button color="primary" (click)="goBackToNovel(chapterForm)"><span class="material-icons">keyboard_return</span>Regresar</button>
         </div>
         <mat-form-field class="w-100">
             <mat-label>Titulo del capitulo*</mat-label>
-            <input matInput placeholder="Ej. El ascenso a un increible mundo" #chp_title="ngModel" name="chapter.chp_title" [(ngModel)]="chapter.chp_title" minlength="2" maxlength="25" [disabled]="!editableChapter" autocomplete="off">
+            <input matInput placeholder="Ej. El ascenso a un increible mundo" #chp_title="ngModel" name="chapter.chp_title" [(ngModel)]="chapter.chp_title" minlength="2" maxlength="60" [disabled]="!editableChapter" autocomplete="off">
             <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
         </mat-form-field>
         <div class="row skn-novel-edition-translators-form">
             <mat-form-field>
                 <mat-label>Titulo indice del capitulo*</mat-label>
-                <input matInput placeholder="Ej. SKNW - Capitulo 1" #chp_index_title="ngModel" name="chapter.chp_index_title" [(ngModel)]="chapter.chp_index_title" minlength="2" maxlength="25" [disabled]="!editableChapter" autocomplete="off">
+                <input matInput placeholder="Ej. SKNW - Capitulo 1" #chp_index_title="ngModel" name="chapter.chp_index_title" [(ngModel)]="chapter.chp_index_title" minlength="2" maxlength="30" [disabled]="!editableChapter" autocomplete="off">
                 <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Numero de capitulo</mat-label>
-                <input matInput type="number" #chp_number="ngModel" name="chapter.chp_number" [(ngModel)]="chapter.chp_number" [disabled]="!editableChapter" required autocomplete="off">
+                <input matInput type="number" #chp_number="ngModel" name="chapter.chp_number" [(ngModel)]="chapter.chp_number" [disabled]="!editableChapter" required autocomplete="off" min="0">
             </mat-form-field>
         </div>
         <div class="row skn-novel-edition-translators-form">
@@ -65,8 +65,8 @@
             </div>
         </div>
         <div class="d-flex justify-content-end">
-            <button mat-raised-button color="warn" style="margin-right: 15px;" (click)="openDialogSheet(deleteChapterModal)" *ngIf="editableChapter && chapter.id">Eliminar capitulo</button>
-            <button mat-raised-button color="primary" (click)="saveChapter(chapterForm)" *ngIf="editableChapter" [disabled]="uploading || chapterForm.invalid || !chapterForm.dirty">{{chapter?.id ? 'Guardar cambios' : 'Crear capitulo'}}</button>
+            <button type="button" mat-raised-button color="warn" style="margin-right: 15px;" (click)="openDialogSheet(deleteChapterModal)" *ngIf="editableChapter && chapter.id">Eliminar capitulo</button>
+            <button type="submit" mat-raised-button color="primary" (click)="saveChapter(chapterForm)" *ngIf="editableChapter" [disabled]="uploading || chapterForm.invalid || !chapterForm.dirty">{{chapter?.id ? 'Guardar cambios' : 'Crear capitulo'}}</button>
         </div>
     </form>
 </main>

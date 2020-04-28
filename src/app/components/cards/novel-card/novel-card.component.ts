@@ -2,6 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { HelperService } from '../../../services/helper.service';
 import { NovelsService } from '../../../services/novels.service';
 import { Router } from '@angular/router';
+import { NovelFilter } from 'src/app/models/models';
 
 @Component({
   selector: 'app-novel-card',
@@ -12,10 +13,7 @@ export class NovelCardComponent implements OnChanges {
 
   @Input() novels: any[] = [];
   @Input() clickRoute = '';
-  @Input() novelFilter = {
-    searchName: '',
-    searchGenres: []
-  };
+  @Input() novelFilter = new NovelFilter();
 
   constructor(public hs: HelperService,
               private ns: NovelsService,

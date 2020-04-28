@@ -8,7 +8,7 @@
                 <div class="skn-novel-edition-presentation-image">
                     <img src={{this.imgURL}} [ngStyle]="{height: editableNovel ? '90%' : '100%'}">
                     <input #file type="file" accept='image/*' (change)="fileChangeEvent($event)" hidden>
-                    <button mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()" *ngIf="editableNovel">Subir imagen (.jpg)</button>
+                    <button type="button" mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()" *ngIf="editableNovel">Subir imagen (.jpg)</button>
                 </div>
                 <div class="skn-novel-edition-main-form">
                     <mat-form-field class="skn-novel-edition-input-100">
@@ -185,8 +185,8 @@
             </mat-card>
         </div>
         <div class="d-flex justify-content-end" style="margin-top: 15px;">
-            <button mat-raised-button color="warn" style="margin-right: 5px;" (click)="openDialogSheet(deletenovelModal)" *ngIf="editableNovel && novel.id">Eliminar novela</button>
-            <button mat-raised-button color="primary" (click)="save(novelForm)" *ngIf="editableNovel" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">{{novel?.id ? 'Guardar cambios' : 'Crear novela'}}</button>
+            <button type="button" mat-raised-button color="warn" style="margin-right: 5px;" (click)="openDialogSheet(deletenovelModal)" *ngIf="editableNovel && novel.id">Eliminar novela</button>
+            <button type="submit" mat-raised-button color="primary" (click)="save(novelForm)" *ngIf="editableNovel" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">{{novel?.id ? 'Guardar cambios' : 'Crear novela'}}</button>
         </div>
     </section>
 </main>

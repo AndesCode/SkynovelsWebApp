@@ -1,12 +1,13 @@
 // tslint:disable: variable-name
 export class User {
-    id?: string;
+    id?: number;
+    user_id?: number;
     user_login?: string;
     user_pass?: string;
     user_email?: string;
     user_rol?: string;
-    user_status?: string;
-    user_forum_auth?: string;
+    user_status?: 'Active' | 'Disabled';
+    user_forum_auth?: 'Active' | 'Disabled';
     user_description?: string;
     user_profile_image?: string;
     createdAt?: Date;

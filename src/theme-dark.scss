@@ -61,6 +61,19 @@ body[theme=dark] {
         color: #626973!important;
         background-color: #2b323a!important;
     }
+    .mat-button-toggle-group {
+        background-color: #1E2228!important;
+    }
+    .mat-button-toggle {
+        border-color: #626973!important;
+        background-color: #242a31!important;
+    }
+    .mat-button-toggle.mat-button-toggle-checked {
+        background-color: #1e2228!important;
+    }
+    .mat-button-toggle-button {
+        color: #626973!important;
+    }
     .mat-pseudo-checkbox {
         color: #626973;
     }

@@ -212,8 +212,10 @@ section {
         margin: 5px;
         cursor: pointer;
         .skn-nvl-chp-element-chp-number-index {
-            min-width: 30px;
+            min-width: 5px;
+            -webkit-text-decoration: solid;
             text-decoration: solid;
+            margin-right: 15px;
         }
     }
     .skn-nvl-chp-element:hover {
