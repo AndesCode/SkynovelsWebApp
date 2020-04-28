@@ -206,6 +206,10 @@ mat-menu {
     }
 }
 
+.mat-tab-label-content {
+    user-select: none;
+}
+
 
 /*.my-pagination /deep/ .ngx-pagination {
     margin-left: -40px;
@@ -359,7 +363,7 @@ h1 {
     font-weight: 600!important;
 }
 
-// Material Icons
+// Material Icons Sizes
 .material-icons.md-18 {
     font-size: 18px;
 }
