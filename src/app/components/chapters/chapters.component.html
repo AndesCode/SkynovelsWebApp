@@ -129,8 +129,9 @@
                 <p [innerHTML]="LoadedChapter.chp_content"></p>
             </div>
             <hr>
-            <div>
-                {{LoadedChapter.chp_review}}
+            <div class="autor_comment">
+                <h3 class="autor_comment_title"><span class="material-icons md-36">mode_comment</span>Comentario de {{novel.nvl_writer}}</h3>
+                <p [innerHTML]="LoadedChapter.chp_review"></p>
             </div>
             <hr>
             <div class="skn-chp-chapter-preloaded-comments">

@@ -210,6 +210,12 @@ mat-menu {
     user-select: none;
 }
 
+.autor_comment_title {
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 
 /*.my-pagination /deep/ .ngx-pagination {
     margin-left: -40px;
