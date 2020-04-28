@@ -13,7 +13,11 @@ export class NovelCardComponent implements OnChanges {
 
   @Input() novels: any[] = [];
   @Input() clickRoute = '';
-  @Input() novelFilter = new NovelFilter();
+  @Input() novelFilter: NovelFilter = {
+    searchName: '',
+    searchStatus: 'All',
+    searchGenres: []
+  };
 
   constructor(public hs: HelperService,
               private ns: NovelsService,
