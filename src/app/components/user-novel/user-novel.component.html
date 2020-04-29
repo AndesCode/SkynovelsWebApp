@@ -127,10 +127,16 @@
                             </mat-menu>
                         </div>
                     </div>
-                    <div *ngFor="let chapter of volume.chapters">
-                        <mat-card class="mat-card-hover" style="margin-bottom: 4px;" (click)="goToChapterEdition(false, volume, chapter)">
-                            <p>{{chapter.chp_number}} - {{chapter.chp_index_title}}</p>
-                        </mat-card>
+                    <div class="skn-nvl-vlm-chapters-container row">
+                        <div class="skn-nvl-chp-element skn-text" *ngFor="let chapter of volume.chapters" (click)="goToChapterEdition(false, volume, chapter)">
+                            <div class="skn-nvl-chp-element-chp-number-index">
+                                {{chapter.chp_number}}
+                            </div>
+                            <div>
+                                <div class="skn-nvl-chp-element-title"> {{hs.setContent(chapter.chp_index_title, 69)}}</div>
+                                <small>{{hs.getRelativeTime(chapter.createdAt).message}}</small>
+                            </div>
+                        </div>
                     </div>
                     <ng-template #editVolumeModal>
                         <div style="width: 85vw; max-width: 25em;"></div>

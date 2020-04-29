@@ -34,6 +34,8 @@ export class NovelComponent implements OnInit {
     rate_comment: null
   };
   mobile: boolean;
+  loading = true;
+  panelOpenState = false;
 
 
 
@@ -102,12 +104,8 @@ export class NovelComponent implements OnInit {
       this.novel.nvl_last_chapter = last_volume.chapters[last_volume.chapters.length - 1];
       this.getUser();
       console.log(data.novel);
+      this.loading = false;
     });
-  }
-
-  track(value: number): void {
-    const percent = value;
-    console.log(percent);
   }
 
   calculateNovelRatingAvarage() {

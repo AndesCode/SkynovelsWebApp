@@ -68,6 +68,22 @@ export class UsersService {
     }
   }
 
+  userIsEditor() {
+    const token = localStorage.getItem('sknvl_s');
+    if (token) {
+      const jwtData = token.split('.')[1];
+      const decodedJwtJsonData = window.atob(jwtData);
+      const decodedJwtData = JSON.parse(decodedJwtJsonData);
+      if (decodedJwtData.user_rol === 'Admin' || decodedJwtData.user_rol === 'Editor') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
   logIn(user: any) {
     const url = `${ this.urlnovelsdb }/login`;
     return this.http.post(url, user, this.GlobalhttpOptions);

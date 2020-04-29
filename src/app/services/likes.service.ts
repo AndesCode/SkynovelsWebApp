@@ -28,7 +28,7 @@ export class LikesService {
     return this.http.post(url, like, this.GlobalhttpOptions);
   }
 
-  deleteNovelRatingLike(id: string) {
+  deleteNovelRatingLike(id: number) {
     const url = `${this.urlnovelsdb}/delete-novel-rating-like/${id}`;
     return this.http.delete(url, this.GlobalhttpOptions);
   }
@@ -42,7 +42,7 @@ export class LikesService {
     return this.http.post(url, like, this.GlobalhttpOptions);
   }
 
-  deleteNovelRatingCommentLike(id: string) {
+  deleteNovelRatingCommentLike(id: number) {
     const url = `${this.urlnovelsdb}/delete-novel-rating-comment-like/${id}`;
     return this.http.delete(url, this.GlobalhttpOptions);
   }
@@ -56,8 +56,22 @@ export class LikesService {
     return this.http.post(url, like, this.GlobalhttpOptions);
   }
 
-  deleteChapterCommentLike(id: string) {
+  deleteChapterCommentLike(id: number) {
     const url = `${this.urlnovelsdb}/delete-chapter-comment-like/${id}`;
+    return this.http.delete(url, this.GlobalhttpOptions);
+  }
+
+  createChapterCommentReplyLike(chapterCommentReplyId: any) {
+    const like = {
+      chapter_comment_reply_id: chapterCommentReplyId
+    };
+    const url = `${ this.urlnovelsdb }/create-chapter-comment-reply-like`;
+    console.log(url);
+    return this.http.post(url, like, this.GlobalhttpOptions);
+  }
+
+  deleteChapterCommentReplyLike(id: number) {
+    const url = `${this.urlnovelsdb}/delete-chapter-comment-reply-like/${id}`;
     return this.http.delete(url, this.GlobalhttpOptions);
   }
 }

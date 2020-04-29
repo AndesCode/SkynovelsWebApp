@@ -11,7 +11,7 @@
     grid-template-rows: 85% 15%;
     grid-template-areas: "img info" "update update";
     @include subtract-media (desktop) {
-        width: 95vw;
+        width: 300px;
         height: 150px;
         grid-template-columns: 26% 74%;
         grid-template-rows: 80% 20%;

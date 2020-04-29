@@ -29,6 +29,7 @@ export class UserNovelComponent implements OnInit {
 
 
 
+  panelOpenState = false;
   public Editor = ClassicEditor;
   public ckEditorConfig = {
     toolbar: [ 'heading', '|', 'bold', 'italic' ]
@@ -47,7 +48,6 @@ export class UserNovelComponent implements OnInit {
   loading = true;
   novel: Novel;
   editableNovel = false;
-  panelOpenState = false;
   user: number = null;
   genres: Array<Genre> = [];
   uploading = false;

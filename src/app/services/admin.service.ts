@@ -22,7 +22,7 @@ export class AdminService {
       const jwtData = token.split('.')[1];
       const decodedJwtJsonData = window.atob(jwtData);
       const decodedJwtData = JSON.parse(decodedJwtJsonData);
-      if (decodedJwtData.user_rol === 'admin') {
+      if (decodedJwtData.user_rol === 'Admin') {
         return true;
       } else {
         return false;

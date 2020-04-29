@@ -9,7 +9,7 @@
                 <a class="nav-link" routerLink="foro" routerLinkActive="nav-link-selected">Foro</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" routerLink="mis-novelas" *ngIf="_us.userIsLoged()" routerLinkActive="nav-link-selected">Mis novelas</a>
+                <a class="nav-link" routerLink="mis-novelas" *ngIf="_us.userIsEditor()" routerLinkActive="nav-link-selected">Mis novelas</a>
             </div>
             <div class="skn-nav-link">
                 <a class="nav-link" (click)="openDialogSheet(loginModal, true, false)" *ngIf="!_us.userIsLoged()" routerLinkActive="nav-link-selected" style="cursor: pointer;">Iniciar sesión</a>

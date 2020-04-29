@@ -1,4 +1,7 @@
-<main (onScroll)="track($event)">
+<div class="skn-loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</div>
+<main *ngIf="!loading">
     <ng-template #deleteBookmark>
         <div class="modal-header">
             <h4 class="modal-title">Eliminar de lista de lectura</h4>
@@ -117,10 +120,14 @@
             <div class="skn-nvl-info" *ngIf="currentTab === 'content'">
                 <p><strong>Ultimo capitulo: </strong><a class="skn-link">{{novel.nvl_last_chapter?.chp_index_title}}</a><small> {{novel.nvl_last_chapter?.date_data.message}}</small></p>
                 <hr>
-                <div *ngFor="let volume of novel.volumes">
-                    <h5>{{volume.vlm_title}}</h5>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let volume of novel?.volumes" style="margin-bottom: 5px;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h4 style="margin: unset;">{{volume.vlm_title}}</h4>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
                     <div class="skn-nvl-vlm-chapters-container row">
-                        <div class="skn-nvl-chp-element skn-text skn-main-hover" *ngFor="let chapter of volume.chapters" (click)="goToChapter(chapter)">
+                        <div class="skn-nvl-chp-element skn-text" *ngFor="let chapter of volume.chapters" (click)="goToChapter(chapter)">
                             <div class="skn-nvl-chp-element-chp-number-index">
                                 {{chapter.chp_number}}
                             </div>
@@ -130,7 +137,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </mat-expansion-panel>
             </div>
         </div>
     </section>
@@ -181,7 +188,7 @@
                 </div>
                 <ng-template #createRatingModal style="width: 8500px;">
                     <!--First div defines custom widht for the modal dialog-->
-                    <div style="width: 85vh;"></div>
+                    <div style="width: 85vw; max-width: 700px;"></div>
                     <div class="modal-header">
                         <h4 class="modal-title">Tu calificación</h4>
                     </div>

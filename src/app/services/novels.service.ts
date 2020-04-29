@@ -50,15 +50,6 @@ export class NovelsService {
     }
 
     updateNovel(novel: Novel) {
-      /*const novelPayload = {
-        id: novel.id,
-        nvl_title: novel.nvl_title,
-        nvl_content: novel.nvl_content,
-        nvl_writer: novel.nvl_writer,
-        nvl_status: novel.nvl_status,
-        genres: novel.genres,
-        collaborators: novel.collaborators
-      };*/
       const url = `${ this.urlnovelsdb }/update-novel`;
       return this.http.put(url , novel, this.GlobalhttpOptions);
     }
@@ -113,8 +104,28 @@ export class NovelsService {
       return this.http.put(url , chapterComment, this.GlobalhttpOptions);
     }
 
-    deleteChapterComment(id: string) {
+    deleteChapterComment(id: number) {
       const url = `${ this.urlnovelsdb }/delete-chapter-comment/${id}`;
+      return this.http.delete(url, this.GlobalhttpOptions);
+    }
+
+    createChapterCommentReply(chapterCommentReply: any) {
+      const url = `${ this.urlnovelsdb }/create-chapter-comment-reply`;
+      return this.http.post(url, chapterCommentReply, this.GlobalhttpOptions);
+    }
+
+    getChapterCommentReplys(id: number) {
+      const url = `${ this.urlnovelsdb }/get-chapter-comment-replys/${id}`;
+      return this.http.get(url);
+    }
+
+    updateChapterCommentReply(chapterCommentReply: any) {
+      const url = `${ this.urlnovelsdb }/update-chapter-comment-reply`;
+      return this.http.put(url , chapterCommentReply, this.GlobalhttpOptions);
+    }
+
+    deleteChapterCommentReply(id: number) {
+      const url = `${ this.urlnovelsdb }/delete-chapter-comment-reply/${id}`;
       return this.http.delete(url, this.GlobalhttpOptions);
     }
 

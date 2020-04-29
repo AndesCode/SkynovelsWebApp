@@ -14,6 +14,7 @@ export class UserNovelsComponent implements OnInit {
   userNovels: any[] = [];
   searchText: String;
   currentTab: any = 'novel';
+  loading = true;
 
   constructor(public _hs: HelperService,
               private router: Router,
@@ -23,15 +24,7 @@ export class UserNovelsComponent implements OnInit {
     this._us.getUserNovels().subscribe((data: any) => {
       this.userNovels = data.novels;
       this.userCollaborations = data.collaborations;
-      console.log(data);
-      /*for (let i = 0; i < this.user_novels.length; i++) {
-        const datesDataFiltered = this._ns.getDiferenceInDaysBetweenDays(this.user_novels[i].createdAt, this.user_novels[i].updatedAt);
-        if ( this.user_novels[i].createdAt === this.user_novels[i].updatedAt) {
-          this.user_novels[i].last_update = datesDataFiltered.creation_date_message;
-        } else {
-          this.user_novels[i].last_update = datesDataFiltered.update_date_message;
-        }
-      }*/
+      this.loading = false;
     }, error => {
       console.log(error);
       this.router.navigate(['']);
@@ -44,10 +37,6 @@ export class UserNovelsComponent implements OnInit {
   }
 
   goToCreateNovel() {
-    this.router.navigate(['/mi-novela/nuevo']);
-  }
-
-  goToEditNovel(novel) {
-    this.router.navigate(['/mi-novela/' , novel.id]);
+    this.router.navigate(['/mis-novelas/nuevo']);
   }
 }
