@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Invitation } from 'src/app/models/invitation';
-import { Novel } from '../models/models';
-import { User } from 'src/app/models/user';
+import { Novel, User } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -94,13 +93,13 @@ export class UsersService {
     return this.http.get(url, this.GlobalhttpOptions);
   }
 
-  createUser(user: any) {
+  createUser(user: User) {
     const url = `${ this.urlnovelsdb }/create-user`;
     console.log(user);
     return this.http.post(url, user);
   }
 
-  getUser(id: any) {
+  getUser(id: number) {
     const url = `${ this.urlnovelsdb }/user/${id}`;
     return this.http.get(url);
   }
@@ -110,7 +109,7 @@ export class UsersService {
     return this.http.get(url, this.GlobalhttpOptions);
   }
 
-  updateUser(user: any) {
+  updateUser(user: User) {
     const url = `${this.urlnovelsdb}/update-user`;
     return this.http.put(url, user, this.GlobalhttpOptions);
   }

@@ -3,15 +3,17 @@
 </div>
 <main *ngIf="!loading">
     <ng-template #deleteBookmark>
-        <div class="modal-header">
-            <h4 class="modal-title">Eliminar de lista de lectura</h4>
-        </div>
-        <div class="skn-bottomSheet-buttons" style="padding: 1rem 1rem">
-            <div>
-                <button mat-raised-button class="skn-cancel-button" (click)="_bottomSheet.dismiss()">Cancelar</button>
+        <div class="skn-bottom-sheet-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Eliminar de lista de lectura</h4>
             </div>
-            <div>
-                <button mat-raised-button color="warn" (click)="switchBookMark(); _bottomSheet.dismiss()">Eliminar</button>
+            <div class="skn-bottomSheet-buttons" style="padding: 1rem 1rem">
+                <div>
+                    <button mat-raised-button class="skn-cancel-button" (click)="bottomSheet.dismiss()">Cancelar</button>
+                </div>
+                <div>
+                    <button mat-raised-button color="warn" (click)="switchBookMark(); bottomSheet.dismiss()">Eliminar</button>
+                </div>
             </div>
         </div>
     </ng-template>
@@ -59,7 +61,7 @@
                             <div> <span class="material-icons">create</span> 2 Capitulos semanales</div>
                             <div *ngIf="novel.nvl_chapters === 1"> <span class="material-icons">format_align_left</span> {{novel.nvl_chapters}} Capitulo</div>
                             <div *ngIf="novel.nvl_chapters > 1"> <span class="material-icons">format_align_left</span> {{novel.nvl_chapters}} Capitulos</div>
-                            <div> <span class="material-icons">access_time</span> {{_hs.getRelativeTime(novel.nvl_last_update).message}}</div>
+                            <div> <span class="material-icons">access_time</span> {{hs.getRelativeTime(novel.nvl_last_update).message}}</div>
                         </div>
                         <div class="skn-nvl-card-genres row" style="margin-bottom: 8px; margin-left: 0px;">
                             <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:5">{{genre.genre_name}}</span>
@@ -112,7 +114,7 @@
                     <div> <span class="material-icons">create</span> 2 Capitulos semanales</div>
                     <div *ngIf="novel.nvl_chapters === 1"> <span class="material-icons">format_align_left</span> {{novel.nvl_chapters}} Capitulo</div>
                     <div *ngIf="novel.nvl_chapters > 1"> <span class="material-icons">format_align_left</span> {{novel.nvl_chapters}} Capitulos</div>
-                    <div> <span class="material-icons">access_time</span> {{_hs.getRelativeTime(novel.nvl_last_update).message}}</div>
+                    <div> <span class="material-icons">access_time</span> {{hs.getRelativeTime(novel.nvl_last_update).message}}</div>
                 </div>
                 <h4>Sinopsis</h4>
                 <p [innerHTML]="novel.nvl_content"></p>
@@ -127,12 +129,12 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="skn-nvl-vlm-chapters-container row">
-                        <div class="skn-nvl-chp-element skn-text" *ngFor="let chapter of volume.chapters" (click)="goToChapter(chapter)">
+                        <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *ngFor="let chapter of volume.chapters" (click)="goToChapter(chapter)">
                             <div class="skn-nvl-chp-element-chp-number-index">
                                 {{chapter.chp_number}}
                             </div>
                             <div>
-                                <div class="skn-nvl-chp-element-title"> {{_hs.setContent(chapter.chp_index_title, 69)}}</div>
+                                <div class="skn-nvl-chp-element-title"> {{hs.setContent(chapter.chp_index_title, 69)}}</div>
                                 <small>{{chapter.date_data.message}}</small>
                             </div>
                         </div>
@@ -186,51 +188,52 @@
                     </div>
 
                 </div>
-                <ng-template #createRatingModal style="width: 8500px;">
+                <ng-template #createRatingModal>
                     <!--First div defines custom widht for the modal dialog-->
-                    <div style="width: 85vw; max-width: 700px;"></div>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Tu calificación</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form autocomplete="off">
-                            <div style="display: flex;">
-                                <span style="margin-right: 5px" class="skn-text">Puntuación:</span>
-                                <ngb-rating [(rate)]="new_rating.rate_value" [max]="5" [(ngModel)]="new_rating.rate_value" name="rate_value" style="border: none !important; outline: none !important;">
-                                    <ng-template let-fill="fill" let-index="index">
-                                        <span class="star" [class.filled]="fill === 100" [class.nfilled]="fill !== 100">
+                    <div class="skn-dialong-modal" style="max-width: 45rem;">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Tu calificación</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form autocomplete="off" [formGroup]="newRatingForm">
+                                <div style="display: flex;">
+                                    <span style="margin-right: 5px" class="skn-text">Puntuación:</span>
+                                    <ngb-rating formControlName="rate_value" style="border: none !important; outline: none !important;" [max]="5">
+                                        <ng-template let-fill="fill" let-index="index">
+                                            <span class="star" [class.filled]="fill === 100" [class.nfilled]="fill !== 100">
                                             <span class="half" [style.width.%]="fill">
                                                 <i class="material-icons"></i>
                                             </span>
-                                        </span>
-                                    </ng-template>
-                                </ngb-rating>
-                            </div>
-                            <mat-form-field style="width: 100%;">
-                                <mat-label>Comentario</mat-label>
-                                <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" placeholder="Escribe un comentario" [(ngModel)]="new_rating.rate_comment" [ngModelOptions]="{standalone: true}"></textarea>
-                            </mat-form-field>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="_dialog.closeAll()">Cancelar</button>
-                        <button mat-raised-button color="primary" style="color: black;" (click)="createNovelRating(); _dialog.closeAll()" [disabled]="new_rating.rate_value === 0 || new_rating.rate_comment.length < 15" matTooltip="Info about the action">Publicar</button>
+                                            </span>
+                                        </ng-template>
+                                    </ngb-rating>
+                                </div>
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Comentario</mat-label>
+                                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" placeholder="Escribe un comentario" formControlName="rate_comment"></textarea>
+                                </mat-form-field>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                            <button mat-raised-button color="primary" (click)="createNovelRating(); dialog.closeAll()" [disabled]="newRatingForm.invalid">Publicar</button>
+                        </div>
                     </div>
                 </ng-template>
             </div>
             <hr>
 
             <div class="skn-nvl-user-rating skn-secondary" *ngFor="let rating of novel.novel_ratings">
-                <div class="skn-nvl-user-rating-user-image">
-                    <div class="skn-nvl-user-rating-user-image-container">
+                <div class="skn-user-image">
+                    <div>
                         <img src="https://dummyimage.com/50x50/000/fff" alt="">
                     </div>
                 </div>
                 <div class="skn-nvl-user-rating-user-rating">
                     <div class="skn-nvl-user-rating-login">
                         <div style="display: flex;">
-                            <div class="skn-nvl-user-rating-user-image-mobile">
-                                <div class="skn-nvl-user-rating-user-image-container">
+                            <div class="skn-user-image-mobile">
+                                <div>
                                     <img src="https://dummyimage.com/50x50/000/fff" alt="">
                                 </div>
                             </div>
@@ -259,11 +262,11 @@
                             </ng-template>
                         </ngb-rating>
                         <div style="margin-left: 7px; margin-top: 3px;">
-                            <small>{{_hs.getRelativeTime(rating.createdAt).message}}</small>
+                            <small>{{hs.getRelativeTime(rating.createdAt).message}}</small>
                         </div>
                     </div>
                     <div>
-                        <p [innerHTML]="_hs.setContent(rating.rate_comment, 360)" *ngIf="(!rating.show_more && rating.rate_comment.length > 360) && !rating.edition"></p>
+                        <p [innerHTML]="hs.setContent(rating.rate_comment, 360)" *ngIf="(!rating.show_more && rating.rate_comment.length > 360) && !rating.edition"></p>
                         <p [innerHTML]="rating.rate_comment" *ngIf="(rating.show_more || rating.rate_comment.length < 360) && !rating.edition"></p>
                         <form autocomplete="off" #updateRatingForm="ngForm">
                             <div class="form-group" *ngIf="rating.edition" style="width: 100%;">
@@ -297,13 +300,13 @@
                     <div *ngIf="rating.show_replys">
                         <form *ngIf="user">
                             <div class="skn-nvl-rating-comment-textarea">
-                                <div class="skn-nvl-user-rating-user-image" style="margin-right: 15px;">
-                                    <div class="skn-nvl-user-rating-user-image-container">
+                                <div class="skn-user-image" style="margin-right: 15px;">
+                                    <div>
                                         <img src="https://dummyimage.com/50x50/000/fff" alt="">
                                     </div>
                                 </div>
                                 <div class="skn-nvl-rating-comment-textarea-input">
-                                    <mat-form-field class="example-full-width" style="width: 100%;">
+                                    <mat-form-field style="width: 100%;">
                                         <mat-label>Añade un comentario</mat-label>
                                         <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #novel_rating_comment="ngModel" name="rating.novel_rating_comment" [(ngModel)]="rating.novel_rating_comment"></textarea>
                                     </mat-form-field>
@@ -312,16 +315,16 @@
                             </div>
                         </form>
                         <div class="skn-nvl-user-rating" *ngFor="let rating_comment of rating.rating_comments" style="padding: 0px!important;">
-                            <div class="skn-nvl-user-rating-user-image">
-                                <div class="skn-nvl-user-rating-user-image-container">
+                            <div class="skn-user-image">
+                                <div>
                                     <img src="https://dummyimage.com/50x50/000/fff" alt="">
                                 </div>
                             </div>
                             <div class="skn-nvl-user-rating-user-rating">
                                 <div class="skn-nvl-user-rating-login" style="margin-bottom: 5px;">
                                     <div style="display: flex;">
-                                        <div class="skn-nvl-user-rating-user-image-mobile">
-                                            <div class="skn-nvl-user-rating-user-image-container">
+                                        <div class="skn-user-image-mobile">
+                                            <div>
                                                 <img src="https://dummyimage.com/50x50/000/fff" alt="">
                                             </div>
                                         </div>
@@ -342,7 +345,7 @@
                                     <button mat-mini-fab *ngIf="rating_comment.edition && user?.id === rating_comment.user_id" (click)="updateNovelRatingComment(updateRatingCommentForm, rating_comment)"><i class="material-icons">done</i></button>
                                 </div>
                                 <div>
-                                    <p [innerHTML]="_hs.setContent(rating_comment.novel_rating_comment, 360)" *ngIf="(!rating_comment.show_more && rating_comment.novel_rating_comment.length > 360) && !rating_comment.edition"></p>
+                                    <p [innerHTML]="hs.setContent(rating_comment.novel_rating_comment, 360)" *ngIf="(!rating_comment.show_more && rating_comment.novel_rating_comment.length > 360) && !rating_comment.edition"></p>
                                     <p [innerHTML]="rating_comment.novel_rating_comment" *ngIf="(rating_comment.show_more || rating_comment.novel_rating_comment.length < 360) && !rating_comment.edition"></p>
                                     <form autocomplete="off" #updateRatingCommentForm="ngForm">
                                         <div class="form-group" *ngIf="rating_comment.edition" style="width: 100%;">
@@ -370,15 +373,17 @@
                                 <hr>
                             </div>
                             <ng-template #deleteRatingCommentModal>
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Eliminar tu comentario</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>¿Seguro que deseas eliminar el comentario?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="_dialog.closeAll()">Cancelar</button>
-                                    <button mat-raised-button color="warn" style="color: black;" (click)="deleteRatingComment(rating, rating_comment); _dialog.closeAll()">Eliminar</button>
+                                <div class="skn-dialong-modal">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Eliminar tu comentario</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Seguro que deseas eliminar el comentario?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                                        <button mat-raised-button color="warn" style="color: black;" (click)="deleteRatingComment(rating, rating_comment); dialog.closeAll()">Eliminar</button>
+                                    </div>
                                 </div>
                             </ng-template>
                         </div>
@@ -386,20 +391,40 @@
 
                 </div>
                 <ng-template #deleteRatingModal>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Eliminar tu calificación</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>¿Seguro que deseas eliminar la calificación?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="_dialog.closeAll()">Cancelar</button>
-                        <button mat-raised-button color="warn" style="color: black;" (click)="deleteRating(rating); _dialog.closeAll()">Eliminar</button>
+                    <div class="skn-dialong-modal">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Eliminar tu calificación</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Seguro que deseas eliminar la calificación?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                            <button mat-raised-button color="warn" style="color: black;" (click)="deleteRating(rating); dialog.closeAll()">Eliminar</button>
+                        </div>
                     </div>
                 </ng-template>
             </div>
         </div>
-
-
     </section>
 </main>
+<ng-template #successSnack>
+    <div class="skn-snack-success-notification">
+        <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #errorSnack>
+    <div class="skn-snack-error-notification">
+        <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>

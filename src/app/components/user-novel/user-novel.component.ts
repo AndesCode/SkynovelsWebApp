@@ -11,14 +11,8 @@ import { Location } from '@angular/common';
 import { UsersService } from '../../services/users.service';
 import { Volume } from 'src/app/models/volume';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { User } from 'src/app/models/user';
-import { Novel, Genre } from 'src/app/models/models';
+import { Novel, Genre, User } from 'src/app/models/models';
 import { Chapter } from 'src/app/models/chapter';
-
-
-
-
-
 
 @Component({
   selector: 'app-user-novel',
@@ -26,8 +20,6 @@ import { Chapter } from 'src/app/models/chapter';
   styleUrls: ['./user-novel.component.scss']
 })
 export class UserNovelComponent implements OnInit {
-
-
 
   panelOpenState = false;
   public Editor = ClassicEditor;
@@ -73,8 +65,6 @@ export class UserNovelComponent implements OnInit {
                   });
 
     }
-
-  // modal service.
   openDialogSheet(template: TemplateRef<any>): void {
     this.dialog.open(template);
   }
@@ -85,14 +75,8 @@ export class UserNovelComponent implements OnInit {
 
   ngOnInit(): void {
     const nid = this.activatedRoute.snapshot.paramMap.get('nid');
-    console.log(nid);
-    // cargamos los generos existentes en Skynovels
     this.ns.getGenres().subscribe((data: any) => {
       this.genres = data.genres;
-     /* for (const genre of this.genres) {
-        // agregamos a cada genero un atributo check inicializado en falso que controlara el estado del checkbox
-        genre.selected = false;
-      }*/
     });
     if (nid !== 'nuevo') {
       this.ns.getNovel(Number(nid), 'edition').subscribe((novelData: any) => {
@@ -110,8 +94,6 @@ export class UserNovelComponent implements OnInit {
           if (this.novel.nvl_img) {
             this.imgURL = 'http://localhost:3000/api/novel/image/' + this.novel.nvl_img + '/false';
           }
-
-
         } else {
           console.log('no autorizado');
           this.router.navigate(['mis-novelas']);
@@ -130,8 +112,6 @@ export class UserNovelComponent implements OnInit {
       this.location.replaceState('/mis-novelas/nuevo');
     }
   }
-
-
 
   save(novelForm: NgForm) {
     if (this.uploading || novelForm.invalid || (!novelForm.dirty && !this.fileToUpload)) {
@@ -247,6 +227,7 @@ export class UserNovelComponent implements OnInit {
     const reader = new FileReader();
     this.imagePath = this.fileToUpload;
     reader.readAsDataURL(this.fileToUpload);
+    // tslint:disable-next-line: variable-name
     reader.onload = (_event) => {
     this.imgURL = reader.result;
     };

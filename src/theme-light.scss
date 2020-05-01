@@ -51,6 +51,14 @@ body[theme=light] {
     .skn-logo {
         background-image: url('./assets/img/008 - SkyNovels V.1/logo/2x/logotipo_preferente@2x.png');
     }
+    .skn-all-chapters-nav {
+        background-color: #ffffff;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    .skn-chapter-comment-nav {
+        background-color: #ffffff;
+        border-top: 1px solid #e5e5e5;
+    }
     .skn-login-logo-image {
         background-image: url('./assets/img/008 - SkyNovels V.1/logo/1x/simbolo_azules.png');
     }
@@ -101,7 +109,6 @@ body[theme=light] {
         background-color: #d5d5d5 !important;
         border-left: 2px solid #d32f2f!important;
     }
-
     .autor_comment {
         background: #3138422e;
         border-radius: 0.5rem;

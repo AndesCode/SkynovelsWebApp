@@ -1,8 +1,7 @@
 import { Injectable, EventEmitter  } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User } from '../models/user';
 import { Observable } from 'rxjs';
-import { Novel } from '../models/models';
+import { Novel, User } from '../models/models';
 import { Chapter } from '../models/chapter';
 import { Post } from '../models/post';
 import { PostComment } from '../models/post-comment';

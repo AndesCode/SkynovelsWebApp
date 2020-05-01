@@ -27,7 +27,7 @@ export class UserProfileComponent implements OnInit {
               public _hs: HelperService) {}
 
   ngOnInit(): void {
-    const urlId = this.activatedRoute.snapshot.paramMap.get('id');
+    const urlId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this._us.getUser(urlId).subscribe((data: any) => {
       // let activityArray = [];
       this.user_data = data;

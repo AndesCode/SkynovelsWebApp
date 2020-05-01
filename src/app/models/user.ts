@@ -1,5 +1,5 @@
 // tslint:disable: variable-name
-export class User {
+export class Usr {
     id?: number;
     user_id?: number;
     user_login?: string;

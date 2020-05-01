@@ -55,27 +55,3 @@
 .skn-novel-edition-input-100 {
     width: 100%;
 }
-
-.skn-nvl-vlm-chapters-container {
-    justify-content: center;
-    .skn-nvl-chp-element {
-        display: flex;
-        border-bottom: 1px solid #DB3836;
-        padding: 10px;
-        width: 420px;
-        margin: 5px;
-        cursor: pointer;
-        .skn-nvl-chp-element-chp-number-index {
-            min-width: 5px;
-            -webkit-text-decoration: solid;
-            text-decoration: solid;
-            margin-right: 15px;
-        }
-    }
-    .skn-nvl-chp-element:hover {
-        background-color: #1e2228;
-        .skn-nvl-chp-element-title {
-            text-decoration: underline;
-        }
-    }
-}

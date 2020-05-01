@@ -127,8 +127,8 @@ section {
             .skn-novel-acronym {
                 background-color: #d32f2f;
                 border-radius: 15px;
-                padding: 2px;
-                margin: 3px;
+                padding: 1px 6px;
+                margin: 5px;
                 text-transform: uppercase;
                 color: black;
             }
@@ -170,59 +170,10 @@ section {
             margin-bottom: 10px;
         }
     }
-    .skn-nvl-user-rating-user-image {
-        width: 50px;
-        min-width: 50px;
-        img {
-            border-radius: 50%;
-            width: 100%;
-            height: 100%;
-        }
-        @include mobile {
-            display: none;
-        }
-    }
-    .skn-nvl-user-rating-user-image-mobile {
-        width: 50px;
-        min-width: 50px;
-        display: none;
-        img {
-            border-radius: 50%;
-            width: 100%;
-            height: 100%;
-        }
-        @include mobile {
-            display: block;
-        }
-    }
     .skn-nvl-user-rating-user-rating {
         padding: 15px 0px 0px 10px;
         flex: auto;
         width: min-content;
-    }
-}
-
-.skn-nvl-vlm-chapters-container {
-    justify-content: center;
-    .skn-nvl-chp-element {
-        display: flex;
-        border-bottom: 1px solid #DB3836;
-        padding: 10px;
-        width: 420px;
-        margin: 5px;
-        cursor: pointer;
-        .skn-nvl-chp-element-chp-number-index {
-            min-width: 5px;
-            -webkit-text-decoration: solid;
-            text-decoration: solid;
-            margin-right: 15px;
-        }
-    }
-    .skn-nvl-chp-element:hover {
-        background-color: #1e2228;
-        .skn-nvl-chp-element-title {
-            text-decoration: underline;
-        }
     }
 }
 
@@ -237,6 +188,33 @@ section {
         color: black;
         height: 35px;
         margin-top: 10px;
+    }
+}
+
+.skn-user-image {
+    width: 50px;
+    min-width: 50px;
+    img {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+    }
+    @include mobile {
+        display: none;
+    }
+}
+
+.skn-user-image-mobile {
+    width: 50px;
+    min-width: 50px;
+    display: none;
+    img {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+    }
+    @include mobile {
+        display: block;
     }
 }
 

@@ -1,17 +1,16 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Location } from '@angular/common';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { NovelsService } from '../../services/novels.service';
 import { HelperService } from '../../services/helper.service';
 import { LikesService } from '../../services/likes.service';
 import { UsersService } from '../../services/users.service';
-import {BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
-
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Novel, User } from 'src/app/models/models';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-novel',
@@ -20,42 +19,39 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class NovelComponent implements OnInit {
 
+  @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
+  @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
+  public successSnackMessage: string;
+  public errorSnackMessage: string;
   public Editor = ClassicEditor;
-  // delete
-  novel: any = {};
+  novel: Novel;
+  user: User;
   currentTab = 'info';
-  // novel: NovelModel = new NovelModel();
-  user: any = null;
-  new_rating_form: FormGroup;
-  emailFormControl: FormGroup;
-  public new_rating = {
-    novel_id: null,
-    rate_value: 0,
-    rate_comment: null
-  };
+  newRatingForm: FormGroup;
   mobile: boolean;
   loading = true;
   panelOpenState = false;
 
-
-
-    constructor(private _ns: NovelsService,
+    constructor(private ns: NovelsService,
                 private activatedRoute: ActivatedRoute,
                 private breakpointObserver: BreakpointObserver,
-                private _ls: LikesService,
-                private _us: UsersService,
-                private modalService: NgbModal,
-                private renderer: Renderer2,
+                private ls: LikesService,
+                private us: UsersService,
                 private router: Router,
-                public _hs: HelperService,
-                public _bottomSheet: MatBottomSheet,
-                public _dialog: MatDialog) {}
+                public matSnackBar: MatSnackBar,
+                public hs: HelperService,
+                public bottomSheet: MatBottomSheet,
+                public dialog: MatDialog) {
 
+                  this.newRatingForm = new FormGroup({
+                    novel_id: new FormControl(''),
+                    rate_value: new FormControl('0', [Validators.required, Validators.min(1), Validators.max(5)]),
+                    rate_comment: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(1500)]),
+                  });
 
-
+                }
 
   ngOnInit(): void {
-
     this.breakpointObserver
     .observe('(max-width: 679px)')
     .subscribe((state: BreakpointState) => {
@@ -67,18 +63,17 @@ export class NovelComponent implements OnInit {
       }
     });
 
-
-    this._hs.invokeExternalFunction.subscribe((data: any) => {
+    this.hs.invokeExternalFunction.subscribe((data: any) => {
       if (data === 'reloadUser') {
         this.getUser();
       }
     });
-    const url_id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-    this._ns.getNovel(url_id, 'reading').subscribe((data: any) => {
+    const urlId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.ns.getNovel(urlId, 'reading').subscribe((data: any) => {
       this.novel = data.novel[0];
       this.novel.user_bookmark = null;
       this.calculateNovelRatingAvarage();
-      this.novel.date_data = this._hs.getRelativeTime(this.novel.nvl_last_update);
+      this.novel.date_data = this.hs.getRelativeTime(this.novel.nvl_last_update);
       if (this.novel.nvl_status === 'Finished') {
         this.novel.nvl_status = 'Finalizada';
       } else {
@@ -88,60 +83,68 @@ export class NovelComponent implements OnInit {
           this.novel.nvl_status = 'Activa';
         }
       }
-      for (let i = 0; i < this.novel.novel_ratings.length; i++) {
-        this.novel.novel_ratings[i].show_more = false;
-        this.novel.novel_ratings[i].edition = false;
-        this.novel.novel_ratings[i].show_replys = false;
-        this.novel.novel_ratings[i].rating_comments = [];
-        this.novel.novel_ratings[i].novel_rating_comment = null;
+      for (const novelRating of  this.novel.novel_ratings) {
+        novelRating.show_more = false;
+        novelRating.edition = false;
+        novelRating.show_replys = false;
+        novelRating.rating_comments = [];
+        novelRating.novel_rating_comment = null;
       }
-      for (let i = 0; i < this.novel.volumes.length; i++) {
-        for (let j = 0; j < this.novel.volumes[i].chapters.length; j++) {
-          this.novel.volumes[i].chapters[j].date_data = this._hs.getRelativeTime(this.novel.volumes[i].chapters[j].createdAt);
+      for (const volume of this.novel.volumes) {
+        for (const chapter of volume.chapters) {
+          chapter.date_data = this.hs.getRelativeTime(chapter.createdAt);
         }
       }
-      const last_volume = this.novel.volumes[this.novel.volumes.length - 1];
-      this.novel.nvl_last_chapter = last_volume.chapters[last_volume.chapters.length - 1];
+      const lastVolume = this.novel.volumes[this.novel.volumes.length - 1];
+      this.novel.nvl_last_chapter = lastVolume.chapters[lastVolume.chapters.length - 1];
       this.getUser();
       console.log(data.novel);
       this.loading = false;
+    }, error => {
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = error.error.message;
+      this.router.navigate(['novelas']);
     });
   }
 
   calculateNovelRatingAvarage() {
-    this.novel.nvl_rating = this._hs.novelRatingAvarageCalculator(this.novel.novel_ratings);
+    this.novel.nvl_rating = this.hs.novelRatingAvarageCalculator(this.novel.novel_ratings);
   }
 
   openBottomSheet(item): void {
-    this._bottomSheet.open(item);
+    this.bottomSheet.open(item);
   }
 
   openDialogSheet(item): void {
-    this._dialog.open(item);
+    this.dialog.open(item);
   }
 
-  openSm(content: any) {
-    this.modalService.open(content, { size: 'lg' });
+  openMatSnackBar(template: TemplateRef<any>): void {
+    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
   }
 
-  switchRatingLike(novel_rating) {
+  switchRatingLike(novelRating) {
     if (this.user) {
-      if (novel_rating.liked === false) {
-        novel_rating.liked = true;
-        this._ls.createNovelRatingLike(novel_rating.id).subscribe((data: any) => {
-          novel_rating.like_id = data.novel_rating_like.id;
-          novel_rating.likes.push(data.novel_rating_like);
+      if (novelRating.liked === false) {
+        novelRating.liked = true;
+        this.ls.createNovelRatingLike(novelRating.id).subscribe((data: any) => {
+          novelRating.like_id = data.novel_rating_like.id;
+          novelRating.likes.push(data.novel_rating_like);
           console.log(data.novel_rating_like);
         }, error => {
-          novel_rating.liked = false;
+          novelRating.liked = false;
+          this.openMatSnackBar(this.errorSnackRef);
+          this.errorSnackMessage = error.error.message;
         });
       } else {
-        novel_rating.liked = false;
-        this._ls.deleteNovelRatingLike(novel_rating.like_id).subscribe((data: any) => {
-          novel_rating.likes.splice(novel_rating.likes.findIndex(x => x.id === novel_rating.like_id), 1);
-          novel_rating.like_id = null;
+        novelRating.liked = false;
+        this.ls.deleteNovelRatingLike(novelRating.like_id).subscribe((data: any) => {
+          novelRating.likes.splice(novelRating.likes.findIndex(x => x.id === novelRating.like_id), 1);
+          novelRating.like_id = null;
         }, error => {
-          novel_rating.liked = true;
+          novelRating.liked = true;
+          this.openMatSnackBar(this.errorSnackRef);
+          this.errorSnackMessage = error.error.message;
         });
       }
       console.log(this.novel.novel_ratings);
@@ -150,24 +153,28 @@ export class NovelComponent implements OnInit {
     }
   }
 
-  switchRatingCommentLike(novel_rating_comment) {
+  switchRatingCommentLike(novelRatingComment) {
     if (this.user) {
-      if (novel_rating_comment.liked === false) {
-        novel_rating_comment.liked = true;
-        this._ls.createNovelRatingCommentLike(novel_rating_comment.id).subscribe((data: any) => {
-          novel_rating_comment.like_id = data.novel_rating_comment_like.id;
-          novel_rating_comment.likes.push(data.novel_rating_comment_like);
+      if (novelRatingComment.liked === false) {
+        novelRatingComment.liked = true;
+        this.ls.createNovelRatingCommentLike(novelRatingComment.id).subscribe((data: any) => {
+          novelRatingComment.like_id = data.novel_rating_comment_like.id;
+          novelRatingComment.likes.push(data.novel_rating_comment_like);
           console.log(data.novel_rating_comment_like);
         }, error => {
-          novel_rating_comment.liked = false;
+          novelRatingComment.liked = false;
+          this.openMatSnackBar(this.errorSnackRef);
+          this.errorSnackMessage = error.error.message;
         });
       } else {
-        novel_rating_comment.liked = false;
-        this._ls.deleteNovelRatingCommentLike(novel_rating_comment.like_id).subscribe((data: any) => {
-          novel_rating_comment.likes.splice(novel_rating_comment.likes.findIndex(x => x.id === novel_rating_comment.like_id), 1);
-          novel_rating_comment.like_id = null;
+        novelRatingComment.liked = false;
+        this.ls.deleteNovelRatingCommentLike(novelRatingComment.like_id).subscribe((data: any) => {
+          novelRatingComment.likes.splice(novelRatingComment.likes.findIndex(x => x.id === novelRatingComment.like_id), 1);
+          novelRatingComment.like_id = null;
         }, error => {
-          novel_rating_comment.liked = true;
+          novelRatingComment.liked = true;
+          this.openMatSnackBar(this.errorSnackRef);
+          this.errorSnackMessage = error.error.message;
         });
       }
       console.log(this.novel.novel_ratings);
@@ -178,45 +185,53 @@ export class NovelComponent implements OnInit {
 
   switchBookMark() {
     if (this.novel.user_bookmark === null) {
-      this._us.createUserBookmark(this.novel.id).subscribe((data: any) => {
+      this.us.createUserBookmark(this.novel.id).subscribe((data: any) => {
         this.novel.user_bookmark = data.bookmark;
         this.novel.bookmarks.push(data.bookmark);
+      }, error => {
+        this.openMatSnackBar(this.errorSnackRef);
+        this.errorSnackMessage = error.error.message;
+        return;
       });
     } else {
-      this._us.deleteUserBoomark(this.novel.user_bookmark.id).subscribe((data: any) => {
+      this.us.deleteUserBoomark(this.novel.user_bookmark.id).subscribe((data: any) => {
         this.novel.bookmarks.splice(this.novel.bookmarks.findIndex(x => x.id === this.novel.user_bookmark.id), 1);
         this.novel.user_bookmark = null;
+      }, error => {
+        this.openMatSnackBar(this.errorSnackRef);
+        this.errorSnackMessage = error.error.message;
+        return;
       });
     }
   }
 
   getUser() {
-    this.user = this._us.getUserLoged();
+    this.user = this.us.getUserLoged();
     console.log(this.user);
     this.novel.nvl_rated = false;
-    for (let i = 0; i < this.novel.novel_ratings.length; i++) {
-      this.novel.novel_ratings[i].liked = false;
-      this.novel.novel_ratings[i].like_id = null;
-      if (this.user && this.novel.novel_ratings[i].user_id === this.user.id) {
+    for (const novelRating of this.novel.novel_ratings) {
+      novelRating.liked = false;
+      novelRating.like_id = null;
+      if (this.user && novelRating.user_id === this.user.id) {
           this.novel.nvl_rated = true;
       }
-      for (let j = 0; j < this.novel.novel_ratings[i].rating_comments.length; j++) {
-        this.novel.novel_ratings[i].rating_comments[j].liked = false;
-        this.novel.novel_ratings[i].rating_comments[j].like_id = null;
+      for (const novelRatingComment of novelRating.rating_comments) {
+        novelRatingComment.liked = false;
+        novelRatingComment.like_id = null;
       }
       if (this.user) {
-        for (let j = 0; j < this.novel.novel_ratings[i].likes.length; j++) {
-          if (this.novel.novel_ratings[i].likes[j].user_id === this.user.id) {
-            this.novel.novel_ratings[i].liked = true;
-            this.novel.novel_ratings[i].like_id = this.novel.novel_ratings[i].likes[j].id;
+        for (const novelRatingLike of  novelRating.likes) {
+          if (novelRatingLike.user_id === this.user.id) {
+            novelRating.liked = true;
+            novelRating.like_id = novelRatingLike.id;
             break;
           }
         }
-        for (let j = 0; j < this.novel.novel_ratings[i].rating_comments.length; j++) {
-          for (let k = 0; k < this.novel.novel_ratings[i].rating_comments[j].likes.length; k++) {
-            if (this.novel.novel_ratings[i].rating_comments[j].likes[k].user_id === this.user.id) {
-              this.novel.novel_ratings[i].rating_comments[j].liked = true;
-              this.novel.novel_ratings[i].rating_comments[j].like_id = this.novel.novel_ratings[i].rating_comments[j].likes[k].id;
+        for (const novelRatingComment of novelRating.rating_comments) {
+          for (const novelRatingCommentLike of novelRatingComment.likes) {
+            if (novelRatingCommentLike.user_id === this.user.id) {
+              novelRatingComment.liked = true;
+              novelRatingComment.like_id = novelRatingCommentLike.id;
               break;
             }
           }
@@ -224,9 +239,9 @@ export class NovelComponent implements OnInit {
       }
     }
     if (this.user) {
-      for (let i = 0; i < this.novel.bookmarks.length; i++) {
-        if (this.novel.bookmarks[i].user_id === this.user.id) {
-          this.novel.user_bookmark = this.novel.bookmarks[i];
+      for (const novelBookmark of this.novel.bookmarks) {
+        if (novelBookmark.user_id === this.user.id) {
+          this.novel.user_bookmark = novelBookmark;
           break;
         }
       }
@@ -253,9 +268,13 @@ export class NovelComponent implements OnInit {
     console.log(updateRatingForm);
     if (updateRatingForm.dirty) {
       if (updateRatingForm.valid) {
-        this._ns.updateNovelRating(rating).subscribe((data: any) => {
+        this.ns.updateNovelRating(rating).subscribe((data: any) => {
           console.log(data);
           rating.edition = false;
+        }, error => {
+          this.openMatSnackBar(this.errorSnackRef);
+          this.errorSnackMessage = error.error.message;
+          return;
         });
       } else {
         rating.edition = false;
@@ -266,7 +285,7 @@ export class NovelComponent implements OnInit {
   }
 
   deleteRating(rating: any) {
-    this._ns.deleteNovelRating(rating.id).subscribe((data: any) => {
+    this.ns.deleteNovelRating(rating.id).subscribe((data: any) => {
       this.novel.novel_ratings.splice(this.novel.novel_ratings.findIndex(x => x.id === rating.id), 1);
       this.novel.nvl_rated = false;
       console.log(data);
@@ -275,23 +294,30 @@ export class NovelComponent implements OnInit {
   }
 
   createNovelRating() {
-  console.log(this.new_rating_form);
-  console.log(this.new_rating);
-  this.new_rating.novel_id = this.novel.id;
-  this._ns.createNovelRating(this.new_rating).subscribe((data: any) => {
-    data.novel_rating.user_login = this.user.user_login;
-    data.novel_rating.liked = false;
-    data.novel_rating.show_replys = false;
-    data.novel_rating.show_more = false;
-    data.novel_rating.edition = false;
-    data.novel_rating.likes = [];
-    data.novel_rating.rating_comments = [];
-    this.novel.nvl_rated = true;
-    console.log(data.novel_rating);
-    this.novel.novel_ratings.push(data.novel_rating);
-    this.calculateNovelRatingAvarage();
-  });
-  console.log(this.novel);
+    this.newRatingForm.patchValue({
+      novel_id: this.novel.id
+    });
+    this.ns.createNovelRating(this.newRatingForm.value).subscribe((data: any) => {
+      data.novel_rating.user_login = this.user.user_login;
+      data.novel_rating.liked = false;
+      data.novel_rating.show_replys = false;
+      data.novel_rating.show_more = false;
+      data.novel_rating.edition = false;
+      data.novel_rating.likes = [];
+      data.novel_rating.rating_comments = [];
+      this.novel.nvl_rated = true;
+      console.log(data.novel_rating);
+      this.novel.novel_ratings.push(data.novel_rating);
+      this.calculateNovelRatingAvarage();
+      this.newRatingForm.reset();
+      this.openMatSnackBar(this.successSnackRef);
+      this.successSnackMessage = '¡Calificación publicada!';
+      return;
+    }, error => {
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = error.error.message;
+      return;
+    });
   }
 
   hideNovelRatingComments(rating: any) {
@@ -302,19 +328,19 @@ export class NovelComponent implements OnInit {
     if (rating.rating_comments.length > 0) {
       rating.show_replys = true;
     } else {
-      this._ns.getNovelRatingComments(rating.id).subscribe((data: any) => {
+      this.ns.getNovelRatingComments(rating.id).subscribe((data: any) => {
         rating.rating_comments = data.novel_rating_comments;
         console.log(rating.rating_comments);
-        for (let i = 0; i < rating.rating_comments.length; i++) {
-          rating.rating_comments[i].liked = false;
-          rating.rating_comments[i].show_more = false;
-          rating.rating_comments[i].edition = false;
-          rating.rating_comments[i].date_data = this._hs.getRelativeTime(rating.rating_comments[i].createdAt);
+        for (const ratingComment of rating.rating_comments) {
+          ratingComment.liked = false;
+          ratingComment.show_more = false;
+          ratingComment.edition = false;
+          ratingComment.date_data = this.hs.getRelativeTime(ratingComment.createdAt);
           if (this.user) {
-            for (let j = 0; j < rating.rating_comments[i].likes.length; j++) {
-              if (rating.rating_comments[i].likes[j].user_id === this.user.id) {
-                rating.rating_comments[i].liked = true;
-                rating.rating_comments[i].like_id = rating.rating_comments[i].likes[j].id;
+            for (const ratingCommentLike of ratingComment.likes) {
+              if (ratingCommentLike.user_id === this.user.id) {
+                ratingComment.liked = true;
+                ratingComment.like_id = ratingCommentLike.id;
                 break;
               }
             }
@@ -322,23 +348,23 @@ export class NovelComponent implements OnInit {
         }
         console.log(rating);
         rating.show_replys = true;
-        rating.rating_comments.sort(this._hs.dateDataSorter);
+        rating.rating_comments.sort(this.hs.dateDataSorter);
       });
     }
   }
 
   createNovelRatingComment(rating: any) {
-    const new_rating_comment = {
+    const newRatingComment = {
       novel_rating_id: rating.id,
       novel_rating_comment: rating.novel_rating_comment
     };
-    this._ns.createNovelRatingComment(new_rating_comment).subscribe((data: any) => {
+    this.ns.createNovelRatingComment(newRatingComment).subscribe((data: any) => {
       data.novel_rating_comment.user_login = this.user.user_login;
       data.novel_rating_comment.liked = false;
       data.novel_rating_comment.show_more = false;
       data.novel_rating_comment.edition = false;
       data.novel_rating_comment.likes = [];
-      data.novel_rating_comment.date_data = this._hs.getRelativeTime(data.novel_rating_comment.createdAt);
+      data.novel_rating_comment.date_data = this.hs.getRelativeTime(data.novel_rating_comment.createdAt);
       console.log(data.novel_rating);
       rating.rating_comments.unshift(data.novel_rating_comment);
       rating.novel_rating_comment = null;
@@ -349,7 +375,7 @@ export class NovelComponent implements OnInit {
     console.log(updateRatingCommentForm);
     if (updateRatingCommentForm.dirty) {
       if (updateRatingCommentForm.valid) {
-        this._ns.updateNovelRatingComment(ratingComment).subscribe((data: any) => {
+        this.ns.updateNovelRatingComment(ratingComment).subscribe((data: any) => {
           console.log(data);
           ratingComment.edition = false;
         });
@@ -362,7 +388,7 @@ export class NovelComponent implements OnInit {
   }
 
   deleteRatingComment(rating: any, ratingComment: any) {
-    this._ns.deleteNovelRatingComment(ratingComment.id).subscribe((data: any) => {
+    this.ns.deleteNovelRatingComment(ratingComment.id).subscribe((data: any) => {
       rating.rating_comments.splice(rating.rating_comments.findIndex(x => x.id === ratingComment.id), 1);
       console.log(data);
     });

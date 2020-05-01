@@ -128,7 +128,7 @@
                         </div>
                     </div>
                     <div class="skn-nvl-vlm-chapters-container row">
-                        <div class="skn-nvl-chp-element skn-text" *ngFor="let chapter of volume.chapters" (click)="goToChapterEdition(false, volume, chapter)">
+                        <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *ngFor="let chapter of volume.chapters" (click)="goToChapterEdition(false, volume, chapter)">
                             <div class="skn-nvl-chp-element-chp-number-index">
                                 {{chapter.chp_number}}
                             </div>
@@ -139,7 +139,7 @@
                         </div>
                     </div>
                     <ng-template #editVolumeModal>
-                        <div style="width: 85vw; max-width: 25em;"></div>
+                        <div class="skn-dialong-modal"></div>
                         <div class="modal-header">
                             <h4 class="modal-title">Editar volumen</h4>
                         </div>
@@ -157,35 +157,38 @@
                         </div>
                     </ng-template>
                     <ng-template #deleteVolumeModal>
-                        <div class="modal-header">
-                            <h4 class="modal-title">Eliminar</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>¿Seguro que deseas eliminar el {{volume.vlm_title}}?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                            <button mat-raised-button color="warn" (click)="deleteVolume(volume)" [disabled]="uploading">Eliminar</button>
+                        <div class="skn-dialong-modal">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Eliminar</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Seguro que deseas eliminar el {{volume.vlm_title}}?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                                <button mat-raised-button color="warn" (click)="deleteVolume(volume)" [disabled]="uploading">Eliminar</button>
+                            </div>
                         </div>
                     </ng-template>
                 </mat-expansion-panel>
                 <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="openDialogSheet(addVolumeModal)">Añadir un volumen o libro</button>
                 <ng-template #addVolumeModal>
-                    <div style="width: 85vw; max-width: 25em;"></div>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Añadir un volumen o libro</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form [formGroup]="volumeForm">
-                            <mat-form-field class="skn-novel-edition-input-100">
-                                <mat-label>Titulo</mat-label>
-                                <input matInput formControlName="vlm_title">
-                            </mat-form-field>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                        <button mat-raised-button color="primary" (click)="createVolume()" [disabled]="volumeForm.invalid || uploading">Añadir</button>
+                    <div class="skn-dialong-modal">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Añadir un volumen o libro</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="volumeForm">
+                                <mat-form-field class="skn-novel-edition-input-100">
+                                    <mat-label>Titulo</mat-label>
+                                    <input matInput formControlName="vlm_title">
+                                </mat-form-field>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                            <button mat-raised-button color="primary" (click)="createVolume()" [disabled]="volumeForm.invalid || uploading">Añadir</button>
+                        </div>
                     </div>
                 </ng-template>
             </mat-card>
@@ -197,33 +200,36 @@
     </section>
 </main>
 <ng-template #deletenovelModal>
-    <div class="modal-header">
-        <h4 class="modal-title">Eliminar</h4>
-    </div>
-    <div class="modal-body">
-        <p>¿Seguro que deseas eliminar la novela?</p>
-    </div>
-    <div class="modal-footer">
-        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-        <button mat-raised-button color="warn" (click)="deleteNovel()" [disabled]="uploading">Eliminar</button>
+    <div class="skn-dialong-modal">
+        <div class="modal-header">
+            <h4 class="modal-title">Eliminar</h4>
+        </div>
+        <div class="modal-body">
+            <p>¿Seguro que deseas eliminar la novela?</p>
+        </div>
+        <div class="modal-footer">
+            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+            <button mat-raised-button color="warn" (click)="deleteNovel()" [disabled]="uploading">Eliminar</button>
+        </div>
     </div>
 </ng-template>
 <ng-template #addCollaboratorModal>
-    <div style="width: 85vw; max-width: 25em;"></div>
-    <div class="modal-header">
-        <h4 class="modal-title">Busca un colaborador</h4>
-    </div>
-    <div class="modal-body">
-        <form [formGroup]="collaboratorForm">
-            <mat-form-field class="skn-novel-edition-input-100">
-                <mat-label>Colaborador</mat-label>
-                <input matInput placeholder="Busca por usuario o correo electronico" formControlName="user_login">
-            </mat-form-field>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cerrar</button>
-        <button mat-raised-button color="primary" (click)="createUserInvitation()">Añadir</button>
+    <div class="skn-dialong-modal">
+        <div class="modal-header">
+            <h4 class="modal-title">Busca un colaborador</h4>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="collaboratorForm">
+                <mat-form-field class="skn-novel-edition-input-100">
+                    <mat-label>Colaborador</mat-label>
+                    <input matInput placeholder="Busca por usuario o correo electronico" formControlName="user_login">
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cerrar</button>
+            <button mat-raised-button color="primary" (click)="createUserInvitation()">Añadir</button>
+        </div>
     </div>
 </ng-template>
 <ng-template #successSnack>
