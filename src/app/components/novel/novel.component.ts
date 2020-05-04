@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { NovelsService } from '../../services/novels.service';
@@ -38,6 +39,7 @@ export class NovelComponent implements OnInit {
                 private ls: LikesService,
                 private us: UsersService,
                 private router: Router,
+                private location: Location,
                 public matSnackBar: MatSnackBar,
                 public hs: HelperService,
                 public bottomSheet: MatBottomSheet,
@@ -68,7 +70,7 @@ export class NovelComponent implements OnInit {
         this.getUser();
       }
     });
-    const urlId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    const urlId = Number(this.activatedRoute.snapshot.paramMap.get('nid'));
     this.ns.getNovel(urlId, 'reading').subscribe((data: any) => {
       this.novel = data.novel[0];
       this.novel.user_bookmark = null;
@@ -99,6 +101,7 @@ export class NovelComponent implements OnInit {
       this.novel.nvl_last_chapter = lastVolume.chapters[lastVolume.chapters.length - 1];
       this.getUser();
       console.log(data.novel);
+      this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name);
       this.loading = false;
     }, error => {
       this.openMatSnackBar(this.errorSnackRef);

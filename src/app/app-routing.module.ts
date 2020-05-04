@@ -41,7 +41,9 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   // novels
   { path: 'novelas', component: NovelsComponent },
-  { path: 'novelas/:id/:name', component: NovelComponent },
+  { path: 'novelas/:nid', component: NovelComponent },
+  { path: 'novelas/:nid/:ntitle', component: NovelComponent },
+  { path: 'novelas/:nid/:ntitle/:cid', component: ChaptersComponent },
   { path: 'novelas/:nid/:ntitle/:cid/:ctitle', component: ChaptersComponent },
     // admin panel
   {

@@ -86,10 +86,12 @@ export class UserChapterComponent implements OnInit {
             this.location.replaceState('/mis-novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' + this.volume.id + '/nuevo');
             this.chapter.chp_status = 'Disabled';
             this.chapter.vlm_id = this.volume.id;
+            this.chapter.chp_content = '';
+            this.chapter.chp_review = '';
+            this.chapter.vlm_id = this.volume.id;
             this.chapter.chp_number = this.novel.nvl_chapters + 1;
             this.editableChapter = true;
             this.loading = false;
-            vid = 444444;
           }
           console.log(this.volume);
         } else {

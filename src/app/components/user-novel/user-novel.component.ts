@@ -108,6 +108,7 @@ export class UserNovelComponent implements OnInit {
       this.novel = new Novel();
       this.editableNovel = true;
       this.novel.nvl_status = 'Disabled';
+      this.novel.nvl_content = '';
       this.loading = false;
       this.location.replaceState('/mis-novelas/nuevo');
     }

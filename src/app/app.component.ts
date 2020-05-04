@@ -11,6 +11,7 @@ import * as Cookies from 'js-cookie';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
+  // SET GLOBAL group_concat_max_len = 999999999999999999;
   @ViewChild('skynovelBody') skynovelBodyRef: ElementRef;
   title = 'SkynovelsWebPage';
   themeToggled = false;
