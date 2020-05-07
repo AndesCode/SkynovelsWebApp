@@ -8,7 +8,7 @@ export class Novel {
     nvl_content?: string;
     nvl_writer?: string;
     nvl_img?: string;
-    nvl_status?: 'Active' | 'Disabled' | 'Finished' | 'Finalizada' | 'Activa' | 'Inactiva';
+    nvl_status?: 'Active' | 'Disabled' | 'Finished' | 'Finalizada' | 'Activa' | 'Inactiva' | 'Oculta';
     nvl_translator_eng?: string;
     nvl_translator?: string;
     nvl_rating?: number;

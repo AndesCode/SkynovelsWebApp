@@ -5,12 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NoimagePipe implements PipeTransform {
 
-  transform(nvl_img: any): string {
-    if (!nvl_img || nvl_img === '' || nvl_img.length <= 0) {
-      return '../../../assets/img/noimage.jpg';
-    }
-    if (nvl_img.length > 0) {
-      return 'http://localhost:3000/api/novel/image/' + nvl_img + '/false';
+  transform(nvlImg: string) {
+    if (nvlImg && nvlImg.length > 0) {
+      return 'http://localhost:3000/api/novel/image/' + nvlImg + '/false';
     } else {
       return '../../../assets/img/noimage.jpg';
     }

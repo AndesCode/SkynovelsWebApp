@@ -25,6 +25,12 @@ export class NovelsService {
 
     // Novels
 
+    getHome() {
+      const url = `${ this.urlnovelsdb }/home`;
+      return this.http.get(url);
+    }
+
+
     getNovels() {
       const url = `${ this.urlnovelsdb }/novels`;
       return this.http.get( url );

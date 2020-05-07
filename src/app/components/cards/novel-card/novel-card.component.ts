@@ -2,7 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { HelperService } from '../../../services/helper.service';
 import { NovelsService } from '../../../services/novels.service';
 import { Router } from '@angular/router';
-import { NovelFilter } from 'src/app/models/models';
+import { NovelFilter, Novel } from 'src/app/models/models';
 
 @Component({
   selector: 'app-novel-card',
@@ -11,7 +11,7 @@ import { NovelFilter } from 'src/app/models/models';
 })
 export class NovelCardComponent implements OnChanges {
 
-  @Input() novels: any[] = [];
+  @Input() novels: Array<Novel>;
   @Input() clickRoute = '';
   @Input() novelFilter: NovelFilter = {
     searchName: '',
@@ -45,26 +45,6 @@ export class NovelCardComponent implements OnChanges {
 
       }
       this.novels = this.novels.sort(this.hs.dateDataSorter);
-      for (const novel of this.novels) {
-        if (novel.nvl_img !== ''
-        && novel.nvl_img !== null
-        && novel.nvl_img !== undefined) {
-          this.ns.getNovelImage(novel.nvl_img).subscribe((data: any) => {
-            console.log(data);
-            const reader = new FileReader();
-            reader.addEventListener('load', () => {
-              novel.nvl_img = reader.result;
-            }, false);
-            if (data) {
-                reader.readAsDataURL(data);
-            }
-          }, error => {
-            novel.nvl_img = '../../../assets/img/noimage.jpg';
-          });
-        } else {
-          novel.nvl_img = '../../../assets/img/noimage.jpg';
-        }
-      }
       console.log(this.novels);
     }
   }

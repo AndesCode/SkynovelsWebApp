@@ -5,7 +5,7 @@ import { UsersService } from '../../services/users.service';
 import { HelperService } from '../../services/helper.service';
 import { Location } from '@angular/common';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { Genre, NovelFilter } from 'src/app/models/models';
+import { Genre, NovelFilter, Novel } from 'src/app/models/models';
 
 @Component({
   selector: 'app-novels',
@@ -14,7 +14,7 @@ import { Genre, NovelFilter } from 'src/app/models/models';
 })
 export class NovelsComponent implements OnInit {
 
-  novels: any;
+  novels: Array<Novel>;
   bookmarks = false;
   user_reading_list: any[] = [];
   novelFilter: NovelFilter = {
@@ -25,6 +25,7 @@ export class NovelsComponent implements OnInit {
   genres: Array<Genre> = [];
   smallScreen = false;
   mobile: boolean;
+  loading = true;
 
   constructor(private router: Router,
               private _ns: NovelsService,
@@ -37,6 +38,7 @@ export class NovelsComponent implements OnInit {
       this.novels = data.novels;
       // this.setImg();
       console.log(this.novels);
+      this.loading = false;
       this.allGenres();
     });
 

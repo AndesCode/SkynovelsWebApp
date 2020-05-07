@@ -49,7 +49,7 @@
         <div class="container">
             <div class="skn-novel-presentation">
                 <div class="skn-novel-presentation-image">
-                    <img src="../../../assets/img/23.jpg" alt="">
+                    <img [src]="novel.nvl_img | noimage" alt="">
                     <div class="skn-secondary">
                         <h4 [ngStyle]="{'color':novel.nvl_status === 'Activa' || novel.nvl_status === 'Finalizada' ? 'green' : 'red' }">{{novel.nvl_status}}</h4>
                     </div>
