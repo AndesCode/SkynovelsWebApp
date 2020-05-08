@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit {
   chapters: any[] = [];
   topNovels: Array<Novel>;
   recomendedNovel: Novel;
+  updatedNovels: Array<Novel>;
   mobile: boolean;
   buttons: any[] = ['1', '2', '3', '4'];
   isActive = false;
@@ -103,6 +104,22 @@ export class HomeComponent implements OnInit {
             this.recomendedNovel.nvl_status = 'Activa';
           }
         }
+        this.updatedNovels = data.updatedNovels;
+        for (const updatedNovel of this.updatedNovels) {
+          updatedNovel.date_data = this.hs.getRelativeTime(updatedNovel.nvl_last_update);
+          this.ns.getHomeUpdatedNovelChapters(updatedNovel.id).subscribe((data: any) => {
+            updatedNovel.chapters = data.updatedChapters;
+            for (const chapter of updatedNovel.chapters) {
+              chapter.date_data = this.hs.getRelativeTime(chapter.createdAt);
+              if (chapter.date_data.seconds > 1296000) {
+                chapter.new = false;
+              } else {
+                chapter.new = true;
+              }
+            }
+            console.log(this.updatedNovels);
+          });
+        }
         if (this.mobile) {
           this.mobile = true;
           setTimeout(() => {
@@ -121,6 +138,14 @@ export class HomeComponent implements OnInit {
 
   goToNovel(id: number, nvlName: string) {
     this.router.navigate(['/novelas', id, nvlName]);
+  }
+
+  goToChapter(nid: number, nvlName: string, cid: number, chpName: string) {
+    console.log(nid);
+    console.log(nvlName);
+    console.log(cid);
+    console.log(chpName);
+    this.router.navigate(['/novelas', nid, nvlName, cid, chpName]);
   }
 
   onclick($event) {

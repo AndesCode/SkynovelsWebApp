@@ -43,7 +43,7 @@ export class NovelsComponent implements OnInit {
     });
 
     this.breakpointObserver
-    .observe('(max-width: 679px)')
+    .observe('(max-width: 1000px)')
     .subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.mobile = true;

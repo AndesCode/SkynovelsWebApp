@@ -9,9 +9,6 @@
                     <img class="skn-home-img" src="../../../assets/img/Portada-Anuncio.jpeg" alt="" class="skn-home-img mx-auto d-block">
                 </div>
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
         </div>
     </section>
     <!-- -------------------------------------------------------------------------- 
@@ -57,7 +54,7 @@
             <div class="swiper-pagination" id></div>
         </div>
 
-        <div class="d-flex justify-content-center">
+        <div class="skn-home-title">
             <h1>Recomendada</h1>
         </div>
 
@@ -105,6 +102,33 @@
                 </div>
             </div>
             <p [innerHTML]="recomendedNovel?.nvl_content" style="margin-top: 15px;"></p>
+        </div>
+        <div class="skn-home-title" style="margin: 1.6rem;">
+            <h1>Ultimas actualizaciones</h1>
+        </div>
+        <div class="row" style="justify-content: center;">
+            <div *ngFor="let updatedNovel of updatedNovels">
+                <div class="skn-nvl-card">
+                    <div class="skn-nvl-card-img">
+                        <img [src]="updatedNovel.nvl_img | noimage" alt="" [routerLink]="['/novelas', updatedNovel.id, updatedNovel.nvl_name]">
+                    </div>
+                    <ul class="skn-nvl-updated-novels-chapters-list">
+                        <li *ngFor="let chapter of updatedNovel.chapters">
+                            <div class="d-flex">
+                                <strong style="word-break: break-word;" class="skn-link" (click)="goToChapter(updatedNovel.id, updatedNovel.nvl_name, chapter.id, chapter.chp_name)">{{hs.setContent(chapter.chp_index_title, 21)}}</strong>
+                                <div style="color: #0bb500;; margin-left: 3px;" *ngIf="chapter.new">Nuevo!</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="skn-nvl-card-update-time skn-tertiary">
+                        <div style="display: flex;">
+                            <div style="margin-left: 5px;">
+                                <strong class="skn-link" (click)="goToNovel(updatedNovel.id, updatedNovel.nvl_name)">{{hs.setContent(updatedNovel.nvl_title, 40)}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </main>

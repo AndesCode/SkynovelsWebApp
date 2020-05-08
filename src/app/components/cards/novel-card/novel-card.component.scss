@@ -4,16 +4,18 @@
     box-shadow: 0 1.1px 1.5px rgba(0, 0, 0, 0.123), 0 3.6px 5.7px rgba(0, 0, 0, 0.149), 0 16px 17px rgba(0, 0, 0, 0.19);
     border-radius: 5px;
     margin: 10px 10px;
-    width: 470px;
+    width: 25vw;
+    min-width: 480px;
     height: 240px;
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 145px auto;
     grid-template-rows: 85% 15%;
     grid-template-areas: "img info" "update update";
     @include subtract-media (desktop) {
-        width: 300px;
+        min-width: 300px;
+        width: 30vw;
         height: 150px;
-        grid-template-columns: 26% 74%;
+        grid-template-columns: 85px auto;
         grid-template-rows: 80% 20%;
     }
 }

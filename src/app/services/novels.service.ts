@@ -30,6 +30,10 @@ export class NovelsService {
       return this.http.get(url);
     }
 
+    getHomeUpdatedNovelChapters(id: number) {
+      const url = `${ this.urlnovelsdb }/home-updated-novel-chapters/${id}`;
+      return this.http.get(url);
+    }
 
     getNovels() {
       const url = `${ this.urlnovelsdb }/novels`;

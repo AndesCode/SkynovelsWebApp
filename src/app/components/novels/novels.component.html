@@ -7,13 +7,13 @@
             <input class="form-control skn-text-area col-auto" type="search" name="inputSearch" [(ngModel)]="novelFilter.searchName" id="searchName" name="searchName" autocomplete="on" placeholder="Busca lo que quieras">
         </div>
         <div class="skn-filters">
-            <mat-button-toggle-group [vertical]="mobile" name="fontStyle" aria-label="Font Style" [(ngModel)]="novelFilter.searchStatus" name="novelFilter.searchStatus">
+            <mat-button-toggle-group [vertical]="mobile" [(ngModel)]="novelFilter.searchStatus" name="novelFilter.searchStatus">
                 <mat-button-toggle value="All">Todas</mat-button-toggle>
                 <mat-button-toggle value="Activa">Activa</mat-button-toggle>
                 <mat-button-toggle value="Inactiva">Inactiva</mat-button-toggle>
                 <mat-button-toggle value="Finalizada">Finalizada</mat-button-toggle>
             </mat-button-toggle-group>
-            <mat-button-toggle-group class="f-right" [vertical]="mobile" name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle-group [vertical]="mobile">
                 <mat-button-toggle value="bold">Nombre</mat-button-toggle>
                 <mat-button-toggle value="italic">Popularidad</mat-button-toggle>
                 <mat-button-toggle value="underline">Capítulos</mat-button-toggle>
