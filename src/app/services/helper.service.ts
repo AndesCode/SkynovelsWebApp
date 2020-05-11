@@ -147,7 +147,7 @@ export class HelperService {
 
     // Upload images to BackEnd
 
-    uploadImage(id: any, file: File, img: string, imageType: string) {
+    uploadImage(id: any, file: File, img: string, imageType: 'novel' | 'user') {
       let url: string;
       let appendType: string;
       let oldAppendType: string;
@@ -157,7 +157,7 @@ export class HelperService {
         oldAppendType = 'old_novel_image';
       }
       if (imageType === 'user') {
-        url = `${ this.urlnovelsdb }/upload-profile-img/${id}`;
+        url = `${ this.urlnovelsdb }/upload-user-profile-img/${id}`;
         appendType = 'user_profile_image';
         oldAppendType = 'old_user_profile_image';
       }

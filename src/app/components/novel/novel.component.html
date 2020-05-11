@@ -189,7 +189,7 @@
 
                 </div>
                 <ng-template #createRatingModal>
-                    <!--First div defines custom widht for the modal dialog-->
+                    <!--First div defines custom width for the modal dialog-->
                     <div class="skn-dialong-modal" style="max-width: 45rem;">
                         <div class="modal-header">
                             <h4 class="modal-title">Tu calificación</h4>
@@ -225,17 +225,13 @@
 
             <div class="skn-nvl-user-rating skn-secondary" *ngFor="let rating of novel.novel_ratings">
                 <div class="skn-user-image">
-                    <div>
-                        <img src="https://dummyimage.com/50x50/000/fff" alt="">
-                    </div>
+                    <img [src]="rating.user_profile_image | noUserImage" alt="">
                 </div>
                 <div class="skn-nvl-user-rating-user-rating">
                     <div class="skn-nvl-user-rating-login">
                         <div style="display: flex;">
                             <div class="skn-user-image-mobile">
-                                <div>
-                                    <img src="https://dummyimage.com/50x50/000/fff" alt="">
-                                </div>
+                                <img [src]="rating.user_profile_image | noUserImage" alt="">
                             </div>
                             <strong style="margin: auto 6px">{{rating.user_login}}</strong>
                         </div>
@@ -301,9 +297,7 @@
                         <form *ngIf="user">
                             <div class="skn-nvl-rating-comment-textarea">
                                 <div class="skn-user-image" style="margin-right: 15px;">
-                                    <div>
-                                        <img src="https://dummyimage.com/50x50/000/fff" alt="">
-                                    </div>
+                                    <img [src]="user.user_profile_image | noUserImage" alt="">
                                 </div>
                                 <div class="skn-nvl-rating-comment-textarea-input">
                                     <mat-form-field style="width: 100%;">
@@ -316,17 +310,13 @@
                         </form>
                         <div class="skn-nvl-user-rating" *ngFor="let rating_comment of rating.rating_comments" style="padding: 0px!important;">
                             <div class="skn-user-image">
-                                <div>
-                                    <img src="https://dummyimage.com/50x50/000/fff" alt="">
-                                </div>
+                                <img [src]="rating_comment.user_profile_image | noUserImage" alt="">
                             </div>
                             <div class="skn-nvl-user-rating-user-rating">
                                 <div class="skn-nvl-user-rating-login" style="margin-bottom: 5px;">
                                     <div style="display: flex;">
                                         <div class="skn-user-image-mobile">
-                                            <div>
-                                                <img src="https://dummyimage.com/50x50/000/fff" alt="">
-                                            </div>
+                                            <img [src]="rating_comment.user_profile_image | noUserImage" alt="">
                                         </div>
                                         <div class="skn-nvl-user-rating-login-name">
                                             <strong style="margin-right: 5px;">{{rating_comment.user_login}}</strong>

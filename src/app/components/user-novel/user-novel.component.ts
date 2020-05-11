@@ -166,7 +166,7 @@ export class UserNovelComponent implements OnInit {
         }).catch(error => {
           console.log(error);
           this.openMatSnackBar(this.errorSnackRef);
-          this.errorSnackMessage = error.message;
+          this.errorSnackMessage = error.error.message;
         });
       } else {
         this.uploading = false;
@@ -176,7 +176,7 @@ export class UserNovelComponent implements OnInit {
     }, error => {
       console.log(error);
       this.openMatSnackBar(this.errorSnackRef);
-      this.errorSnackMessage = error.message;
+      this.errorSnackMessage = error.error.message;
     });
   }
 

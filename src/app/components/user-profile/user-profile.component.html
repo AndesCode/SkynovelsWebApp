@@ -1,4 +1,77 @@
-<main class="container">
+<div class="skn-loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</div>
+<main class="container" *ngIf="!loading">
+    <div class="skn-secondary skn-user-profile">
+        <div class="skn-user-profile-image">
+            <img src={{this.imgURL}} [ngStyle]="{height: editableProfile ? '90%' : '100%'}">
+            <input #file type="file" accept='image/*' (change)="fileChangeEvent($event)" hidden>
+            <button type="button" mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()" *ngIf="editableProfile">Subir imagen (.jpg)</button>
+        </div>
+        <div class="skn-user-profile-description">
+            <div class="d-flex align-items-lg-center" class="skn-user-profile-description-login">
+                <h2>{{userData.user_login}}</h2>
+                <button mat-mini-fab (click)="switchToEdition()" *ngIf="editableProfile && !edition"><span class="material-icons">create</span></button>
+                <button mat-mini-fab (click)="updateUser(userForm)" *ngIf="editableProfile && edition"><span class="material-icons">check</span></button>
+            </div>
+            <div>
+                <p *ngIf="!edition">{{userData.user_description}}</p>
+                <form #userForm="ngForm">
+                    <textarea *ngIf="edition" class="form-control skn-text-area" #user_description="ngModel" name="userData.user_description" [(ngModel)]="userData.user_description" rows="5"></textarea>
+                </form>
+            </div>
+        </div>
+        <div class="skn-user-profile-stats skn-main skn-text row" style="margin-left: 0px;">
+            <div *ngIf="userData.novels.length !== 1"> <span class="material-icons">library_books</span> {{userData.novels.length}} novelas publicadas</div>
+            <div *ngIf="userData.novels.length === 1"> <span class="material-icons">library_books</span> 1 novela publicada</div>
+            <div *ngIf="userData.chapters.length !== 1"> <span class="material-icons">create</span> {{userData.chapters.length}} Capitulos publicados</div>
+            <div *ngIf="userData.chapters.length === 1"> <span class="material-icons">create</span> 1 Capitulo publicado</div>
+            <div *ngIf="userData.collaborations.length !== 1"> <span class="material-icons">people</span> {{userData.collaborations.length}} colaboraciones</div>
+            <div *ngIf="userData.collaborations.length === 1"> <span class="material-icons">people</span> 1 colaboraciones</div>
+        </div>
+    </div>
+</main>
+<mat-tab-group style="align-items: center;" dynamicHeight *ngIf="!loading">
+    <mat-tab label="Novelas" *ngIf="userData.novels.length > 0">
+        <div class="container">
+            <section class="row" style="justify-content: center;">
+                <app-novel-card [novels]="userData.novels" [clickRoute]="'novel'"></app-novel-card>
+            </section>
+        </div>
+    </mat-tab>
+    <mat-tab label="Colaboraciones" *ngIf="userData.collaborations.length > 0">
+        <div class="container">
+            <section class="row" style="justify-content: center;">
+                <app-novel-card [novels]="userData.collaborations" [clickRoute]="'novel'"></app-novel-card>
+            </section>
+        </div>
+    </mat-tab>
+</mat-tab-group>
+<ng-template #successSnack>
+    <div class="skn-snack-success-notification">
+        <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #errorSnack>
+    <div class="skn-snack-error-notification">
+        <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+
+
+
+<!--<main class="container">
     <hr>
     <section>
         <div class="skn-user-profile">
@@ -127,4 +200,4 @@
         </div>
     </section>
 
-</main>
+</main>-->

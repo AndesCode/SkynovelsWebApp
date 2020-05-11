@@ -4,15 +4,15 @@
     display: flex;
     margin-bottom: 15px;
     .skn-novel-edition-presentation-image {
-        width: 290px;
-        height: 412px;
+        width: 18.2rem;
+        height: 25.75rem;
         border-radius: 5px;
         padding: 2px;
         margin-right: 15px;
         @include subtract-media(desktop) {
             margin: auto;
-            width: 245px;
-            height: 360px;
+            width: 15.31rem;
+            height: 22.5rem;
         }
         img {
             width: 100%;

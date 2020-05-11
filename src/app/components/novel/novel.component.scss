@@ -52,7 +52,7 @@ section {
     width: 100%;
     margin: 10px 0px;
     div {
-        margin: 2px 10px;
+        margin: 0.5rem 10px;
         display: flex;
         white-space: nowrap;
         span {
@@ -193,6 +193,7 @@ section {
 
 .skn-user-image {
     width: 50px;
+    height: 50px;
     min-width: 50px;
     img {
         border-radius: 50%;
@@ -206,6 +207,7 @@ section {
 
 .skn-user-image-mobile {
     width: 50px;
+    height: 50px;
     min-width: 50px;
     display: none;
     img {

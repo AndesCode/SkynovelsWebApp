@@ -6,7 +6,7 @@
                 <a class="nav-link" routerLink="novelas" routerLinkActive="nav-link-selected">Novelas</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" routerLink="foro" routerLinkActive="nav-link-selected">Foro</a>
+                <a href="https://skymangas.com" class="nav-link" routerLinkActive="nav-link-selected">Mangas</a>
             </div>
             <div class="skn-nav-link">
                 <a class="nav-link" routerLink="mis-novelas" *ngIf="_us.userIsEditor()" routerLinkActive="nav-link-selected">Mis novelas</a>
@@ -24,7 +24,7 @@
                 <a class="nav-link" *ngIf="_us.userIsLoged()" (click)="logout()" style="cursor: pointer;">Cerrar sesión</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" [routerLink]="['/perfil', this._us.getUserLoged().user_login, this._us.getUserLoged().id]" *ngIf="_us.userIsLoged()" style="cursor: pointer;" routerLinkActive="black">Perfil</a>
+                <a class="nav-link" [routerLink]="['/perfil', this._us.getUserLoged().user_login, this._us.getUserLoged().id]" *ngIf="_us.userIsLoged()" style="cursor: pointer;" routerLinkActive="nav-link-selected">Perfil</a>
             </div>
             <div class="skn-nav-link">
                 <a class="nav-link" (click)="toggleTheme()"><span class="material-icons md-30 hide-light">brightness_2</span><span class="material-icons md-30 hide-dark">brightness_7</span></a>

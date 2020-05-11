@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { UsersService } from '../../services/users.service';
 import { HelperService } from '../../services/helper.service';
+import { User } from 'src/app/models/models';
+import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-profile',
@@ -10,78 +12,115 @@ import { HelperService } from '../../services/helper.service';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
+  @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
+  @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
+  public successSnackMessage: string;
+  public errorSnackMessage: string;
   public fileToUpload: File = null;
-  public image_selected: string;
+  public imageSelected: string;
   public imagePath;
   public imgURL: any = '../../../assets/img/noimage.jpg';
-  public userData: any = {};
-  public Editor = ClassicEditor;
-  current_window = 'profile';
-  user_data: any = [];
-  editable_profile = false;
-  active_tab = 'activity';
+  currentWindow = 'profile';
+  userData: User;
+  editableProfile = false;
+  loading = true;
+  edition = false;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private _us: UsersService,
+              private us: UsersService,
               private router: Router,
-              public _hs: HelperService) {}
+              public matSnackBar: MatSnackBar,
+              public hs: HelperService) {}
 
   ngOnInit(): void {
     const urlId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-    this._us.getUser(urlId).subscribe((data: any) => {
-      // let activityArray = [];
-      this.user_data = data;
-      this.user_data.activityArray = [];
+    this.us.getUser(urlId).subscribe((data: any) => {
+      this.userData = data.user[0];
+      if (this.userData.user_profile_image !== null &&
+        this.userData.user_profile_image !== ''
+        && this.userData.user_profile_image !== undefined) {
+        this.imgURL = 'http://localhost:3000/api/user-profile-img/' + this.userData.user_profile_image + '/false';
+      }
       if (data.self_user) {
-        this.editable_profile = true;
-      }
-      for (let i = 0; i < this.user_data.chapters.length; i++) {
-        this.user_data.chapters[i].date_data = this._hs.getRelativeTime(this.user_data.chapters[i].createdAt, null, 'short');
-        if (this.user_data.chapters[i].date_data && this.user_data.chapters[i].date_data.seconds < 5184000) {
-          console.log('agregar');
-          this.user_data.chapters[i].activity_type = 'chapter';
-          this.user_data.activityArray.push(this.user_data.chapters[i]);
-        }
-      }
-      for (let i = 0; i < this.user_data.novels.length; i++) {
-        this.user_data.novels[i].date_data = this._hs.getRelativeTime(this.user_data.novels[i].createdAt, null, 'short');
-        if (this.user_data.novels[i].date_data && this.user_data.novels[i].date_data.seconds < 5184000) {
-          console.log('agregar');
-          this.user_data.novels[i].activity_type = 'novels';
-          this.user_data.activityArray.push(this.user_data.novels[i]);
-        }
-      }
-      for (let i = 0; i < this.user_data.forum_posts.length; i++) {
-        this.user_data.forum_posts[i].date_data = this._hs.getRelativeTime(this.user_data.forum_posts[i].createdAt, null, 'short');
-        if (this.user_data.forum_posts[i].date_data && this.user_data.forum_posts[i].date_data.seconds < 5184000) {
-          console.log('agregar');
-          this.user_data.forum_posts[i].activity_type = 'forum_post';
-          this.user_data.forum_posts[i].post_name = this.user_data.forum_posts[i].post_title.replace(/^\s+|\s+$|\s+(?=\s)/g, '');
-          this.user_data.forum_posts[i].post_name = this.user_data.forum_posts[i].post_name.split(' ').join('-');
-          this.user_data.forum_posts[i].post_name = this.user_data.forum_posts[i].post_name.toLowerCase();
-          this.user_data.activityArray.push(this.user_data.forum_posts[i]);
-        }
-      }
-      for (let i = 0; i < this.user_data.posts_comments.length; i++) {
-        this.user_data.posts_comments[i].date_data = this._hs.getRelativeTime(this.user_data.posts_comments[i].createdAt, null, 'short');
-        if (this.user_data.posts_comments[i].date_data && this.user_data.posts_comments[i].date_data.seconds < 5184000) {
-          console.log('agregar');
-          this.user_data.posts_comments[i].activity_type = 'posts_comments';
-          // tslint:disable-next-line: max-line-length
-          this.user_data.posts_comments[i].post.post_name = this.user_data.posts_comments[i].post.post_title.replace(/^\s+|\s+$|\s+(?=\s)/g, '');
-          this.user_data.posts_comments[i].post.post_name = this.user_data.posts_comments[i].post.post_name.split(' ').join('-');
-          this.user_data.posts_comments[i].post.post_name = this.user_data.posts_comments[i].post.post_name.toLowerCase();
-          this.user_data.activityArray.push(this.user_data.posts_comments[i]);
-        }
+        this.editableProfile = true;
       }
       console.log(data);
-      this.user_data.activityArray.sort(this._hs.forumAcitivitySorter);
+      this.loading = false;
     }, error => {
       this.router.navigate(['']);
     });
   }
 
-  switchTab(tab: string) {
-    this.active_tab = tab;
+  openMatSnackBar(template: TemplateRef<any>): void {
+    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
+  }
+
+  updateUser(userForm: NgForm) {
+    this.edition = false;
+    if (userForm.valid && userForm.dirty) {
+      this.us.updateUser(this.userData).subscribe((data: any) => {
+        console.log(data);
+        userForm.reset(userForm.value);
+        this.openMatSnackBar(this.successSnackRef);
+        this.successSnackMessage = '¡Cambios guardados!';
+      }, error => {
+        this.edition = true;
+        this.openMatSnackBar(this.errorSnackRef);
+        this.errorSnackMessage = error.error.message;
+      });
+    } else {
+      this.edition = false;
+      return;
+    }
+  }
+
+  fileChangeEvent(fileInput: any) {
+    if (fileInput.target.files.length > 0) {
+      this.fileToUpload = fileInput.target.files[0];
+      console.log(this.fileToUpload);
+      this.imageSelected = this.fileToUpload.name;
+    } else {
+      fileInput = null;
+      this.imageSelected = '';
+    }
+    if (fileInput.target.files.length === 0) {
+      this.fileToUpload = null;
+      return;
+    }
+    const mimeType =  this.fileToUpload.type;
+    console.log(mimeType);
+    if (mimeType.match(/image\/*/) == null) {
+        this.imageSelected = 'Solo puedes seleccionar imagenes .jpg';
+        this.fileToUpload = null;
+        return;
+    }
+    const reader = new FileReader();
+    this.imagePath = this.fileToUpload;
+    reader.readAsDataURL(this.fileToUpload);
+    // tslint:disable-next-line: variable-name
+    reader.onload = (_event) => {
+    this.imgURL = reader.result;
+    };
+    this.hs.uploadImage(this.userData.id, this.fileToUpload, this.userData.user_profile_image, 'user')
+        .then((img: any) => {
+          this.userData.user_profile_image = img.user.user_profile_image;
+          console.log(img);
+          this.fileToUpload = null;
+          this.openMatSnackBar(this.successSnackRef);
+          this.successSnackMessage = '¡Cambios guardados!';
+          return;
+        }).catch(error => {
+          console.log(error);
+          this.openMatSnackBar(this.errorSnackRef);
+          this.errorSnackMessage = error.error.message;
+        });
+  }
+
+  switchToEdition() {
+    if (this.editableProfile) {
+      this.edition = true;
+    } else {
+      return;
+    }
   }
 }

@@ -1,5 +1,84 @@
 @import "../../common.scss";
-.active {
+.skn-user-profile {
+    width: 100%;
+    border-radius: 15px;
+    padding: 0.6rem;
+    display: flex;
+    .skn-user-profile-image {
+        width: 12.2rem;
+        height: 18.75rem;
+        border-radius: 5px;
+        padding: 2px;
+        margin-right: 15px;
+        @include subtract-media(desktop) {
+            margin: auto;
+            width: 9.2rem;
+            height: 15.75rem;
+        }
+        img {
+            width: 100%;
+            height: 90%;
+            border-radius: 5px 5px 0px 0px;
+        }
+        .skn-upload-image-button {
+            line-height: 30px!important;
+            width: 100%;
+            height: 10%;
+            border-radius: 0px 0px 5px 5px;
+        }
+    }
+    .skn-user-profile-description {
+        flex: auto;
+        width: min-content;
+        height: fit-content;
+        @include subtract-media(desktop) {
+            margin: 1rem 0px;
+            flex: unset;
+            width: unset;
+            height: unset;
+        }
+        .skn-user-profile-description-login {
+            align-items: center;
+            display: flex;
+            margin-bottom: 1.5rem;
+            h2 {
+                margin: 0px 0.6rem 0px 0px;
+            }
+            @include subtract-media(desktop) {
+                justify-content: center;
+            }
+        }
+    }
+    @include subtract-media(desktop) {
+        display: block;
+    }
+    .skn-user-profile-stats {
+        border-radius: 15px;
+        padding: 5px;
+        justify-content: center;
+        width: 100%;
+        margin: 10px 0px;
+        max-height: 12rem;
+        div {
+            margin: 0.5rem 10px;
+            display: flex;
+            white-space: nowrap;
+            span {
+                margin-right: 2px;
+            }
+            @include desktop {
+                margin: 1.4em 10px;
+            }
+        }
+        @include desktop {
+            display: block!important;
+            width: unset;
+        }
+    }
+}
+
+
+/*.active {
     background-color: color(primary) !important;
     color: black !important;
 }
@@ -107,4 +186,4 @@
     .skn-user-activity-description {
         width: 95%;
     }
-}
+}*/

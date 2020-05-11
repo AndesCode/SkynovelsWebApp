@@ -5,12 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NoUserImagePipe implements PipeTransform {
 
-  transform(user_profile_image: any): string {
-    if (!user_profile_image || user_profile_image === '' || user_profile_image.length <= 0) {
+  transform(userProfileImage: any): string {
+    if (!userProfileImage || userProfileImage === '' || userProfileImage.length <= 0) {
       return '../../../assets/img/noimage.jpg';
     }
-    if (user_profile_image.length > 0) {
-      return 'http://localhost:3000/api/user/image/' + user_profile_image + '/false';
+    if (userProfileImage.length > 0) {
+      return 'http://localhost:3000/api/user-profile-img/' + userProfileImage + '/false';
     } else {
       return '../../../assets/img/noimage.jpg';
     }
