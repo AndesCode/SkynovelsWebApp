@@ -5,6 +5,7 @@ import { HelperService } from '../../services/helper.service';
 import { User } from 'src/app/models/models';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,6 +23,7 @@ export class UserProfileComponent implements OnInit {
   public imgURL: any = '../../../assets/img/noimage.jpg';
   currentWindow = 'profile';
   userData: User;
+  user: User = null;
   editableProfile = false;
   loading = true;
   edition = false;
@@ -29,23 +31,31 @@ export class UserProfileComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private us: UsersService,
               private router: Router,
+              private location: Location,
               public matSnackBar: MatSnackBar,
               public hs: HelperService) {}
 
   ngOnInit(): void {
+    this.hs.invokeExternalFunction.subscribe((data: any) => {
+      if (data === 'reloadUser') {
+        this.getUser();
+      }
+    });
     const urlId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.us.getUser(urlId).subscribe((data: any) => {
       this.userData = data.user[0];
+      this.location.replaceState('/perfil/' + this.userData.id + '/' + this.userData.user_login);
       if (this.userData.user_profile_image !== null &&
         this.userData.user_profile_image !== ''
         && this.userData.user_profile_image !== undefined) {
         this.imgURL = 'http://localhost:3000/api/user-profile-img/' + this.userData.user_profile_image + '/false';
       }
-      if (data.self_user) {
+      /*if (data.self_user) {
         this.editableProfile = true;
-      }
+      }*/
       console.log(data);
       this.loading = false;
+      this.getUser();
     }, error => {
       this.router.navigate(['']);
     });
@@ -72,6 +82,10 @@ export class UserProfileComponent implements OnInit {
       this.edition = false;
       return;
     }
+  }
+
+  getUser() {
+    this.user = this.us.getUserLoged();
   }
 
   fileChangeEvent(fileInput: any) {
@@ -117,7 +131,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   switchToEdition() {
-    if (this.editableProfile) {
+    if (this.user && this.user.id === this.userData.id) {
       this.edition = true;
     } else {
       return;

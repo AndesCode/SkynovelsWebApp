@@ -77,7 +77,8 @@ const routes: Routes = [
   { path: 'foro', component: ForumComponent },
   { path: 'foro/:category/:cid', component: ForumCategoryComponent },
   { path: 'foro/:category/:cid/:post/:id', component: ForumPostComponent },
-  { path: 'perfil/:login/:id', component: UserProfileComponent },
+  { path: 'perfil/:id', component: UserProfileComponent },
+  { path: 'perfil/:id/:login', component: UserProfileComponent },
   // Test
   { path: 'test', component: TestComponent },
   // redirects

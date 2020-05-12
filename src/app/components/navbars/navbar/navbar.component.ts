@@ -6,6 +6,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { HelperService } from '../../../services/helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -17,14 +18,18 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class NavbarComponent implements OnInit {
 
   @ViewChild('loginModal') loginModalRef: TemplateRef<any>;
+  @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
+  @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
+  public successSnackMessage: string;
+  public errorSnackMessage: string;
+
   currentComponent = null;
-  forgot_password_form = false;
   loginButton = false;
   error: any = null;
   message: any = null;
   elementRotated = false;
   dropDown = false;
-  user_invitations: any[] = [];
+  userInvitations: any[] = [];
   user: any = {};
   mobile = false;
   show = false;
@@ -39,13 +44,13 @@ export class NavbarComponent implements OnInit {
   // login
   registerCompleted = false;
 
-  constructor(public _us: UsersService,
-              public _as: AdminService,
+  constructor(public us: UsersService,
+              public as: AdminService,
               private router: Router,
-              private _hs: HelperService,
-              private activatedRoute: ActivatedRoute,
+              private hs: HelperService,
+              public matSnackBar: MatSnackBar,
               public breakpointObserver: BreakpointObserver,
-              public el:ElementRef,
+              public el: ElementRef,
               public r: Renderer2,
               public dialog: MatDialog) {
 
@@ -84,13 +89,16 @@ export class NavbarComponent implements OnInit {
         }
       });
 
-    this._hs.sendCurrentComponnent.subscribe((data: any) => {
+    this.hs.sendCurrentComponnent.subscribe((data: any) => {
       this.currentComponent = data;
       console.log(this.currentComponent);
     });
-    this._hs.invokeExternalFunction.subscribe((data: any) => {
+    this.hs.invokeExternalFunction.subscribe((data: any) => {
       if (data === 'closeSideNavBarCall') {
         this.mobileNavbar = false;
+      }
+      if (data === 'logOut') {
+        this.logout();
       }
       if (data === 'loginForm') {
         this.openDialogSheet(this.loginModalRef, true, false);
@@ -99,6 +107,10 @@ export class NavbarComponent implements OnInit {
         this.openDialogSheet(this.loginModalRef, false, true);
       }
     });
+  }
+
+  openMatSnackBar(template: TemplateRef<any>): void {
+    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
   }
 
   openDialogSheet(item: TemplateRef<any>, login?: boolean, register?: boolean): void {
@@ -115,21 +127,20 @@ export class NavbarComponent implements OnInit {
     console.log(this.loginForm);
     this.loginFormLoading = true;
     if (this.loginForm.valid) {
-      this._us.logIn(this.loginForm.value).subscribe((data: any) => {
+      this.us.logIn(this.loginForm.value).subscribe((data: any) => {
         console.log(data);
         if (data.sknvl_s) {
           localStorage.setItem('sknvl_s', data.sknvl_s);
         }
-        this._hs.openExternalFunction('reloadUser');
+        this.hs.openExternalFunction('reloadUser');
         this.dialog.closeAll();
         this.registerCompleted = false;
         this.loginFormLoading = false;
         this.loginForm.reset();
-        // Acciones a tomar tras logearse en distintos componentes.
       }, error => {
-        console.log(error);
+        this.openMatSnackBar(this.errorSnackRef);
+        this.errorSnackMessage = error.error.message;
         this.loginFormLoading = false;
-        // this.displayMessage(error.error.message, true);
       });
     } else {
       // this.displayMessage('Debes escribir un usuario y contraseña', true);
@@ -141,18 +152,18 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this._us.logOut().subscribe((data: any) => {
+    this.us.logOut().subscribe((data: any) => {
       localStorage.clear();
-      if (this.currentComponent === 'MyNovelComponent'
-      || this.currentComponent === 'MyNovelsComponent'
-      || this.currentComponent === 'UserProfileComponent'
+      if (this.currentComponent === 'UserNovelComponent'
+      || this.currentComponent === 'UserNovelsComponent'
+      || this.currentComponent === 'UserChapterComponent'
       || this.currentComponent === 'AdminPanelComponent') {
-        this.router.navigate(['/home']);
+        this.router.navigate(['']);
       }
-      this._hs.openExternalFunction('reloadUser');
+      this.hs.openExternalFunction('reloadUser');
     }, error => {
       localStorage.clear();
-      this._hs.openExternalFunction('reloadUser');
+      this.hs.openExternalFunction('reloadUser');
     });
   }
 
@@ -164,16 +175,16 @@ export class NavbarComponent implements OnInit {
 
   openMobileNavbarForm() {
     this.mobileNavbar = true;
-    this._hs.openExternalFunction('sideNavBar');
+    this.hs.openExternalFunction('sideNavBar');
   }
 
   closeMobileNavbarForm() {
     this.mobileNavbar = false;
-    this._hs.openExternalFunction('closeSideNavBar');
+    this.hs.openExternalFunction('closeSideNavBar');
   }
 
   toggleTheme() {
-    this._hs.openExternalFunction('toggleTheme');
+    this.hs.openExternalFunction('toggleTheme');
   }
 
   /*showUserInvitations() {

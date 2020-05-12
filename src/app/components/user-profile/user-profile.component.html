@@ -4,20 +4,20 @@
 <main class="container" *ngIf="!loading">
     <div class="skn-secondary skn-user-profile">
         <div class="skn-user-profile-image">
-            <img src={{this.imgURL}} [ngStyle]="{height: editableProfile ? '90%' : '100%'}">
+            <img src={{this.imgURL}} [ngStyle]="{height: user?.id === userData.id ? '90%' : '100%'}">
             <input #file type="file" accept='image/*' (change)="fileChangeEvent($event)" hidden>
-            <button type="button" mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()" *ngIf="editableProfile">Subir imagen (.jpg)</button>
+            <button type="button" mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()" *ngIf="user?.id === userData.id">Subir imagen (.jpg)</button>
         </div>
         <div class="skn-user-profile-description">
             <div class="d-flex align-items-lg-center" class="skn-user-profile-description-login">
                 <h2>{{userData.user_login}}</h2>
-                <button mat-mini-fab (click)="switchToEdition()" *ngIf="editableProfile && !edition"><span class="material-icons">create</span></button>
-                <button mat-mini-fab (click)="updateUser(userForm)" *ngIf="editableProfile && edition"><span class="material-icons">check</span></button>
+                <button mat-mini-fab (click)="switchToEdition()" *ngIf="user?.id === userData.id && !edition"><span class="material-icons">create</span></button>
+                <button mat-mini-fab (click)="updateUser(userForm)" *ngIf="user?.id === userData.id && edition"><span class="material-icons">check</span></button>
             </div>
             <div>
                 <p *ngIf="!edition">{{userData.user_description}}</p>
                 <form #userForm="ngForm">
-                    <textarea *ngIf="edition" class="form-control skn-text-area" #user_description="ngModel" name="userData.user_description" [(ngModel)]="userData.user_description" rows="5"></textarea>
+                    <textarea *ngIf="user?.id === userData.id && edition" class="form-control skn-text-area" #user_description="ngModel" name="userData.user_description" [(ngModel)]="userData.user_description" rows="5"></textarea>
                 </form>
             </div>
         </div>

@@ -9,22 +9,22 @@
                 <a href="https://skymangas.com" class="nav-link" routerLinkActive="nav-link-selected">Mangas</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" routerLink="mis-novelas" *ngIf="_us.userIsEditor()" routerLinkActive="nav-link-selected">Mis novelas</a>
+                <a class="nav-link" routerLink="mis-novelas" *ngIf="us.userIsEditor()" routerLinkActive="nav-link-selected">Mis novelas</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" (click)="openDialogSheet(loginModal, true, false)" *ngIf="!_us.userIsLoged()" routerLinkActive="nav-link-selected" style="cursor: pointer;">Iniciar sesión</a>
+                <a class="nav-link" (click)="openDialogSheet(loginModal, true, false)" *ngIf="!us.userIsLoged()" routerLinkActive="nav-link-selected" style="cursor: pointer;">Iniciar sesión</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" *ngIf="!_us.userIsLoged()" (click)="openDialogSheet(loginModal, false, true)" routerLinkActive="nav-link-selected" style="cursor: pointer;">Registrarse</a>
+                <a class="nav-link" *ngIf="!us.userIsLoged()" (click)="openDialogSheet(loginModal, false, true)" routerLinkActive="nav-link-selected" style="cursor: pointer;">Registrarse</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" routerLink="panel" *ngIf="this._as.userIsAdmin()" routerLinkActive="nav-link-selected">Panel de control</a>
+                <a class="nav-link" routerLink="panel" *ngIf="this.as.userIsAdmin()" routerLinkActive="nav-link-selected">Panel de control</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" *ngIf="_us.userIsLoged()" (click)="logout()" style="cursor: pointer;">Cerrar sesión</a>
+                <a class="nav-link" *ngIf="us.userIsLoged()" (click)="logout()" style="cursor: pointer;">Cerrar sesión</a>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" [routerLink]="['/perfil', this._us.getUserLoged().user_login, this._us.getUserLoged().id]" *ngIf="_us.userIsLoged()" style="cursor: pointer;" routerLinkActive="nav-link-selected">Perfil</a>
+                <a class="nav-link" [routerLink]="['/perfil', this.us.getUserLoged().id, this.us.getUserLoged().user_login]" *ngIf="us.userIsLoged()" style="cursor: pointer;" routerLinkActive="nav-link-selected">Perfil</a>
             </div>
             <div class="skn-nav-link">
                 <a class="nav-link" (click)="toggleTheme()"><span class="material-icons md-30 hide-light">brightness_2</span><span class="material-icons md-30 hide-dark">brightness_7</span></a>
@@ -115,6 +115,27 @@
         <div class="skn-login-switcher">
             <p class="skn-link" *ngIf="currentForm === 'login'" (click)="swichtTab('passwordRecovery')">¿Olvidaste tu contraseña?</p>
             <p class="skn-link" *ngIf="currentForm === 'passwordRecovery'" (click)="swichtTab('login')">Regresar a inicio</p>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #successSnack>
+    <div class="skn-snack-success-notification">
+        <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #errorSnack>
+    <div class="skn-snack-error-notification">
+        <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
         </div>
     </div>
 </ng-template>

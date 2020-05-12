@@ -64,20 +64,12 @@ nav:hover {
         .skn-admin-card-section {
             display: inline-flex;
             cursor: pointer;
-            i {
-                margin: 0px 8px 0px 0px;
-                font-size: 27px;
-            }
             a {
                 display: contents;
                 span {
                     display: block;
                     white-space: nowrap;
                 }
-            }
-            a:hover {
-                color: white;
-                transition: all .3s ease;
             }
         }
     }

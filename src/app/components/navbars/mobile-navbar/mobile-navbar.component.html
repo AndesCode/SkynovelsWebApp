@@ -16,59 +16,52 @@
             <div class="skn-admin-card-section">
                 <a routerLink="novelas" (click)="navigate()">
                     <span class="material-icons md-30">library_books</span>
-                    <span class="nav-mobile-text">Novelas</span>
+                    <span class="nav-mobile-text" routerLinkActive="nav-link-selected">Novelas</span>
                 </a>
             </div>
             <hr>
-            <div class="skn-admin-card-section">
-                <a routerLink="foro" (click)="navigate()">
-                    <span class="material-icons md-30">forum</span>
-                    <span class="nav-mobile-text">Foro</span>
-                </a>
-            </div>
-            <hr>
-            <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
+            <div class="skn-admin-card-section" *ngIf="us.userIsLoged()">
                 <a (click)="navigate(); goToMyProfile()">
                     <span class="material-icons md-30">account_circle</span>
-                    <span class="nav-mobile-text">Perfil</span>
+                    <span class="nav-mobile-text" routerLinkActive="nav-link-selected">Perfil</span>
                 </a>
             </div>
-            <hr *ngIf="_us.userIsLoged()">
-            <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
+            <hr *ngIf="us.userIsLoged()">
+            <div class="skn-admin-card-section" *ngIf="us.userIsLoged()">
                 <a routerLink="mis-novelas" (click)="navigate()">
                     <span class="material-icons md-30">create</span>
-                    <span class="nav-mobile-text">Mis novelas</span>
+                    <span class="nav-mobile-text" routerLinkActive="nav-link-selected">Mis novelas</span>
                 </a>
             </div>
-            <hr *ngIf="_us.userIsLoged()">
-            <div class="skn-admin-card-section" *ngIf="!_us.userIsLoged()">
+            <hr *ngIf="us.userIsLoged()">
+            <div class="skn-admin-card-section" *ngIf="!us.userIsLoged()">
                 <a (click)="openLoginForm(); closeMobileNavbarForm()">
                     <span class="material-icons md-30">face</span>
                     <span class="nav-mobile-text">Iniciar Sesión</span>
                 </a>
             </div>
-            <hr *ngIf="!_us.userIsLoged()">
-            <div class="skn-admin-card-section" *ngIf="!_us.userIsLoged()">
+            <hr *ngIf="!us.userIsLoged()">
+            <div class="skn-admin-card-section" *ngIf="!us.userIsLoged()">
                 <a (click)="openRegisterForm(); navigate()">
                     <span class="material-icons md-30">account_box</span>
                     <span class="nav-mobile-text">Registrarse</span>
                 </a>
             </div>
-            <hr *ngIf="!_us.userIsLoged()">
-            <div class="skn-admin-card-section" *ngIf="this._as.userIsAdmin()">
+            <hr *ngIf="!us.userIsLoged()">
+            <div class="skn-admin-card-section" *ngIf="this.as.userIsAdmin()">
                 <a routerLink="panel" (click)="navigate()">
                     <span class="material-icons md-30">settings</span>
-                    <span class="nav-mobile-text"> Panel de control</span>
+                    <span class="nav-mobile-text" routerLinkActive="nav-link-selected">Panel de control</span>
                 </a>
             </div>
-            <hr *ngIf="this._as.userIsAdmin()">
-            <div class="skn-admin-card-section" *ngIf="_us.userIsLoged()">
+            <hr *ngIf="this.as.userIsAdmin()">
+            <div class="skn-admin-card-section" *ngIf="us.userIsLoged()">
                 <a (click)="logout()">
                     <span class="material-icons md-30">block</span>
                     <span class="nav-mobile-text">Cerrar sesión</span>
                 </a>
             </div>
-            <hr *ngIf="_us.userIsLoged()">
+            <hr *ngIf="us.userIsLoged()">
         </div>
     </section>
     <div class="skn-mobile-navbar-disabled-content" (click)="closeMobileNavbarForm()">

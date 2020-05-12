@@ -13,9 +13,9 @@ import { ViewportScroller } from '@angular/common';
 })
 export class MobileNavbarComponent implements OnInit {
 
-  constructor(public _as: AdminService,
-              private _hs: HelperService,
-              public _us: UsersService,
+  constructor(public as: AdminService,
+              private hs: HelperService,
+              public us: UsersService,
               private router: Router,
               public breakpointObserver: BreakpointObserver,
               private viewportScroller: ViewportScroller) { }
@@ -24,7 +24,7 @@ export class MobileNavbarComponent implements OnInit {
   scrollPosition = 0;
 
   ngOnInit(): void {
-    this._hs.invokeExternalFunction.subscribe((data: any) => {
+    this.hs.invokeExternalFunction.subscribe((data: any) => {
       if (data === 'sideNavBar') {
         this.openNav();
       }
@@ -56,39 +56,33 @@ export class MobileNavbarComponent implements OnInit {
   }
 
   goToMyProfile() {
-    this.router.navigate(['/perfil', this._us.getUserLoged().user_login, this._us.getUserLoged().id]);
+    this.router.navigate(['/perfil', this.us.getUserLoged().user_login, this.us.getUserLoged().id]);
   }
 
   closeMobileNavbarForm() {
-    this._hs.openExternalFunction('closeSideNavBarCall');
+    this.hs.openExternalFunction('closeSideNavBarCall');
     this.closeNav(true);
   }
 
   navigate() {
-    this._hs.openExternalFunction('closeSideNavBarCall');
+    this.hs.openExternalFunction('closeSideNavBarCall');
     this.closeNav(false);
   }
 
   toggleTheme() {
-    this._hs.openExternalFunction('toggleTheme');
+    this.hs.openExternalFunction('toggleTheme');
   }
 
   openLoginForm() {
-    this._hs.openExternalFunction('loginForm');
+    this.hs.openExternalFunction('loginForm');
   }
 
   openRegisterForm() {
-    this._hs.openExternalFunction('registerForm');
+    this.hs.openExternalFunction('registerForm');
   }
 
   logout() {
-    this._us.logOut().subscribe((data: any) => {
-      localStorage.clear();
-      this._hs.openExternalFunction('reloadUser');
-    }, error => {
-      localStorage.clear();
-      this._hs.openExternalFunction('reloadUser');
-    });
+    this.hs.openExternalFunction('logOut');
   }
 
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NovelsService } from '../../services/novels.service';
-import { UsersService } from '../../services/users.service';
 import { HelperService } from '../../services/helper.service';
 import { Location } from '@angular/common';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
