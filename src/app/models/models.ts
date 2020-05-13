@@ -71,4 +71,18 @@ export class User {
     collaborations?: Array<any>;
 }
 
+export class Invitation {
+    id?: number;
+    user_login?: string;
+    invitation_from_id?: number;
+    invitation_to_id?: number;
+    invitation_novel?: number;
+    invitation_status?: 'Active' | 'Confirmed' | 'Rejected';
+    createdAt?: Date;
+    updatedAt?: Date;
+    invitation_from_user_image?: string;
+    invitation_from_login?: string;
+    invitation_nvl_title?: string;
+}
+
 

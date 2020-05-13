@@ -36,10 +36,10 @@
                 <p *ngIf="novel.novel_ratings?.length === 1" style="padding: 4px;">{{novel.nvl_rating}} ({{novel.novel_ratings?.length}} voto)</p>
             </div>
             <div class="skn-novel-presentation-info-user-buttons-box">
-                <button mat-raised-button color="primary" style="color: black; height: 35px; margin-right: 5px;" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Añadir a la biblioteca</button>
-                <button mat-raised-button color="primary" style="color: black; height: 35px; margin-right: 5px;" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>
-                <button mat-raised-button color="primary" style="color: black; height: 35px;" *ngIf="!novel.user_bookmark || novel.user_bookmark.bkm_chapter <= 1">Leer</button>
-                <button mat-raised-button color="primary" style="color: black; height: 35px;" *ngIf="novel.user_bookmark && novel.user_bookmark.bkm_chapter > 1">Continuar leyendo</button>
+                <button mat-raised-button color="primary" style="height: 35px; margin-right: 5px;" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Añadir a la biblioteca</button>
+                <button mat-raised-button color="primary" style="height: 35px; margin-right: 5px;" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>
+                <button mat-raised-button color="primary" style="height: 35px;" *ngIf="!novel.user_bookmark || novel.user_bookmark.bkm_chapter <= 1">Leer</button>
+                <button mat-raised-button color="primary" style="height: 35px;" *ngIf="novel.user_bookmark && novel.user_bookmark.bkm_chapter > 1">Continuar leyendo</button>
             </div>
 
         </div>

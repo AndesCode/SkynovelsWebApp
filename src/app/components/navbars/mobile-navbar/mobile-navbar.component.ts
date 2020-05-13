@@ -56,7 +56,7 @@ export class MobileNavbarComponent implements OnInit {
   }
 
   goToMyProfile() {
-    this.router.navigate(['/perfil', this.us.getUserLoged().user_login, this.us.getUserLoged().id]);
+    this.router.navigate(['/perfil', this.us.getUserLoged().id, this.us.getUserLoged().user_login]);
   }
 
   closeMobileNavbarForm() {

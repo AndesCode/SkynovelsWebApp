@@ -8,23 +8,44 @@
             <div class="skn-nav-link">
                 <a href="https://skymangas.com" class="nav-link" routerLinkActive="nav-link-selected">Mangas</a>
             </div>
-            <div class="skn-nav-link">
-                <a class="nav-link" routerLink="mis-novelas" *ngIf="us.userIsEditor()" routerLinkActive="nav-link-selected">Mis novelas</a>
+            <div class="skn-nav-link" *ngIf="us.userIsEditor()">
+                <a class="nav-link" routerLink="mis-novelas" routerLinkActive="nav-link-selected">Mis novelas</a>
             </div>
-            <div class="skn-nav-link">
-                <a class="nav-link" (click)="openDialogSheet(loginModal, true, false)" *ngIf="!us.userIsLoged()" routerLinkActive="nav-link-selected" style="cursor: pointer;">Iniciar sesión</a>
+            <div class="skn-nav-link" *ngIf="!us.userIsLoged()">
+                <a class="nav-link" (click)="openDialogSheet(loginModal, true, false)" routerLinkActive="nav-link-selected" style="cursor: pointer;">Iniciar sesión</a>
             </div>
-            <div class="skn-nav-link">
-                <a class="nav-link" *ngIf="!us.userIsLoged()" (click)="openDialogSheet(loginModal, false, true)" routerLinkActive="nav-link-selected" style="cursor: pointer;">Registrarse</a>
+            <div class="skn-nav-link" *ngIf="!us.userIsLoged()">
+                <a class="nav-link" (click)="openDialogSheet(loginModal, false, true)" routerLinkActive="nav-link-selected" style="cursor: pointer;">Registrarse</a>
             </div>
-            <div class="skn-nav-link">
-                <a class="nav-link" routerLink="panel" *ngIf="this.as.userIsAdmin()" routerLinkActive="nav-link-selected">Panel de control</a>
+            <div class="skn-nav-link" *ngIf="this.as.userIsAdmin()">
+                <a class="nav-link" routerLink="panel" routerLinkActive="nav-link-selected">Panel de control</a>
             </div>
-            <div class="skn-nav-link">
-                <a class="nav-link" *ngIf="us.userIsLoged()" (click)="logout()" style="cursor: pointer;">Cerrar sesión</a>
+            <div class="skn-nav-link" *ngIf="us.userIsLoged()">
+                <a class="nav-link" (click)="logout()" style="cursor: pointer;">Cerrar sesión</a>
             </div>
-            <div class="skn-nav-link">
-                <a class="nav-link" [routerLink]="['/perfil', this.us.getUserLoged().id, this.us.getUserLoged().user_login]" *ngIf="us.userIsLoged()" style="cursor: pointer;" routerLinkActive="nav-link-selected">Perfil</a>
+            <div class="skn-nav-link" *ngIf="us.userIsLoged()">
+                <a class="nav-link" [routerLink]="['/perfil', this.us.getUserLoged().id, this.us.getUserLoged().user_login]" style="cursor: pointer;" routerLinkActive="nav-link-selected">Perfil</a>
+            </div>
+            <div class="skn-nav-link" *ngIf="us.userIsEditor()">
+                <a class="nav-link" [matMenuTriggerFor]="invitations" (click)="getUserInvitations()"><span class="material-icons md-30">mail</span></a>
+                <mat-menu #invitations="matMenu">
+                    <div style="padding: 8px;" *ngIf="userInvitations.length === 0">No tienes invitaciones pendientes</div>
+                    <mat-card class="skn-invitation-card" *ngFor="let userInvitation of userInvitations" style="margin-bottom: 0.5rem;">
+                        <mat-card-header>
+                            <div mat-card-avatar><img [src]="userInvitation.invitation_from_user_image | noUserImage" alt=""></div>
+                            <mat-card-title>{{userInvitation.invitation_from_login}}</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p>
+                                {{userInvitation.invitation_from_login}} le ha invitado a colaborar en la novela <strong>{{userInvitation.invitation_nvl_title}}</strong>
+                            </p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-raised-button color="primary" (click)="declineOrAcceptInvitation(userInvitation, 'Confirmed')">Aceptar</button>
+                            <button mat-raised-button class="skn-cancel-button" (click)="declineOrAcceptInvitation(userInvitation, 'Rejected')">Rechazar</button>
+                        </mat-card-actions>
+                    </mat-card>
+                </mat-menu>
             </div>
             <div class="skn-nav-link">
                 <a class="nav-link" (click)="toggleTheme()"><span class="material-icons md-30 hide-light">brightness_2</span><span class="material-icons md-30 hide-dark">brightness_7</span></a>

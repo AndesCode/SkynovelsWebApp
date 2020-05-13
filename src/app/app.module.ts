@@ -45,6 +45,8 @@ import { ForumManagementComponent } from './components/admin-panel/forum-managem
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ChaptersComponent } from './components/chapters/chapters.component';
 import { UserChapterComponent } from './components/user-novel/user-chapter/user-chapter.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { InvitationsComponent } from './components/invitations/invitations.component';
 // bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Pipes
@@ -64,7 +66,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { InViewportModule } from 'ng-in-viewport';
 // Test Eliminar
 import { TestComponent } from './components/test/test.component';
-import { FooterComponent } from './components/footer/footer.component';
 
 
 
@@ -107,7 +108,8 @@ const config: SwiperConfigInterface = {
     ChaptersComponent,
     CdkOverlayDirective,
     UserChapterComponent,
-    FooterComponent
+    FooterComponent,
+    InvitationsComponent
   ],
   imports: [
     // Angular

@@ -7,6 +7,7 @@ import { HelperService } from '../../../services/helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Invitation } from 'src/app/models/models';
 
 
 @Component({
@@ -22,17 +23,10 @@ export class NavbarComponent implements OnInit {
   @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
   public successSnackMessage: string;
   public errorSnackMessage: string;
-
   currentComponent = null;
   loginButton = false;
-  error: any = null;
-  message: any = null;
-  elementRotated = false;
-  dropDown = false;
-  userInvitations: any[] = [];
-  user: any = {};
+  userInvitations: Array<Invitation> = [];
   mobile = false;
-  show = false;
   hide = true;
   mobileNavbar = false;
   currentForm = 'login';
@@ -143,7 +137,9 @@ export class NavbarComponent implements OnInit {
         this.loginFormLoading = false;
       });
     } else {
-      // this.displayMessage('Debes escribir un usuario y contraseña', true);
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = 'Debes escribir un usuario y contraseña';
+      this.loginFormLoading = false;
     }
   }
 
@@ -163,6 +159,12 @@ export class NavbarComponent implements OnInit {
       this.hs.openExternalFunction('reloadUser');
     }, error => {
       localStorage.clear();
+      if (this.currentComponent === 'UserNovelComponent'
+      || this.currentComponent === 'UserNovelsComponent'
+      || this.currentComponent === 'UserChapterComponent'
+      || this.currentComponent === 'AdminPanelComponent') {
+        this.router.navigate(['']);
+      }
       this.hs.openExternalFunction('reloadUser');
     });
   }
@@ -187,47 +189,23 @@ export class NavbarComponent implements OnInit {
     this.hs.openExternalFunction('toggleTheme');
   }
 
-  /*showUserInvitations() {
-    this._ns.showUserInvitations(this._auth.getUserLoged().jwt, this._auth.getUserLoged().user_id).subscribe((data: any) => {
-      console.log(data.invitations);
-      this.user_invitations = data.invitations;
-      for (let i = 0; i < this.user_invitations.length; i++) {
-        const datesDataFiltered = this._ns.getDiferenceInDaysBetweenDays(this.user_invitations[i].createdAt, null);
-        this.user_invitations[i].creation_date = datesDataFiltered.creation_date;
-      }
+  getUserInvitations() {
+    this.us.getUserInvitations().subscribe((data: any) => {
+      this.userInvitations = data.invitations;
     }, error => {
-      this._auth.errorHandler(error, 'login');
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = error.error.message;
+      this.loginFormLoading = false;
     });
-  }*/
+  }
 
-  /*acceptInvitation(invitation: any) {
-    console.log('invitación aceptada');
-    const user_novel = {
-      novel_id: invitation.invitation_novel,
-      user_id: this._auth.getUserLoged().user_id
-    };
-    invitation.invitation_status = 'Aprobada';
-    this._ns.createNovelCollaborator(this._auth.getUserLoged().jwt, user_novel).subscribe((data: any) => {
-      console.log(data);
-      this._ns.updateUserInvitation(this._auth.getUserLoged().jwt, invitation).subscribe((invitations: any) => {
-        console.log(invitations);
-        this.showUserInvitations();
-        const current_route = this.activatedRoute.snapshot['_routerState'].url;
-        console.log(current_route);
-        if (current_route === '/mis-novelas') {
-          console.log('mis novelas detectado, ejecuta accion');
-          this._ns.openExternalFunction('ReloadMyNovels');
-        }
-      });
+  declineOrAcceptInvitation(invitation: Invitation, status: 'Confirmed' | 'Rejected') {
+    invitation.invitation_status = status;
+    this.us.updateUserInvitation(invitation).subscribe((data: any) => {
+      this.userInvitations.splice(this.userInvitations.findIndex(x => x.id === invitation.id), 1);
+    }, error => {
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = error.error.message;
     });
-  }*/
-
-  /*declineInvitation(invitation: any) {
-    console.log('invitación declinada');
-    invitation.invitation_status = 'Rechazada';
-    this._ns.updateUserInvitation(this._auth.getUserLoged().jwt, invitation).subscribe((invitations: any) => {
-      console.log(invitations);
-      this.showUserInvitations();
-    });
-  }*/
+  }
 }

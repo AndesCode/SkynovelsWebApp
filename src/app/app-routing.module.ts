@@ -16,6 +16,7 @@ import { ForumPostComponent } from './components/forum/forum-category/forum-post
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ChaptersComponent } from './components/chapters/chapters.component';
 import { UserChapterComponent } from './components/user-novel/user-chapter/user-chapter.component';
+import { InvitationsComponent } from './components/invitations/invitations.component';
 // Test
 import { TestComponent } from './components/test/test.component';
 
@@ -79,6 +80,8 @@ const routes: Routes = [
   { path: 'foro/:category/:cid/:post/:id', component: ForumPostComponent },
   { path: 'perfil/:id', component: UserProfileComponent },
   { path: 'perfil/:id/:login', component: UserProfileComponent },
+  // Invitations
+  { path: 'invitaciones', component: InvitationsComponent },
   // Test
   { path: 'test', component: TestComponent },
   // redirects

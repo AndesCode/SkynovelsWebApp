@@ -60,6 +60,7 @@
         }
     }
     .skn-nvl-card-description {
+        word-break: break-word;
         @include subtract-media (desktop) {
             display: none;
         }

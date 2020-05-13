@@ -180,6 +180,28 @@ export class UserNovelComponent implements OnInit {
     });
   }
 
+  deleteCollaborator(collaborator: any) {
+    const collaboratorsArray = [];
+    for (const collaboratorToPush of this.collaborators) {
+        if (collaboratorToPush.id !== collaborator.id) {
+          collaboratorsArray.push(collaboratorToPush.id);
+        }
+    }
+    const novel: Novel = {
+      id: this.novel.id,
+      collaborators: collaboratorsArray
+    };
+    console.log(this.collaborators);
+    this.ns.updateNovel(novel).subscribe((data: any) => {
+      this.collaborators.splice(this.collaborators.findIndex(deletedCollaborator => deletedCollaborator.id === collaborator.id), 1);
+      console.log(this.collaborators);
+    }, error => {
+      console.log(error);
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = error.error.message;
+    });
+  }
+
   deleteNovel() {
     this.uploading = true;
     if (this.editableNovel && this.novel.id) {
@@ -244,10 +266,6 @@ export class UserNovelComponent implements OnInit {
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
-  }
-
-  deleteCollaborator(collaborator: any) {
-    this.collaborators.splice(this.collaborators.findIndex(deletedCollaborator => deletedCollaborator.id === collaborator.id), 1);
   }
 
   createVolume() {

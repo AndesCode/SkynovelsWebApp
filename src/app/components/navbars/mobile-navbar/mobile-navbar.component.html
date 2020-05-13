@@ -56,6 +56,13 @@
             </div>
             <hr *ngIf="this.as.userIsAdmin()">
             <div class="skn-admin-card-section" *ngIf="us.userIsLoged()">
+                <a routerLink="invitaciones" (click)="navigate()">
+                    <span class="material-icons md-30">mail</span>
+                    <span class="nav-mobile-text" routerLinkActive="nav-link-selected">Invitaciones</span>
+                </a>
+            </div>
+            <hr *ngIf="us.userIsLoged()">
+            <div class="skn-admin-card-section" *ngIf="us.userIsLoged()">
                 <a (click)="logout()">
                     <span class="material-icons md-30">block</span>
                     <span class="nav-mobile-text">Cerrar sesión</span>

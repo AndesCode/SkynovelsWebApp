@@ -87,7 +87,7 @@
                         </div>
                         <div class="modal-footer">
                             <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                            <button mat-raised-button color="warn" (click)="dialog.closeAll()">Eliminar</button>
+                            <button mat-raised-button color="warn" (click)="deleteCollaborator(collaborator); dialog.closeAll()">Eliminar</button>
                         </div>
                     </ng-template>
                 </mat-expansion-panel>

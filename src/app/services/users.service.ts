@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Invitation } from 'src/app/models/invitation';
-import { Novel, User } from '../models/models';
+import { Novel, User, Invitation } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -153,9 +152,14 @@ export class UsersService {
     return this.http.get(url);
   }
 
-  getUserImage(user_profile_image: string) {
-    const url = `${ this.urlnovelsdb }/user-profile-img/${user_profile_image}/false`;
+  getUserImage(userProfileImage: string) {
+    const url = `${ this.urlnovelsdb }/user-profile-img/${userProfileImage}/false`;
     return this.http.get( url, {responseType: 'blob'});
+  }
+
+  getUserInvitations() {
+    const url = `${ this.urlnovelsdb }/get-user-invitations`;
+    return this.http.get( url );
   }
 
   sendInvitation(userLogin: string, novelId: number) {
@@ -168,7 +172,7 @@ export class UsersService {
     return this.http.post(url, invitation, this.GlobalhttpOptions);
   }
 
-  updateUserInvitation(invitation: any) {
+  updateUserInvitation(invitation: Invitation) {
     const url = `${ this.urlnovelsdb }/update-user-invitation`;
     return this.http.put(url , invitation, this.GlobalhttpOptions);
   }
