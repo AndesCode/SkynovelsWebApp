@@ -26,6 +26,9 @@ body[theme=light] {
     .nav-link-selected {
         color: black!important;
     }
+    .nav-mobile-text {
+        color: #d32f2f;
+    }
     .skn-chp-main-panel {
         background-color: #ececec!important;
     }
@@ -40,6 +43,9 @@ body[theme=light] {
     }
     .skn-secondary {
         background-color: #ececec!important;
+    }
+    .skn-admin-card-section {
+        color: #d32f2f;
     }
     .skn-secondary-hover:hover {
         background-color: #d8d8d8!important;
