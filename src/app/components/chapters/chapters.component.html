@@ -92,7 +92,7 @@
         </div>
         <div class="skn-chp-novel-portrait" *ngIf="loadPortrait">
             <div class="skn-chp-novel-portrait-image">
-                <img src="../../../assets/img/23.jpg" alt="">
+                <img [src]="novel.nvl_img | noimage" alt="">
             </div>
             <div>
                 <h2>{{novel.nvl_title}}</h2>
@@ -132,8 +132,8 @@
                 <p [innerHTML]="LoadedChapter.chp_content"></p>
             </div>
             <hr>
-            <div class="autor_comment">
-                <h3 class="autor_comment_title"><span class="material-icons md-36">mode_comment</span>Comentario de {{novel.nvl_writer}}</h3>
+            <div class="autor_comment" *ngIf="LoadedChapter.chp_review">
+                <h3 class="autor_comment_title" *ngIf="LoadedChapter.chp_translator"><span class="material-icons md-36">mode_comment</span>Comentario de {{LoadedChapter.chp_translator}}</h3>
                 <p [innerHTML]="LoadedChapter.chp_review"></p>
             </div>
             <hr>
@@ -275,8 +275,8 @@
 
                                 <div style="display: flex; justify-content: space-between;">
                                     <div>
-                                        <span class="skn-link skn-red-text" *ngIf="!comment.show_replys" (click)="getChapterCommentReplys(comment)">Comentarios</span>
-                                        <span class="skn-link skn-red-text" *ngIf="comment.show_replys" (click)="hideChapterCommentReplys(comment)">Ocultar Comentarios</span>
+                                        <span class="skn-link skn-red-text" *ngIf="!comment.show_replys" (click)="getChapterCommentReplys(comment)">Respuestas</span>
+                                        <span class="skn-link skn-red-text" *ngIf="comment.show_replys" (click)="hideChapterCommentReplys(comment)">Ocultar Respuestasgit pus</span>
                                     </div>
                                     <div style="display: flex; align-items: center;">
                                         <button mat-icon-button aria-label="like" (click)="switchCommentLike(comment)">
