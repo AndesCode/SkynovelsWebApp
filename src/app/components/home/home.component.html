@@ -17,7 +17,7 @@
 
     <section class="container">
         <div class="skn-home-title">
-            <h1>Top Novelas</h1>
+            <h2>Top Novelas</h2>
         </div>
         <div class="swiper-container container" [swiper]="swiperTopConfig">
             <div class="swiper-wrapper">
@@ -38,7 +38,7 @@
      --------------------------------------------------------------------------  -->
 
         <div class="skn-home-title">
-            <h1>Ultimas novelas añadidas</h1>
+            <h2>Novelas Nuevas</h2>
         </div>
         <div class="swiper-container container" [swiper]="swiperTopConfig">
             <div class="swiper-wrapper">
@@ -55,7 +55,7 @@
         </div>
 
         <div class="skn-home-title">
-            <h1>Recomendada</h1>
+            <h2>Recomendación de la Semana</h2>
         </div>
 
         <div class="skn-recommended-novel skn-secondary">
@@ -68,7 +68,7 @@
                 </div>
                 <div class="skn-novel-presentation-info">
                     <div class="skn-novel-presentation-info-stats-box">
-                        <h2 class="skn-novel-presentation-info-title skn-link" (click)="goToNovel(recomendedNovel?.id, recomendedNovel?.nvl_name)">{{recomendedNovel?.nvl_title}}<span class="skn-novel-acronym">{{recomendedNovel?.nvl_acronym}}</span></h2>
+                        <h3 class="skn-novel-presentation-info-title skn-link" (click)="goToNovel(recomendedNovel?.id, recomendedNovel?.nvl_name)">{{recomendedNovel?.nvl_title}}<span class="skn-novel-acronym">{{recomendedNovel?.nvl_acronym}}</span></h3>
                         <div class="skn-novel-presentation-info-stats skn-main skn-text row" style="margin-left: 0px;">
                             <div> <span class="material-icons">create</span> 2 Capitulos semanales</div>
                             <div *ngIf="recomendedNovel?.nvl_chapters === 1"> <span class="material-icons">format_align_left</span> {{recomendedNovel?.nvl_chapters}} Capitulo</div>
@@ -104,7 +104,7 @@
             <p [innerHTML]="recomendedNovel?.nvl_content" style="margin-top: 15px;"></p>
         </div>
         <div class="skn-home-title" style="margin: 1.6rem;">
-            <h1>Ultimas actualizaciones</h1>
+            <h2>Capítulos Recientes</h2>
         </div>
         <div class="row" style="justify-content: center;">
             <div *ngFor="let updatedNovel of updatedNovels">
