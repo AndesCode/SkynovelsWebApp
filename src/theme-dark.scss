@@ -125,6 +125,9 @@ body[theme=dark] {
         background-color: #23282f!important;
         color: #626973!important;
     }
+    .nav-mobile-text {
+        color: #626973;
+    }
     .skn-novel-presentation-image-mobile {
         color: #d32f2f!important;
     }
@@ -290,10 +293,6 @@ body[theme=dark] {
 }
 
 // Navbar Mobile
-.nav-mobile-text {
-    color: #626973;
-}
-
 body[theme=dark] {
     background: #1E2228;
     color: #626973;

@@ -64,12 +64,14 @@ nav:hover {
         .skn-admin-card-section {
             display: inline-flex;
             cursor: pointer;
+            align-items: center;
+            span {
+                display: block;
+                margin-right: 0.4em;
+            }
             a {
                 display: contents;
-                span {
-                    display: block;
-                    white-space: nowrap;
-                }
+                white-space: nowrap;
             }
         }
     }
@@ -89,8 +91,4 @@ nav:hover {
 
 .hide-dark {
     color: #d32f2f;
-}
-
-.nav-mobile-text {
-    margin-left: 1em;
 }
