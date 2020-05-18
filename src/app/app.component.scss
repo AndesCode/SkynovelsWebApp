@@ -5,11 +5,11 @@ body {
 .app-nav-bar {
     position: sticky;
     top: 0;
-    height: 65px;
+    height: 4.063rem;
     z-index: 500;
 }
 
 .app {
-    overflow: auto;
-    min-height: calc(100vh - 65px);
+    overflow: hidden;
+    min-height: calc(100vh - 4.063rem);
 }

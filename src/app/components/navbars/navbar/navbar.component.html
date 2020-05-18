@@ -1,6 +1,6 @@
 <nav>
     <section class="skn-content">
-        <div class="skn-logo" (click)="goToHome()"></div>
+        <a class="skn-logo" routerLink=""></a>
         <div class="skn-nav-links" *ngIf="!mobile">
             <div class="skn-nav-link">
                 <a class="nav-link" routerLink="novelas" routerLinkActive="nav-link-selected">Novelas</a>
@@ -53,7 +53,7 @@
         </div>
         <div class="skn-nav-links" *ngIf="mobile">
             <div class="skn-nav-link">
-                <a class="nav-link" (click)="toggleTheme()"><span class="material-icons md-30 hide-light">brightness_2</span><span class="material-icons md-30 hide-dark">brightness_7</span></a>
+                <div class="nav-link" (click)="toggleTheme()"><span class="material-icons md-30 hide-light">brightness_2</span><span class="material-icons md-30 hide-dark">brightness_7</span></div>
             </div>
             <div class="skn-navbar-menu-toggler skn-text" (click)="openMobileNavbarForm()" *ngIf="!mobileNavbar" style="cursor: pointer;" aria-label="menu-toggler">
                 <span class="material-icons" unselectable="on">menu</span>

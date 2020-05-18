@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HelperService } from './helper.service';
 import { PostComment } from '../models/post-comment';
+import { User } from '../models/models';
 
 
 @Injectable({
@@ -71,19 +72,33 @@ export class AdminService {
     return this.http.delete(url, httpOptions);
   }
 
-  adminGetUsers(status: string) {
+  adminGetUsers(jwt: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type':  'application/json',
+        Authorization: jwt
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-users/${status}`;
+    const url = `${ this.urlnovelsdb}/admin-users`;
     console.log(url);
     return this.http.get(url, httpOptions);
   }
 
-  adminUpdateUser(jwt: string, user: any) {
+  adminGetUser(jwt: string, id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb}/admin-user/${id}`;
+    console.log(url);
+    return this.http.get(url, httpOptions);
+  }
+
+  adminUpdateUser(jwt: string, user: User) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -95,7 +110,7 @@ export class AdminService {
     return this.http.put(url , user, httpOptions);
   }
 
-  adminDeleteUser(jwt: string, id: string) {
+  adminDeleteUser(jwt: string, id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',

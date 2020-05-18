@@ -37,7 +37,7 @@ html {
 
 body {
     height: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 4.063rem);
     font-family: 'Muli', sans-serif!important;
 }
 
@@ -53,6 +53,18 @@ button:focus,
 button:hover {
     border: none !important;
     outline: none !important;
+}
+
+a.unstyled-a-tag:link {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+a.unstyled-a-tag:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
 }
 
 .ck-focused {
@@ -434,7 +446,7 @@ h1 {
 }
 
 .material-icons.md-30 {
-    font-size: 30px;
+    font-size: 1.875rem;
 }
 
 .material-icons.md-36 {

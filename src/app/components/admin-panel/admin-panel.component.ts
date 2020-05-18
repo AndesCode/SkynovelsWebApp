@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
 import { UsersService } from '../../services/users.service';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
 
 @Component({
@@ -11,31 +12,41 @@ import { UsersService } from '../../services/users.service';
 })
 export class AdminPanelComponent implements OnInit {
 
+  mobile: boolean;
+
   constructor(private route: ActivatedRoute,
-              public _router: Router,
-              private _us: UsersService,
-              private _as: AdminService) { }
+              public router: Router,
+              public breakpointObserver: BreakpointObserver,
+              private us: UsersService,
+              private as: AdminService) { }
   adminVerificated = false;
   currentView = 'panel';
   ngOnInit(): void {
+
+    this.breakpointObserver
+    .observe([Breakpoints.Large = '(max-width: 1151px)'])
+    .subscribe((state: BreakpointState) => {
+      if (state.matches) {
+        this.mobile = true;
+      } else {
+        this.mobile = false;
+      }
+    });
+
     // Verificando administrador
-    this._as.adminPanelAccess(this._us.getUserLoged().token).subscribe((data: any) => {
+    this.as.adminPanelAccess(this.us.getUserLoged().token).subscribe((data: any) => {
       console.log(data);
       if (data.status === 200) {
         this.adminVerificated = true;
       } else {
-        this._router.navigate(['/home']);
-        this._as.adminPanelErrorHandler(null, true);
+        this.router.navigate(['/home']);
+        this.as.adminPanelErrorHandler(null, true);
       }
     }, error => {
       console.log(error);
-      this._router.navigate(['/home']);
-      this._as.adminPanelErrorHandler(error, false);
+      this.router.navigate(['/home']);
+      this.as.adminPanelErrorHandler(error, false);
     });
-  }
-
-  switchView(view: string) {
-
   }
 
 }

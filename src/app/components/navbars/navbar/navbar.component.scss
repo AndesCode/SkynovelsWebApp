@@ -45,7 +45,8 @@ nav {
 
 .skn-nav-link {
     margin: 10px 0px;
-    a {
+    a,
+    div {
         white-space: nowrap;
     }
 }
@@ -59,7 +60,7 @@ nav {
     position: relative;
     span {
         animation: 0.5s ease slideIn;
-        font-size: 48px;
+        font-size: 3rem;
         margin: 8px 0px;
         -webkit-user-select: none;
         /* Safari */

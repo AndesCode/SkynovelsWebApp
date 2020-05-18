@@ -1,104 +1,86 @@
-/* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
-
 @import "../../common.scss";
-body,
-html {
-    height: 100%;
-}
-
-body {
+.skn-admin-panel {
     margin: 0;
+    height: calc(100vh - 4.063rem);
     display: grid;
-    @include plus-media(desktop) {
-        grid-template-columns: 240px auto;
-        grid-template-rows: 100%;
-        grid-template-areas: "sect1 main";
-    }
+    grid-template-columns: 15rem auto;
+    grid-template-rows: 100%;
+    grid-template-areas: "navbar content";
     @include subtract-media(desktop) {
         grid-template-columns: 100%;
-        grid-template-rows: auto 57px;
-        grid-template-areas: "main" "sect1";
+        grid-template-rows: auto 2.7rem;
+        grid-template-areas: "content" "navbar";
     }
 }
 
-section {
-    grid-area: sect1;
-    color: #626973!important;
-    .skn-admin-card-content {
-        height: 100%;
-        width: 100%;
-        text-align: left;
-        hr {
-            display: block;
-            color: #626973;
-            background-color: #626973;
-        }
-        .skn-admin-card-header {
-            margin: 10px 1.2rem;
-            display: inline-flex;
-            h4 {
-                margin: auto auto auto 4px;
-            }
-        }
-        .skn-admin-card-section {
-            display: inline-flex;
-            cursor: pointer;
-            i {
-                margin: 0px 8px 0px 0px;
-                font-size: 27px;
-            }
-            a {
-                display: contents;
-                span {
-                    display: block;
-                }
-            }
-            a:hover {
-                color: white;
-                transition: all .3s ease;
-            }
-        }
-    }
-    @include plus-media(desktop) {
-        .skn-admin-card-content {
-            padding: 1em;
-        }
-    }
+hr {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.skn-admin-panel-icon {
+    font-size: 1.875rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer!important;
+}
+
+.nav-mobile-text {
+    cursor: pointer!important;
+}
+
+.skn-admin-panel-navbar {
+    height: 100%;
+    grid-area: navbar;
+    width: 15rem;
     @include subtract-media(desktop) {
+        width: 100%;
+    }
+    .skn-admin-navbar {
+        height: 100%;
         .skn-admin-card-content {
-            text-align: center;
-            hr {
-                display: none;
+            height: 100%;
+            width: 100%;
+            text-align: left;
+            padding: 1em;
+            @include subtract-media(desktop) {
+                border-top: 1px solid;
+                display: flex;
+                justify-content: space-around;
             }
-            .skn-admin-card-header {
-                display: none;
+            hr {
+                display: block;
+                color: #626973;
+                background-color: #626973;
             }
             .skn-admin-card-section {
-                margin: auto 7%;
-                position: relative;
-                top: 50%;
-                transform: translateY(-50%);
-                i {
-                    margin: auto;
-                    font-size: 35px;
+                display: inline-flex;
+                cursor: pointer;
+                align-items: center;
+                span {
+                    display: block;
+                    margin-right: 0.4em;
                 }
                 a {
-                    span {
-                        display: none;
-                    }
+                    display: contents;
+                    white-space: nowrap;
                 }
             }
         }
     }
 }
 
-main {
-    grid-area: main;
+.skn-admin-panel-content {
+    grid-area: content;
     overflow: auto;
 }
 
-.material-icons {
+.hide-light {
+    color: #131E2C;
+}
+
+.hide-dark {
     color: #d32f2f;
 }

@@ -1,0 +1,33 @@
+<div class="container" style="padding-top: 4%;">
+    <div class="mat-elevation-z8" style="padding: 0.5rem">
+        <h1>Gestión de usuarios</h1>
+        <mat-form-field class="w-100">
+            <mat-label>Filtrar</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Buscar usuario" autocomplete="off">
+        </mat-form-field>
+        <div class="skn-loading" *ngIf="loading">
+            <mat-spinner></mat-spinner>
+        </div>
+        <table mat-table [dataSource]="dataSource" class="skn-secondary w-100" matSort>
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="skn-text"> <strong>ID</strong> </th>
+                <td mat-cell *matCellDef="let element" class="skn-text"> {{element.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="user_login">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="skn-text"> <strong>Usuario</strong> </th>
+                <td mat-cell *matCellDef="let element" class="skn-text"> {{element.user_login}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="user_status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="skn-text"> <strong>Estado</strong> </th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'color':element.user_status === 'Active' ? 'green' : 'red' }"> {{element.user_status}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="skn-main"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="skn-secondary-hover" [routerLink]="[row.id]"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons [pageSize]="10" itemsPerPageLabel="hola">
+        </mat-paginator>
+    </div>
+</div>

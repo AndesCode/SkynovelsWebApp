@@ -1,52 +1,52 @@
 <nav style="top: 65px; position: fixed; z-index:9999; background-color: rgba(0,0,0,0.32); width: 100%; height: 100%;" *ngIf="open">
     <section class="skn-mobile-navbar skn-main">
-        <div class="skn-admin-card-content">
-            <div class="skn-admin-card-header">
+        <div class="skn-mobile-navbar-content">
+            <div class="skn-mobile-navbar-header">
                 <img src="../../../assets/img/008 - SkyNovels V.1/logo/1x/simbolo_rojos.png" height="30">
                 <h4>SkyNovels</h4>
             </div>
             <hr>
-            <div class="skn-admin-card-section">
+            <div class="skn-mobile-navbar-section">
                 <span class="material-icons md-30">home</span>
                 <a routerLink="" (click)="navigate()" class="nav-mobile-text">Inicio</a>
             </div>
             <hr>
-            <div class="skn-admin-card-section">
+            <div class="skn-mobile-navbar-section">
                 <span class="material-icons md-30">library_books</span>
                 <a routerLink="novelas" (click)="navigate()" class="nav-mobile-text" routerLinkActive="nav-link-selected">Novelas</a>
             </div>
             <hr>
-            <div class="skn-admin-card-section" *ngIf="us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
                 <span class="material-icons md-30">account_circle</span>
                 <a (click)="navigate()" routerLink="{{'perfil/' + this.us.getUserLoged().id + '/' + this.us.getUserLoged().user_login}}" class="nav-mobile-text skn-link" routerLinkActive="nav-link-selected">Perfil</a>
             </div>
             <hr *ngIf="us.userIsLoged()">
-            <div class="skn-admin-card-section" *ngIf="us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
                 <span class="material-icons md-30">create</span>
                 <a routerLink="mis-novelas" (click)="navigate()" class="nav-mobile-text" routerLinkActive="nav-link-selected">Mis novelas</a>
             </div>
             <hr *ngIf="us.userIsLoged()">
-            <div class="skn-admin-card-section" *ngIf="!us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="!us.userIsLoged()">
                 <span class="material-icons md-30">face</span>
                 <a (click)="openLoginForm(); closeMobileNavbarForm()" class="nav-mobile-text skn-link">Iniciar Sesión</a>
             </div>
             <hr *ngIf="!us.userIsLoged()">
-            <div class="skn-admin-card-section" *ngIf="!us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="!us.userIsLoged()">
                 <span class="material-icons md-30 skn-link">account_box</span>
                 <a (click)="openRegisterForm(); navigate()" class="nav-mobile-text">Registrarse</a>
             </div>
             <hr *ngIf="!us.userIsLoged()">
-            <div class="skn-admin-card-section" *ngIf="this.as.userIsAdmin()">
+            <div class="skn-mobile-navbar-section" *ngIf="this.as.userIsAdmin()">
                 <span class="material-icons md-30">settings</span>
                 <a routerLink="panel" (click)="navigate()" class="nav-mobile-text" routerLinkActive="nav-link-selected">Panel de control</a>
             </div>
             <hr *ngIf="this.as.userIsAdmin()">
-            <div class="skn-admin-card-section" *ngIf="us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
                 <span class="material-icons md-30">mail</span>
                 <a routerLink="invitaciones" (click)="navigate()" class="nav-mobile-text" routerLinkActive="nav-link-selected">Invitaciones</a>
             </div>
             <hr *ngIf="us.userIsLoged()">
-            <div class="skn-admin-card-section" *ngIf="us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
                 <span class="material-icons md-30">block</span>
                 <a (click)="logout()" class="nav-mobile-text skn-link">Cerrar sesión</a>
             </div>

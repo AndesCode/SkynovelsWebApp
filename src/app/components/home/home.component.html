@@ -22,12 +22,14 @@
         <div class="swiper-container container" [swiper]="swiperTopConfig">
             <div class="swiper-wrapper">
                 <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let topNovel of topNovels">
-                    <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover" [routerLink]="['/novelas', topNovel.id, topNovel.nvl_name]">
-                        <div class="skn-swiper-novel-slide-img-container">
-                            <img class="skn-top-nvl-img " [src]="topNovel.nvl_img | noimage" alt=" ">
+                    <a class="unstyled-a-tag" [routerLink]="['/novelas', topNovel.id, topNovel.nvl_name]">
+                        <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
+                            <div class="skn-swiper-novel-slide-img-container">
+                                <img class="skn-top-nvl-img " [src]="topNovel.nvl_img | noimage" alt=" ">
+                            </div>
+                            <strong style="word-wrap: break-word;">{{hs.setContent(topNovel.nvl_title, 40)}}</strong>
                         </div>
-                        <strong style="word-wrap: break-word;">{{hs.setContent(topNovel.nvl_title, 40)}}</strong>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div class="swiper-pagination" id></div>
@@ -43,12 +45,14 @@
         <div class="swiper-container container" [swiper]="swiperTopConfig">
             <div class="swiper-wrapper">
                 <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let recentNovel of recentNovels">
-                    <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover" [routerLink]="['/novelas', recentNovel.id, recentNovel.nvl_name]">
-                        <div class="skn-swiper-novel-slide-img-container">
-                            <img class="skn-top-nvl-img " [src]="recentNovel.nvl_img | noimage" alt=" ">
+                    <a class="unstyled-a-tag" [routerLink]="['/novelas', recentNovel.id, recentNovel.nvl_name]">
+                        <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
+                            <div class="skn-swiper-novel-slide-img-container">
+                                <img class="skn-top-nvl-img " [src]="recentNovel.nvl_img | noimage" alt=" ">
+                            </div>
+                            <strong style="word-wrap: break-word;">{{hs.setContent(recentNovel.nvl_title, 40)}}</strong>
                         </div>
-                        <strong style="word-wrap: break-word;">{{hs.setContent(recentNovel.nvl_title, 40)}}</strong>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div class="swiper-pagination" id></div>
@@ -61,14 +65,18 @@
         <div class="skn-recommended-novel skn-secondary">
             <div class="skn-novel-presentation">
                 <div class="skn-novel-presentation-image">
-                    <img [src]="recomendedNovel?.nvl_img | noimage" alt="" style="cursor: pointer;" [routerLink]="['/novelas', recomendedNovel?.id, recomendedNovel?.nvl_name]">
+                    <a [routerLink]="['/novelas', recomendedNovel?.id, recomendedNovel?.nvl_name]">
+                        <img [src]="recomendedNovel?.nvl_img | noimage" alt="" style="cursor: pointer;">
+                    </a>
                     <div class="skn-main">
                         <h4 [ngStyle]="{'color':recomendedNovel?.nvl_status === 'Activa' || recomendedNovel?.nvl_status === 'Finalizada' ? 'green' : 'red' }">{{recomendedNovel?.nvl_status}}</h4>
                     </div>
                 </div>
                 <div class="skn-novel-presentation-info">
                     <div class="skn-novel-presentation-info-stats-box">
-                        <h3 class="skn-novel-presentation-info-title skn-link" (click)="goToNovel(recomendedNovel?.id, recomendedNovel?.nvl_name)">{{recomendedNovel?.nvl_title}}<span class="skn-novel-acronym">{{recomendedNovel?.nvl_acronym}}</span></h3>
+                        <a class="unstyled-a-tag" [routerLink]="['/novelas', recomendedNovel?.id, recomendedNovel?.nvl_name]">
+                            <h3 class="skn-novel-presentation-info-title skn-link">{{recomendedNovel?.nvl_title}}<span class="skn-novel-acronym">{{recomendedNovel?.nvl_acronym}}</span></h3>
+                        </a>
                         <div class="skn-novel-presentation-info-stats skn-main skn-text row" style="margin-left: 0px;">
                             <div> <span class="material-icons">create</span> 2 Capitulos semanales</div>
                             <div *ngIf="recomendedNovel?.nvl_chapters === 1"> <span class="material-icons">format_align_left</span> {{recomendedNovel?.nvl_chapters}} Capitulo</div>
@@ -110,12 +118,16 @@
             <div *ngFor="let updatedNovel of updatedNovels">
                 <div class="skn-nvl-card">
                     <div class="skn-nvl-card-img">
-                        <img [src]="updatedNovel.nvl_img | noimage" alt="" [routerLink]="['/novelas', updatedNovel.id, updatedNovel.nvl_name]">
+                        <a [routerLink]="['/novelas', updatedNovel.id, updatedNovel.nvl_name]" class="unstyled-a-tag">
+                            <img [src]="updatedNovel.nvl_img | noimage" alt="">
+                        </a>
                     </div>
                     <ul class="skn-nvl-updated-novels-chapters-list">
                         <li *ngFor="let chapter of updatedNovel.chapters">
                             <div class="d-flex">
-                                <strong style="word-break: break-word;" class="skn-link" (click)="goToChapter(updatedNovel.id, updatedNovel.nvl_name, chapter.id, chapter.chp_name)">{{hs.setContent(chapter.chp_index_title, 21)}}</strong>
+                                <a [routerLink]="['/novelas', updatedNovel.id, updatedNovel.nvl_name, chapter.id, chapter.chp_name]" class="unstyled-a-tag">
+                                    <strong style="word-break: break-word;" class="skn-link">{{hs.setContent(chapter.chp_index_title, 21)}}</strong>
+                                </a>
                                 <div style="color: #0bb500;; margin-left: 3px;" *ngIf="chapter.new">Nuevo!</div>
                             </div>
                         </li>
@@ -123,7 +135,9 @@
                     <div class="skn-nvl-card-update-time skn-tertiary">
                         <div style="display: flex;">
                             <div style="margin-left: 5px;">
-                                <strong class="skn-link" (click)="goToNovel(updatedNovel.id, updatedNovel.nvl_name)">{{hs.setContent(updatedNovel.nvl_title, 40)}}</strong>
+                                <a [routerLink]="['/novelas', updatedNovel.id, updatedNovel.nvl_name]" class="unstyled-a-tag">
+                                    <strong class="skn-link">{{hs.setContent(updatedNovel.nvl_title, 40)}}</strong>
+                                </a>
                             </div>
                         </div>
                     </div>

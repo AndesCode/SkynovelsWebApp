@@ -23,13 +23,15 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { MatSelectModule } from '@angular/material/select';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { CdkOverlayContainer } from './cdk-overlay-container-extension';
-import { CdkOverlayDirective } from './cdk-overlay.directive';
+import { getSpanishPaginatorIntl } from './spanish-paginator-intl';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 // Components
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbars/navbar/navbar.component';
@@ -47,6 +49,10 @@ import { ChaptersComponent } from './components/chapters/chapters.component';
 import { UserChapterComponent } from './components/user-novel/user-chapter/user-chapter.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { InvitationsComponent } from './components/invitations/invitations.component';
+import { MobileNavbarComponent } from './components/navbars/mobile-navbar/mobile-navbar.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { UsersManagementComponent } from './components/admin-panel/users-management/users-management.component';
+import { UserManagementComponent } from './components/admin-panel/users-management/user-management/user-management.component';
 // bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Pipes
@@ -54,9 +60,6 @@ import { NoUserImagePipe } from './pipes/no-user-image.pipe';
 import { NoimagePipe } from './pipes/noimage.pipe';
 import { NoimagePipeThumb } from './pipes/noimagethumb.pipe';
 import { NovelFilterPipe } from './pipes/novel-filter.pipe';
-import { MobileNavbarComponent } from './components/navbars/mobile-navbar/mobile-navbar.component';
-import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
-import { UserManagementComponent } from './components/admin-panel/user-management/user-management.component';
 // Installations
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -91,7 +94,7 @@ const config: SwiperConfigInterface = {
     NovelCardComponent,
     MobileNavbarComponent,
     AdminPanelComponent,
-    UserManagementComponent,
+    UsersManagementComponent,
     UserNovelsComponent,
     UserNovelComponent,
     // pipes
@@ -106,10 +109,10 @@ const config: SwiperConfigInterface = {
     UserProfileComponent,
     TestComponent,
     ChaptersComponent,
-    CdkOverlayDirective,
     UserChapterComponent,
     FooterComponent,
-    InvitationsComponent
+    InvitationsComponent,
+    UserManagementComponent
   ],
   imports: [
     // Angular
@@ -140,6 +143,8 @@ const config: SwiperConfigInterface = {
     MatTreeModule,
     MatExpansionModule,
     MatSnackBarModule,
+    MatPaginatorModule,
+    MatTableModule,
     // bootstrap
     NgbModule,
     // Installations
@@ -153,9 +158,11 @@ const config: SwiperConfigInterface = {
   providers: [
     { provide: OverlayContainer, useClass: CdkOverlayContainer },
     {
-    provide: SWIPER_CONFIG,
-    useValue: config
-  }],
+      provide: SWIPER_CONFIG,
+      useValue: config
+    },
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

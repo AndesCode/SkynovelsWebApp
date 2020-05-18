@@ -6,7 +6,8 @@ import { HomeComponent } from './components/home/home.component';
 import { NovelsComponent } from './components/novels/novels.component';
 import { NovelComponent } from './components/novel/novel.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
-import { UserManagementComponent } from './components/admin-panel/user-management/user-management.component';
+import { UsersManagementComponent } from './components/admin-panel/users-management/users-management.component';
+import { UserManagementComponent } from './components/admin-panel/users-management/user-management/user-management.component';
 import { ForumManagementComponent } from './components/admin-panel/forum-management/forum-management.component';
 import { UserNovelsComponent } from './components/user-novels/user-novels.component';
 import { UserNovelComponent } from './components/user-novel/user-novel.component';
@@ -52,7 +53,7 @@ const routes: Routes = [
     component: AdminPanelComponent,
     canActivate: [GuardService],
     children: [
-      {path: 'administracion-de-usuarios', component: UserManagementComponent},
+      {path: 'administracion-de-usuarios', component: UsersManagementComponent},
       {path: 'administracion-de-usuarios/:id', component: UserManagementComponent},
       {path: 'administracion-del-foro', component: ForumManagementComponent},
       {path: 'administracion-del-foro/:id', component: ForumManagementComponent},

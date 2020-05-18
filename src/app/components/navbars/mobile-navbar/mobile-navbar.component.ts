@@ -38,10 +38,13 @@ export class MobileNavbarComponent implements OnInit {
     this.open = true;
     const top = '-' + this.viewportScroller.getScrollPosition()[1] + 'px';
     this.scrollPosition = this.viewportScroller.getScrollPosition()[1];
-    console.log(top);
-    document.documentElement.style.top = top;
-    document.documentElement.style.left = '0px';
-    document.documentElement.classList.add('cdk-global-scrollblock');
+    if (document.body.clientHeight > window.innerHeight) {
+      document.documentElement.style.top = top;
+      document.documentElement.style.left = '0px';
+      document.documentElement.classList.add('cdk-global-scrollblock');
+    } else {
+      return;
+    }
   }
 
   closeNav(manteinScroll: boolean) {

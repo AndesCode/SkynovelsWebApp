@@ -183,20 +183,19 @@ export class UserNovelComponent implements OnInit {
   deleteCollaborator(collaborator: any) {
     const collaboratorsArray = [];
     for (const collaboratorToPush of this.collaborators) {
-        if (collaboratorToPush.id !== collaborator.id) {
-          collaboratorsArray.push(collaboratorToPush.id);
+        if (collaboratorToPush.user_id !== collaborator.user_id) {
+          collaboratorsArray.push(collaboratorToPush.user_id);
         }
     }
     const novel: Novel = {
       id: this.novel.id,
       collaborators: collaboratorsArray
     };
-    console.log(this.collaborators);
     this.ns.updateNovel(novel).subscribe((data: any) => {
-      this.collaborators.splice(this.collaborators.findIndex(deletedCollaborator => deletedCollaborator.id === collaborator.id), 1);
-      console.log(this.collaborators);
+      this.collaborators.splice(
+        this.collaborators.findIndex(deletedCollaborator => deletedCollaborator.user_id === collaborator.user_id), 1
+      );
     }, error => {
-      console.log(error);
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });

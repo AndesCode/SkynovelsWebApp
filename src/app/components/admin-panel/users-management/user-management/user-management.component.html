@@ -1,0 +1,146 @@
+<div class="container" style="padding-top: 4%;">
+    <mat-card>
+        <div class="row">
+            <div class="skn-user-management-user-buttons">
+                <button mat-raised-button color="primary" type="button" (click)="save()">
+                    <div style="display: flex; align-items: center;">                            
+                        <span class="material-icons">save</span> 
+                        <div>Guardar cambios</div>
+                    </div>
+                </button>
+                <button mat-raised-button color="warn" type="button" (click)="openDialogSheet(disableUserModal)" *ngIf="user.user_status === 'Active'">
+                    <div style="display: flex; align-items: center;">                            
+                        <span class="material-icons">not_interested</span> 
+                        <div>Desactivar usuario</div>
+                    </div>
+                </button>
+                <button mat-raised-button color="primary" type="button" *ngIf="user.user_status !== 'Active' " (click)="swichtUserStatus('Active')">
+                    <div style="display: flex; align-items: center;">                            
+                        <span class="material-icons">how_to_reg</span> 
+                        <div>Activar usuario</div>
+                    </div>
+                </button>
+                <button mat-raised-button color="warn" type="button" *ngIf="user.user_status !== 'Active' " (click)="openDialogSheet(deleteUserModal)">
+                    <div style="display: flex; align-items: center;">                            
+                        <span class="material-icons">delete_forever</span> 
+                        <div>Eliminar usuario</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <form (ngSubmit)="save()" #userForm="ngForm">
+            <div class="row">
+                <div class="col-md-6 skn-user-management-user-data">
+                    <div>
+                        <img [src]="user.user_profile_image | noUserImage" style="height:120px;" alt="User Icon" class="rounded float-center" />
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <h2>{{user.user_login}}</h2>
+                        </div>
+                    </div>
+                    <div>
+                        <p>ID de usuario: {{user.id}}</p>
+                    </div>
+                    <div>
+                        <a [routerLink]="['/perfil', user.id, user.user_login]">
+                            <button mat-raised-button color="primary">Ir a perfil</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 skn-user-management-user-access">
+                    <div style="display: flex;">
+                        <p>Estado del usuario: <strong [ngStyle]="{'color':user.user_status === 'Active' ? 'green' : 'red' }">{{user.user_status === 'Active' ? 'Activo' : 'Inactivo'}}</strong></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="skn-text">Rol de usuario</label>
+                        <select [(ngModel)]="user.user_rol" name="user_rol" class="form-control skn-text-area" required>
+                                                                <option value="Admin">Administrador</option>
+                                                                <option value="Editor">Editor</option>
+                                                                <option value="User">Usuario</option>
+                                                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="skn-text">Correo de usuario</label>
+                        <input [(ngModel)]="user.user_email" name="user_email" type="text" class="form-control skn-text-area" placeholder="Correo electronico" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="skn-text">Acceso al foro</label>
+                        <select [(ngModel)]="user.user_forum_auth" name="user_forum_auth" class="form-control skn-text-area" required>
+                                                          <option value="Active">Habilitado</option>
+                                                          <option value="Disabled">Sin acceso al foro</option>
+                                                      </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <ng-template #disableUserModal>
+            <div class="skn-dialong-modal">
+                <div class="modal-header">
+                    <h4 class="modal-title">Desactivar usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <p>¿Seguro que deseas desactivar el usuario?</p>
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                    <button mat-raised-button color="primary" (click)="swichtUserStatus('Disabled'); dialog.closeAll()">Desactivar</button>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #deleteUserModal>
+            <div class="skn-dialong-modal">
+                <div class="modal-header">
+                    <h4 class="modal-title">Eliminar usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <p>¿Seguro que deseas eliminar el usuario?</p>
+                    <p>Todas sus novelas y capitulos asociados quedaran huerfanas mas no eliminados</p>
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                    <button mat-raised-button color="warn" (click)="deleteUser(); dialog.closeAll()">Desactivar</button>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #deleteUserModal let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title">Eliminar usuario</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Seguro que deseas eliminar el usuario?</p>
+                <p>El usuario y todas sus novelas y capitulos asociados seran eliminados</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" (click)="modal.close('Close click')" id="close_button">Cerrar</button>
+                <button type="button" class="btn btn-danger" (click)="deleteUser(); modal.close('Close click')">Eliminar</button>
+            </div>
+        </ng-template>
+    </mat-card>
+</div>
+<ng-template #successSnack>
+    <div class="skn-snack-success-notification">
+        <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #errorSnack>
+    <div class="skn-snack-error-notification">
+        <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>

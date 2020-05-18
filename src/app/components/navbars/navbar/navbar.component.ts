@@ -74,12 +74,10 @@ export class NavbarComponent implements OnInit {
       .subscribe((state: BreakpointState) => {
         if (state.matches) {
           this.mobile = true;
-          console.log('Estamos en movil');
 
         } else {
           this.mobile = false;
           this.closeMobileNavbarForm();
-          console.log('El breakpoint no se cumple: ' + Breakpoints.Large);
         }
       });
 

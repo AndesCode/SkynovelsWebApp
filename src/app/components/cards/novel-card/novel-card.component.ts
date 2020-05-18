@@ -18,6 +18,7 @@ export class NovelCardComponent implements OnChanges {
     searchStatus: 'All',
     searchGenres: []
   };
+  goToNovelLink: string;
 
   constructor(public hs: HelperService,
               private ns: NovelsService,
@@ -46,6 +47,11 @@ export class NovelCardComponent implements OnChanges {
       }
       this.novels = this.novels.sort(this.hs.dateDataSorter);
       console.log(this.novels);
+    }
+    if (this.clickRoute === 'userNovel') {
+      this.goToNovelLink = '/mis-novelas';
+    } else {
+      this.goToNovelLink = '/novelas';
     }
   }
 
