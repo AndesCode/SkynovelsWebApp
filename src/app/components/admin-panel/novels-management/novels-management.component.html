@@ -1,0 +1,150 @@
+<div class="container" style="padding-top: 4%;">
+    <div class="mat-elevation-z8" style="padding: 0.5rem">
+        <h1>Gestión de novelas</h1>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active': currentTab === 'novels'}" (click)="swichtTab('novels')" style="cursor: pointer;">Lista de novelas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active': currentTab === 'genres'}" (click)="swichtTab('genres')" style="cursor: pointer;">Generos</a>
+            </li>
+        </ul>
+        <div [ngClass]="{'hide': currentTab === 'genres'}">
+            <mat-form-field class="w-100">
+                <mat-label>Filtrar</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Buscar usuario" autocomplete="off">
+            </mat-form-field>
+            <div class="skn-loading" *ngIf="loading">
+                <mat-spinner></mat-spinner>
+            </div>
+            <table mat-table [dataSource]="novelsDataSource" class="skn-secondary w-100" matSort>
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="skn-text"> <strong>ID</strong> </th>
+                    <td mat-cell *matCellDef="let element" class="skn-text"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="user_login" *ngIf="!mobile">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="skn-text"> <strong>Usuario</strong> </th>
+                    <td mat-cell *matCellDef="let element" class="skn-text"> {{element.user_login !== null ? element.user_login : 'No Asignada'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nvl_title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="skn-text"> <strong>Novela</strong> </th>
+                    <td mat-cell *matCellDef="let element" class="skn-text"> {{element.nvl_title}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nvl_status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="skn-text"> <strong>Estado</strong> </th>
+                    <td mat-cell *matCellDef="let element" [ngStyle]="{'color':element.nvl_status === 'Active' || element.nvl_status === 'Finished'? 'green' : 'red' }"> {{element.nvl_status === 'Active' || element.nvl_status === 'Finished'? 'Activa' : 'Oculta'}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="novelsDisplayedColumns" class="skn-main"></tr>
+                <tr mat-row *matRowDef="let row; columns: novelsDisplayedColumns;" class="skn-secondary-hover" [routerLink]="[row.id]"></tr>
+            </table>
+            <mat-paginator #novelsPaginator [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons [pageSize]="10">
+            </mat-paginator>
+        </div>
+        <div [ngClass]="{'hide': currentTab === 'novels'}">
+            <div class="d-flex justify-content-end">
+                <button type="button" mat-raised-button color="primary" (click)="openDialogSheet(addGenreModal)">Añadir genero</button>
+            </div>
+            <div class="skn-loading" *ngIf="loading">
+                <mat-spinner></mat-spinner>
+            </div>
+            <table mat-table [dataSource]="genresDataSource" class="skn-secondary w-100">
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef class="skn-text"> <strong>ID</strong> </th>
+                    <td mat-cell *matCellDef="let element" class="skn-text"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="genre_name">
+                    <th mat-header-cell *matHeaderCellDef class="skn-text"> <strong>Nombre de genero</strong> </th>
+                    <td mat-cell *matCellDef="let element" class="skn-text"> {{element.genre_name}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="genresDisplayedColumns" class="skn-main"></tr>
+                <tr mat-row *matRowDef="let genre; columns: genresDisplayedColumns;" class="skn-secondary-hover" (click)="editGenre(genre); openDialogSheet(updateGenreModal)"></tr>
+            </table>
+            <mat-paginator #genresPaginator [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons [pageSize]="10">
+            </mat-paginator>
+        </div>
+    </div>
+</div>
+<ng-template #updateGenreModal>
+    <div class="skn-modal-top-close-button">
+        <button type="button" mat-icon-button (click)="dialog.closeAll()" [attr.aria-label]="'close'">
+            <span class="material-icons skn-text">close</span>
+        </button>
+    </div>
+    <div class="skn-dialong-modal">
+        <div class="modal-header">
+            <h4 class="modal-title">Actualizar genero</h4>
+        </div>
+        <div class="modal-body">
+            <form #updateGenreForm="ngForm">
+                <mat-form-field class="w-100">
+                    <mat-label>Nombre de genero</mat-label>
+                    <input matInput autocomplete="off" #genre_name="ngModel" name="genre.genre_name" [(ngModel)]="genre.genre_name" minlength="2" maxlength="25" required>
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button mat-raised-button color="warn" (click)="openBottomSheet(deleteGenreModal); dialog.closeAll();" [disabled]="uploading" style="margin-right: 15px;">Eliminar</button>
+            <button mat-raised-button color="primary" (click)="updateGenre()" [disabled]="uploading || updateGenreForm.invalid">Actualizar</button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #deleteGenreModal>
+    <div class="skn-bottom-sheet-modal">
+        <div class="modal-header">
+            <h4 class="modal-title">Eliminar genero</h4>
+        </div>
+        <div class="skn-bottomSheet-buttons" style="padding: 1rem 1rem">
+            <div>
+                <button mat-raised-button class="skn-cancel-button" (click)="bottomSheet.dismiss()">Cancelar</button>
+            </div>
+            <div>
+                <button mat-raised-button color="warn" (click)="deleteGenre(); bottomSheet.dismiss()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #addGenreModal>
+    <div class="skn-dialong-modal">
+        <div class="modal-header">
+            <h4 class="modal-title">Añadir genero</h4>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="NewGenreForm">
+                <mat-form-field class="w-100">
+                    <mat-label>Nombre de genero</mat-label>
+                    <input matInput formControlName="genre_name" autocomplete="off">
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll(); NewGenreForm.reset()">Cancelar</button>
+            <button mat-raised-button color="primary" (click)="createGenre()" [disabled]="uploading || NewGenreForm.invalid"> Añadir</button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #successSnack>
+    <div class="skn-snack-success-notification">
+        <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #errorSnack>
+    <div class="skn-snack-error-notification">
+        <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>

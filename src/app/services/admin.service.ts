@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HelperService } from './helper.service';
 import { PostComment } from '../models/post-comment';
-import { User } from '../models/models';
+import { User, Novel, Genre } from '../models/models';
+import { Volume } from '../models/volume';
+import { Chapter } from '../models/chapter';
 
 
 @Injectable({
@@ -33,8 +35,7 @@ export class AdminService {
     }
   }
 
-  adminCreateGenre(jwt: string, genre: any) {
-    console.log(genre);
+  adminCreateGenre(jwt: string, genre: Genre) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -42,12 +43,11 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb }/create-genre`;
-    console.log(url);
+    const url = `${ this.urlnovelsdb }/admin-create-genre`;
     return this.http.post(url, genre, httpOptions);
   }
 
-  adminUpdateGenre(jwt: string, genre: any) {
+  adminUpdateGenre(jwt: string, genre: Genre) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -55,12 +55,12 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb }/update-genre`;
+    const url = `${ this.urlnovelsdb }/admin-update-genre`;
     console.log(genre);
     return this.http.put(url , genre, httpOptions);
   }
 
-  adminDeleteGenre(jwt: string, id: string) {
+  adminDeleteGenre(jwt: string, id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -68,9 +68,122 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb }/delete-genre/${id}`;
+    const url = `${ this.urlnovelsdb }/admin-delete-genre/${id}`;
     return this.http.delete(url, httpOptions);
   }
+
+  adminGetNovel(jwt: string, id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb}/admin-novel/${id}`;
+    console.log(url);
+    return this.http.get(url, httpOptions);
+  }
+
+
+  adminGetNovels(jwt: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb}/admin-novels`;
+    console.log(url);
+    return this.http.get(url, httpOptions);
+  }
+
+  adminUpdateNovel(jwt: string, novel: Novel) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb}/admin-update-novel`;
+    return this.http.put(url, novel, httpOptions);
+  }
+
+  adminDeleteNovel(jwt: string, id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb}/admin-delete-novel/${id}`;
+    return this.http.delete(url, httpOptions);
+  }
+
+  adminUpdateVolume(jwt: string, volume: Volume) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb}/admin-update-volume`;
+    return this.http.put(url, volume, httpOptions);
+  }
+
+  adminDeleteVolume(jwt: string, id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb}/admin-delete-volume/${id}`;
+    return this.http.delete(url, httpOptions);
+  }
+
+  adminGetChapter(jwt: string, id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb}/admin-get-chapter/${id}`;
+    console.log(url);
+    return this.http.get(url, httpOptions);
+  }
+
+  adminUpdateChapter(jwt: string, chapter: Chapter) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb}/admin-update-chapters`;
+    return this.http.put(url, chapter, httpOptions);
+  }
+
+  adminDeleteChapter(jwt: string, id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb}/admin-delete-chapter/${id}`;
+    return this.http.delete(url, httpOptions);
+  }
+
 
   adminGetUsers(jwt: string) {
     const httpOptions = {

@@ -21,7 +21,7 @@
 
             <ng-container matColumnDef="user_status">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="skn-text"> <strong>Estado</strong> </th>
-                <td mat-cell *matCellDef="let element" [ngStyle]="{'color':element.user_status === 'Active' ? 'green' : 'red' }"> {{element.user_status}} </td>
+                <td mat-cell *matCellDef="let element" [ngStyle]="{'color':element.user_status === 'Active' ? 'green' : 'red' }"> {{element.user_status === 'Active' ? 'Activo' : 'Inactivo'}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns" class="skn-main"></tr>

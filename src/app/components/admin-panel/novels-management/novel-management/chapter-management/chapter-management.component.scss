@@ -1,0 +1,14 @@
+@import "../../../../../common.scss";
+.skn-novel-edition-translators-form {
+    justify-content: space-between;
+    margin-right: unset;
+    margin-left: unset;
+    mat-form-field {
+        width: 45%;
+    }
+    @include mobile {
+        mat-form-field {
+            width: 100%;
+        }
+    }
+}

@@ -18,6 +18,10 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { ChaptersComponent } from './components/chapters/chapters.component';
 import { UserChapterComponent } from './components/user-novel/user-chapter/user-chapter.component';
 import { InvitationsComponent } from './components/invitations/invitations.component';
+import { NovelsManagementComponent } from './components/admin-panel/novels-management/novels-management.component';
+import { HomeManagementComponent } from './components/admin-panel/home-management/home-management.component';
+import { NovelManagementComponent } from './components/admin-panel/novels-management/novel-management/novel-management.component';
+import { ChapterManagementComponent } from './components/admin-panel/novels-management/novel-management/chapter-management/chapter-management.component';
 // Test
 import { TestComponent } from './components/test/test.component';
 
@@ -57,6 +61,10 @@ const routes: Routes = [
       {path: 'administracion-de-usuarios/:id', component: UserManagementComponent},
       {path: 'administracion-del-foro', component: ForumManagementComponent},
       {path: 'administracion-del-foro/:id', component: ForumManagementComponent},
+      {path: 'administracion-de-pagina-de-inicio', component: HomeManagementComponent},
+      {path: 'administracion-de-novelas', component: NovelsManagementComponent},
+      {path: 'administracion-de-novelas/:id', component: NovelManagementComponent},
+      {path: 'administracion-de-novelas/:nid/:vid/:cid', component: ChapterManagementComponent},
       {path: '', pathMatch: 'full', redirectTo: '' },
       { path: '**', pathMatch: 'full', redirectTo: '' }
     ]

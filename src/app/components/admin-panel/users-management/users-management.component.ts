@@ -4,7 +4,7 @@ import { AdminService } from '../../../services/admin.service';
 import { UsersService } from '../../../services/users.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-users-management',
@@ -28,8 +28,6 @@ export class UsersManagementComponent implements OnInit {
   loading = true;
 
   ngOnInit(): void {
-    const paginatorIntl = new MatPaginatorIntl();
-    paginatorIntl.itemsPerPageLabel = 'Items per pagina:';
     this.as.adminGetUsers(this.us.getUserLoged().token).subscribe((data: any) => {
       this.users = data.users;
       this.dataSource = new MatTableDataSource(this.users);

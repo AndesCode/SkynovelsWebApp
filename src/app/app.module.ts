@@ -53,6 +53,10 @@ import { MobileNavbarComponent } from './components/navbars/mobile-navbar/mobile
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { UsersManagementComponent } from './components/admin-panel/users-management/users-management.component';
 import { UserManagementComponent } from './components/admin-panel/users-management/user-management/user-management.component';
+import { NovelsManagementComponent } from './components/admin-panel/novels-management/novels-management.component';
+import { HomeManagementComponent } from './components/admin-panel/home-management/home-management.component';
+import { NovelManagementComponent } from './components/admin-panel/novels-management/novel-management/novel-management.component';
+import { ChapterManagementComponent } from './components/admin-panel/novels-management/novel-management/chapter-management/chapter-management.component';
 // bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Pipes
@@ -112,7 +116,11 @@ const config: SwiperConfigInterface = {
     UserChapterComponent,
     FooterComponent,
     InvitationsComponent,
-    UserManagementComponent
+    UserManagementComponent,
+    NovelsManagementComponent,
+    HomeManagementComponent,
+    NovelManagementComponent,
+    ChapterManagementComponent
   ],
   imports: [
     // Angular

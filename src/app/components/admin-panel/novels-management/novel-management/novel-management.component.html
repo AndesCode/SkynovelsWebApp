@@ -1,0 +1,201 @@
+<div class="skn-loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</div>
+<main class="container" *ngIf="!loading" style="padding-top: 2%; padding-bottom: 2%">
+    <section>
+        <form #novelForm="ngForm">
+            <div class="skn-novel-edition-presentation">
+                <div class="skn-novel-edition-presentation-image">
+                    <img src={{this.imgURL}} style="height: '90%;">
+                    <input #file type="file" accept='image/*' (change)="fileChangeEvent($event)" hidden>
+                    <button type="button" mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()">Subir imagen (.jpg)</button>
+                </div>
+                <div class="skn-novel-edition-main-form">
+                    <mat-form-field class="skn-novel-edition-input-100">
+                        <mat-label>Titulo de novela*</mat-label>
+                        <input matInput #nvl_title="ngModel" name="novel?.nvl_title" autocomplete="off" [(ngModel)]="novel.nvl_title" required minlength="4" maxlength="60">
+                        <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+                    </mat-form-field>
+                    <mat-form-field class="skn-novel-edition-input-100">
+                        <mat-label>Autor de novela*</mat-label>
+                        <input matInput #nvl_writer="ngModel" name="novel.nvl_writer" autocomplete="off" [(ngModel)]="novel.nvl_writer" required required minlength="2" maxlength="25">
+                        <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+                    </mat-form-field>
+                    <mat-form-field class="skn-novel-edition-input-100">
+                        <mat-label>Generos*</mat-label>
+                        <mat-select multiple [(ngModel)]="novel.genres" name="novel.genres" required>
+                            <mat-option *ngFor="let genre of genres" [value]="genre.id">{{genre.genre_name}}</mat-option>
+                        </mat-select>
+                        <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+                    </mat-form-field>
+                    <mat-form-field class="skn-novel-edition-input-100">
+                        <mat-label>Estado de publicación*</mat-label>
+                        <mat-select #nvl_status="ngModel" name="novel.nvl_status" [(ngModel)]="novel.nvl_status" required minlength="6" maxlength="8">
+                            <mat-option value="Disabled">Oculta</mat-option>
+                            <mat-option value="Active">Publicada</mat-option>
+                            <mat-option value="Finished" [disabled]="novel?.nvl_status !== 'Active'">Finalizada</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Acronimo</mat-label>
+                        <input matInput #nvl_acronym="ngModel" name="novel.nvl_acronym" [(ngModel)]="novel.nvl_acronym" maxlength="8">
+                        <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row skn-novel-edition-translators-form">
+                <mat-form-field>
+                    <mat-label>Traductor</mat-label>
+                    <input matInput #nvl_translator="ngModel" name="novel.nvl_translator" [(ngModel)]="novel.nvl_translator" minlength="2" maxlength="25">
+                    <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Traductor al Ingles</mat-label>
+                    <input matInput #nvl_translator_eng="ngModel" name="novel.nvl_translator_eng" [(ngModel)]="novel.nvl_translator_eng" minlength="2" maxlength="25">
+                    <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+                </mat-form-field>
+            </div>
+            <div class="skn-novel-edition-big-form">
+                <div class="form-group skn-novel-edition-input-100">
+                    <label for="skn-novel-sinopsis">Sinopsis*</label>
+                    <ckeditor id="skn-novel-sinopsis" #nvl_content="ngModel" [(ngModel)]="novel.nvl_content" data="{{novel.nvl_content}}" name="novel.nvl_content" [config]="ckEditorConfig" [editor]="Editor" class="skn-ck-editor-novel-content" required minlength="15" maxlength="1500"
+                        autocomplete="off">
+                    </ckeditor>
+                </div>
+            </div>
+        </form>
+        <div *ngIf="novel?.id">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Colaboradores
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let collaborator of collaborators" style="margin-bottom: 4px">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{collaborator.user_login}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <button mat-raised-button color="warn" (click)="openDialogSheet(deleteCollaboratorModal)">Eliminar</button>
+                    <ng-template #deleteCollaboratorModal>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Eliminar colaborador</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Seguro que deseas eliminar al colaborador {{collaborator.user_login}}?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                            <button mat-raised-button color="warn" (click)="deleteCollaborator(collaborator); dialog.closeAll()">Eliminar</button>
+                        </div>
+                    </ng-template>
+                </mat-expansion-panel>
+            </mat-expansion-panel>
+            <mat-card style="margin-top: 15px;">
+                <p>Capitulos*</p>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let volume of novel?.volumes" style="margin-bottom: 5px;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h4 style="margin: unset;">{{volume.vlm_title}}</h4>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div style="margin-bottom: 6px;" class="d-flex justify-content-end">
+                        <div>
+                            <button mat-mini-fab [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
+                            <mat-menu #userMenu="matMenu">
+                                <button mat-menu-item (click)="openDialogSheet(editVolumeModal)">
+                                  <span>Editar</span>
+                                </button>
+                                <button mat-menu-item (click)="openDialogSheet(deleteVolumeModal)">
+                                  <span>Eliminar</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                    <div class="skn-nvl-vlm-chapters-container row">
+                        <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *ngFor="let chapter of volume.chapters" (click)="goToChapterEdition(volume, chapter)">
+                            <div class="skn-nvl-chp-element-chp-number-index">
+                                {{chapter.chp_number}}
+                            </div>
+                            <div>
+                                <div class="skn-nvl-chp-element-title"> {{hs.setContent(chapter.chp_index_title, 69)}}</div>
+                                <small>{{hs.getRelativeTime(chapter.createdAt).message}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #editVolumeModal>
+                        <div class="skn-dialong-modal"></div>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Editar volumen</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form #editVolumeForm="ngForm">
+                                <mat-form-field class="skn-novel-edition-input-100">
+                                    <mat-label>Titulo</mat-label>
+                                    <input matInput #vlm_title="ngModel" name="volume.vlm_title" [(ngModel)]="volume.vlm_title" required minlength="4" maxlength="65">
+                                </mat-form-field>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                            <button mat-raised-button color="primary" (click)="updateVolume(volume, editVolumeForm)" [disabled]="editVolumeForm.invalid || uploading">Guardar</button>
+                        </div>
+                    </ng-template>
+                    <ng-template #deleteVolumeModal>
+                        <div class="skn-dialong-modal">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Eliminar</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Seguro que deseas eliminar el {{volume.vlm_title}}?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                                <button mat-raised-button color="warn" (click)="deleteVolume(volume)" [disabled]="uploading">Eliminar</button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-expansion-panel>
+            </mat-card>
+        </div>
+        <div class="d-flex justify-content-end" style="margin-top: 15px;">
+            <button type="button" mat-raised-button color="warn" style="margin-right: 5px;" (click)="openDialogSheet(deletenovelModal)">Eliminar novela</button>
+            <button type="submit" mat-raised-button color="primary" (click)="save(novelForm)" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">Guardar cambios</button>
+        </div>
+    </section>
+</main>
+<ng-template #deletenovelModal>
+    <div class="skn-dialong-modal">
+        <div class="modal-header">
+            <h4 class="modal-title">Eliminar</h4>
+        </div>
+        <div class="modal-body">
+            <p>¿Seguro que deseas eliminar la novela?</p>
+        </div>
+        <div class="modal-footer">
+            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+            <button mat-raised-button color="warn" (click)="deleteNovel()" [disabled]="uploading">Eliminar</button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #successSnack>
+    <div class="skn-snack-success-notification">
+        <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #errorSnack>
+    <div class="skn-snack-error-notification">
+        <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
+        <div>
+            <button mat-icon-button (click)="matSnackBar.dismiss()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </div>
+</ng-template>

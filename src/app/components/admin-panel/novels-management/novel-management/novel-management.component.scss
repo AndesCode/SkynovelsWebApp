@@ -1,0 +1,57 @@
+@import "../../../../common.scss";
+.skn-novel-edition-presentation {
+    margin-top: 3em;
+    display: flex;
+    margin-bottom: 15px;
+    .skn-novel-edition-presentation-image {
+        width: 18.2rem;
+        height: 25.75rem;
+        border-radius: 5px;
+        padding: 2px;
+        margin-right: 15px;
+        @include subtract-media(desktop) {
+            margin: auto;
+            width: 15.31rem;
+            height: 22.5rem;
+        }
+        img {
+            width: 100%;
+            height: 90%;
+            border-radius: 5px 5px 0px 0px;
+        }
+        .skn-upload-image-button {
+            width: 100%;
+            height: 10%;
+            border-radius: 0px 0px 5px 5px;
+        }
+    }
+    .skn-novel-edition-main-form {
+        width: min-content;
+        flex: auto;
+        @include subtract-media(desktop) {
+            width: 100%;
+            margin-top: 15px;
+            flex: unset;
+        }
+    }
+    @include subtract-media(desktop) {
+        display: block;
+    }
+}
+
+.skn-novel-edition-translators-form {
+    justify-content: space-between;
+    margin-right: unset;
+    margin-left: unset;
+    mat-form-field {
+        width: 45%;
+    }
+}
+
+.skn-novel-edition-big-form {
+    margin-top: 15px;
+}
+
+.skn-novel-edition-input-100 {
+    width: 100%;
+}
