@@ -122,6 +122,61 @@ export class HelperService {
     return  (b.date_data.seconds) - (a.date_data.seconds);
   }
 
+  /*sorterAsc(propName: string) {
+    console.log(propName);
+    return (a, b) => a[propName] === b[propName] ? 0 : a[propName] > b[propName] ? -1 : 1;
+  }*/
+
+  nvlTitleSorter(a, b){
+    if (a.nvl_title < b.nvl_title) { return -1; }
+    if (a.nvl_title > b.nvl_title) { return 1; }
+    return 0;
+  }
+
+
+  sorterAsc(prop) {
+    if (prop === 'date_data') {
+      return (a, b) => {
+        return b.date_data.seconds - a.date_data.seconds;
+      };
+    } else {
+      return (a, b) => {
+        if (isNaN(a[prop])) {
+          if (a[prop] < b[prop]) { return -1; }
+          if (a[prop] > b[prop]) { return 1; }
+          return 0;
+        } else {
+          return a[prop] - b[prop];
+        }
+      };
+    }
+  }
+
+  sorterDesc(prop) {
+    if (prop === 'date_data') {
+      return (a, b) => {
+        return a.date_data.seconds - b.date_data.seconds;
+      };
+    } else {
+      return (a, b) => {
+        if (isNaN(a[prop])) {
+          if (b[prop] < a[prop]) { return 1; }
+          if (b[prop] > a[prop]) { return -1; }
+          return 0;
+        } else {
+          return b[prop] - a[prop];
+        }
+      };
+    }
+  }
+
+  /*sorterDesc(propName: string) {
+    return (a, b) => a[propName] === b[propName] ? 0 : a[propName] < b[propName] ? -1 : 1;
+  }*/
+
+
+
+
   pinnedForumPostDataSorter(a, b) {
     if (a.post_pinned === true) { return -1; }
   }
@@ -169,7 +224,7 @@ export class HelperService {
         const formData: any = new FormData();
         const xhr = new XMLHttpRequest();
         formData.append(appendType, file, file.name);
-        if (img || img !== undefined ||  img !== null || img.length > 0 || img !== '') {
+        if (img && img !== undefined &&  img !== null && img.length > 0) {
           formData.append(oldAppendType, img);
         }
         xhr.withCredentials = true;
@@ -185,8 +240,5 @@ export class HelperService {
           }
         };
       });
-    }
-    getRandomNumer(min: number, max: number) {
-      return Math.round(Math.floor(Math.random() * (max - min))) + min;
     }
 }

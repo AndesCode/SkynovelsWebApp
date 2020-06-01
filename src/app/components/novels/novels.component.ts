@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NovelsService } from '../../services/novels.service';
 import { HelperService } from '../../services/helper.service';
-import { Location } from '@angular/common';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Genre, NovelFilter, Novel } from 'src/app/models/models';
 
@@ -19,6 +18,7 @@ export class NovelsComponent implements OnInit {
   novelFilter: NovelFilter = {
     searchName: '',
     searchStatus: 'All',
+    orderBy: 'date_data',
     searchGenres: []
   };
   genres: Array<Genre> = [];
@@ -27,18 +27,18 @@ export class NovelsComponent implements OnInit {
   loading = true;
 
   constructor(private router: Router,
-              private _ns: NovelsService,
-              public _hs: HelperService,
-              private location: Location,
+              private ns: NovelsService,
+              public hs: HelperService,
               private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
-    this._ns.getNovels().subscribe((data: any) => {
+    this.ns.getGenres().subscribe((genres: any) => {
+      this.genres = genres.genres;
+    });
+    this.ns.getNovels().subscribe((data: any) => {
       this.novels = data.novels;
-      // this.setImg();
       console.log(this.novels);
       this.loading = false;
-      this.allGenres();
     });
 
     this.breakpointObserver
@@ -59,16 +59,5 @@ export class NovelsComponent implements OnInit {
     } else {
       this.router.navigate(['/novela', nvl_name, nvl_chapter]);
     }
-  }
-
-  allGenres() {
-    this._ns.getGenres().subscribe((genres: any) => {
-      this.genres = genres.genres;
-    });
-  }
-
-  goToLastChapter(novelName: any, chpNmber: number) {
-    this.location.go('/novela/' + novelName + '/' + chpNmber);
-    // this.router.navigate(['/novela', novelName, chpNmber]);
   }
 }

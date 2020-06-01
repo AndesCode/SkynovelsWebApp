@@ -22,6 +22,8 @@ import { NovelsManagementComponent } from './components/admin-panel/novels-manag
 import { HomeManagementComponent } from './components/admin-panel/home-management/home-management.component';
 import { NovelManagementComponent } from './components/admin-panel/novels-management/novel-management/novel-management.component';
 import { ChapterManagementComponent } from './components/admin-panel/novels-management/novel-management/chapter-management/chapter-management.component';
+import { AdvertisementManagementComponent } from './components/admin-panel/home-management/advertisement-management/advertisement-management.component';
+import { AdvertisementComponent } from './components/advertisement/advertisement.component';
 // Test
 import { TestComponent } from './components/test/test.component';
 
@@ -65,17 +67,12 @@ const routes: Routes = [
       {path: 'administracion-de-novelas', component: NovelsManagementComponent},
       {path: 'administracion-de-novelas/:id', component: NovelManagementComponent},
       {path: 'administracion-de-novelas/:nid/:vid/:cid', component: ChapterManagementComponent},
+      {path: 'administracion-de-novelas/:nid/:vid/:cid', component: ChapterManagementComponent},
+      {path: 'administracion-de-pagina-de-inicio/noticias/:id/:name', component: AdvertisementManagementComponent},
+      {path: 'administracion-de-pagina-de-inicio/noticias/:id', component: AdvertisementManagementComponent},
       {path: '', pathMatch: 'full', redirectTo: '' },
       { path: '**', pathMatch: 'full', redirectTo: '' }
     ]
-    /*children: [
-      {path: 'analisis', component: AnalyticsComponent},
-      {path: 'administracion-de-novelas', component: NovelManagementComponent},
-      {path: 'administracion-de-novelas/:id', component: NovelAdminEditionComponent},
-      {path: 'administracion-de-novelas/:id/editar-capitulo/:chp', component: NovelAdminEditionComponent},
-      {path: '', pathMatch: 'full', redirectTo: '' },
-      { path: '**', pathMatch: 'full', redirectTo: '' }
-    ]*/
   },
   // novel edition
   { path: 'mis-novelas', component: UserNovelsComponent, canActivate: [GuardService] },
@@ -91,40 +88,14 @@ const routes: Routes = [
   { path: 'perfil/:id/:login', component: UserProfileComponent },
   // Invitations
   { path: 'invitaciones', component: InvitationsComponent },
+  // Advertisements
+  { path: 'noticias/:id', component: AdvertisementComponent },
+  { path: 'noticias/:id/:name', component: AdvertisementComponent },
   // Test
   { path: 'test', component: TestComponent },
   // redirects
   { path: '**', pathMatch: 'full', redirectTo: '' }
 ];
-
-/*const routes: Routes = [
-  // home
-  { path: '', component: HomeComponent },
-
-  // users
-  { path: 'iniciar-sesion', component: LoginComponent },
-  {
-    path: 'registrarse',
-    component: HomeComponent,
-    canActivate: [GuardService]
-  },
-  {
-    path: 'invitaciones',
-    component: InvitationsComponent,
-    canActivate: [GuardService]
-  },
-  {
-    path: 'styles-test',
-    component: DevStylesTestComponent,
-    canActivate: [GuardService]
-  },
-  { path: 'perfil/:login/:id', component: UserProfileComponent },
-  { path: 'verificacion/:key', component: EmailVerificationComponent },
-  { path: 'reseteo-de-contraseña/:token', component: NewPasswordFormComponent },
-  // redirects
-  // {path: '', pathMatch: 'full', redirectTo: '' },
-  { path: '**', pathMatch: 'full', redirectTo: '' }
-];*/
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

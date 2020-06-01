@@ -1,5 +1,5 @@
 <div class="row" style="justify-content: center;">
-    <div *ngFor="let novel of novels | novelFilter:novelFilter.searchName: novelFilter.searchGenres: novelFilter.searchStatus">
+    <div *ngFor="let novel of novels | novelFilter:novelFilter.searchName: novelFilter.searchGenres: novelFilter.searchStatus: novelFilter.orderBy">
         <a class="skn-nvl-card unstyled-a-tag" [routerLink]="[goToNovelLink, novel.id, novel.nvl_name]">
             <div class="skn-nvl-card-img">
                 <img [src]="novel.nvl_img | noimage" alt="">

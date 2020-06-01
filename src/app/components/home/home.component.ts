@@ -90,25 +90,26 @@ export class HomeComponent implements OnInit {
       }
     });
     this.ns.getHome().subscribe((data: any) => {
-        console.log(data);
         this.topNovels = data.topNovels;
         this.recentNovels = data.recentNovels;
         this.recomendedNovel = data.recommendedNovel[0];
-        this.recomendedNovel.date_data = this.hs.getRelativeTime(this.recomendedNovel.nvl_last_update);
-        if (this.recomendedNovel.nvl_status === 'Finished') {
-          this.recomendedNovel.nvl_status = 'Finalizada';
-        } else {
-          if (this.recomendedNovel.date_data.seconds > 1296000) {
-            this.recomendedNovel.nvl_status = 'Inactiva';
+        if (this.recomendedNovel) {
+          this.recomendedNovel.date_data = this.hs.getRelativeTime(this.recomendedNovel.nvl_last_update);
+          if (this.recomendedNovel.nvl_status === 'Finished') {
+            this.recomendedNovel.nvl_status = 'Finalizada';
           } else {
-            this.recomendedNovel.nvl_status = 'Activa';
+            if (this.recomendedNovel.date_data.seconds > 1296000) {
+              this.recomendedNovel.nvl_status = 'Inactiva';
+            } else {
+              this.recomendedNovel.nvl_status = 'Activa';
+            }
           }
         }
         this.updatedNovels = data.updatedNovels;
         for (const updatedNovel of this.updatedNovels) {
           updatedNovel.date_data = this.hs.getRelativeTime(updatedNovel.nvl_last_update);
-          this.ns.getHomeUpdatedNovelChapters(updatedNovel.id).subscribe((data: any) => {
-            updatedNovel.chapters = data.updatedChapters;
+          this.ns.getHomeUpdatedNovelChapters(updatedNovel.id).subscribe((updatedChapters: any) => {
+            updatedNovel.chapters = updatedChapters.updatedChapters;
             for (const chapter of updatedNovel.chapters) {
               chapter.date_data = this.hs.getRelativeTime(chapter.createdAt);
               if (chapter.date_data.seconds > 1296000) {
@@ -146,11 +147,6 @@ export class HomeComponent implements OnInit {
     console.log(cid);
     console.log(chpName);
     this.router.navigate(['/novelas', nid, nvlName, cid, chpName]);
-  }
-
-  onclick($event) {
-    this.isActive = !this.isActive;
-    console.log($event);
   }
 
   setSwiperSlidesPerView(slides: number) {

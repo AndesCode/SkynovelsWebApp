@@ -38,13 +38,14 @@ export class AdminPanelComponent implements OnInit {
       console.log(data);
       if (data.status === 200) {
         this.adminVerificated = true;
+        // this.router.navigate(['/panel/administracion-de-pagina-de-inicio']);
       } else {
-        this.router.navigate(['/home']);
+        this.router.navigate(['']);
         this.as.adminPanelErrorHandler(null, true);
       }
     }, error => {
       console.log(error);
-      this.router.navigate(['/home']);
+      this.router.navigate(['']);
       this.as.adminPanelErrorHandler(error, false);
     });
   }

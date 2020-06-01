@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { HelperService } from '../services/helper.service';
 import { Novel } from '../models/models';
 
 @Pipe({
@@ -6,10 +7,13 @@ import { Novel } from '../models/models';
 })
 export class NovelFilterPipe implements PipeTransform {
 
+  constructor(private hs: HelperService){}
+
   transform(novels: Array<any>,
             novelTitle: string,
             novelGenres: Array<any>,
-            searchStatus: 'All' | 'Activa' | 'Inactiva' | 'Finalizada'): any {
+            searchStatus: 'All' | 'Activa' | 'Inactiva' | 'Finalizada',
+            orderBy: string): any {
     const resultNovels = [];
     if (novels) {
       for (const novel of novels) {
@@ -27,6 +31,7 @@ export class NovelFilterPipe implements PipeTransform {
           }
         }
       }
+      resultNovels.sort(this.hs.sorterDesc((orderBy)));
       return resultNovels;
     }
   }

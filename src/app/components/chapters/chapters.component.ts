@@ -10,6 +10,7 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { LikesService } from '../../services/likes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Like } from 'src/app/models/models';
 
 @Component({
   selector: 'app-chapters',
@@ -178,16 +179,18 @@ export class ChaptersComponent implements AfterViewInit {
     if (this.user) {
       if (chapterComment.liked === false) {
         chapterComment.liked = true;
-        this.ls.createChapterCommentLike(chapterComment.id).subscribe((data: any) => {
-          chapterComment.like_id = data.chapter_comment_like.id;
-          chapterComment.likes.push(data.chapter_comment_like);
-          console.log(data.chapter_comment_like);
+        const like: Like = {
+          chapter_comment_id: chapterComment.id
+        };
+        this.ls.createLike(like).subscribe((data: any) => {
+          chapterComment.like_id = data.like.id;
+          chapterComment.likes.push(data.like);
         }, error => {
           chapterComment.liked = false;
         });
       } else {
         chapterComment.liked = false;
-        this.ls.deleteChapterCommentLike(chapterComment.like_id).subscribe((data: any) => {
+        this.ls.deleteLike(chapterComment.like_id).subscribe((data: any) => {
           chapterComment.likes.splice(chapterComment.likes.findIndex(x => x.id === chapterComment.like_id), 1);
           chapterComment.like_id = null;
         }, error => {
@@ -204,16 +207,18 @@ export class ChaptersComponent implements AfterViewInit {
     if (this.user) {
       if (chapterCommentReply.liked === false) {
         chapterCommentReply.liked = true;
-        this.ls.createChapterCommentReplyLike(chapterCommentReply.id).subscribe((data: any) => {
-          chapterCommentReply.like_id = data.chapter_comment_reply_like.id;
-          chapterCommentReply.likes.push(data.chapter_comment_reply_like);
-          console.log(data.chapter_comment_reply_like);
+        const like: Like = {
+          chapter_comment_reply_id: chapterCommentReply.id
+        };
+        this.ls.createLike(like).subscribe((data: any) => {
+          chapterCommentReply.like_id = data.like.id;
+          chapterCommentReply.likes.push(data.like);
         }, error => {
           chapterCommentReply.liked = false;
         });
       } else {
         chapterCommentReply.liked = false;
-        this.ls.deleteChapterCommentReplyLike(chapterCommentReply.like_id).subscribe((data: any) => {
+        this.ls.deleteLike(chapterCommentReply.like_id).subscribe((data: any) => {
           chapterCommentReply.likes.splice(chapterCommentReply.likes.findIndex(x => x.id === chapterCommentReply.like_id), 1);
           chapterCommentReply.like_id = null;
         }, error => {
@@ -427,19 +432,19 @@ export class ChaptersComponent implements AfterViewInit {
     ChapterComment.show_replys = false;
   }
 
-  updateChapterCommentReply(updateRatingCommentForm: NgForm, ratingComment: any) {
-    console.log(updateRatingCommentForm);
-    if (updateRatingCommentForm.dirty) {
-      if (updateRatingCommentForm.valid) {
-        this.ns.updateChapterCommentReply(ratingComment).subscribe((data: any) => {
+  updateChapterCommentReply(updateChapterCommentReplyForm: NgForm, commentReply: any) {
+    console.log(updateChapterCommentReplyForm);
+    if (updateChapterCommentReplyForm.dirty) {
+      if (updateChapterCommentReplyForm.valid) {
+        this.ns.updateChapterCommentReply(commentReply).subscribe((data: any) => {
           console.log(data);
-          ratingComment.edition = false;
+          commentReply.edition = false;
         });
       } else {
-        ratingComment.edition = false;
+        commentReply.edition = false;
       }
     } else {
-      ratingComment.edition = false;
+      commentReply.edition = false;
     }
   }
 

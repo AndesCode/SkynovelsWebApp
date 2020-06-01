@@ -94,6 +94,7 @@ export class UserNovelComponent implements OnInit {
           if (this.novel.nvl_img) {
             this.imgURL = 'http://localhost:3000/api/novel/image/' + this.novel.nvl_img + '/false';
           }
+          this.evaluateEditableNovelStatus();
         } else {
           console.log('no autorizado');
           this.router.navigate(['mis-novelas']);
@@ -116,11 +117,6 @@ export class UserNovelComponent implements OnInit {
 
   save(novelForm: NgForm) {
     if (this.uploading || novelForm.invalid || (!novelForm.dirty && !this.fileToUpload)) {
-      console.log(this.uploading);
-      console.log(novelForm.invalid);
-      console.log(novelForm.dirty);
-      console.log(this.fileToUpload);
-      console.log(this.novel);
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'Formulario invalido';
       return;
@@ -129,6 +125,9 @@ export class UserNovelComponent implements OnInit {
     this.novel.nvl_title = this.novel.nvl_title.replace(/^\s+|\s+$|\s+(?=\s)/g, '');
     let request: Observable<any>;
     this.novel.collaborators = this.collaborators.map(collaborator => collaborator.user_id);
+    if (!this.novelStatusEditable) {
+      this.novel.nvl_status = 'Disabled';
+    }
     if ( this.novel.id ) {
       request = this.ns.updateNovel(this.novel);
     } else {
@@ -146,12 +145,6 @@ export class UserNovelComponent implements OnInit {
           this.novel.collaborators = [];
       }
       novelForm.form.markAsPristine();
-      console.log(novelForm.value);
-      console.log(this.novel);
-      if (!this.novelStatusEditable) {
-        this.novel.nvl_status = 'Disabled';
-      }
-
       if ( this.fileToUpload ) {
         console.log('Hay archivo a subir, se ejecuta consulta al servidor');
         this.hs.uploadImage(this.novel.id, this.fileToUpload, this.novel.nvl_img, 'novel')
@@ -216,15 +209,36 @@ export class UserNovelComponent implements OnInit {
     }
   }
 
-  /*evaluateEditableNovelStatus() {
-    const chapter_status = this.novel.chapters.map(
-      chapterStatus => chapterStatus.chp_status);
-    if (chapter_status.includes('Publicado')) {
-      this.novelStatusEditable = true;
-    } else {
-      this.hideNovelFormPublic();
+  disableNovel() {
+    const disableNovel: Novel = {
+      id: this.novel.id,
+      nvl_status: 'Disabled'
+    };
+    this.ns.updateNovel(disableNovel).subscribe((data: any) => {
+      this.novel.nvl_status = data.novel.nvl_status;
+    }, error => {
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = error.error.message;
+    });
+  }
+
+  evaluateEditableNovelStatus() {
+    for (const [i, volume] of this.novel.volumes.entries()) {
+      console.log(i);
+      const chaptersStatus = volume.chapters.map(
+        chapterStatus => chapterStatus.chp_status);
+      if (chaptersStatus.includes('Active')) {
+        this.novelStatusEditable = true;
+        break;
+      } else {
+        if (i + 1 === this.novel.volumes.length) {
+          this.novelStatusEditable = false;
+          this.disableNovel();
+        }
+        // this.disableNovel();
+      }
     }
-  }*/
+  }
 
   fileChangeEvent(fileInput: any) {
     if (fileInput.target.files.length > 0) {
@@ -318,6 +332,7 @@ export class UserNovelComponent implements OnInit {
       this.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Volumen eliminado!';
       this.uploading = false;
+      this.evaluateEditableNovelStatus();
     }, error => {
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;

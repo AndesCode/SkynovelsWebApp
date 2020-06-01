@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User } from '../models/user';
+import { User } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class LoginService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': jwt
+        Authorization: jwt
       })
     };
     const url = `${ this.urlnovelsdb }/api/self-service-user/${id}`;
@@ -48,7 +48,7 @@ export class LoginService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': jwt
+        Authorization: jwt
       })
     };
 

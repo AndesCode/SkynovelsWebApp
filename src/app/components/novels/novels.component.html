@@ -13,12 +13,11 @@
                 <mat-button-toggle value="Inactiva">Inactiva</mat-button-toggle>
                 <mat-button-toggle value="Finalizada">Finalizada</mat-button-toggle>
             </mat-button-toggle-group>
-            <mat-button-toggle-group [vertical]="mobile">
-                <mat-button-toggle value="bold">Nombre</mat-button-toggle>
-                <mat-button-toggle value="italic">Popularidad</mat-button-toggle>
-                <mat-button-toggle value="underline">Capítulos</mat-button-toggle>
-                <mat-button-toggle value="underline">Antiguedad</mat-button-toggle>
-                <mat-button-toggle value="underline">Votos</mat-button-toggle>
+            <mat-button-toggle-group [vertical]="mobile" [(ngModel)]="novelFilter.orderBy" name="novelFilter.orderBy">
+                <mat-button-toggle value="nvl_title">Nombre</mat-button-toggle>
+                <mat-button-toggle value="nvl_rating">Popularidad</mat-button-toggle>
+                <mat-button-toggle value="nvl_chapters">Capítulos</mat-button-toggle>
+                <mat-button-toggle value="date_data">Actualización</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
         <div class="skn-search-box-genres w-100">

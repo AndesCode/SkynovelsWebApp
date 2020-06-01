@@ -62,7 +62,7 @@
             <h2>Recomendación de la Semana</h2>
         </div>
 
-        <div class="skn-recommended-novel skn-secondary">
+        <div class="skn-recommended-novel skn-secondary" *ngIf="recomendedNovel">
             <div class="skn-novel-presentation">
                 <div class="skn-novel-presentation-image">
                     <a [routerLink]="['/novelas', recomendedNovel?.id, recomendedNovel?.nvl_name]">

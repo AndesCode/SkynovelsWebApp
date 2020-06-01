@@ -41,6 +41,7 @@ export class NovelManagementComponent implements OnInit {
   novel: Novel;
   genres: Array<Genre> = [];
   uploading = false;
+  novelPublished = false;
   chapterEdition = false;
 
     constructor( private activatedRoute: ActivatedRoute,
@@ -73,6 +74,10 @@ export class NovelManagementComponent implements OnInit {
       if (this.novel.nvl_img) {
         this.imgURL = 'http://localhost:3000/api/novel/image/' + this.novel.nvl_img + '/false';
       }
+      if (this.novel.nvl_status === 'Active' || this.novel.nvl_status === 'Finished') {
+        this.novelPublished = true;
+      }
+      this.evaluateEditableNovelStatus();
       this.loading = false;
     }, error => {
       console.log('no autorizado');
@@ -91,6 +96,13 @@ export class NovelManagementComponent implements OnInit {
     this.novel.nvl_title = this.novel.nvl_title.replace(/^\s+|\s+$|\s+(?=\s)/g, '');
     this.novel.collaborators = this.collaborators.map(collaborator => collaborator.user_id);
     this.as.adminUpdateNovel(this.us.getUserLoged().token, this.novel).subscribe((resp: any) => {
+      this.novel.nvl_recommended = resp.novel.nvl_recommended;
+      if (resp.novel.nvl_status === 'Active' || resp.novel.nvl_status === 'Finished') {
+        this.novelPublished = true;
+      }
+      if (resp.novel.nvl_status === 'Disabled') {
+        this.novelPublished = false;
+      }
       console.log(resp);
       novelForm.form.markAsPristine();
       console.log(novelForm.value);
@@ -98,7 +110,6 @@ export class NovelManagementComponent implements OnInit {
       if (!this.novelStatusEditable) {
         this.novel.nvl_status = 'Disabled';
       }
-
       if ( this.fileToUpload ) {
         console.log('Hay archivo a subir, se ejecuta consulta al servidor');
         this.hs.uploadImage(this.novel.id, this.fileToUpload, this.novel.nvl_img, 'novel')
@@ -122,6 +133,17 @@ export class NovelManagementComponent implements OnInit {
       }
     }, error => {
       console.log(error);
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = error.error.message;
+    });
+  }
+
+  setRecommendedNovel() {
+    this.as.adminCreateRecommnededNovel(this.us.getUserLoged().token, this.novel.id).subscribe((data: any) => {
+      this.novel.nvl_recommended = true;
+      this.openMatSnackBar(this.successSnackRef);
+      this.successSnackMessage = '¡Novela recomendada!';
+    }, error => {
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
@@ -160,15 +182,35 @@ export class NovelManagementComponent implements OnInit {
     });
   }
 
-  /*evaluateEditableNovelStatus() {
-    const chapter_status = this.novel.chapters.map(
-      chapterStatus => chapterStatus.chp_status);
-    if (chapter_status.includes('Publicado')) {
-      this.novelStatusEditable = true;
-    } else {
-      this.hideNovelFormPublic();
+  disableNovel() {
+    const disableNovel: Novel = {
+      id: this.novel.id,
+      nvl_status: 'Disabled'
+    };
+    this.as.adminUpdateNovel(this.us.getUserLoged().token, disableNovel).subscribe((data: any) => {
+      this.novel.nvl_status = data.novel.nvl_status;
+    }, error => {
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = error.error.message;
+    });
+  }
+
+  evaluateEditableNovelStatus() {
+    for (const [i, volume] of this.novel.volumes.entries()) {
+      console.log(i);
+      const chaptersStatus = volume.chapters.map(
+        chapterStatus => chapterStatus.chp_status);
+      if (chaptersStatus.includes('Active')) {
+        this.novelStatusEditable = true;
+        break;
+      } else {
+        if (i + 1 === this.novel.volumes.length) {
+          this.novelStatusEditable = false;
+          this.disableNovel();
+        }
+      }
     }
-  }*/
+  }
 
   fileChangeEvent(fileInput: any) {
     if (fileInput.target.files.length > 0) {

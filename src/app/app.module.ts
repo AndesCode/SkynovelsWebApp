@@ -57,6 +57,8 @@ import { NovelsManagementComponent } from './components/admin-panel/novels-manag
 import { HomeManagementComponent } from './components/admin-panel/home-management/home-management.component';
 import { NovelManagementComponent } from './components/admin-panel/novels-management/novel-management/novel-management.component';
 import { ChapterManagementComponent } from './components/admin-panel/novels-management/novel-management/chapter-management/chapter-management.component';
+import { AdvertisementManagementComponent } from './components/admin-panel/home-management/advertisement-management/advertisement-management.component';
+import { AdvertisementComponent } from './components/advertisement/advertisement.component';
 // bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Pipes
@@ -64,6 +66,7 @@ import { NoUserImagePipe } from './pipes/no-user-image.pipe';
 import { NoimagePipe } from './pipes/noimage.pipe';
 import { NoimagePipeThumb } from './pipes/noimagethumb.pipe';
 import { NovelFilterPipe } from './pipes/novel-filter.pipe';
+import { NoAdvertisementImagePipe} from './pipes/no-advertisement-image.pipe';
 // Installations
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -104,6 +107,7 @@ const config: SwiperConfigInterface = {
     // pipes
     NoimagePipeThumb,
     NoimagePipe,
+    NoAdvertisementImagePipe,
     NoUserImagePipe,
     NovelFilterPipe,
     ForumComponent,
@@ -120,7 +124,9 @@ const config: SwiperConfigInterface = {
     NovelsManagementComponent,
     HomeManagementComponent,
     NovelManagementComponent,
-    ChapterManagementComponent
+    ChapterManagementComponent,
+    AdvertisementManagementComponent,
+    AdvertisementComponent
   ],
   imports: [
     // Angular

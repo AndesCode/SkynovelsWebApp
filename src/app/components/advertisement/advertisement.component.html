@@ -1,0 +1,209 @@
+<div class="skn-loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</div>
+<main class="container" *ngIf="!loading" style="padding-top: 2%; padding-bottom: 2%">
+    <section>
+        <div class="skn-adversitement-image-container">
+            <img class="skn-adversitement-image" [src]="advertisement.adv_img | noAdvertisementImage" alt="">
+        </div>
+        <h1 style="text-align: center;">{{advertisement.adv_title}}</h1>
+        <hr>
+        <p [innerHTML]="advertisement.adv_content"></p>
+        <div class="d-flex justify-content-end">
+            <div class="d-flex align-items-center">
+                <button mat-icon-button aria-label="like" (click)="switchLike(advertisement, 'adv_id')">
+                            <span class="material-icons skn-like" [ngClass]="{'liked': advertisement.liked}">thumb_up</span>
+                        </button>
+                <div style="margin-top: 3px;">{{advertisement.likes?.length}}</div>
+            </div>
+        </div>
+        <hr>
+    </section>
+    <section>
+        <h2 style="text-align: center;">Comentarios</h2>
+        <form *ngIf="user" [formGroup]="newComment">
+            <div class="skn-nvl-rating-comment-textarea" style="align-items: unset;">
+                <div class="skn-user-image" style="margin-right: 15px;">
+                    <div>
+                        <img [src]="user.user_profile_image | noUserImage" alt="">
+                    </div>
+                </div>
+                <div class="skn-nvl-rating-comment-textarea-input">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Agregar un comentario</mat-label>
+                        <textarea matInput formControlName="adv_comment" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10"></textarea>
+                    </mat-form-field>
+                </div>
+                <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" (click)="createAdvertisementComment()">Publicar</button>
+            </div>
+        </form>
+        <div class="skn-nvl-user-rating skn-secondary" *ngFor="let comment of advertisement.comments">
+            <div class="skn-user-image">
+                <div>
+                    <img [src]="comment.user_profile_image | noUserImage" alt="">
+                </div>
+            </div>
+            <div class="skn-nvl-user-rating-user-rating">
+                <div class="skn-nvl-user-rating-login">
+                    <div style="display: flex;">
+                        <div class="skn-user-image-mobile">
+                            <div>
+                                <img [src]="comment.user_profile_image | noUserImage" alt="">
+                            </div>
+                        </div>
+                        <strong style="margin: auto 6px">{{comment.user_login}}</strong>
+                    </div>
+                    <button mat-mini-fab *ngIf="!comment.edition && user?.id === comment.user_id" [matMenuTriggerFor]="userMenu"><span class="material-icons">more_vert</span></button>
+                    <mat-menu #userMenu="matMenu">
+                        <button mat-menu-item (click)="editComment(comment)">
+                                      <span>Editar</span>
+                                    </button>
+                        <button mat-menu-item (click)="openDialogSheet(deleteCommentModal)">
+                                      <span>Eliminar</span>
+                                    </button>
+                    </mat-menu>
+                    <button mat-mini-fab *ngIf="comment.edition" (click)="updateAdvertisementComment(updateCommentForm, comment)"><span class="material-icons">done</span></button>
+                </div>
+                <hr>
+                <div>
+                    <p [innerHTML]="hs.setContent(comment.adv_comment, 160)" *ngIf="(!comment.show_more && comment.adv_comment.length > 160) && !comment.edition"></p>
+                    <p [innerHTML]="comment.adv_comment" *ngIf="(comment.show_more || comment.adv_comment.length < 160) && !comment.edition"></p>
+                    <form autocomplete="off" #updateCommentForm="ngForm">
+                        <div class="form-group" style="width: 100%;" *ngIf="comment.edition">
+                            <textarea class="form-control skn-text-area" id="exampleFormControlTextarea1" #chapter_comment="ngModel" name="comment.chapter_comment" [(ngModel)]="comment.adv_comment" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div *ngIf="comment.adv_comment.length > 160 && !comment.show_more && !comment.edition">
+                    <strong class="skn-link skn-text" (click)="showMoreComment(comment)"><strong>...Ver más</strong></strong>
+                </div>
+                <div *ngIf="comment.show_more && comment.adv_comment.length > 160 && !comment.edition">
+                    <strong class="skn-link skn-text" (click)="showMoreComment(comment)"><strong>...Mostrar menos</strong></strong>
+                </div>
+                <br>
+
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <span class="skn-link skn-red-text" *ngIf="!comment.show_replys" (click)="getAdvertismentCommentReplys(comment)">Respuestas</span>
+                        <span class="skn-link skn-red-text" *ngIf="comment.show_replys" (click)="hideAdvertismentCommentReplys(comment)">Ocultar Respuestas</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <button mat-icon-button aria-label="like" (click)="switchLike(comment, 'adv_comment_id')">
+                                        <span class="material-icons skn-like" [ngClass]="{'liked': comment.liked}">thumb_up</span>
+                                    </button>
+                        <div style="margin-top: 3px;">{{comment.likes?.length}}</div>
+                    </div>
+                </div>
+                <hr>
+
+
+
+
+
+                <div *ngIf="comment.show_replys">
+                    <form *ngIf="user">
+                        <div class="skn-nvl-rating-comment-textarea" style="align-items: unset;">
+                            <div class="skn-user-image" style="margin-right: 15px;">
+                                <div>
+                                    <img [src]="user.user_profile_image | noUserImage" alt="">
+                                </div>
+                            </div>
+                            <div class="skn-nvl-rating-comment-textarea-input">
+                                <mat-form-field style="width: 100%;">
+                                    <mat-label>Responder a {{comment.user_login}}</mat-label>
+                                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #chapter_comment_reply="ngModel" name="comment.chapter_comment_reply" [(ngModel)]="comment.advertisement_comment_reply"></textarea>
+                                </mat-form-field>
+                            </div>
+                            <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" (click)="createAvertismeentCommentReply(comment)">Publicar</button>
+                        </div>
+                    </form>
+                    <div class="skn-nvl-user-rating" *ngFor="let comment_reply of comment.replys" style="padding: 0px!important;">
+                        <div class="skn-user-image">
+                            <div>
+                                <img [src]="comment_reply.user_profile_image | noUserImage" alt="">
+                            </div>
+                        </div>
+                        <div class="skn-nvl-user-rating-user-rating">
+                            <div class="skn-nvl-user-rating-login" style="margin-bottom: 5px;">
+                                <div style="display: flex;">
+                                    <div class="skn-user-image-mobile">
+                                        <div>
+                                            <img [src]="comment_reply.user_profile_image | noUserImage" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="skn-nvl-user-rating-login-name">
+                                        <strong style="margin-right: 5px;">{{comment_reply.user_login}}</strong>
+                                        <small>{{comment_reply.date_data.message}}</small>
+                                    </div>
+                                </div>
+                                <button mat-mini-fab *ngIf="!comment_reply.edition && user?.id === comment_reply.user_id" [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
+                                <mat-menu #userMenu="matMenu">
+                                    <button mat-menu-item (click)="editComment(comment_reply)">
+                                                  <span>Editar</span>
+                                                </button>
+                                    <button mat-menu-item (click)="openDialogSheet(deleteCommentReplyModal)">
+                                                  <span>Eliminar</span>
+                                                </button>
+                                </mat-menu>
+                                <button mat-mini-fab *ngIf="comment_reply.edition && user?.id === comment_reply.user_id" (click)="updateAdvertisementCommentReply(updateAdvertisementCommentReplyForm, comment_reply)"><i class="material-icons">done</i></button>
+                            </div>
+                            <div>
+                                <p [innerHTML]="hs.setContent(comment_reply.adv_comment_reply, 360)" *ngIf="(!comment_reply.show_more && comment_reply.adv_comment_reply.length > 360) && !comment_reply.edition"></p>
+                                <p [innerHTML]="comment_reply.adv_comment_reply" *ngIf="(comment_reply.show_more || comment_reply.adv_comment_reply.length < 360) && !comment_reply.edition"></p>
+                                <form autocomplete="off" #updateAdvertisementCommentReplyForm="ngForm">
+                                    <div class="form-group" *ngIf="comment_reply.edition" style="width: 100%;">
+                                        <textarea class="form-control skn-text-area" #advertisement_comment_reply="ngModel" name="comment." [(ngModel)]="comment_reply.adv_comment_reply" rows="3" required></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div *ngIf="comment_reply.adv_comment_reply.length < 360 || comment_reply.edition">
+
+                                </div>
+                                <div *ngIf="comment_reply.adv_comment_reply.length > 360 && !comment_reply.show_more && !comment_reply.edition">
+                                    <strong class="skn-nvl-user-rating-info-togler" (click)="showMoreComment(comment_reply)">...Ver más</strong>
+                                </div>
+                                <div *ngIf="comment_reply.show_more && comment_reply.adv_comment_reply.length > 360 && !comment_reply.edition">
+                                    <strong class="skn-nvl-user-rating-info-togler" (click)="showMoreComment(comment_reply)">...Mostrar menos</strong>
+                                </div>
+                                <div style="display: flex; align-items: center;">
+                                    <button mat-icon-button aria-label="like" (click)="switchLike(comment_reply, 'adv_comment_reply_id')">
+                                                    <span class="material-icons skn-like" [ngClass]="{'liked': comment_reply.liked}">thumb_up</span>
+                                                </button>
+                                    <div style="margin-top: 3px;">{{comment_reply.likes?.length}}</div>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <ng-template #deleteCommentReplyModal>
+                            <div class="skn-dialong-modal">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Eliminar tu comentario</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¿Seguro que deseas eliminar el comentario?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                                    <button mat-raised-button color="warn" style="color: black;" (click)="deleteAvertismeentCommentReply(comment, comment_reply); dialog.closeAll()">Eliminar</button>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <ng-template #deleteCommentModal>
+                <div class="modal-header">
+                    <h4 class="modal-title">Eliminar tu comentario</h4>
+                </div>
+                <div class="modal-body">
+                    <p>¿Seguro que deseas eliminar el comentario?</p>
+                </div>
+                <div class="modal-footer">
+                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                    <button mat-raised-button color="warn" (click)="deleteAdvertisementComment(comment); dialog.closeAll()">Eliminar</button>
+                </div>
+            </ng-template>
+        </div>
+    </section>
+</main>

@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HelperService } from './helper.service';
 import { PostComment } from '../models/post-comment';
-import { User, Novel, Genre } from '../models/models';
+import { User, Novel, Genre, Advertisement } from '../models/models';
 import { Volume } from '../models/volume';
 import { Chapter } from '../models/chapter';
-
 
 @Injectable({
   providedIn: 'root'
@@ -366,5 +365,105 @@ export class AdminService {
     if (error.status === 500) {
       return error.error.message;
     }
+  }
+
+  adminGetAdvertisements(jwt: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true,
+    };
+    const url = `${ this.urlnovelsdb }/admin-get-advertisements`;
+    return this.http.get(url, httpOptions);
+  }
+
+  adminGetAdvertisement(jwt: string, id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true,
+    };
+    const url = `${ this.urlnovelsdb }/admin-get-advertisement/${id}`;
+    return this.http.get(url, httpOptions);
+  }
+
+  adminCreateAdvertisement(jwt: string, advertisement: Advertisement) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb }/admin-create-advertisement`;
+    return this.http.post(url, advertisement, httpOptions);
+  }
+
+  adminUpdateAdvertisement(jwt: string, advertisement: Advertisement) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb }/admin-update-advertisement`;
+    return this.http.put(url , advertisement, httpOptions);
+  }
+
+  adminDeleteAdvertisement(jwt: string, id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb }/admin-delete-advertisement/${id}`;
+    return this.http.delete(url, httpOptions);
+  }
+
+  adminCreateRecommnededNovel(jwt: string, id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const url = `${ this.urlnovelsdb }/admin-create-recommended-novel/${id}`;
+    return this.http.post(url, null, httpOptions);
+  }
+
+  AdminUploadImage(jwt: string, id: number, file: File, img: string) {
+    console.log(id);
+    const url = `${ this.urlnovelsdb }/admin-upload-advertisement-img/${id}`;
+    const appendType = 'advertisement_image';
+    const oldAppendType = 'old_advertisement_image';
+    return new Promise((resolve, reject) => {
+      const formData: any = new FormData();
+      const xhr = new XMLHttpRequest();
+      formData.append(appendType, file, file.name);
+      if (img && img !== undefined &&  img !== null && img.length > 0) {
+        formData.append(oldAppendType, img);
+      }
+      xhr.withCredentials = true;
+      xhr.open('POST', url, true);
+      xhr.setRequestHeader('Authorization', jwt);
+      xhr.send(formData);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            return resolve(JSON.parse(xhr.response));
+          } else {
+            return reject(JSON.parse(xhr.response));
+          }
+        }
+      };
+    });
   }
 }

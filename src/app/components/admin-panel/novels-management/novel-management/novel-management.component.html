@@ -6,41 +6,45 @@
         <form #novelForm="ngForm">
             <div class="skn-novel-edition-presentation">
                 <div class="skn-novel-edition-presentation-image">
-                    <img src={{this.imgURL}} style="height: '90%;">
+                    <img src={{this.imgURL}} style="height: 90%;">
                     <input #file type="file" accept='image/*' (change)="fileChangeEvent($event)" hidden>
                     <button type="button" mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()">Subir imagen (.jpg)</button>
                 </div>
                 <div class="skn-novel-edition-main-form">
-                    <mat-form-field class="skn-novel-edition-input-100">
+                    <mat-form-field class="w-100">
                         <mat-label>Titulo de novela*</mat-label>
                         <input matInput #nvl_title="ngModel" name="novel?.nvl_title" autocomplete="off" [(ngModel)]="novel.nvl_title" required minlength="4" maxlength="60">
                         <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                     </mat-form-field>
-                    <mat-form-field class="skn-novel-edition-input-100">
+                    <mat-form-field class="w-100">
                         <mat-label>Autor de novela*</mat-label>
                         <input matInput #nvl_writer="ngModel" name="novel.nvl_writer" autocomplete="off" [(ngModel)]="novel.nvl_writer" required required minlength="2" maxlength="25">
                         <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                     </mat-form-field>
-                    <mat-form-field class="skn-novel-edition-input-100">
+                    <mat-form-field class="w-100">
                         <mat-label>Generos*</mat-label>
                         <mat-select multiple [(ngModel)]="novel.genres" name="novel.genres" required>
                             <mat-option *ngFor="let genre of genres" [value]="genre.id">{{genre.genre_name}}</mat-option>
                         </mat-select>
                         <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                     </mat-form-field>
-                    <mat-form-field class="skn-novel-edition-input-100">
+                    <mat-form-field class="w-100" hintLabel="{{novelStatusEditable ? '': 'Debe tener al menos un capitulo activo'}}" [ngStyle]="{'margin-bottom':novelStatusEditable? '0px' : '0.75rem' }">
                         <mat-label>Estado de publicación*</mat-label>
-                        <mat-select #nvl_status="ngModel" name="novel.nvl_status" [(ngModel)]="novel.nvl_status" required minlength="6" maxlength="8">
+                        <mat-select #nvl_status="ngModel" name="novel.nvl_status" [(ngModel)]="novel.nvl_status" required minlength="6" maxlength="8" [disabled]="!novelStatusEditable">
                             <mat-option value="Disabled">Oculta</mat-option>
                             <mat-option value="Active">Publicada</mat-option>
                             <mat-option value="Finished" [disabled]="novel?.nvl_status !== 'Active'">Finalizada</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Acronimo</mat-label>
-                        <input matInput #nvl_acronym="ngModel" name="novel.nvl_acronym" [(ngModel)]="novel.nvl_acronym" maxlength="8">
-                        <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
-                    </mat-form-field>
+                    <div class="skn-novel-edition-recommended-button">
+                        <mat-form-field>
+                            <mat-label>Acronimo</mat-label>
+                            <input matInput #nvl_acronym="ngModel" name="novel.nvl_acronym" [(ngModel)]="novel.nvl_acronym" maxlength="8">
+                            <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+                        </mat-form-field>
+                        <button type="button" mat-raised-button color="primary" (click)="setRecommendedNovel()" *ngIf="novelPublished && !novel.nvl_recommended">Asignar como recomendada</button>
+                        <p style="color: #17bd17;" *ngIf="novel.nvl_recommended">¡Novela recomendada!</p>
+                    </div>
                 </div>
             </div>
             <div class="row skn-novel-edition-translators-form">
@@ -56,7 +60,7 @@
                 </mat-form-field>
             </div>
             <div class="skn-novel-edition-big-form">
-                <div class="form-group skn-novel-edition-input-100">
+                <div class="form-group w-100">
                     <label for="skn-novel-sinopsis">Sinopsis*</label>
                     <ckeditor id="skn-novel-sinopsis" #nvl_content="ngModel" [(ngModel)]="novel.nvl_content" data="{{novel.nvl_content}}" name="novel.nvl_content" [config]="ckEditorConfig" [editor]="Editor" class="skn-ck-editor-novel-content" required minlength="15" maxlength="1500"
                         autocomplete="off">

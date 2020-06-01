@@ -10,8 +10,9 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Novel, User } from 'src/app/models/models';
+import { Novel, User, Like } from 'src/app/models/models';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-novel',
@@ -43,7 +44,9 @@ export class NovelComponent implements OnInit {
                 public matSnackBar: MatSnackBar,
                 public hs: HelperService,
                 public bottomSheet: MatBottomSheet,
-                public dialog: MatDialog) {
+                public dialog: MatDialog,
+                private meta: Meta,
+                private title: Title) {
 
                   this.newRatingForm = new FormGroup({
                     novel_id: new FormControl(''),
@@ -74,6 +77,8 @@ export class NovelComponent implements OnInit {
     this.ns.getNovel(urlId, 'reading').subscribe((data: any) => {
       this.novel = data.novel[0];
       this.novel.user_bookmark = null;
+      this.title.setTitle(this.novel.nvl_title);
+      this.meta.updateTag({name: this.novel.nvl_content});
       this.calculateNovelRatingAvarage();
       this.novel.date_data = this.hs.getRelativeTime(this.novel.nvl_last_update);
       if (this.novel.nvl_status === 'Finished') {
@@ -130,10 +135,12 @@ export class NovelComponent implements OnInit {
     if (this.user) {
       if (novelRating.liked === false) {
         novelRating.liked = true;
-        this.ls.createNovelRatingLike(novelRating.id).subscribe((data: any) => {
-          novelRating.like_id = data.novel_rating_like.id;
-          novelRating.likes.push(data.novel_rating_like);
-          console.log(data.novel_rating_like);
+        const like: Like = {
+          novel_rating_id: novelRating.id
+        };
+        this.ls.createLike(like).subscribe((data: any) => {
+          novelRating.like_id = data.like.id;
+          novelRating.likes.push(data.like);
         }, error => {
           novelRating.liked = false;
           this.openMatSnackBar(this.errorSnackRef);
@@ -141,7 +148,7 @@ export class NovelComponent implements OnInit {
         });
       } else {
         novelRating.liked = false;
-        this.ls.deleteNovelRatingLike(novelRating.like_id).subscribe((data: any) => {
+        this.ls.deleteLike(novelRating.like_id).subscribe((data: any) => {
           novelRating.likes.splice(novelRating.likes.findIndex(x => x.id === novelRating.like_id), 1);
           novelRating.like_id = null;
         }, error => {
@@ -160,10 +167,12 @@ export class NovelComponent implements OnInit {
     if (this.user) {
       if (novelRatingComment.liked === false) {
         novelRatingComment.liked = true;
-        this.ls.createNovelRatingCommentLike(novelRatingComment.id).subscribe((data: any) => {
-          novelRatingComment.like_id = data.novel_rating_comment_like.id;
-          novelRatingComment.likes.push(data.novel_rating_comment_like);
-          console.log(data.novel_rating_comment_like);
+        const like: Like = {
+          novel_rating_comment_id: novelRatingComment.id
+        };
+        this.ls.createLike(like).subscribe((data: any) => {
+          novelRatingComment.like_id = data.like.id;
+          novelRatingComment.likes.push(data.like);
         }, error => {
           novelRatingComment.liked = false;
           this.openMatSnackBar(this.errorSnackRef);
@@ -171,7 +180,7 @@ export class NovelComponent implements OnInit {
         });
       } else {
         novelRatingComment.liked = false;
-        this.ls.deleteNovelRatingCommentLike(novelRatingComment.like_id).subscribe((data: any) => {
+        this.ls.deleteLike(novelRatingComment.like_id).subscribe((data: any) => {
           novelRatingComment.likes.splice(novelRatingComment.likes.findIndex(x => x.id === novelRatingComment.like_id), 1);
           novelRatingComment.like_id = null;
         }, error => {

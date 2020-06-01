@@ -9,7 +9,7 @@
                 <a class="nav-link" [ngClass]="{'active': currentTab === 'genres'}" (click)="swichtTab('genres')" style="cursor: pointer;">Generos</a>
             </li>
         </ul>
-        <div [ngClass]="{'hide': currentTab === 'genres'}">
+        <div [ngClass]="{'skn-hide': currentTab === 'genres'}">
             <mat-form-field class="w-100">
                 <mat-label>Filtrar</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Buscar usuario" autocomplete="off">
@@ -44,7 +44,7 @@
             <mat-paginator #novelsPaginator [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons [pageSize]="10">
             </mat-paginator>
         </div>
-        <div [ngClass]="{'hide': currentTab === 'novels'}">
+        <div [ngClass]="{'skn-hide': currentTab === 'novels'}">
             <div class="d-flex justify-content-end">
                 <button type="button" mat-raised-button color="primary" (click)="openDialogSheet(addGenreModal)">Añadir genero</button>
             </div>

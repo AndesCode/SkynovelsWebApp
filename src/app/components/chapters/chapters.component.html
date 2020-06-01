@@ -336,12 +336,12 @@
                                                       <span>Eliminar</span>
                                                     </button>
                                                 </mat-menu>
-                                                <button mat-mini-fab *ngIf="comment_reply.edition && user?.id === comment_reply.user_id" (click)="updateChapterCommentReply(updateRatingCommentForm, comment_reply)"><i class="material-icons">done</i></button>
+                                                <button mat-mini-fab *ngIf="comment_reply.edition && user?.id === comment_reply.user_id" (click)="updateChapterCommentReply(updateChapterCommentReplyForm, comment_reply)"><i class="material-icons">done</i></button>
                                             </div>
                                             <div>
                                                 <p [innerHTML]="hs.setContent(comment_reply.chapter_comment_reply, 360)" *ngIf="(!comment_reply.show_more && comment_reply.chapter_comment_reply.length > 360) && !comment_reply.edition"></p>
                                                 <p [innerHTML]="comment_reply.chapter_comment_reply" *ngIf="(comment_reply.show_more || comment_reply.chapter_comment_reply.length < 360) && !comment_reply.edition"></p>
-                                                <form autocomplete="off" #updateRatingCommentForm="ngForm">
+                                                <form autocomplete="off" #updateChapterCommentReplyForm="ngForm">
                                                     <div class="form-group" *ngIf="comment_reply.edition" style="width: 100%;">
                                                         <textarea class="form-control skn-text-area" #chapter_comment_reply="ngModel" name="rating_comment.chapter_comment_reply" [(ngModel)]="comment_reply.chapter_comment_reply" rows="3" required></textarea>
                                                     </div>

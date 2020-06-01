@@ -163,12 +163,42 @@ export class UserChapterComponent implements OnInit {
       this.location.replaceState('/mis-novelas/' + this.novel.id + '/' +
       this.novel.nvl_name + '/' + this.volume.id + '/' + this.chapter.id + '/' + this.chapter.chp_name);
       chapterForm.form.markAsPristine();
+      for (const volume of this.novel.volumes) {
+        if (volume.chapters.findIndex(x => x.id === this.chapter.id) !== -1) {
+          volume.chapters[volume.chapters.findIndex(x => x.id === this.chapter.id)].chp_status = resp.chapter.chp_status;
+        }
+      }
+      this.evaluateEditableNovelStatus();
       this.uploading = false;
     }, error => {
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
       this.uploading = false;
     });
+  }
+
+  evaluateEditableNovelStatus() {
+    for (const [i, volume] of this.novel.volumes.entries()) {
+      console.log(i);
+      const chaptersStatus = volume.chapters.map(
+        chapterStatus => chapterStatus.chp_status);
+      if (chaptersStatus.includes('Active')) {
+        return;
+      } else {
+        if (i + 1 === this.novel.volumes.length) {
+          const disableNovel: Novel = {
+            id: this.novel.id,
+            nvl_status: 'Disabled'
+          };
+          this.ns.updateNovel(disableNovel).subscribe((data: any) => {
+            this.novel.nvl_status = data.novel.nvl_status;
+          }, error => {
+            this.openMatSnackBar(this.errorSnackRef);
+            this.errorSnackMessage = error.error.message;
+          });
+        }
+      }
+    }
   }
 
   deleteChapter() {

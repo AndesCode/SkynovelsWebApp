@@ -16,37 +16,35 @@ export class NovelCardComponent implements OnChanges {
   @Input() novelFilter: NovelFilter = {
     searchName: '',
     searchStatus: 'All',
+    orderBy: 'nvl_title',
     searchGenres: []
   };
+  @Input() orderBy: string;
   goToNovelLink: string;
 
   constructor(public hs: HelperService,
-              private ns: NovelsService,
               private router: Router) { }
 
   ngOnChanges() {
-    console.log(this.novelFilter);
     if (this.novels) {
       for (const novel of this.novels) {
-        // tslint:disable-next-line: max-line-length
-        novel.date_data = this.hs.getRelativeTime(novel.nvl_last_update);
-        if (novel.nvl_status === 'Finished') {
-          novel.nvl_status = 'Finalizada';
-        } else {
-          if (novel.date_data.seconds === 0) {
-            novel.nvl_status = 'Oculta';
+        if (!novel.date_data) {
+          novel.date_data = this.hs.getRelativeTime(novel.nvl_last_update);
+          if (novel.nvl_status === 'Finished') {
+            novel.nvl_status = 'Finalizada';
           } else {
-            if (novel.date_data.seconds > 1296000) {
-              novel.nvl_status = 'Inactiva';
+            if (novel.date_data.seconds === 0) {
+              novel.nvl_status = 'Oculta';
             } else {
-              novel.nvl_status = 'Activa';
+              if (novel.date_data.seconds > 1296000) {
+                novel.nvl_status = 'Inactiva';
+              } else {
+                novel.nvl_status = 'Activa';
+              }
             }
           }
         }
-
       }
-      this.novels = this.novels.sort(this.hs.dateDataSorter);
-      console.log(this.novels);
     }
     if (this.clickRoute === 'userNovel') {
       this.goToNovelLink = '/mis-novelas';
@@ -54,6 +52,7 @@ export class NovelCardComponent implements OnChanges {
       this.goToNovelLink = '/novelas';
     }
   }
+
 
   goToNovel(novel) {
     if (this.clickRoute === 'userNovel') {
