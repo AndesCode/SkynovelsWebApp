@@ -1,17 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SwiperConfigInterface} from 'ngx-swiper-wrapper';
-// Variables de prueba
-// import * as data from '../JSONTest/novels.json';
-import {
-  BreakpointObserver,
-  Breakpoints,
-  BreakpointState
-} from '@angular/cdk/layout';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { NovelsService } from '../../services/novels.service';
 import { HelperService } from '../../services/helper.service';
 import { UsersService } from 'src/app/services/users.service';
-import { Novel } from 'src/app/models/models';
+import { Advertisement, Novel } from '../../models/models';
 
 @Component({
   selector: 'app-home',
@@ -35,7 +29,11 @@ export class HomeComponent implements OnInit {
   public swiperTopConfig: SwiperConfigInterface = {
     observer: true,
     spaceBetween: 0,
-    mousewheel: false
+    mousewheel: false,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
 
 };
 
@@ -51,16 +49,11 @@ export class HomeComponent implements OnInit {
   };
 
   recentNovels: Array<Novel>;
-  items: any[];
-  novels: any;
-  chapters: any[] = [];
+  advertisements: Array<Advertisement>;
   topNovels: Array<Novel>;
   recomendedNovel: Novel;
   updatedNovels: Array<Novel>;
   mobile: boolean;
-  buttons: any[] = ['1', '2', '3', '4'];
-  isActive = false;
-  lastChapters: any;
   swiperConfigured = false;
   loading = true;
 
@@ -135,6 +128,11 @@ export class HomeComponent implements OnInit {
         }
         this.loading = false;
     });
+
+    this.ns.getAdvertisements().subscribe((data: any) => {
+      this.advertisements = data.advertisements;
+      console.log(this.advertisements);
+    });
   }
 
   goToNovel(id: number, nvlName: string) {
@@ -142,10 +140,6 @@ export class HomeComponent implements OnInit {
   }
 
   goToChapter(nid: number, nvlName: string, cid: number, chpName: string) {
-    console.log(nid);
-    console.log(nvlName);
-    console.log(cid);
-    console.log(chpName);
     this.router.navigate(['/novelas', nid, nvlName, cid, chpName]);
   }
 

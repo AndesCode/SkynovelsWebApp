@@ -5,9 +5,6 @@
             <li class="nav-item">
                 <a class="nav-link" [ngClass]="{'active': currentTab === 'advertisements'}" (click)="swichtTab('advertisements')" style="cursor: pointer;">Anuncios de inicio</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" [ngClass]="{'active': currentTab === 'statistics'}" (click)="swichtTab('statistics')" style="cursor: pointer;">Estadisticas</a>
-            </li>
         </ul>
         <div [ngClass]="{'skn-hide': currentTab === 'statistics'}">
             <div class="d-flex justify-content-end" style="margin: 1rem 0px;">

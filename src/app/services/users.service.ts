@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Novel, User, Invitation } from '../models/models';
+import { Novel, User, Invitation, LoginUser, NewUser } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +82,7 @@ export class UsersService {
     }
   }
 
-  logIn(user: any) {
+  logIn(user: LoginUser) {
     const url = `${ this.urlnovelsdb }/login`;
     return this.http.post(url, user, this.GlobalhttpOptions);
   }
@@ -92,7 +92,7 @@ export class UsersService {
     return this.http.get(url, this.GlobalhttpOptions);
   }
 
-  createUser(user: User) {
+  createUser(user: NewUser) {
     const url = `${ this.urlnovelsdb }/create-user`;
     console.log(user);
     return this.http.post(url, user);
@@ -129,7 +129,12 @@ export class UsersService {
     return this.http.post(url, password, httpOptions);
   }
 
-  createUserBookmark(nvlId: any) {
+  getUserBookmarks() {
+    const url = `${ this.urlnovelsdb }/get-user-bookmarks`;
+    return this.http.get(url);
+  }
+
+  createUserBookmark(nvlId: number) {
     const url = `${this.urlnovelsdb}/create-user-bookmark`;
     const bookmark = {
       nvl_id: nvlId,
@@ -142,12 +147,12 @@ export class UsersService {
     return this.http.put(url, bookmark, this.GlobalhttpOptions);
   }
 
-  deleteUserBoomark(id: string) {
+  deleteUserBoomark(id: number) {
     const url = `${ this.urlnovelsdb }/delete-user-bookmark/${id}`;
     return this.http.delete(url, this.GlobalhttpOptions);
   }
 
-  activateUser(key: any) {
+  activateUser(key: string) {
     const url = `${this.urlnovelsdb}/activate-user/${key}`;
     return this.http.get(url);
   }

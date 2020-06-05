@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { NovelsService } from '../../../services/novels.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Novel } from 'src/app/models/models';
+import { Novel, Chapter, Volume } from 'src/app/models/models';
 import { Location } from '@angular/common';
-import { Volume } from 'src/app/models/volume';
-import { Chapter } from 'src/app/models/chapter';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -53,7 +51,7 @@ export class UserChapterComponent implements OnInit {
 
   ngOnInit(): void {
     const nid = this.activatedRoute.snapshot.paramMap.get('nid');
-    let vid = Number(this.activatedRoute.snapshot.paramMap.get('vid'));
+    const vid = Number(this.activatedRoute.snapshot.paramMap.get('vid'));
     const cid = this.activatedRoute.snapshot.paramMap.get('cid');
     this.ns.getNovel(Number(nid), 'edition').subscribe((novelData: any) => {
       if (novelData.authorized_user) {

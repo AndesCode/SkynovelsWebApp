@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HelperService } from './helper.service';
 import { PostComment } from '../models/post-comment';
-import { User, Novel, Genre, Advertisement } from '../models/models';
-import { Volume } from '../models/volume';
-import { Chapter } from '../models/chapter';
+import { User, Novel, Genre, Advertisement, Volume, Chapter } from '../models/models';
 
 @Injectable({
   providedIn: 'root'

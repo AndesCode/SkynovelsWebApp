@@ -45,9 +45,7 @@ export class UserProfileComponent implements OnInit {
     this.us.getUser(urlId).subscribe((data: any) => {
       this.userData = data.user[0];
       this.location.replaceState('/perfil/' + this.userData.id + '/' + this.userData.user_login);
-      if (this.userData.user_profile_image !== null &&
-        this.userData.user_profile_image !== ''
-        && this.userData.user_profile_image !== undefined) {
+      if (this.userData.user_profile_image && this.userData.user_profile_image.length > 0) {
         this.imgURL = 'http://localhost:3000/api/user-profile-img/' + this.userData.user_profile_image + '/false';
       }
       /*if (data.self_user) {

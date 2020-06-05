@@ -1,0 +1,95 @@
+@import "../../common.scss";
+.skn-nvl-card {
+    cursor: pointer!important;
+    box-shadow: 0 1.1px 1.5px rgba(0, 0, 0, 0.123), 0 3.6px 5.7px rgba(0, 0, 0, 0.149), 0 16px 17px rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+    margin: 10px 10px;
+    width: 25vw;
+    min-width: 480px;
+    height: 240px;
+    display: grid;
+    grid-template-columns: 145px auto;
+    grid-template-rows: 85% 15%;
+    grid-template-areas: "img info" "update update";
+    @include subtract-media (desktop) {
+        min-width: 300px;
+        width: 30vw;
+        height: 150px;
+        grid-template-columns: 85px auto;
+        grid-template-rows: 80% 20%;
+    }
+}
+
+.skn-nvl-card:hover {
+    -webkit-animation: shadow-drop-2-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: shadow-drop-2-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.skn-nvl-card-img {
+    grid-area: img;
+    img {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px 0px 0px 0px;
+    }
+}
+
+.skn-nvl-card-info {
+    grid-area: info;
+    padding: 6px;
+    display: inline-block;
+    list-style-type: none;
+    .skn-nvl-card-title {
+        display: inline-block;
+    }
+    .skn-nvl-card-genres {
+        display: inline-block;
+        span {
+            font-size: 11px;
+            padding: 1px 5px;
+            margin-right: 5px;
+            border: color(primary) solid 1px;
+            border-radius: 15px;
+            box-shadow: 3px 3px 9px -4px rgba(0, 0, 0, 0.67);
+        }
+    }
+    .skn-nvl-card-votes {
+        display: inline;
+        span {
+            color: sandybrown;
+        }
+    }
+    .skn-nvl-card-description {
+        word-break: break-word;
+        @include subtract-media (desktop) {
+            display: none;
+        }
+    }
+}
+
+.skn-nvl-card-update-time {
+    grid-area: update;
+    padding: 4.5px 15px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0px 0px 5px 5px;
+    div {
+        color: color(negative-font);
+    }
+}
+
+.text-star {
+    text-align: right;
+}
+
+.star {
+    font-size: 1.5rem;
+}
+
+.filled .material-icons::before {
+    content: "star";
+}
+
+.nfilled .material-icons::before {
+    content: "star_border";
+}

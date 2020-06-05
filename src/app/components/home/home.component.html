@@ -5,8 +5,10 @@
     <section>
         <div class="swiper-container" [swiper]="swiperHomeConfig">
             <div class="swiper-wrapper" style="max-height: 500px;">
-                <div class="swiper-slide skn-swiper-banner-slide" *ngFor="let item of topNovels">
-                    <img class="skn-home-img" src="../../../assets/img/Portada-Anuncio.jpeg" alt="" class="skn-home-img mx-auto d-block">
+                <div class="swiper-slide skn-swiper-banner-slide" *ngFor="let advertisement of advertisements">
+                    <a [routerLink]="['/noticias', advertisement.id, advertisement.adv_name]">
+                        <img class="skn-home-img" [src]="advertisement.adv_img | noAdvertisementImage" alt="" class="skn-home-img mx-auto d-block">
+                    </a>
                 </div>
             </div>
         </div>
@@ -19,7 +21,7 @@
         <div class="skn-home-title">
             <h2>Top Novelas</h2>
         </div>
-        <div class="swiper-container container" [swiper]="swiperTopConfig">
+        <div class="swiper-container" [swiper]="swiperTopConfig">
             <div class="swiper-wrapper">
                 <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let topNovel of topNovels">
                     <a class="unstyled-a-tag" [routerLink]="['/novelas', topNovel.id, topNovel.nvl_name]">
@@ -32,6 +34,8 @@
                     </a>
                 </div>
             </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
             <div class="swiper-pagination" id></div>
         </div>
 
@@ -42,7 +46,7 @@
         <div class="skn-home-title">
             <h2>Novelas Nuevas</h2>
         </div>
-        <div class="swiper-container container" [swiper]="swiperTopConfig">
+        <div class="swiper-container" [swiper]="swiperTopConfig">
             <div class="swiper-wrapper">
                 <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let recentNovel of recentNovels">
                     <a class="unstyled-a-tag" [routerLink]="['/novelas', recentNovel.id, recentNovel.nvl_name]">

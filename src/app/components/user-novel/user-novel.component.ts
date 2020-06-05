@@ -9,10 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { UsersService } from '../../services/users.service';
-import { Volume } from 'src/app/models/volume';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Novel, Genre, User } from 'src/app/models/models';
-import { Chapter } from 'src/app/models/chapter';
+import { Novel, Genre, User, Chapter, Volume } from 'src/app/models/models';
 
 @Component({
   selector: 'app-user-novel',
@@ -91,7 +89,8 @@ export class UserNovelComponent implements OnInit {
           if (this.user === this.novel.nvl_author) {
             this.editableNovel = true;
           }
-          if (this.novel.nvl_img) {
+          if (this.novel.nvl_img && this.novel.nvl_img.length > 0) {
+            console.log(this.novel.nvl_img.length);
             this.imgURL = 'http://localhost:3000/api/novel/image/' + this.novel.nvl_img + '/false';
           }
           this.evaluateEditableNovelStatus();

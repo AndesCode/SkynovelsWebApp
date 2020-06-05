@@ -5,11 +5,11 @@
             <div class="skn-nav-link">
                 <a class="nav-link" routerLink="novelas" routerLinkActive="nav-link-selected">Novelas</a>
             </div>
-            <div class="skn-nav-link">
-                <a href="https://skymangas.com" class="nav-link" routerLinkActive="nav-link-selected">Mangas</a>
-            </div>
             <div class="skn-nav-link" *ngIf="us.userIsEditor()">
                 <a class="nav-link" routerLink="mis-novelas" routerLinkActive="nav-link-selected">Mis novelas</a>
+            </div>
+            <div class="skn-nav-link" *ngIf="us.userIsLoged()">
+                <a class="nav-link" routerLink="lista-de-lectura" routerLinkActive="nav-link-selected">Lista de lectura</a>
             </div>
             <div class="skn-nav-link" *ngIf="!us.userIsLoged()">
                 <a class="nav-link" (click)="openDialogSheet(loginModal, true, false)" routerLinkActive="nav-link-selected" style="cursor: pointer;">Iniciar sesión</a>
@@ -80,12 +80,12 @@
             <form [formGroup]="loginForm">
                 <mat-form-field class="w-100 skn-mat-label-center">
                     <mat-label>Usuario o correo electronico</mat-label>
-                    <input matInput formControlName="user_login" cdkFocusInitial>
+                    <input matInput formControlName="user_login" cdkFocusInitial autocomplete="off">
                 </mat-form-field>
                 <mat-form-field class="w-100">
                     <mat-label>Contraseña</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="user_pass">
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="user_pass" autocomplete="off">
+                    <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <span class="material-icons">{{hide ? 'visibility_off' : 'visibility'}}</span>
                     </button>
                 </mat-form-field>
@@ -96,17 +96,17 @@
             <form [formGroup]="registerForm">
                 <mat-form-field class="w-100 skn-mat-label-center">
                     <mat-label>Usuario</mat-label>
-                    <input matInput formControlName="user_login" cdkFocusInitial>
+                    <input matInput formControlName="user_login" cdkFocusInitial autocomplete="off">
                     <mat-error *ngIf="registerForm.get('user_login').hasError('pattern')">Invalido</mat-error>
                 </mat-form-field>
                 <mat-form-field class="w-100 skn-mat-label-center">
                     <mat-label>Correo electronico</mat-label>
-                    <input matInput formControlName="user_email">
+                    <input matInput formControlName="user_email" autocomplete="off">
                     <mat-error *ngIf="registerForm.get('user_email').hasError('email')">Invalido</mat-error>
                 </mat-form-field>
                 <mat-form-field class="w-100">
                     <mat-label>Contraseña</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="user_pass">
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="user_pass" autocomplete="off">
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <span class="material-icons">{{hide ? 'visibility_off' : 'visibility'}}</span>
                     </button>
@@ -119,7 +119,7 @@
             <form [formGroup]="passwordRecoveryForm">
                 <mat-form-field class="w-100 skn-mat-label-center">
                     <mat-label>Correo electronico</mat-label>
-                    <input matInput formControlName="user_email">
+                    <input matInput formControlName="user_email" autocomplete="off">
                     <mat-error *ngIf="passwordRecoveryForm.get('user_email').hasError('email')">Invalido</mat-error>
                 </mat-form-field>
             </form>
@@ -130,12 +130,12 @@
             <button mat-raised-button color="primary" *ngIf="currentForm === 'passwordRecovery'" [disabled]="passwordRecoveryForm.invalid || loginFormLoading">Enviar correo</button>
         </div>
         <div class="skn-login-switcher">
-            <p class="skn-link" *ngIf="currentForm === 'login'" (click)="swichtTab('register')">¿No tienes cuenta? ¡Registrate aquí!</p>
-            <p class="skn-link" *ngIf="currentForm === 'register'" (click)="swichtTab('login')">Regresar a inicio</p>
+            <p class="skn-link" *ngIf="currentForm === 'login'" (click)="swichtTab('register')" style="font-size: 0.8rem;">¿No tienes cuenta? ¡Registrate aquí!</p>
+            <p class="skn-link" *ngIf="currentForm === 'register'" (click)="swichtTab('login')" style="font-size: 0.8rem;">Regresar a inicio</p>
         </div>
         <div class="skn-login-switcher">
-            <p class="skn-link" *ngIf="currentForm === 'login'" (click)="swichtTab('passwordRecovery')">¿Olvidaste tu contraseña?</p>
-            <p class="skn-link" *ngIf="currentForm === 'passwordRecovery'" (click)="swichtTab('login')">Regresar a inicio</p>
+            <p class="skn-link" *ngIf="currentForm === 'login'" (click)="swichtTab('passwordRecovery')" style="font-size: 0.8rem;">¿Olvidaste tu contraseña?</p>
+            <p class="skn-link" *ngIf="currentForm === 'passwordRecovery'" (click)="swichtTab('login')" style="font-size: 0.8rem;">Regresar a inicio</p>
         </div>
     </div>
 </ng-template>

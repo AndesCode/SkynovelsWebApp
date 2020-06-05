@@ -343,19 +343,16 @@
                                                 <p [innerHTML]="comment_reply.chapter_comment_reply" *ngIf="(comment_reply.show_more || comment_reply.chapter_comment_reply.length < 360) && !comment_reply.edition"></p>
                                                 <form autocomplete="off" #updateChapterCommentReplyForm="ngForm">
                                                     <div class="form-group" *ngIf="comment_reply.edition" style="width: 100%;">
-                                                        <textarea class="form-control skn-text-area" #chapter_comment_reply="ngModel" name="rating_comment.chapter_comment_reply" [(ngModel)]="comment_reply.chapter_comment_reply" rows="3" required></textarea>
+                                                        <textarea class="form-control skn-text-area" #chapter_comment_reply="ngModel" name="rating_comment.chapter_comment_reply" [(ngModel)]="comment_reply.chapter_comment_reply" rows="3" required maxlength="2000" minlength="2"></textarea>
                                                     </div>
                                                 </form>
                                             </div>
-                                            <div style="display: flex; justify-content: space-between;">
-                                                <div *ngIf="comment_reply.chapter_comment_reply.length < 360 || comment_reply.edition">
-
-                                                </div>
+                                            <div class="d-flex" [ngClass]="{'justify-content-end': comment_reply.chapter_comment_reply.length < 360 || comment_reply.edition, 'justify-content-between': comment_reply.chapter_comment_reply.length > 360 || comment_reply.edition}">
                                                 <div *ngIf="comment_reply.chapter_comment_reply.length > 360 && !comment_reply.show_more && !comment_reply.edition">
-                                                    <strong class="skn-nvl-user-rating-info-togler" (click)="showMoreComment(comment_reply)">...Ver más</strong>
+                                                    <strong class="skn-nvl-user-rating-info-togler skn-link" (click)="showMoreComment(comment_reply)">...Ver más</strong>
                                                 </div>
                                                 <div *ngIf="comment_reply.show_more && comment_reply.chapter_comment_reply.length > 360 && !comment_reply.edition">
-                                                    <strong class="skn-nvl-user-rating-info-togler" (click)="showMoreComment(comment_reply)">...Mostrar menos</strong>
+                                                    <strong class="skn-nvl-user-rating-info-togler skn-link" (click)="showMoreComment(comment_reply)">...Mostrar menos</strong>
                                                 </div>
                                                 <div style="display: flex; align-items: center;">
                                                     <button mat-icon-button aria-label="like" (click)="switchCommentReplyLike(comment_reply)">

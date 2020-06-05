@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./user-management.component.scss']
 })
 export class UserManagementComponent implements OnInit {
-  
+
   @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
   @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
   public successSnackMessage: string;

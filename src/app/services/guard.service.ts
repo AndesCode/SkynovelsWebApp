@@ -9,9 +9,9 @@ import { AdminService } from './admin.service';
 })
 export class GuardService implements CanActivate {
 
-  constructor(private _router: Router,
-              private _us: UsersService,
-              private _as: AdminService) { }
+  constructor(private router: Router,
+              private us: UsersService,
+              private as: AdminService) { }
 
   canActivate(route: ActivatedRouteSnapshot) {
     console.log(route);
@@ -23,32 +23,33 @@ export class GuardService implements CanActivate {
       || route.routeConfig.path === 'panel/administracion-de-usuarios'
       || route.routeConfig.path === 'panel/administracion-de-usuarios/:id'
       ) {
-      if (this._as.userIsAdmin()) {
+      if (this.as.userIsAdmin()) {
         return true;
       } else {
-        this._router.navigate(['']);
+        this.router.navigate(['']);
         return false;
       }
     } else if (
       route.routeConfig.path === 'registrarse'
       ) {
-      if (!this._us.userIsLoged()) {
+      if (!this.us.userIsLoged()) {
         // this._ns.openExternalFunction('registerForm');
-        this._router.navigate(['']);
+        this.router.navigate(['']);
         return true;
       } else {
-        this._router.navigate(['']);
+        this.router.navigate(['']);
         return false;
       }
     } else if (
       route.routeConfig.path === 'mi-perfil'
       || route.routeConfig.path === 'mis-novelas'
+      || route.routeConfig.path === 'lista-de-lectura'
       || route.routeConfig.path === 'mi-novela/:id'
       ) {
-      if (this._us.userIsLoged()) {
+      if (this.us.userIsLoged()) {
         return true;
       } else {
-        this._router.navigate(['']);
+        this.router.navigate(['']);
         return false;
       }
     } else {

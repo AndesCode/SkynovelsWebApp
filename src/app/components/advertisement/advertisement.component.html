@@ -152,7 +152,7 @@
                                 <p [innerHTML]="comment_reply.adv_comment_reply" *ngIf="(comment_reply.show_more || comment_reply.adv_comment_reply.length < 360) && !comment_reply.edition"></p>
                                 <form autocomplete="off" #updateAdvertisementCommentReplyForm="ngForm">
                                     <div class="form-group" *ngIf="comment_reply.edition" style="width: 100%;">
-                                        <textarea class="form-control skn-text-area" #advertisement_comment_reply="ngModel" name="comment." [(ngModel)]="comment_reply.adv_comment_reply" rows="3" required></textarea>
+                                        <textarea class="form-control skn-text-area" #advertisement_comment_reply="ngModel" name="comment." [(ngModel)]="comment_reply.adv_comment_reply" rows="3" required maxlength="2000" minlength="2"></textarea>
                                     </div>
                                 </form>
                             </div>

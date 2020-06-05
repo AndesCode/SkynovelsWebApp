@@ -66,17 +66,17 @@ export class ChaptersComponent implements AfterViewInit {
                 this.newRatingForm = new FormGroup({
                   novel_id: new FormControl(''),
                   rate_value: new FormControl('0', [Validators.required, Validators.min(1), Validators.max(5)]),
-                  rate_comment: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(1500)]),
+                  rate_comment: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(2000)]),
                 });
 
                 this.newComment = new FormGroup({
                   chapter_id: new FormControl(''),
-                  chapter_comment: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(500)]),
+                  chapter_comment: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(2000)]),
                 });
 
                 this.newCommentReply = new FormGroup({
                   chapter_comment_id: new FormControl(''),
-                  chapter_comment_reply: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(500)]),
+                  chapter_comment_reply: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(2000)]),
                 });
               }
 

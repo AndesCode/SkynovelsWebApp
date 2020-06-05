@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit {
               public matSnackBar: MatSnackBar,
               public breakpointObserver: BreakpointObserver,
               public el: ElementRef,
-              public r: Renderer2,
+              private re: Renderer2,
               public dialog: MatDialog) {
 
               this.loginForm = new FormGroup({

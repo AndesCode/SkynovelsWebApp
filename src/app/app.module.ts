@@ -59,6 +59,7 @@ import { NovelManagementComponent } from './components/admin-panel/novels-manage
 import { ChapterManagementComponent } from './components/admin-panel/novels-management/novel-management/chapter-management/chapter-management.component';
 import { AdvertisementManagementComponent } from './components/admin-panel/home-management/advertisement-management/advertisement-management.component';
 import { AdvertisementComponent } from './components/advertisement/advertisement.component';
+import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 // bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Pipes
@@ -104,6 +105,7 @@ const config: SwiperConfigInterface = {
     UsersManagementComponent,
     UserNovelsComponent,
     UserNovelComponent,
+    BookmarksComponent,
     // pipes
     NoimagePipeThumb,
     NoimagePipe,
@@ -126,7 +128,7 @@ const config: SwiperConfigInterface = {
     NovelManagementComponent,
     ChapterManagementComponent,
     AdvertisementManagementComponent,
-    AdvertisementComponent
+    AdvertisementComponent,
   ],
   imports: [
     // Angular

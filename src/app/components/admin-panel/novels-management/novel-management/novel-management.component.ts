@@ -7,10 +7,8 @@ import { HelperService } from 'src/app/services/helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UsersService } from '../../../../services/users.service';
-import { Volume } from 'src/app/models/volume';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Novel, Genre, User } from 'src/app/models/models';
-import { Chapter } from 'src/app/models/chapter';
+import { Novel, Genre, User, Chapter, Volume } from 'src/app/models/models';
 import { AdminService } from '../../../../services/admin.service';
 
 

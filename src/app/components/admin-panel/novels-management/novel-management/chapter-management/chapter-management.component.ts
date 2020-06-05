@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { NovelsService } from '../../../../../services/novels.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Novel } from 'src/app/models/models';
+import { Novel, Volume, Chapter } from 'src/app/models/models';
 import { Location } from '@angular/common';
-import { Volume } from 'src/app/models/volume';
-import { Chapter } from 'src/app/models/chapter';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';

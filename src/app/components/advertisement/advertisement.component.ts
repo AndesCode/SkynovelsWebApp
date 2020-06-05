@@ -35,7 +35,7 @@ export class AdvertisementComponent implements OnInit {
 
                 this.newComment = new FormGroup({
                   adv_id: new FormControl(''),
-                  adv_comment: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(500)]),
+                  adv_comment: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(2000)]),
                 });
               }
 

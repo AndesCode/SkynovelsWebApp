@@ -24,6 +24,7 @@ import { NovelManagementComponent } from './components/admin-panel/novels-manage
 import { ChapterManagementComponent } from './components/admin-panel/novels-management/novel-management/chapter-management/chapter-management.component';
 import { AdvertisementManagementComponent } from './components/admin-panel/home-management/advertisement-management/advertisement-management.component';
 import { AdvertisementComponent } from './components/advertisement/advertisement.component';
+import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 // Test
 import { TestComponent } from './components/test/test.component';
 
@@ -91,6 +92,8 @@ const routes: Routes = [
   // Advertisements
   { path: 'noticias/:id', component: AdvertisementComponent },
   { path: 'noticias/:id/:name', component: AdvertisementComponent },
+  // Bookmarks
+  { path: 'lista-de-lectura', component: BookmarksComponent, canActivate: [GuardService] },
   // Test
   { path: 'test', component: TestComponent },
   // redirects

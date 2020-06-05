@@ -21,6 +21,7 @@ export class NovelCardComponent implements OnChanges {
   };
   @Input() orderBy: string;
   goToNovelLink: string;
+  page = 1;
 
   constructor(public hs: HelperService,
               private router: Router) { }

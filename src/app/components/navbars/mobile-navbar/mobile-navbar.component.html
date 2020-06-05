@@ -17,15 +17,20 @@
             </div>
             <hr>
             <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
+                <span class="material-icons md-30">star</span>
+                <a (click)="navigate()" routerLink="lista-de-lectura" class="nav-mobile-text skn-link" routerLinkActive="nav-link-selected">Lista de lectura</a>
+            </div>
+            <hr *ngIf="us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
                 <span class="material-icons md-30">account_circle</span>
                 <a (click)="navigate()" routerLink="{{'perfil/' + this.us.getUserLoged().id + '/' + this.us.getUserLoged().user_login}}" class="nav-mobile-text skn-link" routerLinkActive="nav-link-selected">Perfil</a>
             </div>
             <hr *ngIf="us.userIsLoged()">
-            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsEditor()">
                 <span class="material-icons md-30">create</span>
                 <a routerLink="mis-novelas" (click)="navigate()" class="nav-mobile-text" routerLinkActive="nav-link-selected">Mis novelas</a>
             </div>
-            <hr *ngIf="us.userIsLoged()">
+            <hr *ngIf="us.userIsEditor()">
             <div class="skn-mobile-navbar-section" *ngIf="!us.userIsLoged()">
                 <span class="material-icons md-30">face</span>
                 <a (click)="openLoginForm(); closeMobileNavbarForm()" class="nav-mobile-text skn-link">Iniciar Sesión</a>
@@ -41,11 +46,11 @@
                 <a routerLink="panel" (click)="navigate()" class="nav-mobile-text" routerLinkActive="nav-link-selected">Panel de control</a>
             </div>
             <hr *ngIf="this.as.userIsAdmin()">
-            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsEditor()">
                 <span class="material-icons md-30">mail</span>
                 <a routerLink="invitaciones" (click)="navigate()" class="nav-mobile-text" routerLinkActive="nav-link-selected">Invitaciones</a>
             </div>
-            <hr *ngIf="us.userIsLoged()">
+            <hr *ngIf="us.userIsEditor()">
             <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
                 <span class="material-icons md-30">block</span>
                 <a (click)="logout()" class="nav-mobile-text skn-link">Cerrar sesión</a>

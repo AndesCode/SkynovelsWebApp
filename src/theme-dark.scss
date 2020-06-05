@@ -124,6 +124,17 @@ body[theme=dark] {
     .ck-content.ck-focused {
         border-color: #d32f2f!important;
     }
+    .ngx-pagination a:hover,
+    .ngx-pagination button:hover {
+        background: #242a31!important;
+    }
+    .ngx-pagination a,
+    .ngx-pagination button {
+        color: #626973;
+    }
+    .ngx-pagination .disabled {
+        color: #363b42!important;
+    }
     // Skynovels styles
     .regular-wrapper {
         background-color: #1E2228!important;

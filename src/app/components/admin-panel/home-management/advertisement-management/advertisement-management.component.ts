@@ -53,7 +53,7 @@ export class AdvertisementManagementComponent implements OnInit {
          + this.advertisement.id + '/' + this.advertisement.adv_name);
         console.log(this.advertisement);
         this.loading = false;
-        if (this.advertisement.adv_img) {
+        if (this.advertisement.adv_img && this.advertisement.adv_img.length > 0) {
           this.imgURL = 'http://localhost:3000/api/advertisement/image/' + this.advertisement.adv_img;
         }
       }, error => {

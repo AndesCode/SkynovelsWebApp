@@ -1,9 +1,11 @@
-<div class="text-center" style="margin-top: 1rem;">
-    <pagination-controls (pageChange)="page = $event" maxSize="5" previousLabel="" nextLabel="" autoHide="true" screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Pagina" screenReaderCurrentLabel="Estas en la pagina"></pagination-controls>
-</div>
 <div class="row justify-content-center">
-    <div *ngFor="let novel of novels | novelFilter:novelFilter.searchName: novelFilter.searchGenres: novelFilter.searchStatus: novelFilter.orderBy | paginate: { itemsPerPage: 2, currentPage: page }">
-        <a class="skn-nvl-card unstyled-a-tag" [routerLink]="[goToNovelLink, novel.id, novel.nvl_name]">
+    <div *ngIf="bookmarks.length === 0" style="margin-top: 30vh;" class="text-center">
+        <h1>No tienes novelas en tu lista de lectura</h1>
+        <p>Ve al catalogo de <a class="unstyled-a-tag skn-link" style="color: #d32f2f!important" routerLink="/novelas">novelas</a> para agregar tu lista de lectura</p>
+    </div>
+
+    <div *ngFor="let novel of bookmarks">
+        <a class="skn-nvl-card unstyled-a-tag" [routerLink]="['novelas', novel.id, novel.nvl_name]">
             <div class="skn-nvl-card-img">
                 <img [src]="novel.nvl_img | noimage" alt="">
             </div>
@@ -50,7 +52,4 @@
             </div>
         </a>
     </div>
-</div>
-<div class="text-center">
-    <pagination-controls (pageChange)="page = $event" maxSize="5" previousLabel="" nextLabel="" autoHide="true"></pagination-controls>
 </div>

@@ -266,7 +266,7 @@
                         <p [innerHTML]="rating.rate_comment" *ngIf="(rating.show_more || rating.rate_comment.length < 360) && !rating.edition"></p>
                         <form autocomplete="off" #updateRatingForm="ngForm">
                             <div class="form-group" *ngIf="rating.edition" style="width: 100%;">
-                                <textarea class="form-control skn-text-area" #rate_comment="ngModel" name="rating.rate_comment" [(ngModel)]="rating.rate_comment" rows="3"></textarea>
+                                <textarea class="form-control skn-text-area" #rate_comment="ngModel" name="rating.rate_comment" [(ngModel)]="rating.rate_comment" rows="3" maxlength="2000" minlength="2"></textarea>
                             </div>
                         </form>
                     </div>
@@ -302,10 +302,10 @@
                                 <div class="skn-nvl-rating-comment-textarea-input">
                                     <mat-form-field style="width: 100%;">
                                         <mat-label>Añade un comentario</mat-label>
-                                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #novel_rating_comment="ngModel" name="rating.novel_rating_comment" [(ngModel)]="rating.novel_rating_comment"></textarea>
+                                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #novel_rating_comment="ngModel" name="rating.novel_rating_comment" [(ngModel)]="rating.novel_rating_comment" maxlength="2000" minlength="2"></textarea>
                                     </mat-form-field>
                                 </div>
-                                <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" [disabled]="rating.novel_rating_comment === null || rating.novel_rating_comment === ''" (click)="createNovelRatingComment(rating)">Publicar</button>
+                                <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" [disabled]="rating.novel_rating_comment === null || rating.novel_rating_comment.length < 2" (click)="createNovelRatingComment(rating)">Publicar</button>
                             </div>
                         </form>
                         <div class="skn-nvl-user-rating" *ngFor="let rating_comment of rating.rating_comments" style="padding: 0px!important;">

@@ -8,19 +8,19 @@
                         <div>Guardar cambios</div>
                     </div>
                 </button>
-                <button mat-raised-button color="warn" type="button" (click)="openDialogSheet(disableUserModal)" *ngIf="user.user_status === 'Active'">
+                <button mat-raised-button color="warn" type="button" (click)="openDialogSheet(disableUserModal)" *ngIf="user?.user_status === 'Active'">
                     <div style="display: flex; align-items: center;">                            
                         <span class="material-icons">not_interested</span> 
                         <div>Desactivar usuario</div>
                     </div>
                 </button>
-                <button mat-raised-button color="primary" type="button" *ngIf="user.user_status !== 'Active' " (click)="swichtUserStatus('Active')">
+                <button mat-raised-button color="primary" type="button" *ngIf="user?.user_status !== 'Active' " (click)="swichtUserStatus('Active')">
                     <div style="display: flex; align-items: center;">                            
                         <span class="material-icons">how_to_reg</span> 
                         <div>Activar usuario</div>
                     </div>
                 </button>
-                <button mat-raised-button color="warn" type="button" *ngIf="user.user_status !== 'Active' " (click)="openDialogSheet(deleteUserModal)">
+                <button mat-raised-button color="warn" type="button" *ngIf="user?.user_status !== 'Active' " (click)="openDialogSheet(deleteUserModal)">
                     <div style="display: flex; align-items: center;">                            
                         <span class="material-icons">delete_forever</span> 
                         <div>Eliminar usuario</div>
@@ -32,25 +32,25 @@
             <div class="row">
                 <div class="col-md-6 skn-user-management-user-data">
                     <div>
-                        <img [src]="user.user_profile_image | noUserImage" style="height:120px;" alt="User Icon" class="rounded float-center" />
+                        <img [src]="user?.user_profile_image | noUserImage" style="height:120px;" alt="User Icon" class="rounded float-center" />
                     </div>
                     <div>
                         <div class="form-group">
-                            <h2>{{user.user_login}}</h2>
+                            <h2>{{user?.user_login}}</h2>
                         </div>
                     </div>
                     <div>
-                        <p>ID de usuario: {{user.id}}</p>
+                        <p>ID de usuario: {{user?.id}}</p>
                     </div>
                     <div>
-                        <a [routerLink]="['/perfil', user.id, user.user_login]">
+                        <a [routerLink]="['/perfil', user?.id, user?.user_login]">
                             <button mat-raised-button color="primary">Ir a perfil</button>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-6 skn-user-management-user-access">
                     <div style="display: flex;">
-                        <p>Estado del usuario: <strong [ngStyle]="{'color':user.user_status === 'Active' ? 'green' : 'red' }">{{user.user_status === 'Active' ? 'Activo' : 'Inactivo'}}</strong></p>
+                        <p>Estado del usuario: <strong [ngStyle]="{'color':user?.user_status === 'Active' ? 'green' : 'red' }">{{user?.user_status === 'Active' ? 'Activo' : 'Inactivo'}}</strong></p>
                     </div>
                     <div class="form-group">
                         <label class="skn-text">Rol de usuario</label>

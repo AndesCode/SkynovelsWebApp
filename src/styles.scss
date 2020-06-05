@@ -212,7 +212,7 @@ mat-menu {
 }
 
 .skn-link {
-    cursor: pointer;
+    cursor: pointer!important;
 }
 
 .skn-modal-top-close-button {
@@ -352,6 +352,20 @@ mat-menu {
     width: 0px;
 }
 
+.ngx-pagination {
+    padding: unset!important;
+}
+
+.ngx-pagination .current {
+    background: #db3836!important;
+    border-radius: 4px;
+    color: black!important;
+}
+
+.ng-star-inserted {
+    outline: unset!important;
+}
+
 .profile-card {
     display: none;
 }
@@ -368,7 +382,6 @@ mat-menu {
     color: #8a8f96 !important;
 }
 
-$primary: #DB3836;
 .modal-dialog {
     display: flex;
     justify-content: center;

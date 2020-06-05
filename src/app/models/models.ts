@@ -16,9 +16,9 @@ export class Novel {
     nvl_chapters?: number;
     nvl_rated?: boolean;
     nvl_recommended?: boolean;
-    chapters?: Array<any>;
+    chapters?: Array<Chapter>;
     genres?: Array<any>;
-    volumes?: Array<any>;
+    volumes?: Array<Volume>;
     bookmarks?: Array<any>;
     novel_ratings?: Array<NovelRating>;
     collaborators?: Array<any>;
@@ -28,7 +28,7 @@ export class Novel {
     nvl_last_update?: Date;
     user_bookmark?: any;
     date_data?: any;
-    nvl_last_chapter?: any;
+    nvl_last_chapter?: Chapter;
 }
 
 export class NovelFilter {
@@ -66,7 +66,6 @@ export class User {
     id?: number;
     user_id?: number;
     user_login?: string;
-    user_pass?: string;
     user_email?: string;
     user_rol?: string;
     user_status?: 'Active' | 'Disabled';
@@ -90,6 +89,17 @@ export class User {
     bookmarks?: Array<any>;
     post_comments?: Array<any>;
     collaborations?: Array<any>;
+}
+
+export class LoginUser {
+    user_login: string;
+    user_pass: string;
+}
+
+export class NewUser {
+    user_login: string;
+    user_pass: string;
+    user_email: string;
 }
 
 export class Invitation {
@@ -177,6 +187,37 @@ export class Like {
     chapter_comment_id?: number;
     forum_post_id?: number;
     post_comment_id?: number;
+}
+
+export class Chapter {
+    id?: number;
+    chp_author?: number;
+    chp_translator?: string;
+    chp_translator_eng?: string;
+    nvl_id?: number;
+    vlm_id?: number;
+    chp_number?: number;
+    createdAt?: Date;
+    chp_content?: string;
+    chp_review?: string;
+    chp_title?: string;
+    chp_index_title?: string;
+    chp_status?: 'Active' | 'Disabled';
+    chp_comment_status?: string;
+    chp_name?: string;
+    updatedAt?: Date;
+    chp_comment_count?: number;
+    comments?: Array<any>;
+    new: boolean;
+    date_data: any;
+}
+
+export class Volume {
+    id?: number;
+    vlm_title?: string;
+    nvl_id?: number;
+    user_id?: number;
+    chapters?: Array<Chapter>;
 }
 
 
