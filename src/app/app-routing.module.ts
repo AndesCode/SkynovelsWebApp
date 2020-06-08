@@ -11,9 +11,9 @@ import { UserManagementComponent } from './components/admin-panel/users-manageme
 import { ForumManagementComponent } from './components/admin-panel/forum-management/forum-management.component';
 import { UserNovelsComponent } from './components/user-novels/user-novels.component';
 import { UserNovelComponent } from './components/user-novel/user-novel.component';
-import { ForumComponent } from './components/forum/forum.component';
+/*import { ForumComponent } from './components/forum/forum.component';
 import { ForumCategoryComponent } from './components/forum/forum-category/forum-category.component';
-import { ForumPostComponent } from './components/forum/forum-category/forum-post/forum-post.component';
+import { ForumPostComponent } from './components/forum/forum-category/forum-post/forum-post.component';*/
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ChaptersComponent } from './components/chapters/chapters.component';
 import { UserChapterComponent } from './components/user-novel/user-chapter/user-chapter.component';
@@ -27,8 +27,6 @@ import { AdvertisementComponent } from './components/advertisement/advertisement
 import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 // Test
 import { TestComponent } from './components/test/test.component';
-
-
 /*
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { LoginComponent } from './components/login/login.component';
@@ -82,9 +80,10 @@ const routes: Routes = [
   { path: 'mis-novelas/:nid/:ntitle/:vid/:cid', component: UserChapterComponent, canActivate: [GuardService] },
   { path: 'mis-novelas/:nid/:ntitle/:vid/:cid/:ctitle', component: UserChapterComponent, canActivate: [GuardService] },
   // forum
-  { path: 'foro', component: ForumComponent },
+  /*{ path: 'foro', component: ForumComponent },
   { path: 'foro/:category/:cid', component: ForumCategoryComponent },
-  { path: 'foro/:category/:cid/:post/:id', component: ForumPostComponent },
+  { path: 'foro/:category/:cid/:post/:id', component: ForumPostComponent },*/
+  // User profile
   { path: 'perfil/:id', component: UserProfileComponent },
   { path: 'perfil/:id/:login', component: UserProfileComponent },
   // Invitations
