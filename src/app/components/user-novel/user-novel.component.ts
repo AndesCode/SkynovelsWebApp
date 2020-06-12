@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { UsersService } from '../../services/users.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Novel, Genre, User, Chapter, Volume } from 'src/app/models/models';
+import { PageService } from '../../services/page.service';
 
 @Component({
   selector: 'app-user-novel',
@@ -49,6 +50,7 @@ export class UserNovelComponent implements OnInit {
                  public ns: NovelsService,
                  private us: UsersService,
                  public hs: HelperService,
+                 public ps: PageService,
                  private router: Router,
                  public dialog: MatDialog,
                  public matSnackBar: MatSnackBar,

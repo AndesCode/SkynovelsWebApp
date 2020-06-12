@@ -134,7 +134,7 @@
                                 {{chapter.chp_number}}
                             </div>
                             <div>
-                                <div class="skn-nvl-chp-element-title"> {{hs.setContent(chapter.chp_index_title, 69)}}</div>
+                                <div class="skn-nvl-chp-element-title"> {{ps.setContent(chapter.chp_index_title, 69)}}</div>
                                 <small>{{chapter.date_data.message}}</small>
                             </div>
                         </div>
@@ -237,7 +237,7 @@
                         </div>
                         <button mat-mini-fab *ngIf="!rating.edition && user?.id === rating.user_id" [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
                         <mat-menu #userMenu="matMenu">
-                            <button mat-menu-item (click)="editRating(rating)">
+                            <button mat-menu-item (click)="ps.setEdition(rating)">
                               <span>Editar</span>
                             </button>
                             <button mat-menu-item (click)="openDialogSheet(deleteRatingModal)">
@@ -262,7 +262,7 @@
                         </div>
                     </div>
                     <div>
-                        <p [innerHTML]="hs.setContent(rating.rate_comment, 360)" *ngIf="(!rating.show_more && rating.rate_comment.length > 360) && !rating.edition"></p>
+                        <p [innerHTML]="ps.setContent(rating.rate_comment, 360)" *ngIf="(!rating.show_more && rating.rate_comment.length > 360) && !rating.edition"></p>
                         <p [innerHTML]="rating.rate_comment" *ngIf="(rating.show_more || rating.rate_comment.length < 360) && !rating.edition"></p>
                         <form autocomplete="off" #updateRatingForm="ngForm">
                             <div class="form-group" *ngIf="rating.edition" style="width: 100%;">
@@ -270,21 +270,18 @@
                             </div>
                         </form>
                     </div>
-                    <div *ngIf="rating.rate_comment.length > 360 && !rating.show_more && !rating.edition">
-                        <strong class="skn-nvl-user-rating-info-togler skn-text" (click)="showMoreRating(rating)">...Ver más</strong>
-                    </div>
-                    <div *ngIf="rating.show_more && rating.rate_comment.length > 360 && !rating.edition">
-                        <strong class="skn-nvl-user-rating-info-togler skn-text" (click)="showMoreRating(rating)">...Mostrar menos</strong>
+                    <div *ngIf="rating.rate_comment.length > 360 && !rating.edition">
+                        <strong class="skn-nvl-user-rating-info-togler skn-text" (click)="ps.showMore(rating)">{{rating.show_more ? '...Mostrar menos' : '...Ver más'}}</strong>
                     </div>
                     <br>
 
                     <div style="display: flex; justify-content: space-between;">
                         <div>
-                            <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="getNovelRatingComments(rating)" *ngIf="!rating.show_replys">Comentarios</span>
-                            <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="hideNovelRatingComments(rating)" *ngIf="rating.show_replys">Ocultar Comentarios</span>
+                            <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="ps.getReplysFunction(user, rating, 'novel_rating_id')" *ngIf="!rating.show_replys">Ver comentarios</span>
+                            <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="ps.hideReplys(rating)" *ngIf="rating.show_replys">Ocultar comentarios</span>
                         </div>
                         <div style="display: flex; align-items: center;">
-                            <button mat-icon-button aria-label="like" (click)="switchRatingLike(rating)">
+                            <button mat-icon-button aria-label="like" (click)="ls.switchLike(user, rating, 'novel_rating_id')">
                                 <span class="material-icons skn-like" [ngClass]="{'liked': rating.liked}">thumb_up</span>
                             </button>
                             <div style="margin-top: 3px;">{{rating.likes?.length}}</div>
@@ -292,7 +289,7 @@
                     </div>
                     <hr>
 
-                    <!-- Novel rating comments-->
+                    <!-- Novel rating replys-->
                     <div *ngIf="rating.show_replys">
                         <form *ngIf="user">
                             <div class="skn-nvl-rating-comment-textarea">
@@ -302,62 +299,59 @@
                                 <div class="skn-nvl-rating-comment-textarea-input">
                                     <mat-form-field style="width: 100%;">
                                         <mat-label>Añade un comentario</mat-label>
-                                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #novel_rating_comment="ngModel" name="rating.novel_rating_comment" [(ngModel)]="rating.novel_rating_comment" maxlength="2000" minlength="2"></textarea>
+                                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #reply="ngModel" name="rating.reply" [(ngModel)]="rating.reply" maxlength="2000" minlength="2"></textarea>
                                     </mat-form-field>
                                 </div>
-                                <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" [disabled]="rating.novel_rating_comment === null || rating.novel_rating_comment.length < 2" (click)="createNovelRatingComment(rating)">Publicar</button>
+                                <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" [disabled]="rating.reply === null || rating.reply.length < 2" (click)="ps.createReplyFunction(user, rating, 'novel_rating_id')">Publicar</button>
                             </div>
                         </form>
-                        <div class="skn-nvl-user-rating" *ngFor="let rating_comment of rating.rating_comments" style="padding: 0px!important;">
+                        <div class="skn-nvl-user-rating" *ngFor="let reply of rating.replys" style="padding: 0px!important;">
                             <div class="skn-user-image">
-                                <img [src]="rating_comment.user_profile_image | noUserImage" alt="">
+                                <img [src]="reply.user_profile_image | noUserImage" alt="">
                             </div>
                             <div class="skn-nvl-user-rating-user-rating">
                                 <div class="skn-nvl-user-rating-login" style="margin-bottom: 5px;">
                                     <div style="display: flex;">
                                         <div class="skn-user-image-mobile">
-                                            <img [src]="rating_comment.user_profile_image | noUserImage" alt="">
+                                            <img [src]="reply.user_profile_image | noUserImage" alt="">
                                         </div>
                                         <div class="skn-nvl-user-rating-login-name">
-                                            <strong style="margin-right: 5px;">{{rating_comment.user_login}}</strong>
-                                            <small>{{rating_comment.date_data.message}}</small>
+                                            <strong style="margin-right: 5px;">{{reply.user_login}}</strong>
+                                            <small>{{reply.date_data.message}}</small>
                                         </div>
                                     </div>
-                                    <button mat-mini-fab *ngIf="!rating_comment.edition && user?.id === rating_comment.user_id" [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
+                                    <button mat-mini-fab *ngIf="!reply.edition && user?.id === reply.user_id" [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
                                     <mat-menu #userMenu="matMenu">
-                                        <button mat-menu-item (click)="editRating(rating_comment)">
+                                        <button mat-menu-item (click)="ps.setEdition(reply)">
                                           <span>Editar</span>
                                         </button>
                                         <button mat-menu-item (click)="openDialogSheet(deleteRatingCommentModal)">
                                           <span>Eliminar</span>
                                         </button>
                                     </mat-menu>
-                                    <button mat-mini-fab *ngIf="rating_comment.edition && user?.id === rating_comment.user_id" (click)="updateNovelRatingComment(updateRatingCommentForm, rating_comment)"><i class="material-icons">done</i></button>
+                                    <button mat-mini-fab *ngIf="reply.edition && user?.id === reply.user_id" (click)="ps.updateReplyFunction(updateRatingCommentForm, reply)"><i class="material-icons">done</i></button>
                                 </div>
                                 <div>
-                                    <p [innerHTML]="hs.setContent(rating_comment.novel_rating_comment, 360)" *ngIf="(!rating_comment.show_more && rating_comment.novel_rating_comment.length > 360) && !rating_comment.edition"></p>
-                                    <p [innerHTML]="rating_comment.novel_rating_comment" *ngIf="(rating_comment.show_more || rating_comment.novel_rating_comment.length < 360) && !rating_comment.edition"></p>
+                                    <p [innerHTML]="ps.setContent(reply.reply_content, 360)" *ngIf="(!reply.show_more && reply.reply_content.length > 360) && !reply.edition"></p>
+                                    <p [innerHTML]="reply.reply_content" *ngIf="(reply.show_more || reply.reply_content.length < 360) && !reply.edition"></p>
                                     <form autocomplete="off" #updateRatingCommentForm="ngForm">
-                                        <div class="form-group" *ngIf="rating_comment.edition" style="width: 100%;">
-                                            <textarea class="form-control skn-text-area" #novel_rating_comment="ngModel" name="rating_comment.novel_rating_comment" [(ngModel)]="rating_comment.novel_rating_comment" rows="3" required></textarea>
+                                        <div class="form-group" *ngIf="reply.edition" style="width: 100%;">
+                                            <textarea class="form-control skn-text-area" #reply_content="ngModel" name="reply.reply_content" [(ngModel)]="reply.reply_content" rows="3" required></textarea>
                                         </div>
                                     </form>
                                 </div>
                                 <div style="display: flex; justify-content: space-between;">
-                                    <div *ngIf="rating_comment.novel_rating_comment.length < 360 || rating_comment.edition">
+                                    <div *ngIf="reply.reply_content.length < 360 || reply.edition">
 
                                     </div>
-                                    <div *ngIf="rating_comment.novel_rating_comment.length > 360 && !rating_comment.show_more && !rating_comment.edition">
-                                        <strong class="skn-nvl-user-rating-info-togler" (click)="showMoreRating(rating_comment)">...Ver más</strong>
-                                    </div>
-                                    <div *ngIf="rating_comment.show_more && rating_comment.novel_rating_comment.length > 360 && !rating_comment.edition">
-                                        <strong class="skn-nvl-user-rating-info-togler" (click)="showMoreRating(rating_comment)">...Mostrar menos</strong>
+                                    <div *ngIf="reply.reply_content.length > 360 && !reply.edition">
+                                        <strong class="skn-nvl-user-rating-info-togler skn-text" (click)="ps.showMore(reply)">{{reply.show_more ? '...Mostrar menos' : '...Ver más'}}</strong>
                                     </div>
                                     <div style="display: flex; align-items: center;">
-                                        <button mat-icon-button aria-label="like" (click)="switchRatingCommentLike(rating_comment)">
-                                            <span class="material-icons skn-like" [ngClass]="{'liked': rating_comment.liked}">thumb_up</span>
+                                        <button mat-icon-button aria-label="like" (click)="ps.switchLike(user, reply, 'reply_id')">
+                                            <span class="material-icons skn-like" [ngClass]="{'liked': reply.liked}">thumb_up</span>
                                         </button>
-                                        <div style="margin-top: 3px;">{{rating_comment.likes?.length}}</div>
+                                        <div style="margin-top: 3px;">{{reply.likes?.length}}</div>
                                     </div>
                                 </div>
                                 <hr>
@@ -372,7 +366,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                                        <button mat-raised-button color="warn" style="color: black;" (click)="deleteRatingComment(rating, rating_comment); dialog.closeAll()">Eliminar</button>
+                                        <button mat-raised-button color="warn" style="color: black;" (click)="ps.deleteReplyFunction(rating, reply); dialog.closeAll()">Eliminar</button>
                                     </div>
                                 </div>
                             </ng-template>

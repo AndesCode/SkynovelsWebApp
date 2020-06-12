@@ -10,9 +10,10 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Novel, User, Like } from 'src/app/models/models';
+import { Novel, User } from 'src/app/models/models';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Meta, Title } from '@angular/platform-browser';
+import { PageService } from '../../services/page.service';
 
 @Component({
   selector: 'app-novel',
@@ -37,7 +38,8 @@ export class NovelComponent implements OnInit {
     constructor(private ns: NovelsService,
                 private activatedRoute: ActivatedRoute,
                 private breakpointObserver: BreakpointObserver,
-                private ls: LikesService,
+                public ls: LikesService,
+                public ps: PageService,
                 private us: UsersService,
                 private router: Router,
                 private location: Location,
@@ -94,8 +96,8 @@ export class NovelComponent implements OnInit {
         novelRating.show_more = false;
         novelRating.edition = false;
         novelRating.show_replys = false;
-        novelRating.rating_comments = [];
-        novelRating.novel_rating_comment = null;
+        novelRating.replys = [];
+        novelRating.reply = null;
       }
       for (const volume of this.novel.volumes) {
         for (const chapter of volume.chapters) {
@@ -131,70 +133,6 @@ export class NovelComponent implements OnInit {
     this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
   }
 
-  switchRatingLike(novelRating) {
-    if (this.user) {
-      if (novelRating.liked === false) {
-        novelRating.liked = true;
-        const like: Like = {
-          novel_rating_id: novelRating.id
-        };
-        this.ls.createLike(like).subscribe((data: any) => {
-          novelRating.like_id = data.like.id;
-          novelRating.likes.push(data.like);
-        }, error => {
-          novelRating.liked = false;
-          this.openMatSnackBar(this.errorSnackRef);
-          this.errorSnackMessage = error.error.message;
-        });
-      } else {
-        novelRating.liked = false;
-        this.ls.deleteLike(novelRating.like_id).subscribe((data: any) => {
-          novelRating.likes.splice(novelRating.likes.findIndex(x => x.id === novelRating.like_id), 1);
-          novelRating.like_id = null;
-        }, error => {
-          novelRating.liked = true;
-          this.openMatSnackBar(this.errorSnackRef);
-          this.errorSnackMessage = error.error.message;
-        });
-      }
-      console.log(this.novel.novel_ratings);
-    } else {
-      return;
-    }
-  }
-
-  switchRatingCommentLike(novelRatingComment) {
-    if (this.user) {
-      if (novelRatingComment.liked === false) {
-        novelRatingComment.liked = true;
-        const like: Like = {
-          novel_rating_comment_id: novelRatingComment.id
-        };
-        this.ls.createLike(like).subscribe((data: any) => {
-          novelRatingComment.like_id = data.like.id;
-          novelRatingComment.likes.push(data.like);
-        }, error => {
-          novelRatingComment.liked = false;
-          this.openMatSnackBar(this.errorSnackRef);
-          this.errorSnackMessage = error.error.message;
-        });
-      } else {
-        novelRatingComment.liked = false;
-        this.ls.deleteLike(novelRatingComment.like_id).subscribe((data: any) => {
-          novelRatingComment.likes.splice(novelRatingComment.likes.findIndex(x => x.id === novelRatingComment.like_id), 1);
-          novelRatingComment.like_id = null;
-        }, error => {
-          novelRatingComment.liked = true;
-          this.openMatSnackBar(this.errorSnackRef);
-          this.errorSnackMessage = error.error.message;
-        });
-      }
-      console.log(this.novel.novel_ratings);
-    } else {
-      return;
-    }
-  }
-
   switchBookMark() {
     if (this.novel.user_bookmark === null) {
       this.us.createUserBookmark(this.novel.id).subscribe((data: any) => {
@@ -227,9 +165,9 @@ export class NovelComponent implements OnInit {
       if (this.user && novelRating.user_id === this.user.id) {
           this.novel.nvl_rated = true;
       }
-      for (const novelRatingComment of novelRating.rating_comments) {
-        novelRatingComment.liked = false;
-        novelRatingComment.like_id = null;
+      for (const novelRatingReply of novelRating.replys) {
+        novelRatingReply.liked = false;
+        novelRatingReply.like_id = null;
       }
       if (this.user) {
         for (const novelRatingLike of  novelRating.likes) {
@@ -239,11 +177,11 @@ export class NovelComponent implements OnInit {
             break;
           }
         }
-        for (const novelRatingComment of novelRating.rating_comments) {
-          for (const novelRatingCommentLike of novelRatingComment.likes) {
+        for (const novelRatingReply of novelRating.replys) {
+          for (const novelRatingCommentLike of novelRatingReply.likes) {
             if (novelRatingCommentLike.user_id === this.user.id) {
-              novelRatingComment.liked = true;
-              novelRatingComment.like_id = novelRatingCommentLike.id;
+              novelRatingReply.liked = true;
+              novelRatingReply.like_id = novelRatingCommentLike.id;
               break;
             }
           }
@@ -262,18 +200,6 @@ export class NovelComponent implements OnInit {
 
   swichtTab(tab: string) {
     this.currentTab = tab;
-  }
-
-  showMoreRating(rating) {
-    if (rating.show_more === true) {
-      rating.show_more = false;
-    } else {
-      rating.show_more = true;
-    }
-  }
-
-  editRating(rating: any) {
-    rating.edition = true;
   }
 
   updateRating(updateRatingForm: NgForm, rating: any) {
@@ -329,81 +255,6 @@ export class NovelComponent implements OnInit {
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
       return;
-    });
-  }
-
-  hideNovelRatingComments(rating: any) {
-    rating.show_replys = false;
-  }
-
-  getNovelRatingComments(rating: any) {
-    if (rating.rating_comments.length > 0) {
-      rating.show_replys = true;
-    } else {
-      this.ns.getNovelRatingComments(rating.id).subscribe((data: any) => {
-        rating.rating_comments = data.novel_rating_comments;
-        console.log(rating.rating_comments);
-        for (const ratingComment of rating.rating_comments) {
-          ratingComment.liked = false;
-          ratingComment.show_more = false;
-          ratingComment.edition = false;
-          ratingComment.date_data = this.hs.getRelativeTime(ratingComment.createdAt);
-          if (this.user) {
-            for (const ratingCommentLike of ratingComment.likes) {
-              if (ratingCommentLike.user_id === this.user.id) {
-                ratingComment.liked = true;
-                ratingComment.like_id = ratingCommentLike.id;
-                break;
-              }
-            }
-          }
-        }
-        console.log(rating);
-        rating.show_replys = true;
-        rating.rating_comments.sort(this.hs.dateDataSorter);
-      });
-    }
-  }
-
-  createNovelRatingComment(rating: any) {
-    const newRatingComment = {
-      novel_rating_id: rating.id,
-      novel_rating_comment: rating.novel_rating_comment
-    };
-    this.ns.createNovelRatingComment(newRatingComment).subscribe((data: any) => {
-      data.novel_rating_comment.user_login = this.user.user_login;
-      data.novel_rating_comment.user_profile_image = this.user.user_profile_image;
-      data.novel_rating_comment.liked = false;
-      data.novel_rating_comment.show_more = false;
-      data.novel_rating_comment.edition = false;
-      data.novel_rating_comment.likes = [];
-      data.novel_rating_comment.date_data = this.hs.getRelativeTime(data.novel_rating_comment.createdAt);
-      console.log(data.novel_rating);
-      rating.rating_comments.unshift(data.novel_rating_comment);
-      rating.novel_rating_comment = null;
-    });
-  }
-
-  updateNovelRatingComment(updateRatingCommentForm: NgForm, ratingComment: any) {
-    console.log(updateRatingCommentForm);
-    if (updateRatingCommentForm.dirty) {
-      if (updateRatingCommentForm.valid) {
-        this.ns.updateNovelRatingComment(ratingComment).subscribe((data: any) => {
-          console.log(data);
-          ratingComment.edition = false;
-        });
-      } else {
-        ratingComment.edition = false;
-      }
-    } else {
-      ratingComment.edition = false;
-    }
-  }
-
-  deleteRatingComment(rating: any, ratingComment: any) {
-    this.ns.deleteNovelRatingComment(ratingComment.id).subscribe((data: any) => {
-      rating.rating_comments.splice(rating.rating_comments.findIndex(x => x.id === ratingComment.id), 1);
-      console.log(data);
     });
   }
 

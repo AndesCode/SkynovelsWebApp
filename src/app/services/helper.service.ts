@@ -195,11 +195,6 @@ export class HelperService {
     }
     return rating;
   }
-
-  setContent(content: string, length: number) {
-    return content.length > length ? (content).substring(0, length) + '...' : content;
-  }
-
     // Upload images to BackEnd
 
     uploadImage(id: any, file: File, img: string, imageType: 'novel' | 'user') {

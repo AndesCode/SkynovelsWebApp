@@ -29,7 +29,7 @@
                             <div class="skn-swiper-novel-slide-img-container">
                                 <img class="skn-top-nvl-img " [src]="topNovel.nvl_img | noimage" alt=" ">
                             </div>
-                            <strong style="word-wrap: break-word;">{{hs.setContent(topNovel.nvl_title, 40)}}</strong>
+                            <strong style="word-wrap: break-word;">{{ps.setContent(topNovel.nvl_title, 40)}}</strong>
                         </div>
                     </a>
                 </div>
@@ -54,7 +54,7 @@
                             <div class="skn-swiper-novel-slide-img-container">
                                 <img class="skn-top-nvl-img " [src]="recentNovel.nvl_img | noimage" alt=" ">
                             </div>
-                            <strong style="word-wrap: break-word;">{{hs.setContent(recentNovel.nvl_title, 40)}}</strong>
+                            <strong style="word-wrap: break-word;">{{ps.setContent(recentNovel.nvl_title, 40)}}</strong>
                         </div>
                     </a>
                 </div>
@@ -130,7 +130,7 @@
                         <li *ngFor="let chapter of updatedNovel.chapters">
                             <div class="d-flex">
                                 <a [routerLink]="['/novelas', updatedNovel.id, updatedNovel.nvl_name, chapter.id, chapter.chp_name]" class="unstyled-a-tag">
-                                    <strong style="word-break: break-word;" class="skn-link">{{hs.setContent(chapter.chp_index_title, 21)}}</strong>
+                                    <strong style="word-break: break-word;" class="skn-link">{{ps.setContent(chapter.chp_index_title, 21)}}</strong>
                                 </a>
                                 <div style="color: #0bb500;; margin-left: 3px;" *ngIf="chapter.new">Nuevo!</div>
                             </div>
@@ -140,7 +140,7 @@
                         <div style="display: flex;">
                             <div style="margin-left: 5px;">
                                 <a [routerLink]="['/novelas', updatedNovel.id, updatedNovel.nvl_name]" class="unstyled-a-tag">
-                                    <strong class="skn-link">{{hs.setContent(updatedNovel.nvl_title, 40)}}</strong>
+                                    <strong class="skn-link">{{ps.setContent(updatedNovel.nvl_title, 40)}}</strong>
                                 </a>
                             </div>
                         </div>

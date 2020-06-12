@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Novel, NovelRating, AdvertisementComment, Volume, Chapter } from '../models/models';
+import { Novel, NovelRating, Volume, Chapter } from '../models/models';
 
 
 @Injectable({
@@ -38,7 +38,7 @@ export class NovelsService {
       return this.http.get( url );
     }
 
-    getNovel(id: number, action: string) {
+    getNovel(id: number, action: 'reading' | 'edition') {
       const url = `${ this.urlnovelsdb }/novel/${id}/${action}`;
       if (action === 'edition') {
         return this.http.get( url, this.GlobalhttpOptions );
@@ -97,46 +97,6 @@ export class NovelsService {
       return this.http.delete(url, this.GlobalhttpOptions);
     }
 
-    createChapterComment(chapterComment: any) {
-      const url = `${ this.urlnovelsdb }/create-chapter-comment`;
-      return this.http.post(url, chapterComment, this.GlobalhttpOptions);
-    }
-
-    getChapterComments(id: number) {
-      const url = `${ this.urlnovelsdb }/get-chapters-comments/${id}`;
-      return this.http.get(url);
-    }
-
-    updateChapterComment(chapterComment: any) {
-      const url = `${ this.urlnovelsdb }/update-chapter-comment`;
-      return this.http.put(url , chapterComment, this.GlobalhttpOptions);
-    }
-
-    deleteChapterComment(id: number) {
-      const url = `${ this.urlnovelsdb }/delete-chapter-comment/${id}`;
-      return this.http.delete(url, this.GlobalhttpOptions);
-    }
-
-    createChapterCommentReply(chapterCommentReply: any) {
-      const url = `${ this.urlnovelsdb }/create-chapter-comment-reply`;
-      return this.http.post(url, chapterCommentReply, this.GlobalhttpOptions);
-    }
-
-    getChapterCommentReplys(id: number) {
-      const url = `${ this.urlnovelsdb }/get-chapter-comment-replys/${id}`;
-      return this.http.get(url);
-    }
-
-    updateChapterCommentReply(chapterCommentReply: any) {
-      const url = `${ this.urlnovelsdb }/update-chapter-comment-reply`;
-      return this.http.put(url , chapterCommentReply, this.GlobalhttpOptions);
-    }
-
-    deleteChapterCommentReply(id: number) {
-      const url = `${ this.urlnovelsdb }/delete-chapter-comment-reply/${id}`;
-      return this.http.delete(url, this.GlobalhttpOptions);
-    }
-
     createNovelRating(rate: NovelRating) {
       const url = `${ this.urlnovelsdb }/create-novel-rating`;
       return this.http.post(url, rate, this.GlobalhttpOptions);
@@ -147,28 +107,8 @@ export class NovelsService {
       return this.http.put(url , rate, this.GlobalhttpOptions);
     }
 
-    deleteNovelRating(id: string) {
+    deleteNovelRating(id: number) {
       const url = `${ this.urlnovelsdb }/delete-novel-rating/${id}`;
-      return this.http.delete(url, this.GlobalhttpOptions);
-    }
-
-    createNovelRatingComment(ratingComment: any) {
-      const url = `${ this.urlnovelsdb }/create-novel-rating-comment`;
-      return this.http.post(url, ratingComment, this.GlobalhttpOptions);
-    }
-
-    getNovelRatingComments(id: number) {
-      const url = `${ this.urlnovelsdb }/get-novel-rating-comments/${id}`;
-      return this.http.get(url);
-    }
-
-    updateNovelRatingComment(ratingComment: any) {
-      const url = `${ this.urlnovelsdb }/update-novel-rating-comment`;
-      return this.http.put(url , ratingComment, this.GlobalhttpOptions);
-    }
-
-    deleteNovelRatingComment(id: number) {
-      const url = `${ this.urlnovelsdb }/delete-novel-rating-comment/${id}`;
       return this.http.delete(url, this.GlobalhttpOptions);
     }
 
@@ -195,51 +135,6 @@ export class NovelsService {
 
     deleteNovelVolume(id: number) {
       const url = `${ this.urlnovelsdb }/delete-novel-volume/${id}`;
-      return this.http.delete(url, this.GlobalhttpOptions);
-    }
-
-    getAdvertisements() {
-      const url = `${ this.urlnovelsdb }/get-advertisements`;
-      return this.http.get( url );
-    }
-
-    getAdvertisement(id: number) {
-      const url = `${ this.urlnovelsdb }/get-advertisement/${id}`;
-      return this.http.get( url );
-    }
-
-    createAdvertisementComment(advertisementComment: AdvertisementComment) {
-      const url = `${ this.urlnovelsdb }/create-advertisement-comment`;
-      return this.http.post(url, advertisementComment, this.GlobalhttpOptions);
-    }
-
-    updateAdvertisementComment(rate: AdvertisementComment) {
-      const url = `${ this.urlnovelsdb }/update-advertisement-comment`;
-      return this.http.put(url , rate, this.GlobalhttpOptions);
-    }
-
-    deleteAdvertisementComment(id: number) {
-      const url = `${ this.urlnovelsdb }/delete-advertisement-comment/${id}`;
-      return this.http.delete(url, this.GlobalhttpOptions);
-    }
-
-    createAdvertisementCommentReply(ratingComment: any) {
-      const url = `${ this.urlnovelsdb }/create-advertisement-comment-reply`;
-      return this.http.post(url, ratingComment, this.GlobalhttpOptions);
-    }
-
-    getAdvertisementCommentReplys(id: number) {
-      const url = `${ this.urlnovelsdb }/get-advertisement-comment-replys/${id}`;
-      return this.http.get(url);
-    }
-
-    updateAdvertisementCommentReply(ratingComment: any) {
-      const url = `${ this.urlnovelsdb }/update-advertisement-comment-reply`;
-      return this.http.put(url , ratingComment, this.GlobalhttpOptions);
-    }
-
-    deleteAdvertisementCommentReply(id: number) {
-      const url = `${ this.urlnovelsdb }/delete-advertisement-comment-reply/${id}`;
       return this.http.delete(url, this.GlobalhttpOptions);
     }
 }

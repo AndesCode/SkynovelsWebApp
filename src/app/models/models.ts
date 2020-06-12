@@ -29,6 +29,8 @@ export class Novel {
     user_bookmark?: any;
     date_data?: any;
     nvl_last_chapter?: Chapter;
+    nvl_currentChapter?: string;
+    nvl_currentChapterN?: string;
 }
 
 export class NovelFilter {
@@ -38,7 +40,7 @@ export class NovelFilter {
     searchGenres: Array<any>;
 }
 
-export interface NovelRating {
+export class NovelRating {
     id: number;
     likes?: Array<Like>;
     user_id: number;
@@ -46,7 +48,7 @@ export interface NovelRating {
     updatedAt?: Date;
     rate_value?: number;
     user_login?: string;
-    rating_comments?: Array<any>;
+    replys?: Array<Reply>;
     rate_comment?: string;
     user_profile_image?: string;
     edition?: boolean;
@@ -54,7 +56,7 @@ export interface NovelRating {
     show_replys?: boolean;
     liked?: boolean;
     like_id?: number;
-    novel_rating_comment?: string;
+    reply?: string;
 }
 
 export class Genre {
@@ -125,54 +127,14 @@ export class Advertisement {
     adv_content?: string;
     adv_img?: string;
     adv_order?: number;
-    comments?: Array<AdvertisementComment>;
+    comments?: Array<Comment>;
+    comment?: string;
     likes?: Array<Like>;
     liked?: boolean;
     like_id?: number;
     date_data?: any;
     createdAt?: Date;
     updatedAt?: Date;
-}
-
-export class AdvertisementComment {
-    id?: number;
-    adv_comment?: string;
-    replys_count?: number;
-    user_id?: number;
-    user_login?: string;
-    user_profile_image?: string;
-    adv_id?: number;
-    replys?: Array<AdvertisementCommentReply>;
-    likes?: Array<Like>;
-    likes_count?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
-    edition?: boolean;
-    show_more?: boolean;
-    show_replys?: boolean;
-    advertisement_comment_reply?: string;
-    liked?: boolean;
-    like_id?: number;
-    date_data?: any;
-}
-
-export class AdvertisementCommentReply {
-    id?: number;
-    adv_comment_reply?: string;
-    replys_count?: number;
-    user_id?: number;
-    user_login?: string;
-    user_profile_image?: string;
-    adv_comment_id?: number;
-    likes?: Array<Like>;
-    likes_count?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
-    edition?: boolean;
-    show_more?: boolean;
-    liked?: boolean;
-    like_id?: number;
-    date_data?: any;
 }
 
 export class Like {
@@ -197,7 +159,6 @@ export class Chapter {
     nvl_id?: number;
     vlm_id?: number;
     chp_number?: number;
-    createdAt?: Date;
     chp_content?: string;
     chp_review?: string;
     chp_title?: string;
@@ -205,11 +166,13 @@ export class Chapter {
     chp_status?: 'Active' | 'Disabled';
     chp_comment_status?: string;
     chp_name?: string;
+    createdAt?: Date;
     updatedAt?: Date;
     chp_comment_count?: number;
-    comments?: Array<any>;
-    new: boolean;
-    date_data: any;
+    comments?: Array<Comment>;
+    comment?: string;
+    new?: boolean;
+    date_data?: any;
 }
 
 export class Volume {
@@ -218,6 +181,51 @@ export class Volume {
     nvl_id?: number;
     user_id?: number;
     chapters?: Array<Chapter>;
+}
+
+export class Comment {
+    id?: number;
+    comment_content?: string;
+    replys_count?: number;
+    user_id?: number;
+    user_login?: string;
+    user_profile_image?: string;
+    adv_id?: number;
+    chp_id?: number;
+    replys?: Array<Reply>;
+    likes?: Array<Like>;
+    likes_count?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+    edition?: boolean;
+    show_more?: boolean;
+    show_replys?: boolean;
+    reply?: string;
+    liked?: boolean;
+    like_id?: number;
+    date_data?: any;
+}
+
+export class Reply {
+    id?: number;
+    reply_content?: string;
+    replys_count?: number;
+    user_id?: number;
+    user_login?: string;
+    user_profile_image?: string;
+    comment_id?: number;
+    novel_rating_id?: number;
+    likes?: Array<Like>;
+    likes_count?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+    edition?: boolean;
+    show_more?: boolean;
+    show_replys?: boolean;
+    reply?: string;
+    liked?: boolean;
+    like_id?: number;
+    date_data?: any;
 }
 
 

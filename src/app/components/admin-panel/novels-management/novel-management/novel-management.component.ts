@@ -10,6 +10,7 @@ import { UsersService } from '../../../../services/users.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Novel, Genre, User, Chapter, Volume } from 'src/app/models/models';
 import { AdminService } from '../../../../services/admin.service';
+import { PageService } from '../../../../services/page.service';
 
 
 @Component({
@@ -44,6 +45,7 @@ export class NovelManagementComponent implements OnInit {
 
     constructor( private activatedRoute: ActivatedRoute,
                  public ns: NovelsService,
+                 public ps: PageService,
                  private as: AdminService,
                  private us: UsersService,
                  public hs: HelperService,

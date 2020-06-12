@@ -3,6 +3,7 @@ import { HelperService } from '../../../services/helper.service';
 import { NovelsService } from '../../../services/novels.service';
 import { Router } from '@angular/router';
 import { NovelFilter, Novel } from 'src/app/models/models';
+import { PageService } from '../../../services/page.service';
 
 @Component({
   selector: 'app-novel-card',
@@ -24,6 +25,7 @@ export class NovelCardComponent implements OnChanges {
   page = 1;
 
   constructor(public hs: HelperService,
+              public ps: PageService,
               private router: Router) { }
 
   ngOnChanges() {

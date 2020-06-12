@@ -1,6 +1,6 @@
 import { Injectable  } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Like } from '../models/models';
+import { Like, User } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,33 @@ export class LikesService {
 
   constructor(private http: HttpClient) {
     this.urlnovelsdb = '/api';
+  }
+
+  switchLike(user: User, object: any, objectType: 'adv_id' | 'novel_rating_id' | 'comment_id' | 'reply_id') {
+    if (user) {
+      if (object.liked === false) {
+        object.liked = true;
+        const like: Like = {
+          [objectType]: object.id
+        };
+        this.createLike(like).subscribe((data: any) => {
+          object.like_id = data.like.id;
+          object.likes.push(data.like);
+        }, error => {
+          object.liked = false;
+        });
+      } else {
+        object.liked = false;
+        this.deleteLike(object.like_id).subscribe((data: any) => {
+          object.likes.splice(object.likes.findIndex(x => x.id === object.like_id), 1);
+          object.like_id = null;
+        }, error => {
+          object.liked = true;
+        });
+      }
+    } else {
+      return;
+    }
   }
 
   createLike(like: Like) {

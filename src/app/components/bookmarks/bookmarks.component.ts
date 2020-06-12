@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { Router } from '@angular/router';
 import { Novel } from 'src/app/models/models';
+import { PageService } from '../../services/page.service';
 import { HelperService } from '../../services/helper.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class BookmarksComponent implements OnInit {
 
   constructor(private us: UsersService,
               private router: Router,
-              public hs: HelperService) { }
+              public ps: PageService,
+              private hs: HelperService) { }
 
   ngOnInit(): void {
     this.hs.invokeExternalFunction.subscribe((data: any) => {

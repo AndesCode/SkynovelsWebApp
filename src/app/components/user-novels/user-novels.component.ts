@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { HelperService } from '../../services/helper.service';
+import { Novel } from 'src/app/models/models';
 
 @Component({
   selector: 'app-user-novels',
@@ -10,18 +11,17 @@ import { HelperService } from '../../services/helper.service';
 })
 export class UserNovelsComponent implements OnInit {
 
-  userCollaborations: any[] = [];
-  userNovels: any[] = [];
-  searchText: String;
-  currentTab: any = 'novel';
+  userCollaborations: Array<Novel> = [];
+  userNovels: Array<Novel> = [];
+  searchText: string;
+  currentTab = 'novel';
   loading = true;
 
-  constructor(public _hs: HelperService,
-              private router: Router,
-              private _us: UsersService) {}
+  constructor(private router: Router,
+              private us: UsersService) {}
 
   ngOnInit() {
-    this._us.getUserNovels().subscribe((data: any) => {
+    this.us.getUserNovels().subscribe((data: any) => {
       this.userNovels = data.novels;
       this.userCollaborations = data.collaborations;
       this.loading = false;

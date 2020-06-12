@@ -62,7 +62,7 @@
                         {{chapter.chp_number}}
                     </div>
                     <div>
-                        <div class="skn-nvl-chp-element-title"> {{hs.setContent(chapter.chp_index_title, 69)}}</div>
+                        <div class="skn-nvl-chp-element-title"> {{ps.setContent(chapter.chp_index_title, 69)}}</div>
                         <small>{{hs.getRelativeTime(chapter.createdAt).message}}</small>
                     </div>
                 </div>
@@ -159,35 +159,32 @@
                             </div>
                             <button mat-mini-fab *ngIf="!comment.edition && user?.id === comment.user_id" [matMenuTriggerFor]="userMenu"><span class="material-icons">more_vert</span></button>
                             <mat-menu #userMenu="matMenu">
-                                <button mat-menu-item (click)="editComment(comment)">
+                                <button mat-menu-item (click)="ps.setEdition(comment)">
                                   <span>Editar</span>
                                 </button>
                                 <button mat-menu-item (click)="openDialogSheet(deleteCommentModal)">
                                   <span>Eliminar</span>
                                 </button>
                             </mat-menu>
-                            <button mat-mini-fab *ngIf="comment.edition" (click)="updateComment(updateCommentForm, comment)"><span class="material-icons">done</span></button>
+                            <button mat-mini-fab *ngIf="comment.edition" (click)="ps.updateCommentFunction(updateCommentForm, comment)"><span class="material-icons">done</span></button>
                         </div>
                         <hr>
                         <div>
-                            <p [innerHTML]="hs.setContent(comment.chapter_comment, 160)" *ngIf="(!comment.show_more && comment.chapter_comment.length > 160) && !comment.edition"></p>
-                            <p [innerHTML]="comment.chapter_comment" *ngIf="(comment.show_more || comment.chapter_comment.length < 160) && !comment.edition"></p>
+                            <p [innerHTML]="ps.setContent(comment.comment_content, 160)" *ngIf="(!comment.show_more && comment.comment_content.length > 160) && !comment.edition"></p>
+                            <p [innerHTML]="comment.comment_content" *ngIf="(comment.show_more || comment.comment_content.length < 160) && !comment.edition"></p>
                             <form autocomplete="off" #updateCommentForm="ngForm">
                                 <div class="form-group" style="width: 100%;" *ngIf="comment.edition">
-                                    <textarea class="form-control skn-text-area" id="exampleFormControlTextarea1" #chapter_comment="ngModel" name="comment.chapter_comment" [(ngModel)]="comment.chapter_comment" rows="3"></textarea>
+                                    <textarea class="form-control skn-text-area" id="exampleFormControlTextarea1" #comment_content="ngModel" name="comment.comment_content" [(ngModel)]="comment.comment_content" rows="3"></textarea>
                                 </div>
                             </form>
                         </div>
                         <div style="display: flex; justify-content: space-between;">
-                            <div *ngIf="comment.chapter_comment.length <= 160"></div>
-                            <div *ngIf="comment.chapter_comment.length > 160 && !comment.show_more && !comment.edition">
-                                <strong class="skn-link skn-text" (click)="showMoreComment(comment)"><strong>...Ver más</strong></strong>
-                            </div>
-                            <div *ngIf="comment.show_more && comment.chapter_comment.length > 160 && !comment.edition">
-                                <strong class="skn-link skn-text" (click)="showMoreComment(comment)"><strong>...Mostrar menos</strong></strong>
+                            <div *ngIf="comment.comment_content.length <= 160"></div>
+                            <div *ngIf="comment.comment_content.length > 160 && !comment.edition">
+                                <strong class="skn-link skn-text" (click)="ps.showMore(comment)">{{comment.show_more ? '...Mostrar menos' : '...Ver más'}}</strong>
                             </div>
                             <div style="display: flex; align-items: center;">
-                                <button mat-icon-button aria-label="like" (click)="switchCommentLike(comment)">
+                                <button mat-icon-button aria-label="like" (click)="ps.switchLike(user, comment, 'comment_id')">
                                     <span class="material-icons skn-like" [ngClass]="{'liked': comment.liked}">thumb_up</span>
                                 </button>
                                 <div style="margin-top: 3px;">{{comment.likes?.length}}</div>
@@ -203,7 +200,7 @@
                         </div>
                         <div class="modal-footer">
                             <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                            <button mat-raised-button color="warn" (click)="deleteComment(LoadedChapter, comment); dialog.closeAll()">Eliminar</button>
+                            <button mat-raised-button color="warn" (click)="ps.deleteCommentFunction(LoadedChapter, comment); dialog.closeAll()">Eliminar</button>
                         </div>
                     </ng-template>
                 </div>
@@ -246,40 +243,37 @@
                                     </div>
                                     <button mat-mini-fab *ngIf="!comment.edition && user?.id === comment.user_id" [matMenuTriggerFor]="userMenu"><span class="material-icons">more_vert</span></button>
                                     <mat-menu #userMenu="matMenu">
-                                        <button mat-menu-item (click)="editComment(comment)">
+                                        <button mat-menu-item (click)="ps.setEdition(comment)">
                                           <span>Editar</span>
                                         </button>
                                         <button mat-menu-item (click)="openDialogSheet(deleteCommentModal)">
                                           <span>Eliminar</span>
                                         </button>
                                     </mat-menu>
-                                    <button mat-mini-fab *ngIf="comment.edition" (click)="updateComment(updateCommentForm, comment)"><span class="material-icons">done</span></button>
+                                    <button mat-mini-fab *ngIf="comment.edition" (click)="ps.updateCommentFunction(updateCommentForm, comment)"><span class="material-icons">done</span></button>
                                 </div>
                                 <hr>
                                 <div>
-                                    <p [innerHTML]="hs.setContent(comment.chapter_comment, 160)" *ngIf="(!comment.show_more && comment.chapter_comment.length > 160) && !comment.edition"></p>
-                                    <p [innerHTML]="comment.chapter_comment" *ngIf="(comment.show_more || comment.chapter_comment.length < 160) && !comment.edition"></p>
+                                    <p [innerHTML]="ps.setContent(comment.comment_content, 160)" *ngIf="(!comment.show_more && comment.comment_content.length > 160) && !comment.edition"></p>
+                                    <p [innerHTML]="comment.comment_content" *ngIf="(comment.show_more || comment.comment_content.length < 160) && !comment.edition"></p>
                                     <form autocomplete="off" #updateCommentForm="ngForm">
                                         <div class="form-group" style="width: 100%;" *ngIf="comment.edition">
-                                            <textarea class="form-control skn-text-area" id="exampleFormControlTextarea1" #chapter_comment="ngModel" name="comment.chapter_comment" [(ngModel)]="comment.chapter_comment" rows="3"></textarea>
+                                            <textarea class="form-control skn-text-area" id="exampleFormControlTextarea1" #comment_content="ngModel" name="comment.comment_content" [(ngModel)]="comment.comment_content" rows="3"></textarea>
                                         </div>
                                     </form>
                                 </div>
-                                <div *ngIf="comment.chapter_comment.length > 160 && !comment.show_more && !comment.edition">
-                                    <strong class="skn-link skn-text" (click)="showMoreComment(comment)"><strong>...Ver más</strong></strong>
-                                </div>
-                                <div *ngIf="comment.show_more && comment.chapter_comment.length > 160 && !comment.edition">
-                                    <strong class="skn-link skn-text" (click)="showMoreComment(comment)"><strong>...Mostrar menos</strong></strong>
+                                <div *ngIf="comment.comment_content.length > 160 && !comment.edition">
+                                    <strong class="skn-link skn-text" (click)="ps.showMore(comment)">{{comment.show_more ? '...Mostrar menos' : '...Ver más'}}</strong>
                                 </div>
                                 <br>
 
                                 <div style="display: flex; justify-content: space-between;">
                                     <div>
-                                        <span class="skn-link skn-red-text" *ngIf="!comment.show_replys" (click)="getChapterCommentReplys(comment)">Respuestas</span>
-                                        <span class="skn-link skn-red-text" *ngIf="comment.show_replys" (click)="hideChapterCommentReplys(comment)">Ocultar Respuestas</span>
+                                        <span class="skn-link skn-red-text" *ngIf="!comment.show_replys" (click)="ps.getReplysFunction(user, comment, 'comment_id')">Respuestas</span>
+                                        <span class="skn-link skn-red-text" *ngIf="comment.show_replys" (click)="ps.hideReplys(comment)">Ocultar Respuestas</span>
                                     </div>
                                     <div style="display: flex; align-items: center;">
-                                        <button mat-icon-button aria-label="like" (click)="switchCommentLike(comment)">
+                                        <button mat-icon-button aria-label="like" (click)="ps.switchLike(user, comment, 'comment_id')">
                                             <span class="material-icons skn-like" [ngClass]="{'liked': comment.liked}">thumb_up</span>
                                         </button>
                                         <div style="margin-top: 3px;">{{comment.likes?.length}}</div>
@@ -302,13 +296,13 @@
                                             <div class="skn-nvl-rating-comment-textarea-input">
                                                 <mat-form-field style="width: 100%;">
                                                     <mat-label>Responder a {{comment.user_login}}</mat-label>
-                                                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #chapter_comment_reply="ngModel" name="comment.chapter_comment_reply" [(ngModel)]="comment.chapter_comment_reply"></textarea>
+                                                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #reply="ngModel" name="comment.reply" [(ngModel)]="comment.reply"></textarea>
                                                 </mat-form-field>
                                             </div>
-                                            <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" (click)="createChapterCommentReply(comment)">Publicar</button>
+                                            <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" (click)="ps.createReplyFunction(user, comment, 'comment_id')">Publicar</button>
                                         </div>
                                     </form>
-                                    <div class="skn-nvl-user-rating" *ngFor="let comment_reply of comment.replys" style="padding: 0px!important;">
+                                    <div class="skn-nvl-user-rating" *ngFor="let reply of comment.replys" style="padding: 0px!important;">
                                         <div class="skn-user-image">
                                             <div>
                                                 <img src="https://dummyimage.com/50x50/000/fff" alt="">
@@ -323,42 +317,39 @@
                                                         </div>
                                                     </div>
                                                     <div class="skn-nvl-user-rating-login-name">
-                                                        <strong style="margin-right: 5px;">{{comment_reply.user_login}}</strong>
-                                                        <small>{{comment_reply.date_data.message}}</small>
+                                                        <strong style="margin-right: 5px;">{{reply.user_login}}</strong>
+                                                        <small>{{reply.date_data.message}}</small>
                                                     </div>
                                                 </div>
-                                                <button mat-mini-fab *ngIf="!comment_reply.edition && user?.id === comment_reply.user_id" [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
+                                                <button mat-mini-fab *ngIf="!reply.edition && user?.id === reply.user_id" [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
                                                 <mat-menu #userMenu="matMenu">
-                                                    <button mat-menu-item (click)="editComment(comment_reply)">
+                                                    <button mat-menu-item (click)="ps.setEdition(reply)">
                                                       <span>Editar</span>
                                                     </button>
                                                     <button mat-menu-item (click)="openDialogSheet(deleteCommentReplyModal)">
                                                       <span>Eliminar</span>
                                                     </button>
                                                 </mat-menu>
-                                                <button mat-mini-fab *ngIf="comment_reply.edition && user?.id === comment_reply.user_id" (click)="updateChapterCommentReply(updateChapterCommentReplyForm, comment_reply)"><i class="material-icons">done</i></button>
+                                                <button mat-mini-fab *ngIf="reply.edition && user?.id === reply.user_id" (click)="ps.updateReplyFunction(updateReplyForm, reply)"><i class="material-icons">done</i></button>
                                             </div>
                                             <div>
-                                                <p [innerHTML]="hs.setContent(comment_reply.chapter_comment_reply, 360)" *ngIf="(!comment_reply.show_more && comment_reply.chapter_comment_reply.length > 360) && !comment_reply.edition"></p>
-                                                <p [innerHTML]="comment_reply.chapter_comment_reply" *ngIf="(comment_reply.show_more || comment_reply.chapter_comment_reply.length < 360) && !comment_reply.edition"></p>
-                                                <form autocomplete="off" #updateChapterCommentReplyForm="ngForm">
-                                                    <div class="form-group" *ngIf="comment_reply.edition" style="width: 100%;">
-                                                        <textarea class="form-control skn-text-area" #chapter_comment_reply="ngModel" name="rating_comment.chapter_comment_reply" [(ngModel)]="comment_reply.chapter_comment_reply" rows="3" required maxlength="2000" minlength="2"></textarea>
+                                                <p [innerHTML]="ps.setContent(reply.reply_content, 360)" *ngIf="(!reply.show_more && reply.reply_content.length > 360) && !reply.edition"></p>
+                                                <p [innerHTML]="reply.reply_content" *ngIf="(reply.show_more || reply.reply_content.length < 360) && !reply.edition"></p>
+                                                <form autocomplete="off" #updateReplyForm="ngForm">
+                                                    <div class="form-group" *ngIf="reply.edition" style="width: 100%;">
+                                                        <textarea class="form-control skn-text-area" #reply_content="ngModel" name="rating_comment.reply_content" [(ngModel)]="reply.reply_content" rows="3" required maxlength="2000" minlength="2"></textarea>
                                                     </div>
                                                 </form>
                                             </div>
-                                            <div class="d-flex" [ngClass]="{'justify-content-end': comment_reply.chapter_comment_reply.length < 360 || comment_reply.edition, 'justify-content-between': comment_reply.chapter_comment_reply.length > 360 || comment_reply.edition}">
-                                                <div *ngIf="comment_reply.chapter_comment_reply.length > 360 && !comment_reply.show_more && !comment_reply.edition">
-                                                    <strong class="skn-nvl-user-rating-info-togler skn-link" (click)="showMoreComment(comment_reply)">...Ver más</strong>
-                                                </div>
-                                                <div *ngIf="comment_reply.show_more && comment_reply.chapter_comment_reply.length > 360 && !comment_reply.edition">
-                                                    <strong class="skn-nvl-user-rating-info-togler skn-link" (click)="showMoreComment(comment_reply)">...Mostrar menos</strong>
+                                            <div class="d-flex" [ngClass]="{'justify-content-end': reply.reply_content.length < 360 || reply.edition, 'justify-content-between': reply.reply_content.length > 360 || reply.edition}">
+                                                <div *ngIf="reply.reply_content.length > 360 && !reply.edition">
+                                                    <strong class="skn-link skn-text" (click)="ps.showMore(reply)">{{reply.show_more ? '...Mostrar menos' : '...Ver más'}}</strong>
                                                 </div>
                                                 <div style="display: flex; align-items: center;">
-                                                    <button mat-icon-button aria-label="like" (click)="switchCommentReplyLike(comment_reply)">
-                                                        <span class="material-icons skn-like" [ngClass]="{'liked': comment_reply.liked}">thumb_up</span>
+                                                    <button mat-icon-button aria-label="like" (click)="ps.switchLike(user, reply, 'reply_id')">
+                                                        <span class="material-icons skn-like" [ngClass]="{'liked': reply.liked}">thumb_up</span>
                                                     </button>
-                                                    <div style="margin-top: 3px;">{{comment_reply.likes?.length}}</div>
+                                                    <div style="margin-top: 3px;">{{reply.likes?.length}}</div>
                                                 </div>
                                             </div>
                                             <hr>
@@ -373,7 +364,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                                                    <button mat-raised-button color="warn" style="color: black;" (click)="deleteChapterCommentReply(comment, comment_reply); dialog.closeAll()">Eliminar</button>
+                                                    <button mat-raised-button color="warn" style="color: black;" (click)="ps.deleteReplyFunction(comment, reply); dialog.closeAll()">Eliminar</button>
                                                 </div>
                                             </div>
                                         </ng-template>
@@ -389,13 +380,13 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                                    <button mat-raised-button color="warn" (click)="deleteComment(LoadedChapter, comment); dialog.closeAll()">Eliminar</button>
+                                    <button mat-raised-button color="warn" (click)="ps.deleteCommentFunction(LoadedChapter, comment); dialog.closeAll()">Eliminar</button>
                                 </div>
                             </ng-template>
                         </div>
                     </div>
                     <div class="skn-chapter-comment-nav">
-                        <form *ngIf="user" [formGroup]="newComment">
+                        <form *ngIf="user" #commentForm="ngForm">
                             <div class="skn-nvl-rating-comment-textarea">
                                 <div class="skn-user-image" style="margin-right: 15px;">
                                     <div>
@@ -405,10 +396,10 @@
                                 <div class="skn-nvl-rating-comment-textarea-input">
                                     <mat-form-field style="width: 100%;">
                                         <mat-label>Añade un comentario</mat-label>
-                                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4" formControlName="chapter_comment"></textarea>
+                                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4" #comment="ngModel" name="LoadedChapter.comment" [(ngModel)]="LoadedChapter.comment" required minlength="2"></textarea>
                                     </mat-form-field>
                                 </div>
-                                <button class="skn-nvl-rating-comment-textarea-button" mat-mini-fab color="primary" class="skn-primary-button" [disabled]="newComment.invalid" (click)="createChapterComment(LoadedChapter)"><span class="material-icons">send</span></button>
+                                <button class="skn-nvl-rating-comment-textarea-button" mat-mini-fab color="primary" class="skn-primary-button" [disabled]="commentForm.invalid" (click)="ps.createCommentFunction(user, LoadedChapter, 'chp_id')"><span class="material-icons">send</span></button>
                             </div>
                         </form>
                     </div>

@@ -6,6 +6,7 @@ import { NovelsService } from '../../services/novels.service';
 import { HelperService } from '../../services/helper.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Advertisement, Novel } from '../../models/models';
+import { PageService } from '../../services/page.service';
 
 @Component({
   selector: 'app-home',
@@ -62,7 +63,8 @@ export class HomeComponent implements OnInit {
     public router: Router,
     public breakpointObserver: BreakpointObserver,
     public hs: HelperService,
-    public us: UsersService
+    public us: UsersService,
+    public ps: PageService
   ) {}
 
   ngOnInit() {
@@ -129,7 +131,7 @@ export class HomeComponent implements OnInit {
         this.loading = false;
     });
 
-    this.ns.getAdvertisements().subscribe((data: any) => {
+    this.ps.getAdvertisements().subscribe((data: any) => {
       this.advertisements = data.advertisements;
       console.log(this.advertisements);
     });
