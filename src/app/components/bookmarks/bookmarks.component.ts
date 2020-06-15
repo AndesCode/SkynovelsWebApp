@@ -13,6 +13,7 @@ import { HelperService } from '../../services/helper.service';
 export class BookmarksComponent implements OnInit {
 
   bookmarks: Array<Novel> = [];
+  loading = true;
 
   constructor(private us: UsersService,
               private router: Router,
@@ -28,6 +29,7 @@ export class BookmarksComponent implements OnInit {
     if (this.us.userIsLoged) {
       this.us.getUserBookmarks().subscribe((data: any) => {
         this.bookmarks = data.novels;
+        this.loading = false;
         for (const novel of this.bookmarks) {
           if (!novel.date_data) {
             novel.date_data = this.hs.getRelativeTime(novel.nvl_last_update);

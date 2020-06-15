@@ -26,7 +26,7 @@ export class Novel {
     createdAt?: Date;
     updatedAt?: Date;
     nvl_last_update?: Date;
-    user_bookmark?: any;
+    user_bookmark?: Bookmark;
     date_data?: any;
     nvl_last_chapter?: Chapter;
     nvl_currentChapter?: string;
@@ -104,6 +104,16 @@ export class NewUser {
     user_email: string;
 }
 
+export class Bookmark {
+    id?: number;
+    nvl_id?: number;
+    chp_id: number;
+    chp_name?: string;
+    user_id?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
 export class Invitation {
     id?: number;
     user_login?: string;
@@ -142,11 +152,9 @@ export class Like {
     user_id?: number;
     user_login?: string;
     adv_id?: number;
-    adv_comment_id?: number;
     novel_rating_id?: number;
-    novel_rating_comment_id?: number;
-    chapter_comment_reply_id?: number;
-    chapter_comment_id?: number;
+    comment_id?: number;
+    reply_id?: number;
     forum_post_id?: number;
     post_comment_id?: number;
 }

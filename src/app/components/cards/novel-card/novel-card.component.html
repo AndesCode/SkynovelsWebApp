@@ -2,7 +2,7 @@
     <pagination-controls (pageChange)="page = $event" maxSize="5" previousLabel="" nextLabel="" autoHide="true" screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Pagina" screenReaderCurrentLabel="Estas en la pagina"></pagination-controls>
 </div>
 <div class="row justify-content-center">
-    <div *ngFor="let novel of novels | novelFilter:novelFilter.searchName: novelFilter.searchGenres: novelFilter.searchStatus: novelFilter.orderBy | paginate: { itemsPerPage: 2, currentPage: page }">
+    <div *ngFor="let novel of novels | novelFilter:novelFilter.searchName: novelFilter.searchGenres: novelFilter.searchStatus: novelFilter.orderBy | paginate: { itemsPerPage: 25, currentPage: page }">
         <a class="skn-nvl-card unstyled-a-tag" [routerLink]="[goToNovelLink, novel.id, novel.nvl_name]">
             <div class="skn-nvl-card-img">
                 <img [src]="novel.nvl_img | noimage" alt="">

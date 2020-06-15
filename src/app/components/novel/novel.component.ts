@@ -34,6 +34,7 @@ export class NovelComponent implements OnInit {
   mobile: boolean;
   loading = true;
   panelOpenState = false;
+  novelChaptersForWeeks = 0;
 
     constructor(private ns: NovelsService,
                 private activatedRoute: ActivatedRoute,
@@ -49,13 +50,11 @@ export class NovelComponent implements OnInit {
                 public dialog: MatDialog,
                 private meta: Meta,
                 private title: Title) {
-
                   this.newRatingForm = new FormGroup({
                     novel_id: new FormControl(''),
                     rate_value: new FormControl('0', [Validators.required, Validators.min(1), Validators.max(5)]),
                     rate_comment: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(2000)]),
                   });
-
                 }
 
   ngOnInit(): void {
@@ -102,6 +101,9 @@ export class NovelComponent implements OnInit {
       for (const volume of this.novel.volumes) {
         for (const chapter of volume.chapters) {
           chapter.date_data = this.hs.getRelativeTime(chapter.createdAt);
+          if (chapter.date_data.seconds < 604801) {
+            this.novelChaptersForWeeks = this.novelChaptersForWeeks + 1;
+          }
         }
       }
       const lastVolume = this.novel.volumes[this.novel.volumes.length - 1];
@@ -135,9 +137,11 @@ export class NovelComponent implements OnInit {
 
   switchBookMark() {
     if (this.novel.user_bookmark === null) {
-      this.us.createUserBookmark(this.novel.id).subscribe((data: any) => {
+      this.us.createUserBookmark(this.novel.id, this.novel.volumes[0].chapters[0].id).subscribe((data: any) => {
         this.novel.user_bookmark = data.bookmark;
         this.novel.bookmarks.push(data.bookmark);
+        this.openMatSnackBar(this.successSnackRef);
+        this.successSnackMessage = '¡Novela agregada a tu lista de lectura!';
       }, error => {
         this.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;
@@ -195,6 +199,8 @@ export class NovelComponent implements OnInit {
           break;
         }
       }
+    } else {
+      this.novel.user_bookmark = null;
     }
   }
 

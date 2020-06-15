@@ -1,11 +1,14 @@
-<div class="row justify-content-center">
+<div class="skn-loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="row justify-content-center" *ngIf="!loading">
     <div *ngIf="bookmarks.length === 0" style="margin-top: 30vh;" class="text-center">
         <h1>No tienes novelas en tu lista de lectura</h1>
         <p>Ve al catalogo de <a class="unstyled-a-tag skn-link" style="color: #d32f2f!important" routerLink="/novelas">novelas</a> para agregar tu lista de lectura</p>
     </div>
 
     <div *ngFor="let novel of bookmarks">
-        <a class="skn-nvl-card unstyled-a-tag" [routerLink]="['novelas', novel.id, novel.nvl_name]">
+        <a class="skn-nvl-card unstyled-a-tag" [routerLink]="['/novelas', novel.id, novel.nvl_name]">
             <div class="skn-nvl-card-img">
                 <img [src]="novel.nvl_img | noimage" alt="">
             </div>

@@ -113,7 +113,9 @@
                     </mat-expansion-panel-header>
                     <div style="margin-bottom: 6px;" class="d-flex justify-content-between">
                         <div>
-                            <button mat-raised-button color="primary" style="margin-right: 4px;" (click)="goToChapterEdition(true, volume)">Añadir capitulo</button>
+                            <a [routerLink]="[volume.id, 'nuevo']">
+                                <button mat-raised-button color="primary" style="margin-right: 4px;" (click)="goToChapterEdition(true, volume)">Añadir capitulo</button>
+                            </a>
                         </div>
                         <div>
                             <button mat-mini-fab *ngIf="editableNovel || volume.user_id === user" [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
@@ -128,14 +130,18 @@
                         </div>
                     </div>
                     <div class="skn-nvl-vlm-chapters-container row">
-                        <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *ngFor="let chapter of volume.chapters" (click)="goToChapterEdition(false, volume, chapter)">
-                            <div class="skn-nvl-chp-element-chp-number-index">
-                                {{chapter.chp_number}}
-                            </div>
-                            <div>
-                                <div class="skn-nvl-chp-element-title"> {{ps.setContent(chapter.chp_index_title, 69)}}</div>
-                                <small>{{hs.getRelativeTime(chapter.createdAt).message}}</small>
-                            </div>
+                        <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *ngFor="let chapter of volume.chapters">
+                            <a [routerLink]="[volume.id, chapter.id, chapter.chp_name]" class="unstyled-a-tag w-100 skn-link">
+                                <div class="skn-nvl-chp-element-content" style="padding: 10px;">
+                                    <div class="skn-nvl-chp-element-chp-number-index">
+                                        {{chapter.chp_number}}
+                                    </div>
+                                    <div>
+                                        <div class="skn-nvl-chp-element-title"> {{ps.setContent(chapter.chp_index_title, 69)}}</div>
+                                        <small>{{hs.getRelativeTime(chapter.createdAt).message}}</small>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                     <ng-template #editVolumeModal>
@@ -147,7 +153,7 @@
                             <form #editVolumeForm="ngForm">
                                 <mat-form-field class="w-100">
                                     <mat-label>Titulo</mat-label>
-                                    <input matInput #vlm_title="ngModel" name="volume.vlm_title" [(ngModel)]="volume.vlm_title" required minlength="4" maxlength="65">
+                                    <input matInput #vlm_title="ngModel" name="volume.vlm_title" [(ngModel)]="volume.vlm_title" required minlength="4" maxlength="125">
                                 </mat-form-field>
                             </form>
                         </div>

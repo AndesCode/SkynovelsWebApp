@@ -24,16 +24,16 @@ export class HelperService {
 
   getRelativeTime(date: Date, update?: boolean, format?: string) {
     if (date === null || date === undefined || Object.prototype.toString.call(date) === '[object Date]') {
-      const date_data_empty =  {
+      const dateDataEmpty =  {
         seconds: 0,
         message: 'Sin datos'
       };
-      return date_data_empty;
+      return dateDataEmpty;
     }
     const today = new Date();
-    const creation_time = new Date(date);
-    const creation_time_diff = Math.abs(today.getTime() - (creation_time.getTime() - 3600000));
-    const date_diffSeconds = Math.ceil(((creation_time_diff) / 1000));
+    const creationTime = new Date(date);
+    const creationTimeDiff = Math.abs(today.getTime() - (creationTime.getTime() - 3600000));
+    const dateDiffSeconds = Math.ceil(((creationTimeDiff) / 1000));
     moment.locale('es');
     if (update && format !== 'short') {
       moment.updateLocale('es', {
@@ -90,11 +90,11 @@ export class HelperService {
     }
     let sknmoment: any = moment(date);
     sknmoment = moment((sknmoment).fromNow());
-    const date_data =  {
-      seconds: date_diffSeconds,
+    const dateData =  {
+      seconds: dateDiffSeconds,
       message: sknmoment._i
     };
-    return date_data;
+    return dateData;
   }
 
   // Data Sorters
@@ -122,16 +122,11 @@ export class HelperService {
     return  (b.date_data.seconds) - (a.date_data.seconds);
   }
 
-  /*sorterAsc(propName: string) {
-    console.log(propName);
-    return (a, b) => a[propName] === b[propName] ? 0 : a[propName] > b[propName] ? -1 : 1;
-  }*/
-
-  nvlTitleSorter(a, b){
+  /*nvlTitleSorter(a, b){
     if (a.nvl_title < b.nvl_title) { return -1; }
     if (a.nvl_title > b.nvl_title) { return 1; }
     return 0;
-  }
+  }*/
 
 
   sorterAsc(prop) {
@@ -170,13 +165,6 @@ export class HelperService {
     }
   }
 
-  /*sorterDesc(propName: string) {
-    return (a, b) => a[propName] === b[propName] ? 0 : a[propName] < b[propName] ? -1 : 1;
-  }*/
-
-
-
-
   pinnedForumPostDataSorter(a, b) {
     if (a.post_pinned === true) { return -1; }
   }
@@ -195,45 +183,44 @@ export class HelperService {
     }
     return rating;
   }
-    // Upload images to BackEnd
 
-    uploadImage(id: any, file: File, img: string, imageType: 'novel' | 'user') {
-      let url: string;
-      let appendType: string;
-      let oldAppendType: string;
-      if (imageType === 'novel') {
-        url = `${ this.urlnovelsdb }/upload-novel-img/${id}`;
-        appendType = 'novel_image';
-        oldAppendType = 'old_novel_image';
-      }
-      if (imageType === 'user') {
-        url = `${ this.urlnovelsdb }/upload-user-profile-img/${id}`;
-        appendType = 'user_profile_image';
-        oldAppendType = 'old_user_profile_image';
-      }
-      if (imageType !== 'user' && imageType !== 'novel') {
-        console.log('Cancelando subida de archivo');
-        return;
-      }
-      return new Promise((resolve, reject) => {
-        const formData: any = new FormData();
-        const xhr = new XMLHttpRequest();
-        formData.append(appendType, file, file.name);
-        if (img && img !== undefined &&  img !== null && img.length > 0) {
-          formData.append(oldAppendType, img);
-        }
-        xhr.withCredentials = true;
-        xhr.open('POST', url, true);
-        xhr.send(formData);
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-              return resolve(JSON.parse(xhr.response));
-            } else {
-              return reject(JSON.parse(xhr.response));
-            }
-          }
-        };
-      });
+  uploadImage(id: any, file: File, img: string, imageType: 'novel' | 'user') {
+    let url: string;
+    let appendType: string;
+    let oldAppendType: string;
+    if (imageType === 'novel') {
+      url = `${ this.urlnovelsdb }/upload-novel-img/${id}`;
+      appendType = 'novel_image';
+      oldAppendType = 'old_novel_image';
     }
+    if (imageType === 'user') {
+      url = `${ this.urlnovelsdb }/upload-user-profile-img/${id}`;
+      appendType = 'user_profile_image';
+      oldAppendType = 'old_user_profile_image';
+    }
+    if (imageType !== 'user' && imageType !== 'novel') {
+      console.log('Cancelando subida de archivo');
+      return;
+    }
+    return new Promise((resolve, reject) => {
+      const formData: any = new FormData();
+      const xhr = new XMLHttpRequest();
+      formData.append(appendType, file, file.name);
+      if (img && img !== undefined &&  img !== null && img.length > 0) {
+        formData.append(oldAppendType, img);
+      }
+      xhr.withCredentials = true;
+      xhr.open('POST', url, true);
+      xhr.send(formData);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            return resolve(JSON.parse(xhr.response));
+          } else {
+            return reject(JSON.parse(xhr.response));
+          }
+        }
+      };
+    });
+  }
 }

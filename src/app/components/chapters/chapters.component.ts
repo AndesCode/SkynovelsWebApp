@@ -42,6 +42,7 @@ export class ChaptersComponent implements AfterViewInit {
   newComment: FormGroup;
   mobile: boolean;
   newCommentReply: FormGroup;
+  chapterId: number;
 
   @ViewChildren('chaptersElement') chaptersElementRef;
 
@@ -105,13 +106,24 @@ export class ChaptersComponent implements AfterViewInit {
       this.scrolling = setTimeout(() => {
         this.chaptersElementRef.forEach(chapterElementRef => {
           if (chapterElementRef.nativeElement.getBoundingClientRect().top < 350 &&
-          chapterElementRef.nativeElement.getBoundingClientRect().bottom > 450) {
+          chapterElementRef.nativeElement.getBoundingClientRect().bottom > 450 &&
+          this.chapterId !== Number(chapterElementRef.nativeElement.firstElementChild.lastElementChild.firstElementChild.innerText)) {
             this.novel.nvl_currentChapter = chapterElementRef.nativeElement.firstElementChild.firstElementChild.lastElementChild.innerText;
             this.novel.nvl_currentChapterN = chapterElementRef.nativeElement.firstElementChild.lastElementChild.lastElementChild.innerText;
+            this.chapterId = Number(chapterElementRef.nativeElement.firstElementChild.lastElementChild.firstElementChild.innerText);
             // Location
             this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' +
-            chapterElementRef.nativeElement.firstElementChild.lastElementChild.firstElementChild.innerText + '/' +
+            this.chapterId + '/' +
             chapterElementRef.nativeElement.firstElementChild.firstElementChild.firstElementChild.innerText);
+            if (this.novel.user_bookmark) {
+              this.novel.user_bookmark.chp_id = this.chapterId;
+              this.us.updateUserBookmark(this.novel.user_bookmark).subscribe((data: any) => {
+                console.log('bookmark actualizado');
+              }, error => {
+                this.openMatSnackBar(this.errorSnackRef);
+                this.errorSnackMessage = error.error.message;
+              });
+            }
           }
         });
       }, 100);
@@ -134,8 +146,9 @@ export class ChaptersComponent implements AfterViewInit {
       this.router.navigate(['novelas', this.novel.id, this.novel.nvl_name]);
     } else {
       this.ns.getNovelChapter(chpId).subscribe((data: any) => {
+        this.chapterId = Number(data.chapter[0].id);
         this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' +
-          data.chapter[0].id + '/' + data.chapter[0].chp_name);
+          this.chapterId + '/' + data.chapter[0].chp_name);
         this.allChapters[this.currentChapter] = data.chapter[0];
         if (this.currentChapter === 0) {
           this.loadPortrait = true;
@@ -181,7 +194,6 @@ export class ChaptersComponent implements AfterViewInit {
         }
       }
     }
-    console.log(comments);
   }
 
   toggleTheme() {
@@ -254,7 +266,7 @@ export class ChaptersComponent implements AfterViewInit {
 
   switchBookMark() {
     if (this.novel.user_bookmark === null) {
-      this.us.createUserBookmark(this.novel.id).subscribe((data: any) => {
+      this.us.createUserBookmark(this.novel.id, this.chapterId).subscribe((data: any) => {
         this.novel.user_bookmark = data.bookmark;
         this.novel.bookmarks.push(data.bookmark);
       });

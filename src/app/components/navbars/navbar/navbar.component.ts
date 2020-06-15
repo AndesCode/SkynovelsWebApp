@@ -24,7 +24,6 @@ export class NavbarComponent implements OnInit {
   public successSnackMessage: string;
   public errorSnackMessage: string;
   currentComponent = null;
-  loginButton = false;
   userInvitations: Array<Invitation> = [];
   mobile = false;
   hide = true;

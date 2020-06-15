@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Novel, User, Invitation, LoginUser, NewUser } from '../models/models';
+import { Novel, User, Invitation, LoginUser, NewUser, Bookmark } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -134,15 +134,16 @@ export class UsersService {
     return this.http.get(url);
   }
 
-  createUserBookmark(nvlId: number) {
+  createUserBookmark(nvlId: number, chpId: number) {
     const url = `${this.urlnovelsdb}/create-user-bookmark`;
-    const bookmark = {
+    const bookmark: Bookmark = {
       nvl_id: nvlId,
+      chp_id: chpId
     };
     return this.http.post(url, bookmark, this.GlobalhttpOptions);
   }
 
-  updateUserBookmark(bookmark: any) {
+  updateUserBookmark(bookmark: Bookmark) {
     const url = `${this.urlnovelsdb}/update-user-bookmark`;
     return this.http.put(url, bookmark, this.GlobalhttpOptions);
   }

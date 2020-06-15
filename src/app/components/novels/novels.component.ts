@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { NovelsService } from '../../services/novels.service';
 import { HelperService } from '../../services/helper.service';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
@@ -14,7 +13,6 @@ export class NovelsComponent implements OnInit {
 
   novels: Array<Novel>;
   bookmarks = false;
-  user_reading_list: any[] = [];
   novelFilter: NovelFilter = {
     searchName: '',
     searchStatus: 'All',
@@ -26,8 +24,7 @@ export class NovelsComponent implements OnInit {
   mobile: boolean;
   loading = true;
 
-  constructor(private router: Router,
-              private ns: NovelsService,
+  constructor(private ns: NovelsService,
               public hs: HelperService,
               private breakpointObserver: BreakpointObserver) { }
 
@@ -51,13 +48,5 @@ export class NovelsComponent implements OnInit {
         this.mobile = false;
       }
     });
-  }
-
-  goToBookmark(nvl_name: any, nvl_chapter: any) {
-    if (nvl_chapter === null || nvl_chapter === 0) {
-      this.router.navigate(['/novela', nvl_name]);
-    } else {
-      this.router.navigate(['/novela', nvl_name, nvl_chapter]);
-    }
   }
 }

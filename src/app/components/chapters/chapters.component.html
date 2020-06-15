@@ -46,15 +46,15 @@
     </div>
 </ng-template>
 <ng-template #allChapters>
-    <div style="max-width: 25em!important; max-height: 72vh!important;">
-        <div class="skn-all-chapters-nav">
-            <div class="skn-modal-top-close-button">
-                <button mat-icon-button (click)="dialog.closeAll()" [attr.aria-label]="'close'">
-                    <span class="material-icons skn-text">close</span>
-                </button>
-            </div>
-            <h4 class="modal-title" style="margin: 12px;">Todos los capitulos</h4>
+    <div class="skn-all-chapters-nav">
+        <div class="skn-modal-top-close-button">
+            <button type="button" mat-icon-button (click)="dialog.closeAll()" [attr.aria-label]="'close'">
+                <span class="material-icons skn-text">close</span>
+            </button>
         </div>
+        <h4 class="modal-title" style="margin: 12px;">Todos los capitulos</h4>
+    </div>
+    <div style="max-width: 25em!important; max-height: 72vh!important;">
         <div class="modal-body">
             <div class="skn-nvl-vlm-chapters-container row">
                 <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *ngFor="let chapter of novel.chapters" (click)="loadNovelDataChapters(chapter.id); dialog.closeAll();">
@@ -422,6 +422,9 @@
             <div>
                 <button mat-raised-button color="primary" (click)="toggleTheme();" class="hide-dark">Modo día</button>
                 <button mat-raised-button color="primary" (click)="toggleTheme();" class="hide-light">Modo noche</button>
+                <a [routerLink]="['/novelas', novel.id, novel.nvl_name]" (click)="bottomSheet.dismiss()">
+                    <button mat-raised-button color="primary">Regresar a novela</button>
+                </a>
                 <button mat-raised-button color="primary" (click)="openDialogSheet(createRatingModal); bottomSheet.dismiss()" *ngIf="user && !novel.nvl_rated">Calificar novela</button>
                 <button mat-raised-button color="primary" (click)="openDialogSheet(allChapters); bottomSheet.dismiss()">Lista de capitulos</button>
                 <button mat-raised-button color="primary" *ngIf="!user" (click)="openLoginForm(); bottomSheet.dismiss()">Iniciar Sesión</button>

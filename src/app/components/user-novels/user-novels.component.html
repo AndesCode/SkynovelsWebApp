@@ -5,7 +5,9 @@
     <mat-tab label="Mis novelas">
         <div class="container">
             <div class="d-flex justify-content-end" style="margin: 4px;">
-                <button type="button" mat-raised-button color="primary" [routerLink]="['/mis-novelas/nuevo']">Añadir novela</button>
+                <a [routerLink]="['nuevo']">
+                    <button type="button" mat-raised-button color="primary">Añadir novela</button>
+                </a>
             </div>
             <section class="row" style="justify-content: center;">
                 <app-novel-card [novels]="userNovels" [clickRoute]="'userNovel'"></app-novel-card>
