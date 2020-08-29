@@ -187,6 +187,11 @@ mat-menu {
     color: unset!important;
 }
 
+mat-expansion-panel-header {
+    height: unset!important;
+    min-height: 48px!important;
+}
+
 .mat-placeholder-required {
     display: none!important;
 }
@@ -205,6 +210,32 @@ mat-menu {
 
 .mat-input-element {
     min-height: 22px!important;
+}
+
+.swiper-button-next {
+    right: 1px;
+    color: #d32f2f!important;
+    border: 1px solid #d32f2f80;
+    width: 50px;
+    height: 60px;
+    border-radius: 50px;
+    transition: 0.3s;
+    -webkit-box-shadow: 1px 9px 8px -6px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 9px 8px -6px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 9px 8px -6px rgba(0, 0, 0, 0.6);
+}
+
+.swiper-button-prev {
+    left: 1px;
+    color: #d32f2f!important;
+    border: 1px solid #d32f2f80;
+    width: 50px;
+    height: 60px;
+    border-radius: 50px;
+    transition: 0.3s;
+    -webkit-box-shadow: 1px 9px 8px -6px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 1px 9px 8px -6px rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 9px 8px -6px rgba(0, 0, 0, 0.6);
 }
 
 .modal-footer {
@@ -352,6 +383,10 @@ mat-menu {
     width: 0px;
 }
 
+.skn-component-title {
+    margin: 1.5rem;
+}
+
 .ngx-pagination {
     padding: unset!important;
 }
@@ -399,13 +434,13 @@ mat-menu {
 .skn-nvl-vlm-chapters-container {
     justify-content: center;
     .skn-nvl-chp-element {
-        display: flex;
         border-bottom: 1px solid #DB3836;
         width: 26.25rem;
         margin: 5px;
         border-radius: 3px;
         cursor: pointer;
         .skn-nvl-chp-element-content {
+            display: flex;
             padding: 0.6rem;
             height: 100%;
             width: 100%;
@@ -455,11 +490,11 @@ h1 {
 
 // Material Icons Sizes
 .material-icons.md-18 {
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 
 .material-icons.md-24 {
-    font-size: 24px;
+    font-size: 1.5rem;
 }
 
 .material-icons.md-30 {
@@ -467,9 +502,9 @@ h1 {
 }
 
 .material-icons.md-36 {
-    font-size: 36px;
+    font-size: 2.25rem;
 }
 
 .material-icons.md-48 {
-    font-size: 48px;
+    font-size: 3rem;
 }

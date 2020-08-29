@@ -8,9 +8,8 @@ import { FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
 import { HelperService } from '../../services/helper.service';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { LikesService } from '../../services/likes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Like, Novel, User } from 'src/app/models/models';
+import { Novel, User } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
 import { Chapter } from '../../models/models';
 
@@ -43,6 +42,8 @@ export class ChaptersComponent implements AfterViewInit {
   mobile: boolean;
   newCommentReply: FormGroup;
   chapterId: number;
+  fontSize = 16;
+  componentName = 'ChaptersComponent';
 
   @ViewChildren('chaptersElement') chaptersElementRef;
 
@@ -116,17 +117,30 @@ export class ChaptersComponent implements AfterViewInit {
             this.chapterId + '/' +
             chapterElementRef.nativeElement.firstElementChild.firstElementChild.firstElementChild.innerText);
             if (this.novel.user_bookmark) {
-              this.novel.user_bookmark.chp_id = this.chapterId;
-              this.us.updateUserBookmark(this.novel.user_bookmark).subscribe((data: any) => {
-                console.log('bookmark actualizado');
-              }, error => {
-                this.openMatSnackBar(this.errorSnackRef);
-                this.errorSnackMessage = error.error.message;
-              });
+              this.updateUserBookmark();
             }
           }
         });
       }, 100);
+    });
+  }
+
+  changeFontSize(value: 'plus' | 'substract') {
+    if (value === 'plus' && this.fontSize < 24) {
+      this.fontSize = this.fontSize + 1;
+    }
+    if (value === 'substract' && this.fontSize > 1) {
+      this.fontSize = this.fontSize - 1;
+    }
+  }
+
+  updateUserBookmark() {
+    this.novel.user_bookmark.chp_id = this.chapterId;
+    this.us.updateUserBookmark(this.novel.user_bookmark).subscribe((data: any) => {
+      console.log('bookmark actualizado');
+    }, error => {
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = error.error.message;
     });
   }
 
@@ -160,6 +174,9 @@ export class ChaptersComponent implements AfterViewInit {
         this.LoadedChapters.push(this.allChapters[this.currentChapter]);
         this.currentPageDown = this.currentChapter;
         this.currentPageUp = this.currentChapter;
+        if (this.novel.user_bookmark) {
+          this.updateUserBookmark();
+        }
       }, error => {
         this.router.navigate(['novelas']);
       });
@@ -186,11 +203,13 @@ export class ChaptersComponent implements AfterViewInit {
       comment.liked = false;
       comment.chapter_comment_reply = null;
       comment.replys = [];
-      for (const commentLike of comment.likes) {
-        if (commentLike.user_id === this.user.id) {
-          comment.liked = true;
-          comment.like_id = commentLike.id;
-          break;
+      if (this.user) {
+        for (const commentLike of comment.likes) {
+          if (commentLike.user_id === this.user.id) {
+            comment.liked = true;
+            comment.like_id = commentLike.id;
+            break;
+          }
         }
       }
     }
@@ -204,6 +223,13 @@ export class ChaptersComponent implements AfterViewInit {
     this.user = this.us.getUserLoged();
     console.log(this.user);
     this.novel.nvl_rated = false;
+    this.novel.user_bookmark = null;
+    for (const loadadChapter of this.LoadedChapters) {
+      for (const comment of loadadChapter.comments) {
+          comment.liked = false;
+          comment.like_id = null;
+      }
+    }
     if (this.user) {
       for (const novelRating of this.novel.novel_ratings) {
         if (novelRating.user_id === this.user.id) {
@@ -214,6 +240,17 @@ export class ChaptersComponent implements AfterViewInit {
         if (novelBookmark.user_id === this.user.id) {
           this.novel.user_bookmark = novelBookmark;
           break;
+        }
+      }
+      for (const loadadChapter of this.LoadedChapters) {
+        for (const comment of loadadChapter.comments) {
+          for (const commentLike of comment.likes) {
+            if (commentLike.user_id === this.user.id) {
+              comment.liked = true;
+              comment.like_id = commentLike.id;
+              break;
+            }
+          }
         }
       }
     }
@@ -230,6 +267,7 @@ export class ChaptersComponent implements AfterViewInit {
           this.initializeComment(data.chapter[0].comments);
           this.LoadedChapters.push(this.allChapters[this.currentPageDown]);
           this.loading = false;
+          console.log(this.LoadedChapters);
         });
       } else {
         return;
@@ -254,6 +292,7 @@ export class ChaptersComponent implements AfterViewInit {
         this.initializeComment(data.chapter[0].comments);
         this.LoadedChapters.unshift(this.allChapters[this.currentPageUp]);
         this.loading = false;
+        console.log(this.LoadedChapters);
       });
     } else {
       return;

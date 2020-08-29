@@ -1,13 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Novel, User, Invitation, LoginUser, NewUser, Bookmark } from '../models/models';
+import { Globals } from '../config/config';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  private urlnovelsdb: string;
+  private urlNovelsDb: string;
+  private urlCredentialsNovelsDb: string;
+  isBrowser: boolean;
   private GlobalhttpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
@@ -15,26 +19,30 @@ export class UsersService {
     withCredentials: true
   };
 
-  constructor(private http: HttpClient) {
-    this.urlnovelsdb = '/api';
+  constructor(private http: HttpClient,
+              private globals: Globals,
+              @Inject(PLATFORM_ID) private platformId) {
+
+              this.isBrowser = isPlatformBrowser(this.platformId);
+              this.urlNovelsDb = this.globals.urlNovelsDb;
+              this.urlCredentialsNovelsDb = this.globals.urlCredentialsNovelsDb;
   }
 
   getUserLoged() {
-    const Localtoken = localStorage.getItem('sknvl_s');
-    if (Localtoken) {
-      const jwtData = Localtoken.split('.')[1];
-      if (window.atob(jwtData)) {
-        const decodedJwtJsonData = window.atob(jwtData);
-        const decodedJwtData = JSON.parse(decodedJwtJsonData);
-        if (decodedJwtData.sub) {
-          const user: User = {
-            id: decodedJwtData.sub,
-            user_forum_auth: decodedJwtData.user_forum_auth,
-            user_login: decodedJwtData.user_login,
-            user_profile_image: decodedJwtData.user_profile_image,
-            token: Localtoken
-          };
-          return user;
+    if (this.isBrowser) {
+      const Localtoken = localStorage.getItem('sknvl_s');
+      if (Localtoken) {
+        const jwtData = Localtoken.split('.')[1];
+        if (JSON.parse(atob(jwtData))) {
+            const decodedJwtData = JSON.parse(atob(jwtData));
+            const user: User = {
+              id: decodedJwtData.sub,
+              user_forum_auth: decodedJwtData.user_forum_auth,
+              user_login: decodedJwtData.user_login,
+              user_profile_image: decodedJwtData.user_profile_image,
+              token: Localtoken
+            };
+            return user;
         } else {
           return null;
         }
@@ -47,14 +55,17 @@ export class UsersService {
   }
 
   userIsLoged() {
-    const token = localStorage.getItem('sknvl_s');
-    if (token) {
-      const jwtData = token.split('.')[1];
-      if (window.atob(jwtData)) {
-        const decodedJwtJsonData = window.atob(jwtData);
-        const decodedJwtData = JSON.parse(decodedJwtJsonData);
-        if (decodedJwtData.sub) {
-          return true;
+    if (this.isBrowser) {
+      const token = localStorage.getItem('sknvl_s');
+      if (token) {
+        const jwtData = token.split('.')[1];
+        if (JSON.parse(atob(jwtData))) {
+          const decodedJwtData = JSON.parse(atob(jwtData));
+          if (decodedJwtData.sub) {
+            return true;
+          } else {
+            return false;
+          }
         } else {
           return false;
         }
@@ -67,13 +78,16 @@ export class UsersService {
   }
 
   userIsEditor() {
-    const token = localStorage.getItem('sknvl_s');
-    if (token) {
-      const jwtData = token.split('.')[1];
-      const decodedJwtJsonData = window.atob(jwtData);
-      const decodedJwtData = JSON.parse(decodedJwtJsonData);
-      if (decodedJwtData.user_rol === 'Admin' || decodedJwtData.user_rol === 'Editor') {
-        return true;
+    if (this.isBrowser) {
+      const token = localStorage.getItem('sknvl_s');
+      if (token) {
+        const jwtData = token.split('.')[1];
+        const decodedJwtData = JSON.parse(atob(jwtData));
+        if (decodedJwtData.user_rol === 'Admin' || decodedJwtData.user_rol === 'Editor') {
+          return true;
+        } else {
+          return false;
+        }
       } else {
         return false;
       }
@@ -83,59 +97,76 @@ export class UsersService {
   }
 
   logIn(user: LoginUser) {
-    const url = `${ this.urlnovelsdb }/login`;
+    const url = `${ this.urlCredentialsNovelsDb }/login`;
     return this.http.post(url, user, this.GlobalhttpOptions);
   }
 
   logOut() {
-    const url = `${ this.urlnovelsdb }/logout`;
+    const url = `${ this.urlCredentialsNovelsDb }/logout`;
     return this.http.get(url, this.GlobalhttpOptions);
   }
 
   createUser(user: NewUser) {
-    const url = `${ this.urlnovelsdb }/create-user`;
+    const url = `${ this.urlNovelsDb }/create-user`;
     console.log(user);
     return this.http.post(url, user);
   }
 
   getUser(id: number) {
-    const url = `${ this.urlnovelsdb }/user/${id}`;
+    const url = `${ this.urlNovelsDb }/user/${id}`;
     return this.http.get(url);
   }
 
   getUserNovels() {
-    const url = `${ this.urlnovelsdb }/user-novels`;
+    const url = `${ this.urlCredentialsNovelsDb }/user-novels`;
     return this.http.get(url, this.GlobalhttpOptions);
   }
 
   updateUser(user: User) {
-    const url = `${this.urlnovelsdb}/update-user`;
+    const url = `${this.urlCredentialsNovelsDb}/update-user`;
     return this.http.put(url, user, this.GlobalhttpOptions);
   }
 
   passwordResetRequest(email: string) {
-    const url = `${ this.urlnovelsdb}/password-reset-request`;
-    return this.http.post(url, email);
+    const body = {
+      user_email: email
+    };
+    const url = `${ this.urlNovelsDb}/password-reset-request`;
+    return this.http.post(url, body);
   }
 
-  passwordReset(password: string, token: string) {
+  passwordResetAccess(token: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         Authorization: token
       })
     };
-    const url = `${ this.urlnovelsdb}/password-reset-request`;
-    return this.http.post(url, password, httpOptions);
+    const url = `${ this.urlNovelsDb}/password-reset-access`;
+    return this.http.get(url, httpOptions);
+  }
+
+  updateUserPassword(password: string, token: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: token
+      })
+    };
+    const body = {
+      user_pass: password
+    };
+    const url = `${ this.urlNovelsDb}/password-reset`;
+    return this.http.post(url, body, httpOptions);
   }
 
   getUserBookmarks() {
-    const url = `${ this.urlnovelsdb }/get-user-bookmarks`;
-    return this.http.get(url);
+    const url = `${ this.urlCredentialsNovelsDb }/get-user-bookmarks`;
+    return this.http.get(url, this.GlobalhttpOptions);
   }
 
   createUserBookmark(nvlId: number, chpId: number) {
-    const url = `${this.urlnovelsdb}/create-user-bookmark`;
+    const url = `${this.urlCredentialsNovelsDb}/create-user-bookmark`;
     const bookmark: Bookmark = {
       nvl_id: nvlId,
       chp_id: chpId
@@ -144,28 +175,31 @@ export class UsersService {
   }
 
   updateUserBookmark(bookmark: Bookmark) {
-    const url = `${this.urlnovelsdb}/update-user-bookmark`;
+    const url = `${this.urlCredentialsNovelsDb}/update-user-bookmark`;
     return this.http.put(url, bookmark, this.GlobalhttpOptions);
   }
 
   deleteUserBoomark(id: number) {
-    const url = `${ this.urlnovelsdb }/delete-user-bookmark/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb }/delete-user-bookmark/${id}`;
     return this.http.delete(url, this.GlobalhttpOptions);
   }
 
-  activateUser(key: string) {
-    const url = `${this.urlnovelsdb}/activate-user/${key}`;
-    return this.http.get(url);
+  activateUser(userKey: string) {
+    const url = `${this.urlNovelsDb}/activate-user`;
+    const body = {
+      key: userKey
+    };
+    return this.http.post(url, body);
   }
 
   getUserImage(userProfileImage: string) {
-    const url = `${ this.urlnovelsdb }/user-profile-img/${userProfileImage}/false`;
+    const url = `${ this.urlNovelsDb }/user-profile-img/${userProfileImage}/false`;
     return this.http.get( url, {responseType: 'blob'});
   }
 
   getUserInvitations() {
-    const url = `${ this.urlnovelsdb }/get-user-invitations`;
-    return this.http.get( url );
+    const url = `${ this.urlCredentialsNovelsDb }/get-user-invitations`;
+    return this.http.get( url, this.GlobalhttpOptions );
   }
 
   sendInvitation(userLogin: string, novelId: number) {
@@ -174,12 +208,12 @@ export class UsersService {
       invitation_novel: novelId
     };
     console.log(invitation);
-    const url = `${ this.urlnovelsdb }/create-user-invitation`;
+    const url = `${ this.urlCredentialsNovelsDb }/create-user-invitation`;
     return this.http.post(url, invitation, this.GlobalhttpOptions);
   }
 
   updateUserInvitation(invitation: Invitation) {
-    const url = `${ this.urlnovelsdb }/update-user-invitation`;
+    const url = `${ this.urlCredentialsNovelsDb }/update-user-invitation`;
     return this.http.put(url , invitation, this.GlobalhttpOptions);
   }
 }

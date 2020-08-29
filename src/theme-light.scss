@@ -28,6 +28,22 @@ body[theme=light] {
     }
     .nav-mobile-text {
         color: #d32f2f;
+        text-decoration: none;
+    }
+    .nav-tabs .nav-link {
+        color: #495057!important;
+    }
+    .swiper-button-next {
+        background-color: #00000008;
+    }
+    .swiper-button-prev {
+        background-color: #00000008;
+    }
+    .swiper-button-next:hover {
+        background-color: #0000001a;
+    }
+    .swiper-button-prev:hover {
+        background-color: #0000001a;
     }
     .skn-chp-main-panel {
         background-color: #ececec!important;

@@ -3,13 +3,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Reply, Comment, User, Like } from '../models/models';
 import { HelperService } from './helper.service';
 import { NgForm } from '@angular/forms';
+import { Globals } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageService {
 
-  private urlnovelsdb: string;
+  private urlNovelsDb: string;
+  private urlCredentialsNovelsDb: string;
   private GlobalhttpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
@@ -18,8 +20,10 @@ export class PageService {
   };
 
   constructor(private http: HttpClient,
-              private hs: HelperService) {
-    this.urlnovelsdb = '/api';
+              private hs: HelperService,
+              private globals: Globals) {
+    this.urlNovelsDb = this.globals.urlNovelsDb;
+    this.urlCredentialsNovelsDb = this.globals.urlCredentialsNovelsDb;
   }
 
   createCommentFunction(user: User, object: any, objectType: 'chp_id' | 'adv_id') {
@@ -176,62 +180,62 @@ export class PageService {
   }
 
   createLike(like: Like) {
-    const url = `${ this.urlnovelsdb }/create-like`;
+    const url = `${ this.urlCredentialsNovelsDb }/create-like`;
     return this.http.post(url, like, this.GlobalhttpOptions);
   }
 
   deleteLike(id: number) {
-    const url = `${this.urlnovelsdb}/delete-like/${id}`;
+    const url = `${this.urlCredentialsNovelsDb}/delete-like/${id}`;
     return this.http.delete(url, this.GlobalhttpOptions);
   }
 
   getAdvertisements() {
-    const url = `${ this.urlnovelsdb }/get-advertisements`;
+    const url = `${ this.urlNovelsDb }/get-advertisements`;
     return this.http.get( url );
   }
 
   getAdvertisement(id: number) {
-    const url = `${ this.urlnovelsdb }/get-advertisement/${id}`;
+    const url = `${ this.urlNovelsDb }/get-advertisement/${id}`;
     return this.http.get( url );
   }
 
   createComment(comment: Comment) {
-    const url = `${ this.urlnovelsdb }/create-comment`;
+    const url = `${ this.urlCredentialsNovelsDb }/create-comment`;
     return this.http.post(url, comment, this.GlobalhttpOptions);
   }
 
   getComments(id: number, objectType: string) {
-    const url = `${ this.urlnovelsdb }/get-comments/${id}/${objectType}`;
+    const url = `${ this.urlNovelsDb }/get-comments/${id}/${objectType}`;
     return this.http.get( url );
   }
 
   updateComment(comment: Comment) {
-    const url = `${ this.urlnovelsdb }/update-comment`;
+    const url = `${ this.urlCredentialsNovelsDb }/update-comment`;
     return this.http.put(url , comment, this.GlobalhttpOptions);
   }
 
   deleteComment(id: number) {
-    const url = `${ this.urlnovelsdb }/delete-comment/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb }/delete-comment/${id}`;
     return this.http.delete(url, this.GlobalhttpOptions);
   }
 
   createReply(reply: Reply) {
-    const url = `${ this.urlnovelsdb }/create-reply`;
+    const url = `${ this.urlCredentialsNovelsDb }/create-reply`;
     return this.http.post(url, reply, this.GlobalhttpOptions);
   }
 
   getReplys(id: number, objectType: string) {
-    const url = `${ this.urlnovelsdb }/get-replys/${id}/${objectType}`;
+    const url = `${ this.urlNovelsDb }/get-replys/${id}/${objectType}`;
     return this.http.get( url );
   }
 
   updateReply(reply: Reply) {
-    const url = `${ this.urlnovelsdb }/update-reply`;
+    const url = `${ this.urlCredentialsNovelsDb }/update-reply`;
     return this.http.put(url , reply, this.GlobalhttpOptions);
   }
 
   deleteReply(id: number) {
-    const url = `${ this.urlnovelsdb }/delete-reply/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb }/delete-reply/${id}`;
     return this.http.delete(url, this.GlobalhttpOptions);
   }
 }

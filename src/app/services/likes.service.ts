@@ -1,13 +1,14 @@
 import { Injectable  } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Like, User } from '../models/models';
+import { Globals } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LikesService {
 
-  private urlnovelsdb: string;
+  private urlCredentialsNovelsDb: string;
   private GlobalhttpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
@@ -15,8 +16,9 @@ export class LikesService {
     withCredentials: true
   };
 
-  constructor(private http: HttpClient) {
-    this.urlnovelsdb = '/api';
+  constructor(private http: HttpClient,
+              private globals: Globals) {
+    this.urlCredentialsNovelsDb = this.globals.urlCredentialsNovelsDb;
   }
 
   switchLike(user: User, object: any, objectType: 'adv_id' | 'novel_rating_id' | 'comment_id' | 'reply_id') {
@@ -47,12 +49,12 @@ export class LikesService {
   }
 
   createLike(like: Like) {
-    const url = `${ this.urlnovelsdb }/create-like`;
+    const url = `${ this.urlCredentialsNovelsDb }/create-like`;
     return this.http.post(url, like, this.GlobalhttpOptions);
   }
 
   deleteLike(id: number) {
-    const url = `${this.urlnovelsdb}/delete-like/${id}`;
+    const url = `${this.urlCredentialsNovelsDb}/delete-like/${id}`;
     return this.http.delete(url, this.GlobalhttpOptions);
   }
 }

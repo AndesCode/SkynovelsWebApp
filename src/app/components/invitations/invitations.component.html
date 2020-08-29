@@ -3,7 +3,8 @@
         <mat-spinner></mat-spinner>
     </div>
     <div class="container" *ngIf="!loading">
-        <h1 style="margin-top: 3vh; text-align: center;" *ngIf="userInvitations.length === 0">No tienes invitaciones pendientes</h1>
+        <h1 class="text-center skn-component-title" *ngIf="userInvitations.length === 0">No tienes invitaciones pendientes</h1>
+        <h1 class="text-center skn-component-title" *ngIf="userInvitations.length > 0">invitaciones:</h1>
         <mat-card class="skn-invitation-card" *ngFor="let userInvitation of userInvitations" style="margin-bottom: 0.5rem;">
             <mat-card-header>
                 <div mat-card-avatar><img [src]="userInvitation.invitation_from_user_image | noUserImage" alt=""></div>

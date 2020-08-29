@@ -8,30 +8,28 @@
         </div>
         <mat-form-field class="w-100">
             <mat-label>Titulo del capitulo*</mat-label>
-            <input matInput placeholder="Ej. El ascenso a un increible mundo" #chp_title="ngModel" name="chapter.chp_title" [(ngModel)]="chapter.chp_title" minlength="2" maxlength="60" autocomplete="off">
-            <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+            <input matInput placeholder="Ej. El ascenso a un increible mundo" #chp_title="ngModel" name="chapter.chp_title" [(ngModel)]="chapter.chp_title" minlength="2" maxlength="60" autocomplete="off" required>
         </mat-form-field>
         <div class="row skn-novel-edition-translators-form">
             <mat-form-field>
                 <mat-label>Titulo indice del capitulo*</mat-label>
-                <input matInput placeholder="Ej. SKNW - Capitulo 1" #chp_index_title="ngModel" name="chapter.chp_index_title" [(ngModel)]="chapter.chp_index_title" minlength="2" maxlength="30" autocomplete="off">
-                <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
+                <input matInput placeholder="Ej. SKNW - Capitulo 1" #chp_index_title="ngModel" name="chapter.chp_index_title" [(ngModel)]="chapter.chp_index_title" minlength="2" maxlength="30" autocomplete="off" required>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Numero de capitulo</mat-label>
-                <input matInput type="number" #chp_number="ngModel" name="chapter.chp_number" [(ngModel)]="chapter.chp_number" required autocomplete="off" min="0">
+                <mat-label>Numero de capitulo*</mat-label>
+                <input matInput type="number" #chp_number="ngModel" name="chapter.chp_number" [(ngModel)]="chapter.chp_number" required autocomplete="off" min="0" required>
             </mat-form-field>
         </div>
         <div class="row skn-novel-edition-translators-form">
             <mat-form-field>
                 <mat-label>Volumen o libro*</mat-label>
-                <mat-select #vlm_id="ngModel" name="chapter.vlm_id" [(ngModel)]="chapter.vlm_id" required autocomplete="off" (ngModelChange)="swichtVolume(vlm_id.value)">
+                <mat-select #vlm_id="ngModel" name="chapter.vlm_id" [(ngModel)]="chapter.vlm_id" autocomplete="off" (ngModelChange)="swichtVolume(vlm_id.value)" required>
                     <mat-option *ngFor="let volume of novel.volumes" [value]="volume.id">{{volume.vlm_title}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Estado de publicación*</mat-label>
-                <mat-select #chp_status="ngModel" name="chapter.chp_status" [(ngModel)]="chapter.chp_status" required minlength="6" maxlength="8" autocomplete="off">
+                <mat-select #chp_status="ngModel" name="chapter.chp_status" [(ngModel)]="chapter.chp_status" minlength="6" maxlength="8" autocomplete="off" required>
                     <mat-option value="Disabled">{{novel.nvl_status === 'Active' ? 'Oculto' : 'Inactivo'}}</mat-option>
                     <mat-option value="Active">{{novel.nvl_status === 'Active' ? 'Publicado' : 'Activo'}}</mat-option>
                 </mat-select>
@@ -39,27 +37,22 @@
         </div>
         <div class="row skn-novel-edition-translators-form">
             <mat-form-field>
-                <mat-label>Traductor*</mat-label>
+                <mat-label>Traductor</mat-label>
                 <input matInput #chp_translator="ngModel" name="chapter.chp_translator" [(ngModel)]="chapter.chp_translator" minlength="2" maxlength="25" autocomplete="off">
-                <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Traductor al ingles*</mat-label>
-                <input matInput #chp_translator_eng="ngModel" name="chapter.chp_translator_eng" [(ngModel)]="chapter.chp_translator_eng" minlength="2" maxlength="25" autocomplete="off">
-                <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
             </mat-form-field>
         </div>
         <div class="skn-novel-edition-big-form">
             <div class="form-group w-100">
                 <label>Contenido*</label>
-                <ckeditor #chp_content="ngModel" [(ngModel)]="chapter.chp_content" data="{{chapter.chp_content}}" name="chapter.chp_content" [config]="ckEditorConfig" [editor]="Editor" class="skn-ck-editor-chapter-content" required minlength="15" maxlength="65535" autocomplete="off">
+                <ckeditor #chp_content="ngModel" [(ngModel)]="chapter.chp_content" data="{{chapter.chp_content}}" name="chapter.chp_content" [config]="ckEditorConfig" [editor]="Editor" class="skn-ck-editor-chapter-content" required minlength="15" maxlength="65535" autocomplete="off"
+                    *ngIf="isBrowser">
                 </ckeditor>
             </div>
         </div>
         <div class="skn-novel-edition-big-form">
             <div class="form-group w-100">
                 <label>Comentarios del traductor/escritor</label>
-                <ckeditor #chp_review="ngModel" [(ngModel)]="chapter.chp_review" data="{{chapter.chp_review}}" name="chapter.chp_review" [config]="ckEditorConfig" [editor]="Editor" minlength="15" maxlength="1500" autocomplete="off">
+                <ckeditor #chp_review="ngModel" [(ngModel)]="chapter.chp_review" data="{{chapter.chp_review}}" name="chapter.chp_review" [config]="ckEditorConfig" [editor]="Editor" minlength="15" maxlength="5500" autocomplete="off" *ngIf="isBrowser">
                 </ckeditor>
             </div>
         </div>

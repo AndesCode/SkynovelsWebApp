@@ -27,6 +27,7 @@ export class UserProfileComponent implements OnInit {
   editableProfile = false;
   loading = true;
   edition = false;
+  componentName = 'UserProfileComponent';
 
   constructor(private activatedRoute: ActivatedRoute,
               private us: UsersService,
@@ -113,10 +114,8 @@ export class UserProfileComponent implements OnInit {
     reader.onload = (_event) => {
     this.imgURL = reader.result;
     };
-    this.hs.uploadImage(this.userData.id, this.fileToUpload, this.userData.user_profile_image, 'user')
-        .then((img: any) => {
-          this.userData.user_profile_image = img.user.user_profile_image;
-          console.log(img);
+    this.hs.uploadImage(this.userData.id, this.fileToUpload, this.userData.user_profile_image, 'user').then((img: any) => {
+          this.userData.user_profile_image = img.image;
           this.fileToUpload = null;
           this.openMatSnackBar(this.successSnackRef);
           this.successSnackMessage = '¡Cambios guardados!';

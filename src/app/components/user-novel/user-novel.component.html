@@ -6,9 +6,9 @@
         <form #novelForm="ngForm">
             <div class="skn-novel-edition-presentation">
                 <div class="skn-novel-edition-presentation-image">
-                    <img src={{this.imgURL}} [ngStyle]="{height: editableNovel ? '90%' : '100%'}">
+                    <img src={{this.imgURL}}>
                     <input #file type="file" accept='image/*' (change)="fileChangeEvent($event)" hidden>
-                    <button type="button" mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()" *ngIf="editableNovel">Subir imagen (.jpg)</button>
+                    <button type="button" mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()">Subir imagen (.jpg)</button>
                 </div>
                 <div class="skn-novel-edition-main-form">
                     <mat-form-field class="w-100">
@@ -59,19 +59,19 @@
                 <div class="form-group w-100">
                     <label for="skn-novel-sinopsis">Sinopsis*</label>
                     <ckeditor id="skn-novel-sinopsis" #nvl_content="ngModel" [(ngModel)]="novel.nvl_content" data="{{novel.nvl_content}}" name="novel.nvl_content" [config]="ckEditorConfig" [editor]="Editor" class="skn-ck-editor-novel-content" required minlength="15" maxlength="2500"
-                        autocomplete="off">
+                        autocomplete="off" *ngIf="isBrowser">
                     </ckeditor>
                 </div>
             </div>
         </form>
         <div *ngIf="novel?.id">
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="editableNovel">
+            <mat-expansion-panel *ngIf="editableNovel">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Colaboradores
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let collaborator of collaborators" style="margin-bottom: 4px;">
+                <mat-expansion-panel *ngFor="let collaborator of collaborators" style="margin-bottom: 4px;">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             {{collaborator.user_login}}
@@ -93,7 +93,7 @@
                 </mat-expansion-panel>
                 <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="openDialogSheet(addCollaboratorModal)">Añadir un colaborador</button>
             </mat-expansion-panel>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="!editableNovel">
+            <mat-expansion-panel *ngIf="!editableNovel">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Colaboradores
@@ -103,9 +103,9 @@
                     <p>{{collaborator.user_login}}</p>
                 </mat-card>
             </mat-expansion-panel>
-            <mat-card style="margin-top: 15px;">
+            <mat-card style="margin-top: 15px; padding: 16px 24px;">
                 <p>Capitulos*</p>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let volume of novel?.volumes" style="margin-bottom: 5px;">
+                <mat-expansion-panel (opened)="volume.open = true" (closed)="hs.closeMatExpansionPanel(volume)" *ngFor="let volume of novel?.volumes" style="margin-bottom: 5px;">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <h4 style="margin: unset;">{{volume.vlm_title}}</h4>
@@ -129,7 +129,7 @@
                             </mat-menu>
                         </div>
                     </div>
-                    <div class="skn-nvl-vlm-chapters-container row">
+                    <div class="skn-nvl-vlm-chapters-container row" *ngIf="volume.open">
                         <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *ngFor="let chapter of volume.chapters">
                             <a [routerLink]="[volume.id, chapter.id, chapter.chp_name]" class="unstyled-a-tag w-100 skn-link">
                                 <div class="skn-nvl-chp-element-content" style="padding: 10px;">
@@ -199,9 +199,9 @@
                 </ng-template>
             </mat-card>
         </div>
-        <div class="d-flex justify-content-end" style="margin-top: 15px;">
+        <div class="d-flex justify-content-end" style="margin: 15px 0px;">
             <button type="button" mat-raised-button color="warn" style="margin-right: 5px;" (click)="openDialogSheet(deletenovelModal)" *ngIf="editableNovel && novel.id">Eliminar novela</button>
-            <button type="submit" mat-raised-button color="primary" (click)="save(novelForm)" *ngIf="editableNovel" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">{{novel?.id ? 'Guardar cambios' : 'Crear novela'}}</button>
+            <button type="submit" mat-raised-button color="primary" (click)="save(novelForm)" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">{{novel?.id ? 'Guardar cambios' : 'Crear novela'}}</button>
         </div>
     </section>
 </main>

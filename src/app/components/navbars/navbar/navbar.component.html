@@ -29,7 +29,9 @@
             <div class="skn-nav-link" *ngIf="us.userIsEditor()">
                 <a class="nav-link" [matMenuTriggerFor]="invitations" (click)="getUserInvitations()"><span class="material-icons md-30">mail</span></a>
                 <mat-menu #invitations="matMenu">
-                    <div style="padding: 8px;" *ngIf="userInvitations.length === 0">No tienes invitaciones pendientes</div>
+                    <div style="padding: 8px;" *ngIf="userInvitations.length === 0">
+                        <p style="margin: unset;">No tienes invitaciones pendientes</p>
+                    </div>
                     <mat-card class="skn-invitation-card" *ngFor="let userInvitation of userInvitations" style="margin-bottom: 0.5rem;">
                         <mat-card-header>
                             <div mat-card-avatar><img [src]="userInvitation.invitation_from_user_image | noUserImage" alt=""></div>
@@ -48,12 +50,18 @@
                 </mat-menu>
             </div>
             <div class="skn-nav-link">
-                <a class="nav-link" (click)="toggleTheme()"><span class="material-icons md-30 hide-light">brightness_2</span><span class="material-icons md-30 hide-dark">brightness_7</span></a>
+                <a class="nav-link" (click)="toggleTheme()">
+                    <span class="material-icons md-30 hide-light">brightness_2</span>
+                    <span class="material-icons md-30 hide-dark">brightness_7</span>
+                </a>
             </div>
         </div>
         <div class="skn-nav-links" *ngIf="mobile">
             <div class="skn-nav-link">
-                <div class="nav-link" (click)="toggleTheme()"><span class="material-icons md-30 hide-light">brightness_2</span><span class="material-icons md-30 hide-dark">brightness_7</span></div>
+                <div class="nav-link" (click)="toggleTheme()">
+                    <span class="material-icons md-30 hide-light">brightness_2</span>
+                    <span class="material-icons md-30 hide-dark">brightness_7</span>
+                </div>
             </div>
             <div class="skn-navbar-menu-toggler skn-text" (click)="openMobileNavbarForm()" *ngIf="!mobileNavbar" style="cursor: pointer;" aria-label="menu-toggler">
                 <span class="material-icons" unselectable="on">menu</span>
@@ -93,7 +101,13 @@
         </div>
         <div class="skn-login-form" *ngIf="currentForm === 'register'">
             <hr>
-            <form [formGroup]="registerForm">
+            <h2 *ngIf="registerCompleted" style="color: green;">
+                ¡Registro completado!
+            </h2>
+            <p *ngIf="registerCompleted">
+                Comprueba tu correo electronico para confirmar tu registro.
+            </p>
+            <form [formGroup]="registerForm" *ngIf="!registerCompleted">
                 <mat-form-field class="w-100 skn-mat-label-center">
                     <mat-label>Usuario</mat-label>
                     <input matInput formControlName="user_login" cdkFocusInitial autocomplete="off">
@@ -110,13 +124,29 @@
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <span class="material-icons">{{hide ? 'visibility_off' : 'visibility'}}</span>
                     </button>
-                    <mat-error *ngIf="registerForm.get('user_pass').hasError('pattern')">Invalido</mat-error>
+                    <mat-error *ngIf="registerForm.get('user_pass').hasError('pattern')">Contraseña invalida</mat-error>
                 </mat-form-field>
+                <div class="text-left" style="font-size: 0.8rem;">
+                    <p>La contraseña debe tener:</p>
+                    <ul style="padding-inline-start: 20px;">
+                        <li>De 8 a 16 caracteres</li>
+                        <li>Al menos una letra mayuscula</li>
+                        <li>Al menos una letra minuscula</li>
+                        <li>Al menos un numero</li>
+                        <li>Al menos un caracter especial @$!%*?&.,"'#}()¡¿</li>
+                    </ul>
+                </div>
             </form>
         </div>
         <div class="skn-login-form" *ngIf="currentForm === 'passwordRecovery'">
             <hr>
-            <form [formGroup]="passwordRecoveryForm">
+            <h2 *ngIf="passwordRecoveryCompleted" style="color: green;">
+                ¡Solicitud enviada!
+            </h2>
+            <p *ngIf="passwordRecoveryCompleted">
+                Comprueba tu correo electronico para proceder con el cambio de contraseña.
+            </p>
+            <form [formGroup]="passwordRecoveryForm" *ngIf="!passwordRecoveryCompleted">
                 <mat-form-field class="w-100 skn-mat-label-center">
                     <mat-label>Correo electronico</mat-label>
                     <input matInput formControlName="user_email" autocomplete="off">
@@ -126,16 +156,16 @@
         </div>
         <div class="skn-login-button">
             <button mat-raised-button color="primary" (click)="login()" *ngIf="currentForm === 'login'" [disabled]="loginForm.invalid || loginFormLoading">Iniciar sesión</button>
-            <button mat-raised-button color="primary" *ngIf="currentForm === 'register'" [disabled]="registerForm.invalid || loginFormLoading">Registrarse</button>
-            <button mat-raised-button color="primary" *ngIf="currentForm === 'passwordRecovery'" [disabled]="passwordRecoveryForm.invalid || loginFormLoading">Enviar correo</button>
+            <button mat-raised-button color="primary" (click)="register()" *ngIf="currentForm === 'register' && !registerCompleted" [disabled]="registerForm.invalid || loginFormLoading">Registrarse</button>
+            <button mat-raised-button color="primary" (click)="passwordRecovery()" *ngIf="currentForm === 'passwordRecovery' && !passwordRecoveryCompleted" [disabled]="passwordRecoveryForm.invalid || loginFormLoading">Enviar correo</button>
         </div>
-        <div class="skn-login-switcher">
-            <p class="skn-link" *ngIf="currentForm === 'login'" (click)="swichtTab('register')" style="font-size: 0.8rem;">¿No tienes cuenta? ¡Registrate aquí!</p>
-            <p class="skn-link" *ngIf="currentForm === 'register'" (click)="swichtTab('login')" style="font-size: 0.8rem;">Regresar a inicio</p>
+        <div class="skn-loading" style="height: unset; margin: 1rem 0px;" *ngIf="loginFormLoading">
+            <mat-spinner diameter="25"></mat-spinner>
         </div>
         <div class="skn-login-switcher">
             <p class="skn-link" *ngIf="currentForm === 'login'" (click)="swichtTab('passwordRecovery')" style="font-size: 0.8rem;">¿Olvidaste tu contraseña?</p>
-            <p class="skn-link" *ngIf="currentForm === 'passwordRecovery'" (click)="swichtTab('login')" style="font-size: 0.8rem;">Regresar a inicio</p>
+            <p class="skn-link" *ngIf="currentForm === 'login' && !registerCompleted" (click)="swichtTab('register')" style="font-size: 0.8rem;">¿No tienes cuenta? ¡Registrate aquí!</p>
+            <p class="skn-link" *ngIf="currentForm === 'register' || currentForm === 'passwordRecovery'" (click)="swichtTab('login')" style="font-size: 0.8rem;">Regresar a inicio</p>
         </div>
     </div>
 </ng-template>

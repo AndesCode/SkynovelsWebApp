@@ -8,7 +8,7 @@ body[theme=dark] {
     }
     .mat-dialog-container {
         background-color: #1E2228!important;
-        // overflow: unset!important;
+        color: #626973!important;
     }
     .mat-form-field {
         color: #626973!important;
@@ -53,6 +53,7 @@ body[theme=dark] {
     }
     .mat-card {
         background-color: #1E2228!important;
+        color: #626973!important;
     }
     .mat-option.mat-option-disabled {
         color: #32363b!important;
@@ -145,6 +146,7 @@ body[theme=dark] {
     }
     .nav-mobile-text {
         color: #626973;
+        text-decoration: none;
     }
     .skn-novel-presentation-image-mobile {
         color: #d32f2f!important;
@@ -262,7 +264,19 @@ body[theme=dark] {
     .nav-tabs {
         border-bottom: 1px solid #626973!important;
     }
-    // HTML standard 
+    .swiper-button-next {
+        background-color: #191d2380;
+    }
+    .swiper-button-prev {
+        background-color: #191d2380;
+    }
+    .swiper-button-next:hover {
+        background-color: #2b323ca1;
+    }
+    .swiper-button-prev:hover {
+        background-color: #2b323ca1;
+    }
+    .skn // HTML standard 
     p {
         color: #626973;
     }

@@ -1,14 +1,13 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID } from '@angular/core';
 import { UsersService } from '../../../../services/users.service';
 import { AdminService } from '../../../../services/admin.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Advertisement } from '../../../../models/models';
-import { Location } from '@angular/common';
+import { Location, isPlatformBrowser } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-advertisement-management',
@@ -31,10 +30,9 @@ export class AdvertisementManagementComponent implements OnInit {
   uploading = false;
   loading = true;
 
-  public Editor = ClassicEditor;
-  public ckEditorConfig = {
-    toolbar: [ 'heading', '|', 'bold', 'italic' ]
-  };
+  public Editor;
+  public ckEditorConfig;
+  isBrowser: boolean;
 
   constructor(private us: UsersService,
               private as: AdminService,
@@ -42,7 +40,19 @@ export class AdvertisementManagementComponent implements OnInit {
               public matSnackBar: MatSnackBar,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              private location: Location) { }
+              private location: Location,
+              @Inject(PLATFORM_ID) private platformId) {
+
+              this.isBrowser = isPlatformBrowser(this.platformId);
+              if (this.isBrowser) {
+                const ClassicEditor = require('@ckeditor/ckeditor5-build-classic');
+                this.Editor = ClassicEditor;
+                this.ckEditorConfig = {
+                  toolbar: [ 'heading', '|', 'bold', 'italic' ]
+                };
+              }
+
+  }
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('id');

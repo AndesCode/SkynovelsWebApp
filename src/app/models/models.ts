@@ -162,8 +162,8 @@ export class Like {
 export class Chapter {
     id?: number;
     chp_author?: number;
+    user_login?: string;
     chp_translator?: string;
-    chp_translator_eng?: string;
     nvl_id?: number;
     vlm_id?: number;
     chp_number?: number;
@@ -189,6 +189,7 @@ export class Volume {
     nvl_id?: number;
     user_id?: number;
     chapters?: Array<Chapter>;
+    open?: boolean;
 }
 
 export class Comment {

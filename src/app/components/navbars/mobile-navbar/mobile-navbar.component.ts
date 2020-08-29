@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import { HelperService } from '../../../services/helper.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-mobile-navbar',
@@ -18,7 +19,8 @@ export class MobileNavbarComponent implements OnInit {
               public us: UsersService,
               private router: Router,
               public breakpointObserver: BreakpointObserver,
-              private viewportScroller: ViewportScroller) { }
+              private viewportScroller: ViewportScroller,
+              @Inject(PLATFORM_ID) private platformId) { }
 
   open = false;
   scrollPosition = 0;
@@ -38,10 +40,14 @@ export class MobileNavbarComponent implements OnInit {
     this.open = true;
     const top = '-' + this.viewportScroller.getScrollPosition()[1] + 'px';
     this.scrollPosition = this.viewportScroller.getScrollPosition()[1];
-    if (document.body.clientHeight > window.innerHeight) {
-      document.documentElement.style.top = top;
-      document.documentElement.style.left = '0px';
-      document.documentElement.classList.add('cdk-global-scrollblock');
+    if (isPlatformBrowser(this.platformId)) {
+      if (document.body.clientHeight > window.innerHeight) {
+        document.documentElement.style.top = top;
+        document.documentElement.style.left = '0px';
+        document.documentElement.classList.add('cdk-global-scrollblock');
+      } else {
+        return;
+      }
     } else {
       return;
     }
@@ -49,12 +55,16 @@ export class MobileNavbarComponent implements OnInit {
 
   closeNav(manteinScroll: boolean) {
     this.open = false;
-    document.documentElement.classList.remove('cdk-global-scrollblock');
-    document.documentElement.removeAttribute('style');
-    if (manteinScroll) {
-      window.scrollTo(0, this.scrollPosition);
+    if (isPlatformBrowser(this.platformId)) {
+      document.documentElement.classList.remove('cdk-global-scrollblock');
+      document.documentElement.removeAttribute('style');
+      if (manteinScroll) {
+        window.scrollTo(0, this.scrollPosition);
+      } else {
+        window.scrollTo(0, 0);
+      }
     } else {
-      window.scrollTo(0, 0);
+      return;
     }
   }
 

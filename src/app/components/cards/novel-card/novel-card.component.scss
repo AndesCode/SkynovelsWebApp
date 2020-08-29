@@ -6,7 +6,7 @@
     margin: 10px 10px;
     width: 25vw;
     min-width: 480px;
-    height: 240px;
+    height: 16rem;
     display: grid;
     grid-template-columns: 145px auto;
     grid-template-rows: 85% 15%;
@@ -14,7 +14,7 @@
     @include subtract-media (desktop) {
         min-width: 300px;
         width: 30vw;
-        height: 150px;
+        height: 10.75rem;
         grid-template-columns: 85px auto;
         grid-template-rows: 80% 20%;
     }

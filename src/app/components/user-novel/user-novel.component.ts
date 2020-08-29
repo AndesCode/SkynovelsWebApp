@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -7,9 +7,8 @@ import { NovelsService } from '../../services/novels.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Location } from '@angular/common';
+import { Location, isPlatformBrowser } from '@angular/common';
 import { UsersService } from '../../services/users.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Novel, Genre, User, Chapter, Volume } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
 
@@ -20,11 +19,8 @@ import { PageService } from '../../services/page.service';
 })
 export class UserNovelComponent implements OnInit {
 
-  panelOpenState = false;
-  public Editor = ClassicEditor;
-  public ckEditorConfig = {
-    toolbar: [ 'heading', '|', 'bold', 'italic' ]
-  };
+  public Editor;
+  public ckEditorConfig;
   @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
   @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
   public successSnackMessage: string;
@@ -45,6 +41,8 @@ export class UserNovelComponent implements OnInit {
   chapterEdition = false;
   collaboratorForm: FormGroup;
   volumeForm: FormGroup;
+  isBrowser: boolean;
+  componentName = 'UserNovelComponent';
 
     constructor( private activatedRoute: ActivatedRoute,
                  public ns: NovelsService,
@@ -54,8 +52,17 @@ export class UserNovelComponent implements OnInit {
                  private router: Router,
                  public dialog: MatDialog,
                  public matSnackBar: MatSnackBar,
-                 private location: Location) {
+                 private location: Location,
+                 @Inject(PLATFORM_ID) private platformId) {
 
+                  this.isBrowser = isPlatformBrowser(this.platformId);
+                  if (this.isBrowser) {
+                    const ClassicEditor = require('@ckeditor/ckeditor5-build-classic');
+                    this.Editor = ClassicEditor;
+                    this.ckEditorConfig = {
+                      toolbar: [ 'heading', '|', 'bold', 'italic' ]
+                    };
+                  }
                   this.collaboratorForm = new FormGroup({
                     user_login: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]),
                   });
@@ -130,9 +137,22 @@ export class UserNovelComponent implements OnInit {
       this.novel.nvl_status = 'Disabled';
     }
     if ( this.novel.id ) {
-      request = this.ns.updateNovel(this.novel);
+
+      const novel: Novel = {
+        id: this.novel.id,
+        genres: this.novel.genres,
+        collaborators: this.novel.collaborators,
+        nvl_acronym: this.novel.nvl_acronym,
+        nvl_content: this.novel.nvl_content,
+        nvl_status: this.novel.nvl_status,
+        nvl_title: this.novel.nvl_title,
+        nvl_writer: this.novel.nvl_writer,
+        nvl_translator: this.novel.nvl_translator,
+        nvl_translator_eng: this.novel.nvl_translator_eng
+      };
+
+      request = this.ns.updateNovel(novel);
     } else {
-      console.log('creando novela...');
       request = this.ns.createNovel(this.novel);
     }
     request.subscribe((resp: any) => {
@@ -148,10 +168,8 @@ export class UserNovelComponent implements OnInit {
       novelForm.form.markAsPristine();
       if ( this.fileToUpload ) {
         console.log('Hay archivo a subir, se ejecuta consulta al servidor');
-        this.hs.uploadImage(this.novel.id, this.fileToUpload, this.novel.nvl_img, 'novel')
-        .then((img: any) => {
-          this.novel.nvl_img = img.novel.nvl_img;
-          console.log(img);
+        this.hs.uploadImage(this.novel.id, this.fileToUpload, this.novel.nvl_img, 'novel').then((img: any) => {
+          this.novel.nvl_img = img.image;
           this.fileToUpload = null;
           this.uploading = false;
           this.openMatSnackBar(this.successSnackRef);
@@ -160,7 +178,7 @@ export class UserNovelComponent implements OnInit {
         }).catch(error => {
           console.log(error);
           this.openMatSnackBar(this.errorSnackRef);
-          this.errorSnackMessage = error.error.message;
+          this.errorSnackMessage = error.message;
         });
       } else {
         this.uploading = false;

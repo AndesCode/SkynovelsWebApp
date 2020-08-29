@@ -8,10 +8,10 @@ import { NovelComponent } from './components/novel/novel.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { UsersManagementComponent } from './components/admin-panel/users-management/users-management.component';
 import { UserManagementComponent } from './components/admin-panel/users-management/user-management/user-management.component';
-import { ForumManagementComponent } from './components/admin-panel/forum-management/forum-management.component';
 import { UserNovelsComponent } from './components/user-novels/user-novels.component';
 import { UserNovelComponent } from './components/user-novel/user-novel.component';
 /*import { ForumComponent } from './components/forum/forum.component';
+import { ForumManagementComponent } from './components/admin-panel/forum-management/forum-management.component';
 import { ForumCategoryComponent } from './components/forum/forum-category/forum-category.component';
 import { ForumPostComponent } from './components/forum/forum-category/forum-post/forum-post.component';*/
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
@@ -25,6 +25,8 @@ import { ChapterManagementComponent } from './components/admin-panel/novels-mana
 import { AdvertisementManagementComponent } from './components/admin-panel/home-management/advertisement-management/advertisement-management.component';
 import { AdvertisementComponent } from './components/advertisement/advertisement.component';
 import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { UserActivationComponent } from './components/user-activation/user-activation.component';
 // Test
 import { TestComponent } from './components/test/test.component';
 /*
@@ -60,12 +62,11 @@ const routes: Routes = [
     children: [
       {path: 'administracion-de-usuarios', component: UsersManagementComponent},
       {path: 'administracion-de-usuarios/:id', component: UserManagementComponent},
-      {path: 'administracion-del-foro', component: ForumManagementComponent},
-      {path: 'administracion-del-foro/:id', component: ForumManagementComponent},
+      /*{path: 'administracion-del-foro', component: ForumManagementComponent},
+      {path: 'administracion-del-foro/:id', component: ForumManagementComponent},*/
       {path: 'administracion-de-pagina-de-inicio', component: HomeManagementComponent},
       {path: 'administracion-de-novelas', component: NovelsManagementComponent},
       {path: 'administracion-de-novelas/:id', component: NovelManagementComponent},
-      {path: 'administracion-de-novelas/:nid/:vid/:cid', component: ChapterManagementComponent},
       {path: 'administracion-de-novelas/:nid/:vid/:cid', component: ChapterManagementComponent},
       {path: 'administracion-de-pagina-de-inicio/noticias/:id/:name', component: AdvertisementManagementComponent},
       {path: 'administracion-de-pagina-de-inicio/noticias/:id', component: AdvertisementManagementComponent},
@@ -93,6 +94,10 @@ const routes: Routes = [
   { path: 'noticias/:id/:name', component: AdvertisementComponent },
   // Bookmarks
   { path: 'lista-de-lectura', component: BookmarksComponent, canActivate: [GuardService] },
+  // Password recovery
+  { path: 'nueva-contraseña/:token', component: PasswordRecoveryComponent },
+  // User activation
+  { path: 'activacion-de-usuario/:key', component: UserActivationComponent },
   // Test
   { path: 'test', component: TestComponent },
   // redirects
@@ -100,7 +105,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    initialNavigation: 'enabled'
+})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

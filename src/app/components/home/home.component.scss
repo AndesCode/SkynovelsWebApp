@@ -3,6 +3,12 @@ h1 {
     font-size: 2rem;
 }
 
+@media (min-width: 1200px) {
+    .container-home {
+        max-width: 1230px!important;
+    }
+}
+
 h2 {
     font-size: 2rem;
 }
@@ -20,11 +26,15 @@ h3 {
     height: unset;
 }
 
+.skn-home-swiper {
+    border-radius: 35px;
+}
+
 .skn-swiper-novel-slide {
     height: 21rem;
     padding: 0.4rem;
     .skn-swiper-novel-slide-content {
-        max-width: 180px;
+        max-width: 175px;
         margin: auto;
         padding: 0.4rem;
         border-radius: 10px;
@@ -51,11 +61,14 @@ h3 {
 }
 
 .skn-swiper-banner-slide {
-    padding: 1vw;
+    padding: 1vh 12vw;
     img {
         width: 100%;
         height: 100%;
         max-width: 1150px;
+    }
+    @include mobile {
+        padding: 1vh 0vw;
     }
 }
 
@@ -230,4 +243,47 @@ h3 {
     @include subtract-media(desktop) {
         font-size: 0.75rem;
     }
+}
+
+// test
+.app-title {
+    font-size: 24px;
+}
+
+.box-title {
+    font-size: 20px;
+}
+
+.box-container {
+    box-sizing: border-box;
+    width: 800px;
+    height: 500px;
+    max-width: 90%;
+    max-height: 90%;
+    padding: 24px;
+    margin: 24px auto;
+    border-radius: 4px;
+    color: #555;
+    background-color: #eee;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18), 0 6px 6px rgba(0, 0, 0, 0.25);
+}
+
+.info-container {
+    padding: 12px 16px;
+    line-height: 24px;
+}
+
+.action-container,
+.content-container {
+    position: relative;
+    overflow: auto;
+    height: 300px;
+    min-height: 0;
+    margin: 8px 16px;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.action-container {
+    padding: 16px;
 }

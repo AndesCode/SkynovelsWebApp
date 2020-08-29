@@ -65,7 +65,7 @@
                             <div *ngIf="novel.nvl_chapters > 1"> <span class="material-icons">format_align_left</span> {{novel.nvl_chapters}} Capitulos</div>
                             <div> <span class="material-icons">access_time</span> {{hs.getRelativeTime(novel.nvl_last_update).message}}</div>
                         </div>
-                        <div class="skn-nvl-card-genres row" style="margin-bottom: 8px; margin-left: 0px;">
+                        <div class="skn-nvl-card-genres row">
                             <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:5">{{genre.genre_name}}</span>
                         </div>
                         <div class="skn-text">Autor: <strong>{{novel.nvl_writer}}</strong></div>
@@ -98,7 +98,7 @@
                         <a *ngIf="novel.user_bookmark && novel.user_bookmark.chp_id !== novel.volumes[0].chapters[0].id" [routerLink]="[novel.user_bookmark.chp_id, novel.user_bookmark.chp_name]">
                             <button mat-raised-button color="primary" style="height: 41px;">Continuar leyendo</button>
                         </a>
-                        <p *ngIf="!user">Incia sesión para agregar esta novela a tu biblioteca</p>
+                        <p *ngIf="!user" class="skn-red-text">Inicia sesión para agregar esta novela a tu biblioteca</p>
                     </div>
                 </div>
             </div>
@@ -119,6 +119,7 @@
                 <div *ngIf="mobile" class="text-center">
                     <button mat-raised-button color="primary" style="height: 35px; margin-right: 5px;" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Añadir a la biblioteca</button>
                     <button mat-raised-button color="primary" style="height: 35px; margin-right: 5px;" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>
+                    <p *ngIf="!user" class="skn-red-text">Inicia sesión para agregar esta novela a tu biblioteca</p>
                 </div>
                 <div class="skn-novel-presentation-info-stats-mobile skn-secondary skn-text row" style="margin-left: 0px;" *ngIf="mobile">
                     <div> <span class="material-icons">create</span> {{novelChaptersForWeeks !== 1 ? novelChaptersForWeeks + ' Capitulos semanales' : '1 Capitulo semanal'}}</div>
@@ -130,15 +131,15 @@
                 <p [innerHTML]="novel.nvl_content"></p>
             </div>
             <div class="skn-nvl-info" *ngIf="currentTab === 'content'">
-                <p><strong>Ultimo capitulo: </strong><a class="skn-link">{{novel.nvl_last_chapter?.chp_index_title}}</a><small> {{novel.nvl_last_chapter?.date_data.message}}</small></p>
+                <p><strong>Ultimo capitulo: </strong><a class="skn-link unstyled-a-tag" [routerLink]="[novel.nvl_last_chapter?.id, novel.nvl_last_chapter?.chp_name]" style="color: #d32f2f;">{{novel.nvl_last_chapter?.chp_index_title}}</a><small> {{novel.nvl_last_chapter?.date_data.message}}</small></p>
                 <hr>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let volume of novel?.volumes" style="margin-bottom: 5px;">
+                <mat-expansion-panel (opened)="volume.open = true" (closed)="hs.closeMatExpansionPanel(volume)" *ngFor="let volume of novel?.volumes" style="margin-bottom: 5px;">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <h4 style="margin: unset;">{{volume.vlm_title}}</h4>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <div class="skn-nvl-vlm-chapters-container row">
+                    <div class="skn-nvl-vlm-chapters-container row" *ngIf="volume.open">
                         <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *ngFor="let chapter of volume.chapters">
                             <a [routerLink]="[chapter.id, chapter.chp_name]" class="unstyled-a-tag w-100 skn-link">
                                 <div class="skn-nvl-chp-element-content" style="padding: 10px;">
@@ -163,11 +164,12 @@
                 <hr>
                 <div class="skn-text" *ngIf="novel.nvl_translator">Traductor: <strong>{{novel.nvl_translator}}</strong></div>
                 <div class="skn-text" *ngIf="novel.nvl_translator_eng">Traductor al ingles: <strong>{{novel.nvl_translator_eng}}</strong></div>
-                <div class="skn-nvl-card-genres row" style="margin-bottom: 8px; margin-left: 0px;">
+                <div class="skn-nvl-card-genres row">
                     <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:5">{{genre.genre_name}}</span>
                 </div>
             </div>
             <hr>
+
             <div class="skn-share-novel-rating">
                 <div class="skn-nvl-ratings skn-text" *ngIf="!mobile">
                     <div class="skn-nvl-card-votes" style="display: flex; margin-top: 15px;">
@@ -195,7 +197,7 @@
                     <div *ngIf="!this.novel.nvl_rated">
                         <div class="skn-text">Comparte tus pensamientos</div>
                         <button mat-raised-button color="primary" style="color: black;" (click)="openDialogSheet(createRatingModal)" *ngIf="user">Escribe una calificación</button>
-                        <p *ngIf="!user">Incia sesíon</p>
+                        <p *ngIf="!user" class="skn-red-text skn-link" (click)="openLoginForm()">Inicia sesión</p>
                     </div>
                     <div *ngIf="this.novel.nvl_rated">
                         <p style="margin-top: 24px; color: green !important;">¡Has calificado la novela!</p>
@@ -239,13 +241,13 @@
 
             <div class="skn-nvl-user-rating skn-secondary" *ngFor="let rating of novel.novel_ratings">
                 <div class="skn-user-image">
-                    <img [src]="rating.user_profile_image | noUserImage" alt="">
+                    <img [src]="rating.user_profile_image | noUserImage">
                 </div>
                 <div class="skn-nvl-user-rating-user-rating">
                     <div class="skn-nvl-user-rating-login">
                         <div style="display: flex;">
                             <div class="skn-user-image-mobile">
-                                <img [src]="rating.user_profile_image | noUserImage" alt="">
+                                <img [src]="rating.user_profile_image | noUserImage">
                             </div>
                             <strong style="margin: auto 6px">{{rating.user_login}}</strong>
                         </div>

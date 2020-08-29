@@ -23,6 +23,7 @@ export class NovelsComponent implements OnInit {
   smallScreen = false;
   mobile: boolean;
   loading = true;
+  componentName = 'NovelsComponent';
 
   constructor(private ns: NovelsService,
               public hs: HelperService,

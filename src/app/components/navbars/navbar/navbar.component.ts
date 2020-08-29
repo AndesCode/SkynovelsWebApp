@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, ElementRef, TemplateRef, Renderer2, ViewChild, Directive } from '@angular/core';
+import { Component, OnInit, EventEmitter, ElementRef, TemplateRef, Renderer2, ViewChild, Directive, Inject, PLATFORM_ID } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../../services/users.service';
 import { AdminService } from '../../../services/admin.service';
@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Invitation } from 'src/app/models/models';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Component({
@@ -33,9 +34,9 @@ export class NavbarComponent implements OnInit {
   registerForm: FormGroup;
   passwordRecoveryForm: FormGroup;
   loginFormLoading = false;
-
-  // login
   registerCompleted = false;
+  passwordRecoveryCompleted = false;
+  isBrowser: boolean;
 
   constructor(public us: UsersService,
               public as: AdminService,
@@ -45,11 +46,14 @@ export class NavbarComponent implements OnInit {
               public breakpointObserver: BreakpointObserver,
               public el: ElementRef,
               private re: Renderer2,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              @Inject(PLATFORM_ID) private platformId) {
+
+              this.isBrowser = isPlatformBrowser(this.platformId);
 
               this.loginForm = new FormGroup({
                 user_login: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(12)]),
-                user_pass: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]),
+                user_pass: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)])
               });
 
               this.registerForm = new FormGroup({
@@ -58,8 +62,8 @@ export class NavbarComponent implements OnInit {
                                             Validators.minLength(5), Validators.maxLength(12)]),
                 user_email: new FormControl('', [Validators.required, Validators.email]),
                 user_pass: new FormControl('', [Validators.required,
-                                                Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z_.\\d]{8,16}$'),
-                                                Validators.minLength(8), Validators.maxLength(16)]),
+                                                Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,"'#{}()¡¿])[A-Za-z\d@$!%*?&.,"'#{}()¡¿]{8,16}$/),
+                                                Validators.minLength(8), Validators.maxLength(16)])
               });
 
               this.passwordRecoveryForm = new FormGroup({
@@ -120,7 +124,7 @@ export class NavbarComponent implements OnInit {
     if (this.loginForm.valid) {
       this.us.logIn(this.loginForm.value).subscribe((data: any) => {
         console.log(data);
-        if (data.sknvl_s) {
+        if (data.sknvl_s && this.isBrowser) {
           localStorage.setItem('sknvl_s', data.sknvl_s);
         }
         this.hs.openExternalFunction('reloadUser');
@@ -140,13 +144,56 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  register() {
+    console.log(this.registerForm);
+    this.loginFormLoading = true;
+    if (this.registerForm.valid) {
+      this.us.createUser(this.registerForm.value).subscribe((data: any) => {
+        this.registerCompleted = true;
+        console.log(data);
+        this.loginFormLoading = false;
+        this.registerForm.reset();
+      }, error => {
+        this.openMatSnackBar(this.errorSnackRef);
+        this.errorSnackMessage = error.error.message;
+        this.loginFormLoading = false;
+      });
+    } else {
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = 'Debes rellenar correctamente los campos';
+      this.loginFormLoading = false;
+    }
+  }
+
+  passwordRecovery() {
+    console.log(this.passwordRecoveryForm);
+    this.loginFormLoading = true;
+    if (this.passwordRecoveryForm.valid) {
+      this.us.passwordResetRequest(this.passwordRecoveryForm.value.user_email).subscribe((data: any) => {
+        this.passwordRecoveryCompleted = true;
+        this.loginFormLoading = false;
+        this.passwordRecoveryForm.reset();
+      }, error => {
+        this.openMatSnackBar(this.errorSnackRef);
+        this.errorSnackMessage = error.error.message;
+        this.loginFormLoading = false;
+      });
+    } else {
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = 'Debes rellenar correctamente los campos';
+      this.loginFormLoading = false;
+    }
+  }
+
   swichtTab(tab: string) {
     this.currentForm = tab;
   }
 
   logout() {
     this.us.logOut().subscribe((data: any) => {
-      localStorage.clear();
+      if (this.isBrowser) {
+        localStorage.clear();
+      }
       if (this.currentComponent === 'UserNovelComponent'
       || this.currentComponent === 'UserNovelsComponent'
       || this.currentComponent === 'UserChapterComponent'
@@ -155,7 +202,9 @@ export class NavbarComponent implements OnInit {
       }
       this.hs.openExternalFunction('reloadUser');
     }, error => {
-      localStorage.clear();
+      if (this.isBrowser) {
+        localStorage.clear();
+      }
       if (this.currentComponent === 'UserNovelComponent'
       || this.currentComponent === 'UserNovelsComponent'
       || this.currentComponent === 'UserChapterComponent'

@@ -1,11 +1,14 @@
 // Angular essential
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { TransferHttpCacheModule } from '@nguniversal/common';
+import { Globals } from './config/config';
 // Material
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,7 +22,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { OverlayModule } from '@angular/cdk/overlay';
 import { MatSelectModule } from '@angular/material/select';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { CdkOverlayContainer } from './cdk-overlay-container-extension';
@@ -40,10 +42,10 @@ import { NovelCardComponent } from './components/cards/novel-card/novel-card.com
 import { NovelComponent } from './components/novel/novel.component';
 import { UserNovelsComponent } from './components/user-novels/user-novels.component';
 import { UserNovelComponent } from './components/user-novel/user-novel.component';
-import { ForumComponent } from './components/forum/forum.component';
+/*import { ForumComponent } from './components/forum/forum.component';
 import { ForumCategoryComponent } from './components/forum/forum-category/forum-category.component';
 import { ForumPostComponent } from './components/forum/forum-category/forum-post/forum-post.component';
-import { ForumManagementComponent } from './components/admin-panel/forum-management/forum-management.component';
+import { ForumManagementComponent } from './components/admin-panel/forum-management/forum-management.component';*/
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ChaptersComponent } from './components/chapters/chapters.component';
 import { UserChapterComponent } from './components/user-novel/user-chapter/user-chapter.component';
@@ -60,6 +62,8 @@ import { ChapterManagementComponent } from './components/admin-panel/novels-mana
 import { AdvertisementManagementComponent } from './components/admin-panel/home-management/advertisement-management/advertisement-management.component';
 import { AdvertisementComponent } from './components/advertisement/advertisement.component';
 import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { UserActivationComponent } from './components/user-activation/user-activation.component';
 // bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Pipes
@@ -75,10 +79,9 @@ import { SwiperModule, SWIPER_CONFIG, SwiperConfigInterface } from 'ngx-swiper-w
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { InViewportModule } from 'ng-in-viewport';
+import { AdsenseModule } from 'ng2-adsense';
 // Test Eliminar
 import { TestComponent } from './components/test/test.component';
-
-
 
 const config: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -106,16 +109,11 @@ const config: SwiperConfigInterface = {
     UserNovelsComponent,
     UserNovelComponent,
     BookmarksComponent,
-    // pipes
-    NoimagePipeThumb,
-    NoimagePipe,
-    NoAdvertisementImagePipe,
-    NoUserImagePipe,
-    NovelFilterPipe,
-    ForumComponent,
+    // Forum
+    /*ForumComponent,
     ForumCategoryComponent,
     ForumPostComponent,
-    ForumManagementComponent,
+    ForumManagementComponent,*/
     UserProfileComponent,
     TestComponent,
     ChaptersComponent,
@@ -129,15 +127,25 @@ const config: SwiperConfigInterface = {
     ChapterManagementComponent,
     AdvertisementManagementComponent,
     AdvertisementComponent,
+    PasswordRecoveryComponent,
+    UserActivationComponent,
+    // pipes
+    NoimagePipeThumb,
+    NoimagePipe,
+    NoAdvertisementImagePipe,
+    NoUserImagePipe,
+    NovelFilterPipe,
   ],
   imports: [
     // Angular
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserTransferStateModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
+    TransferHttpCacheModule,
     OverlayModule,
     // Material
     MatFormFieldModule,
@@ -169,7 +177,11 @@ const config: SwiperConfigInterface = {
     SwiperModule,
     Ng2SearchPipeModule,
     InfiniteScrollModule,
-    InViewportModule
+    InViewportModule,
+    AdsenseModule.forRoot({
+      adClient: 'ca-pub-7640562161899788',
+      adSlot: 7259870550,
+    }),
   ],
   providers: [
     { provide: OverlayContainer, useClass: CdkOverlayContainer },
@@ -177,7 +189,8 @@ const config: SwiperConfigInterface = {
       provide: SWIPER_CONFIG,
       useValue: config
     },
-    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
+    Globals
   ],
   bootstrap: [AppComponent]
 })

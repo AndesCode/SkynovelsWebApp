@@ -1,29 +1,39 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HelperService } from './helper.service';
 import { PostComment } from '../models/post-comment';
 import { User, Novel, Genre, Advertisement, Volume, Chapter } from '../models/models';
+import { Globals } from '../config/config';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  private urlnovelsdb: string;
+  private urlCredentialsNovelsDb: string;
+  isBrowser: boolean;
 
   constructor(private http: HttpClient,
-              private hs: HelperService) {
-    this.urlnovelsdb = '/api';
+              private hs: HelperService,
+              private globals: Globals,
+              @Inject(PLATFORM_ID) private platformId) {
+
+              this.isBrowser = isPlatformBrowser(this.platformId);
+              this.urlCredentialsNovelsDb = this.globals.urlCredentialsNovelsDb;
   }
 
   userIsAdmin() {
-    const token = localStorage.getItem('sknvl_s');
-    if (token) {
-      const jwtData = token.split('.')[1];
-      const decodedJwtJsonData = window.atob(jwtData);
-      const decodedJwtData = JSON.parse(decodedJwtJsonData);
-      if (decodedJwtData.user_rol === 'Admin') {
-        return true;
+    if (this.isBrowser) {
+      const token = localStorage.getItem('sknvl_s');
+      if (token) {
+        const jwtData = token.split('.')[1];
+        const decodedJwtData = JSON.parse(atob(jwtData));
+        if (decodedJwtData.user_rol === 'Admin') {
+          return true;
+        } else {
+          return false;
+        }
       } else {
         return false;
       }
@@ -40,7 +50,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb }/admin-create-genre`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-create-genre`;
     return this.http.post(url, genre, httpOptions);
   }
 
@@ -52,7 +62,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb }/admin-update-genre`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-update-genre`;
     console.log(genre);
     return this.http.put(url , genre, httpOptions);
   }
@@ -65,7 +75,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb }/admin-delete-genre/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-delete-genre/${id}`;
     return this.http.delete(url, httpOptions);
   }
 
@@ -77,7 +87,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-novel/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-novel/${id}`;
     console.log(url);
     return this.http.get(url, httpOptions);
   }
@@ -91,7 +101,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-novels`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-novels`;
     console.log(url);
     return this.http.get(url, httpOptions);
   }
@@ -104,7 +114,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-update-novel`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-update-novel`;
     return this.http.put(url, novel, httpOptions);
   }
 
@@ -116,7 +126,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-delete-novel/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-delete-novel/${id}`;
     return this.http.delete(url, httpOptions);
   }
 
@@ -128,7 +138,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-update-volume`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-update-volume`;
     return this.http.put(url, volume, httpOptions);
   }
 
@@ -140,7 +150,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-delete-volume/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-delete-volume/${id}`;
     return this.http.delete(url, httpOptions);
   }
 
@@ -152,7 +162,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-get-chapter/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-get-chapter/${id}`;
     console.log(url);
     return this.http.get(url, httpOptions);
   }
@@ -165,7 +175,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-update-chapters`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-update-chapters`;
     return this.http.put(url, chapter, httpOptions);
   }
 
@@ -177,7 +187,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-delete-chapter/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-delete-chapter/${id}`;
     return this.http.delete(url, httpOptions);
   }
 
@@ -190,7 +200,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-users`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-users`;
     console.log(url);
     return this.http.get(url, httpOptions);
   }
@@ -203,7 +213,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-user/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-user/${id}`;
     console.log(url);
     return this.http.get(url, httpOptions);
   }
@@ -216,7 +226,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb }/admin-update-user`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-update-user`;
     return this.http.put(url , user, httpOptions);
   }
 
@@ -229,7 +239,7 @@ export class AdminService {
       withCredentials: true
     };
 
-    const url = `${ this.urlnovelsdb }/admin-delete-user/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-delete-user/${id}`;
     return this.http.delete(url, httpOptions);
   }
 
@@ -241,13 +251,13 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-get-forum-posts`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-get-forum-posts`;
     console.log(url);
     return this.http.get(url, httpOptions);
   }
 
   adminUpdateForumPost(jwt: string, post: any) {
-    const url = `${ this.urlnovelsdb }/admin-update-forum-post`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-update-forum-post`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -259,7 +269,7 @@ export class AdminService {
   }
 
   adminDeleteForumPost(jwt: string, id: string) {
-    const url = `${this.urlnovelsdb}/admin-delete-forum-post/${id}`;
+    const url = `${this.urlCredentialsNovelsDb}/admin-delete-forum-post/${id}`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -271,7 +281,7 @@ export class AdminService {
   }
 
   adminDeletePostComment(jwt: string, id: string) {
-    const url = `${this.urlnovelsdb}/admin-delete-post-comment/${id}`;
+    const url = `${this.urlCredentialsNovelsDb}/admin-delete-post-comment/${id}`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -283,7 +293,7 @@ export class AdminService {
   }
 
   adminUpdatePostComment(jwt: string, postComment: PostComment) {
-    const url = `${ this.urlnovelsdb }/admin-update-post-comment`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-update-post-comment`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -302,13 +312,13 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb}/admin-get-categories`;
+    const url = `${ this.urlCredentialsNovelsDb}/admin-get-categories`;
     console.log(url);
     return this.http.get(url, httpOptions);
   }
 
   adminCreateCategory(jwt: string, category: any) {
-    const url = `${ this.urlnovelsdb }/admin-create-forum-category`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-create-forum-category`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -321,7 +331,7 @@ export class AdminService {
   }
 
   adminUpdateCategory(jwt: string, category: any) {
-    const url = `${ this.urlnovelsdb }/admin-update-forum-category`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-update-forum-category`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -333,7 +343,7 @@ export class AdminService {
   }
 
   adminDeleteCategory(jwt: string, id: string) {
-    const url = `${this.urlnovelsdb}/admin-delete-forum-category/${id}`;
+    const url = `${this.urlCredentialsNovelsDb}/admin-delete-forum-category/${id}`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -352,7 +362,7 @@ export class AdminService {
       }),
       withCredentials: true,
     };
-    const url = `${ this.urlnovelsdb }/admin-panel`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-panel`;
     return this.http.get(url, httpOptions);
   }
 
@@ -373,7 +383,7 @@ export class AdminService {
       }),
       withCredentials: true,
     };
-    const url = `${ this.urlnovelsdb }/admin-get-advertisements`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-get-advertisements`;
     return this.http.get(url, httpOptions);
   }
 
@@ -385,7 +395,7 @@ export class AdminService {
       }),
       withCredentials: true,
     };
-    const url = `${ this.urlnovelsdb }/admin-get-advertisement/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-get-advertisement/${id}`;
     return this.http.get(url, httpOptions);
   }
 
@@ -397,7 +407,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb }/admin-create-advertisement`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-create-advertisement`;
     return this.http.post(url, advertisement, httpOptions);
   }
 
@@ -409,7 +419,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb }/admin-update-advertisement`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-update-advertisement`;
     return this.http.put(url , advertisement, httpOptions);
   }
 
@@ -421,7 +431,7 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb }/admin-delete-advertisement/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-delete-advertisement/${id}`;
     return this.http.delete(url, httpOptions);
   }
 
@@ -433,13 +443,13 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    const url = `${ this.urlnovelsdb }/admin-create-recommended-novel/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-create-recommended-novel/${id}`;
     return this.http.post(url, null, httpOptions);
   }
 
   AdminUploadImage(jwt: string, id: number, file: File, img: string) {
     console.log(id);
-    const url = `${ this.urlnovelsdb }/admin-upload-advertisement-img/${id}`;
+    const url = `${ this.urlCredentialsNovelsDb }/admin-upload-advertisement-img/${id}`;
     const appendType = 'advertisement_image';
     const oldAppendType = 'old_advertisement_image';
     return new Promise((resolve, reject) => {

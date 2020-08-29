@@ -16,6 +16,7 @@ export class UserNovelsComponent implements OnInit {
   searchText: string;
   currentTab = 'novel';
   loading = true;
+  componentName = 'UserNovelsComponent';
 
   constructor(private router: Router,
               private us: UsersService) {}

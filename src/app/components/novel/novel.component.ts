@@ -11,7 +11,6 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Novel, User } from 'src/app/models/models';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Meta, Title } from '@angular/platform-browser';
 import { PageService } from '../../services/page.service';
 
@@ -26,15 +25,14 @@ export class NovelComponent implements OnInit {
   @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
   public successSnackMessage: string;
   public errorSnackMessage: string;
-  public Editor = ClassicEditor;
   novel: Novel;
   user: User;
   currentTab = 'info';
   newRatingForm: FormGroup;
   mobile: boolean;
   loading = true;
-  panelOpenState = false;
   novelChaptersForWeeks = 0;
+  componentName = 'NovelComponent';
 
     constructor(private ns: NovelsService,
                 private activatedRoute: ActivatedRoute,
@@ -226,6 +224,10 @@ export class NovelComponent implements OnInit {
     } else {
       rating.edition = false;
     }
+  }
+
+  openLoginForm() {
+    this.hs.openExternalFunction('loginForm');
   }
 
   deleteRating(rating: any) {

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
 import { UsersService } from '../../services/users.service';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
-
 
 @Component({
   selector: 'app-admin-panel',
@@ -13,16 +12,16 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 export class AdminPanelComponent implements OnInit {
 
   mobile: boolean;
+  componentName = 'AdminPanelComponent';
+  adminVerificated = false;
+  loading = true;
 
-  constructor(private route: ActivatedRoute,
-              public router: Router,
+  constructor(public router: Router,
               public breakpointObserver: BreakpointObserver,
               private us: UsersService,
               private as: AdminService) { }
-  adminVerificated = false;
-  currentView = 'panel';
-  ngOnInit(): void {
 
+  ngOnInit(): void {
     this.breakpointObserver
     .observe([Breakpoints.Large = '(max-width: 1151px)'])
     .subscribe((state: BreakpointState) => {
@@ -33,12 +32,13 @@ export class AdminPanelComponent implements OnInit {
       }
     });
 
-    // Verificando administrador
     this.as.adminPanelAccess(this.us.getUserLoged().token).subscribe((data: any) => {
-      console.log(data);
       if (data.status === 200) {
         this.adminVerificated = true;
-        // this.router.navigate(['/panel/administracion-de-pagina-de-inicio']);
+        this.loading = false;
+        if (this.router.url === '/panel') {
+          this.router.navigate(['/panel/administracion-de-pagina-de-inicio']);
+        }
       } else {
         this.router.navigate(['']);
         this.as.adminPanelErrorHandler(null, true);
@@ -48,6 +48,10 @@ export class AdminPanelComponent implements OnInit {
       this.router.navigate(['']);
       this.as.adminPanelErrorHandler(error, false);
     });
+  }
+
+  goToLink(link: string) {
+    this.router.navigate([link]);
   }
 
 }

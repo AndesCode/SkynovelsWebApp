@@ -5,7 +5,7 @@
             <mat-label>Filtrar</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Buscar usuario" autocomplete="off">
         </mat-form-field>
-        <div class="skn-loading" *ngIf="loading">
+        <div class="skn-loading" style="height: 15vh;" *ngIf="loading">
             <mat-spinner></mat-spinner>
         </div>
         <table mat-table [dataSource]="dataSource" class="skn-secondary w-100" matSort>

@@ -2,8 +2,9 @@
     <mat-spinner></mat-spinner>
 </div>
 <main *ngIf="!loading">
-    <section>
-        <div class="swiper-container" [swiper]="swiperHomeConfig">
+
+    <section style="margin: 0.5rem;">
+        <div class="swiper-container skn-home-swiper skn-secondary" [swiper]="swiperHomeConfig">
             <div class="swiper-wrapper" style="max-height: 500px;">
                 <div class="swiper-slide skn-swiper-banner-slide" *ngFor="let advertisement of advertisements">
                     <a [routerLink]="['/noticias', advertisement.id, advertisement.adv_name]">
@@ -11,13 +12,16 @@
                     </a>
                 </div>
             </div>
+            <div class="swiper-button-prev unstyled-a-tag" *ngIf="!mobile" style="margin-left: 2rem;"></div>
+            <div class="swiper-button-next unstyled-a-tag" *ngIf="!mobile" style="margin-right: 2rem;"></div>
         </div>
     </section>
+
     <!-- -------------------------------------------------------------------------- 
                                    TOP NOVELAS                               
      --------------------------------------------------------------------------  -->
 
-    <section class="container">
+    <section class="container container-home">
         <div class="skn-home-title">
             <h2>Top Novelas</h2>
         </div>
@@ -33,10 +37,35 @@
                         </div>
                     </a>
                 </div>
+
+                <!-- eliminar-->
+                <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let topNovel of topNovels">
+                    <a class="unstyled-a-tag" [routerLink]="['/novelas', topNovel.id, topNovel.nvl_name]">
+                        <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
+                            <div class="skn-swiper-novel-slide-img-container">
+                                <img class="skn-top-nvl-img " [src]="topNovel.nvl_img | noimage" alt=" ">
+                            </div>
+                            <strong style="word-wrap: break-word;">{{ps.setContent(topNovel.nvl_title, 40)}}</strong>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let topNovel of topNovels">
+                    <a class="unstyled-a-tag" [routerLink]="['/novelas', topNovel.id, topNovel.nvl_name]">
+                        <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
+                            <div class="skn-swiper-novel-slide-img-container">
+                                <img class="skn-top-nvl-img " [src]="topNovel.nvl_img | noimage" alt=" ">
+                            </div>
+                            <strong style="word-wrap: break-word;">{{ps.setContent(topNovel.nvl_title, 40)}}</strong>
+                        </div>
+                    </a>
+                </div>
             </div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-pagination" id></div>
+
+            <!-- eliminar-->
+
+            <div class="swiper-button-prev" *ngIf="!mobile"></div>
+            <div class="swiper-button-next" *ngIf="!mobile"></div>
         </div>
 
         <!-- -------------------------------------------------------------------------- 
@@ -58,8 +87,37 @@
                         </div>
                     </a>
                 </div>
+
+                <!-- eliminar-->
+
+                <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let recentNovel of recentNovels">
+                    <a class="unstyled-a-tag" [routerLink]="['/novelas', recentNovel.id, recentNovel.nvl_name]">
+                        <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
+                            <div class="skn-swiper-novel-slide-img-container">
+                                <img class="skn-top-nvl-img " [src]="recentNovel.nvl_img | noimage" alt=" ">
+                            </div>
+                            <strong style="word-wrap: break-word;">{{ps.setContent(recentNovel.nvl_title, 40)}}</strong>
+                        </div>
+                    </a>
+                </div>
+
+
+                <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let recentNovel of recentNovels">
+                    <a class="unstyled-a-tag" [routerLink]="['/novelas', recentNovel.id, recentNovel.nvl_name]">
+                        <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
+                            <div class="skn-swiper-novel-slide-img-container">
+                                <img class="skn-top-nvl-img " [src]="recentNovel.nvl_img | noimage" alt=" ">
+                            </div>
+                            <strong style="word-wrap: break-word;">{{ps.setContent(recentNovel.nvl_title, 40)}}</strong>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- eliminar-->
             </div>
-            <div class="swiper-pagination" id></div>
+
+            <div class="swiper-button-prev" *ngIf="!mobile"></div>
+            <div class="swiper-button-next" *ngIf="!mobile"></div>
         </div>
 
         <div class="skn-home-title">
@@ -150,130 +208,3 @@
         </div>
     </section>
 </main>
-
-<!-- -------------------------------------------------------------------------- 
-                               RECOMENDADAS                               
- --------------------------------------------------------------------------  
-
-<section class="skn-recom-section container">
-    <h2>
-        Novela Recomendada
-    </h2>
-    <div class="skn-recom-wrapper">
-        <aside class="skn-recom-side-container" [ngClass]="{'d-none': mobile}">
-            <div class="body" style="width: 100%; height: 100%;">
-                <div class="d-block img">
-                    <img [src]="recomended.nvl_img" alt=" " class="recomended-img img ">
-                </div>
-                <div class="d-block title">
-                    <h5 class="card-title"> {{recomended.nvl_title}} </h5>
-                </div>
-                <div class="d-block">
-                    <p class="card-text content">
-                        {{_hs.setContent(recomended.nvl_title, 100)}}
-                    </p>
-                </div>
-                <div class="d-block rating">
-                    <ngb-rating [(rate)]='recomended.nvl_rating' max='5' [readonly]="true">
-                        <ng-template let-fill="fill" let-index="index">
-                            <span class="rating-star" [class.filled]="fill === 100" [class.nfilled]="fill !== 100">
-                                <span class="half" [style.width.%]="fill">
-                                    <i class="material-icons" style="font-size: 2em;">
-
-                                    </i>
-                                </span>
-                            </span>
-                        </ng-template>
-                    </ngb-rating>
-                </div>
-            </div>
-            <div class="footer" style="width: 100%; height: 100%;">
-                <footer><small>HOLAs</small></footer>
-            </div>
-        </aside> -->
-<!-- -------------------------------------------------------------------------- 
-                               CARTA ULTIMA NOVELAS - MOVIL                           
- --------------------------------------------------------------------------  
-
-        <div class="m-skn-recom-novel-row container" [ngClass]="{'d-none' : !mobile}">
-            <div class="m-skn-recom-novel-container" *ngFor="let mobileCatalog of lastNovels | slice: 0:6">
-                <div class="m-skn-recom-novel-wrapper ">
-                    <div class="m-skn-recom-novel-container-img ">
-                        <img [src]="mobileCatalog.nvl_img" alt="">
-                    </div>
-                    <div class="m-skn-recom-novel-body">
-                        <ul class="m-skn-recom-novel-body-wrapper">
-                            <li class="m-skn-recom-novel-title" style="list-style: none;">
-                                {{_hs.setContent(mobileCatalog.nvl_title, 30)}}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-<!-- -------------------------------------------------------------------------- 
-                               CARTA ULTIMAS NOVELAS - DESKTOP                               
- --------------------------------------------------------------------------  
-
-        <div class="skn-recom-novels-wrapper" *ngFor="let catalog of lastNovels; let i = index" [ngClass]="{'d-none': mobile}">
-            <div class="catalog{{i}}" style="height: 100%;">
-                <div class="catalog-card">
-                    <div class="catalog-img-container">
-                        <img class="catalog-img" [src]="catalog?.nvl_img">
-                    </div>
-                    <div class="catalog-body">
-                        <div class="title">
-                            <p> {{_hs.setContent(catalog.nvl_title, 30)}} </p>
-                        </div>
-                        <footer>
-                            <span class="icon">
-                                <span>
-                                    <mat-icon>watch_later</mat-icon>
-                                </span>
-                            <small>40min</small>
-                            </span>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
-<!-- -------------------------------------------------------------------------- 
-                               ULTIMOS CAPITULOS                                
- --------------------------------------------------------------------------  
-<section class="lastChapters container">
-    <h2>Utlimos capitulos</h2>
-    <div class="skn-chapters-row row">
-        <div class="skn-chapters-container" *ngFor="let chapters of lastChapters; let i=index" [ngClass]="{'col-12': mobile, 'col-6': !mobile}">
-            <div class="skn-chapter-card">
-                <div class="skn-nvl-card-img">
-                    <img [src]="chapters.nvl_img" alt="">
-                </div>
-                <ul class="skn-chapter-card-info">
-                    <li class="skn-chapter-wrapper">
-                        <div class="c-title">
-                            <strong>{{chapters?.nvl_title}}</strong>
-                        </div>
-                    </li>
-                    <li class="skn-chapter-wrapper">
-                        <div class="c-chapters">
-                            <small>Capitulo: {{chapters?.chapters.length}}</small>
-                        </div>
-                    </li>
-                    <li class="skn-chapter-wrapper">
-                        <div class="c-autor">
-                            <small>Autor: {{chapters?.author.author_login}} <br/> </small> <small> Tradutor: Mi prima la coja </small>
-                        </div>
-                    </li>
-                </ul>
-                <div class="skn-chapter-card-update-time">
-                    <div class="d-flex align-content-center c-footer"> <i class="material-icons">
-                        watch_later
-                        </i> Hace 30 minutoazos
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>-->

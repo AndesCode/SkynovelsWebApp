@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter  } from '@angular/core';
 import * as moment from 'moment';
+import { Globals } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,11 @@ export class HelperService {
   invokeExternalFunction = new EventEmitter();
   sendCurrentComponnent = new EventEmitter();
 
-  private urlnovelsdb: string;
-  constructor() {
-    this.urlnovelsdb = '/api';
+  private urlCredentialsNovelsDb: string;
+  constructor(private globals: Globals) {
+    this.urlCredentialsNovelsDb = this.globals.urlCredentialsNovelsDb;
   }
+
 
   openExternalFunction(functionCalled: string) {
     this.invokeExternalFunction.emit(functionCalled);
@@ -181,7 +183,13 @@ export class HelperService {
         rating /= ratings.length;
       }
     }
-    return rating;
+    return Number(rating.toFixed(1));
+  }
+
+  closeMatExpansionPanel(object: any) {
+    setTimeout(() => {
+      object.open = false;
+    }, 500);
   }
 
   uploadImage(id: any, file: File, img: string, imageType: 'novel' | 'user') {
@@ -189,12 +197,12 @@ export class HelperService {
     let appendType: string;
     let oldAppendType: string;
     if (imageType === 'novel') {
-      url = `${ this.urlnovelsdb }/upload-novel-img/${id}`;
+      url = `${ this.urlCredentialsNovelsDb }/upload-novel-img/${id}`;
       appendType = 'novel_image';
       oldAppendType = 'old_novel_image';
     }
     if (imageType === 'user') {
-      url = `${ this.urlnovelsdb }/upload-user-profile-img/${id}`;
+      url = `${ this.urlCredentialsNovelsDb }/upload-user-profile-img/${id}`;
       appendType = 'user_profile_image';
       oldAppendType = 'old_user_profile_image';
     }

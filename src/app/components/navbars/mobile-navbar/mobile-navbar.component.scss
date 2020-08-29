@@ -48,17 +48,20 @@ nav:hover {
         height: 100%;
         width: 100%;
         text-align: left;
-        padding: 1em;
+        padding: 0px 1em;
         hr {
             display: block;
             color: #626973;
             background-color: #626973;
         }
         .skn-mobile-navbar-header {
-            margin: 10px 1.2rem;
-            display: inline-flex;
-            h4 {
-                margin: auto auto auto 4px;
+            display: flex;
+            width: 100%;
+            margin-top: 0.3rem;
+            justify-content: center;
+            img {
+                width: 2.5rem;
+                height: 2.5rem;
             }
         }
         .skn-mobile-navbar-section {

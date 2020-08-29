@@ -15,29 +15,6 @@ import { PageService } from '../../services/page.service';
 })
 export class HomeComponent implements OnInit {
 
-  public swiperMobileConfig: SwiperConfigInterface = {
-    spaceBetween: 10,
-    observer: true,
-    autoHeight: false,
-    grabCursor: true,
-    slidesPerView: 2,
-    centeredSlides: true,
-    pagination: {
-      clickable: true
-    }
-  };
-
-  public swiperTopConfig: SwiperConfigInterface = {
-    observer: true,
-    spaceBetween: 0,
-    mousewheel: false,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-
-};
-
   public swiperHomeConfig: SwiperConfigInterface = {
     spaceBetween: 12,
     observer: true,
@@ -46,7 +23,18 @@ export class HomeComponent implements OnInit {
     roundLengths: true,
     centeredSlides: true,
     initialSlide: 0,
-    mousewheel: false
+    mousewheel: false,
+    autoplay: {
+      delay: 6000,
+      disableOnInteraction: true,
+    },
+  };
+
+  public swiperTopConfig: SwiperConfigInterface = {
+    observer: true,
+    spaceBetween: 0,
+    mousewheel: false,
+
   };
 
   recentNovels: Array<Novel>;
@@ -57,13 +45,13 @@ export class HomeComponent implements OnInit {
   mobile: boolean;
   swiperConfigured = false;
   loading = true;
+  componentName = 'HomeComponent';
 
   constructor(
-    public ns: NovelsService,
-    public router: Router,
-    public breakpointObserver: BreakpointObserver,
+    private ns: NovelsService,
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
     public hs: HelperService,
-    public us: UsersService,
     public ps: PageService
   ) {}
 

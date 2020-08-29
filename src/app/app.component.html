@@ -1,6 +1,4 @@
-<html>
-
-<body #skynovelBody theme="light" id="content-container">
+<div #skynovelBody id="content-container" class="skn-body">
     <div class="app-nav-bar skn-main" *ngIf="currentComponent !== 'ChaptersComponent'">
         <app-navbar></app-navbar>
     </div>
@@ -9,6 +7,4 @@
         <router-outlet (activate)='onActivate($event)'></router-outlet>
     </div>
     <app-footer *ngIf="currentComponent !== 'ChaptersComponent' && currentComponent !=='AdminPanelComponent'"></app-footer>
-</body>
-
-</html>
+</div>

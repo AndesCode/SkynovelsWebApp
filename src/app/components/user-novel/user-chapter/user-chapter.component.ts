@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID } from '@angular/core';
 import { NovelsService } from '../../../services/novels.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Novel, Chapter, Volume } from 'src/app/models/models';
-import { Location } from '@angular/common';
+import { Location, isPlatformBrowser } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-user-chapter',
@@ -16,10 +15,8 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 })
 export class UserChapterComponent implements OnInit {
 
-  public Editor = ClassicEditor;
-  public ckEditorConfig = {
-    toolbar: [ 'heading', '|', 'bold', 'italic' ]
-  };
+  public Editor;
+  public ckEditorConfig;
   @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
   @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
   @ViewChild('confirmExitComponentModal') confirmExitComponentModalref: TemplateRef<any>;
@@ -32,13 +29,27 @@ export class UserChapterComponent implements OnInit {
   loading = true;
   editableChapter = false;
   uploading = false;
+  isBrowser: boolean;
+  componentName = 'UserChapterComponent';
 
   constructor(private ns: NovelsService,
               private activatedRoute: ActivatedRoute,
               private location: Location,
               private router: Router,
               public dialog: MatDialog,
-              public matSnackBar: MatSnackBar) { }
+              public matSnackBar: MatSnackBar,
+              @Inject(PLATFORM_ID) private platformId) {
+
+              this.isBrowser = isPlatformBrowser(this.platformId);
+              if (this.isBrowser) {
+                const ClassicEditor = require('@ckeditor/ckeditor5-build-classic');
+                this.Editor = ClassicEditor;
+                this.ckEditorConfig = {
+                  toolbar: [ 'heading', '|', 'bold', 'italic' ]
+                };
+              }
+
+  }
 
     // modal service.
     openDialogSheet(template: TemplateRef<any>): void {

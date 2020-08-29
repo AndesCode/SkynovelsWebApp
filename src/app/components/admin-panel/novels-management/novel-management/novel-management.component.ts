@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -7,10 +7,10 @@ import { HelperService } from 'src/app/services/helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UsersService } from '../../../../services/users.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Novel, Genre, User, Chapter, Volume } from 'src/app/models/models';
 import { AdminService } from '../../../../services/admin.service';
 import { PageService } from '../../../../services/page.service';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Component({
@@ -20,11 +20,8 @@ import { PageService } from '../../../../services/page.service';
 })
 export class NovelManagementComponent implements OnInit {
 
-  panelOpenState = false;
-  public Editor = ClassicEditor;
-  public ckEditorConfig = {
-    toolbar: [ 'heading', '|', 'bold', 'italic' ]
-  };
+  public Editor;
+  public ckEditorConfig;
   @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
   @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
   public successSnackMessage: string;
@@ -42,16 +39,28 @@ export class NovelManagementComponent implements OnInit {
   uploading = false;
   novelPublished = false;
   chapterEdition = false;
+  isBrowser: boolean;
 
-    constructor( private activatedRoute: ActivatedRoute,
-                 public ns: NovelsService,
-                 public ps: PageService,
-                 private as: AdminService,
-                 private us: UsersService,
-                 public hs: HelperService,
-                 private router: Router,
-                 public dialog: MatDialog,
-                 public matSnackBar: MatSnackBar) {}
+    constructor(private activatedRoute: ActivatedRoute,
+                public ns: NovelsService,
+                public ps: PageService,
+                private as: AdminService,
+                private us: UsersService,
+                public hs: HelperService,
+                private router: Router,
+                public dialog: MatDialog,
+                public matSnackBar: MatSnackBar,
+                @Inject(PLATFORM_ID) private platformId) {
+
+                this.isBrowser = isPlatformBrowser(this.platformId);
+                if (this.isBrowser) {
+                  const ClassicEditor = require('@ckeditor/ckeditor5-build-classic');
+                  this.Editor = ClassicEditor;
+                  this.ckEditorConfig = {
+                    toolbar: [ 'heading', '|', 'bold', 'italic' ]
+                  };
+                }
+    }
 
   openDialogSheet(template: TemplateRef<any>): void {
     this.dialog.open(template);

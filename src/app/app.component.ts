@@ -1,8 +1,9 @@
-import { Component, ViewChild, AfterViewInit, Renderer2, ElementRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, Routes, ActivatedRoute } from '@angular/router';
 import { HelperService } from './services/helper.service';
 import { filter } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 import * as Cookies from 'js-cookie';
 
 @Component({
@@ -11,21 +12,20 @@ import * as Cookies from 'js-cookie';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  // SET GLOBAL group_concat_max_len = 999999999999999999;
   @ViewChild('skynovelBody') skynovelBodyRef: ElementRef;
   title = 'SkynovelsWebPage';
   themeToggled = false;
   currentComponent = null;
   scrollPosition = 0;
+  isBrowser: boolean;
   constructor(public hs: HelperService,
               private router: Router,
-              private renderer: Renderer2) {
+              private activatedRoute: ActivatedRoute,
+              // private renderer: Renderer2,
+              @Inject(PLATFORM_ID) private platformId) {
 
-              const navEndEvents$ = this.router.events
-                 .pipe(
-                   filter(event => event instanceof NavigationEnd)
-                 );
-
+              this.isBrowser = isPlatformBrowser(this.platformId);
+              const navEndEvents$ = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
               navEndEvents$.subscribe((event: NavigationEnd) => {
                    console.log(event.urlAfterRedirects);
                   /*gtag('config', 'xxxxxx', {
@@ -46,22 +46,34 @@ export class AppComponent implements AfterViewInit {
   }
 
   toggleTheme() {
-    console.log('toogling');
-    if (!this.themeToggled) {
-      this.themeToggled = true;
-      this.renderer.setAttribute(this.skynovelBodyRef.nativeElement, 'theme', 'dark');
-      Cookies.set('presence', 'dark');
+    if (this.isBrowser) {
+      console.log('toogling');
+      if (!this.themeToggled) {
+        this.themeToggled = true;
+        // this.renderer.setAttribute(this.skynovelBodyRef.nativeElement, 'theme', 'dark');
+        document.body.setAttribute('theme', 'dark');
+        Cookies.set('presence', 'dark');
+      } else {
+        this.themeToggled = false;
+        // this.renderer.setAttribute(this.skynovelBodyRef.nativeElement, 'theme', 'light');
+        document.body.setAttribute('theme', 'light');
+        Cookies.set('presence', 'light');
+      }
     } else {
-      this.themeToggled = false;
-      this.renderer.setAttribute(this.skynovelBodyRef.nativeElement, 'theme', 'light');
-      Cookies.set('presence', 'light');
+      return;
     }
   }
 
   onActivate(event: any) {
     console.log(event);
-    window.scrollTo(0, 0);
-    this.currentComponent = event.__proto__.constructor.name;
-    this.hs.getCurrentComponent(this.currentComponent); // modificando aqui
+    if (event.componentName) {
+      this.currentComponent = event.componentName;
+      this.hs.getCurrentComponent(this.currentComponent); // modificando aqui
+    } else {
+      this.currentComponent = null;
+    }
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo(0, 0);
+    }
   }
 }

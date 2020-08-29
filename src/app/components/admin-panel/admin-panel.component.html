@@ -1,20 +1,23 @@
-<main class="skn-admin-panel">
+<div class="skn-loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</div>
+<main class="skn-admin-panel" *ngIf="!loading">
     <section class="skn-admin-panel-navbar" *ngIf="!mobile">
         <nav class="skn-admin-navbar skn-main">
             <div class="skn-admin-card-content">
-                <div class="skn-admin-card-section">
-                    <span class="material-icons md-30">home</span>
-                    <a routerLink="administracion-de-pagina-de-inicio" class="nav-mobile-text skn-link unstyled-a-tag" routerLinkActive="nav-link-selected">Inicio</a>
+                <div class="skn-admin-card-section" (click)="goToLink('/panel/administracion-de-pagina-de-inicio')">
+                    <span class="skn-admin-panel-icon material-icons md-30">home</span>
+                    <a routerLink="administracion-de-pagina-de-inicio" class="nav-mobile-text" routerLinkActive="nav-link-selected">Inicio</a>
                 </div>
                 <hr>
-                <div class="skn-admin-card-section">
-                    <span class="material-icons md-30">library_books</span>
-                    <a routerLink="administracion-de-novelas" class="nav-mobile-text skn-link unstyled-a-tag" routerLinkActive="nav-link-selected">Gestión de Novelas</a>
+                <div class="skn-admin-card-section" (click)="goToLink('/panel/administracion-de-novelas')">
+                    <span class="skn-admin-panel-icon material-icons md-30">library_books</span>
+                    <a routerLink="administracion-de-novelas" class="nav-mobile-text" routerLinkActive="nav-link-selected">Gestión de Novelas</a>
                 </div>
                 <hr>
-                <div class="skn-admin-card-section">
-                    <span class="material-icons md-30">perm_identity</span>
-                    <a routerLink="administracion-de-usuarios" class="nav-mobile-text skn-link unstyled-a-tag" routerLinkActive="nav-link-selected">Gestión de usuarios</a>
+                <div class="skn-admin-card-section" (click)="goToLink('/panel/administracion-de-usuarios')">
+                    <span class="skn-admin-panel-icon material-icons md-30">perm_identity</span>
+                    <a routerLink="administracion-de-usuarios" class="nav-mobile-text" routerLinkActive="nav-link-selected">Gestión de usuarios</a>
                 </div>
                 <hr>
             </div>
@@ -27,13 +30,13 @@
         <nav class="skn-admin-navbar skn-main">
             <div class="skn-admin-card-content">
                 <div class="skn-admin-card-section">
-                    <a routerLink="administracion-de-pagina-de-inicio" routerLinkActive="nav-link-selected" class="material-icons skn-admin-panel-icon unstyled-a-tag">home</a>
+                    <a routerLink="administracion-de-pagina-de-inicio" routerLinkActive="nav-link-selected" class="material-icons nav-mobile-text skn-admin-panel-icon">home</a>
                 </div>
                 <div class="skn-admin-card-section">
-                    <a routerLink="administracion-de-novelas" class="material-icons skn-admin-panel-icon unstyled-a-tag" routerLinkActive="nav-link-selected">library_books</a>
+                    <a routerLink="administracion-de-novelas" class="material-icons nav-mobile-text skn-admin-panel-icon" routerLinkActive="nav-link-selected">library_books</a>
                 </div>
                 <div class="skn-admin-card-section">
-                    <a routerLink="administracion-de-usuarios" routerLinkActive="nav-link-selected" class="material-icons skn-admin-panel-icon unstyled-a-tag">perm_identity</a>
+                    <a routerLink="administracion-de-usuarios" routerLinkActive="nav-link-selected" class="material-icons nav-mobile-text skn-admin-panel-icon">perm_identity</a>
                 </div>
             </div>
         </nav>

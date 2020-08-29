@@ -18,6 +18,7 @@ export class AdvertisementComponent implements OnInit {
   advertisement: Advertisement;
   loading = true;
   user: User;
+  componentName = 'AdvertisementComponent';
 
   constructor(private us: UsersService,
               public ps: PageService,

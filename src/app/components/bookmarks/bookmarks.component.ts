@@ -14,6 +14,7 @@ export class BookmarksComponent implements OnInit {
 
   bookmarks: Array<Novel> = [];
   loading = true;
+  componentName = 'BookmarksComponent';
 
   constructor(private us: UsersService,
               private router: Router,

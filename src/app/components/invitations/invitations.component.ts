@@ -17,10 +17,11 @@ export class InvitationsComponent implements OnInit {
   public successSnackMessage: string;
   public errorSnackMessage: string;
   loading = true;
+  componentName = 'InvitationsComponent';
 
   constructor(private us: UsersService,
               private router: Router,
-              public matSnackBar: MatSnackBar,) { }
+              public matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.us.getUserInvitations().subscribe((data: any) => {
