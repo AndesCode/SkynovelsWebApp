@@ -104,10 +104,10 @@ export class NovelComponent implements OnInit {
           }
         }
       }
+      console.log(this.novel.volumes);
       const lastVolume = this.novel.volumes[this.novel.volumes.length - 1];
       this.novel.nvl_last_chapter = lastVolume.chapters[lastVolume.chapters.length - 1];
       this.getUser();
-      console.log(data.novel);
       this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name);
       this.loading = false;
     }, error => {

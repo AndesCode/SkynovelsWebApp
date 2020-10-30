@@ -254,7 +254,6 @@ export class UserNovelComponent implements OnInit {
           this.novelStatusEditable = false;
           this.disableNovel();
         }
-        // this.disableNovel();
       }
     }
   }
@@ -355,6 +354,7 @@ export class UserNovelComponent implements OnInit {
     }, error => {
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
+      console.log(error.error.message);
       this.uploading = false;
     });
   }
