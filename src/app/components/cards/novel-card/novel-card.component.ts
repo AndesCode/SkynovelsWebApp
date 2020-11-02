@@ -23,6 +23,7 @@ export class NovelCardComponent implements OnChanges {
   @Input() orderBy: string;
   goToNovelLink: string;
   page = 1;
+  itemsPerPage: number;
 
   constructor(public hs: HelperService,
               public ps: PageService,
@@ -50,8 +51,10 @@ export class NovelCardComponent implements OnChanges {
       }
     }
     if (this.clickRoute === 'userNovel') {
+      this.itemsPerPage = 9999;
       this.goToNovelLink = '/mis-novelas';
     } else {
+      this.itemsPerPage = 25;
       this.goToNovelLink = '/novelas';
     }
   }

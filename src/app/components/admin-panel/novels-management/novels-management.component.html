@@ -90,7 +90,7 @@
         </div>
         <div class="modal-footer">
             <button mat-raised-button color="warn" (click)="openBottomSheet(deleteGenreModal); dialog.closeAll();" [disabled]="uploading" style="margin-right: 15px;">Eliminar</button>
-            <button mat-raised-button color="primary" (click)="updateGenre()" [disabled]="uploading || updateGenreForm.invalid">Actualizar</button>
+            <button mat-raised-button color="primary" (click)="updateGenre()" [disabled]="uploading || updateGenreForm.invalid || !updateGenreForm.dirty">Actualizar</button>
         </div>
     </div>
 </ng-template>
