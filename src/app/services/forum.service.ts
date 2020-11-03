@@ -1,8 +1,8 @@
-import { Injectable  } from '@angular/core';
+import { Injectable, isDevMode  } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from '../models/post';
 import { PostComment } from '../models/post-comment';
-import { Globals } from '../config/config';
+import { Dev, Prod } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ import { Globals } from '../config/config';
 export class ForumService {
 
   private urlNovelsDb: string;
+  private urlCredentialsNovelsDb: string;
   private GlobalhttpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
@@ -18,8 +19,15 @@ export class ForumService {
   };
 
   constructor(private http: HttpClient,
-              private globals: Globals) {
-    this.urlNovelsDb = this.globals.urlNovelsDb;
+              private dev: Dev,
+              private prod: Prod) {
+    if (isDevMode()) {
+      this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
+      this.urlNovelsDb = this.dev.urlNovelsDb;
+    } else {
+      this.urlCredentialsNovelsDb = this.prod.urlCredentialsNovelsDb;
+      this.urlNovelsDb = this.prod.urlNovelsDb;
+    }
   }
 
   getForumCategories()  {
@@ -62,7 +70,7 @@ export class ForumService {
     return this.http.post(url, postComment, this.GlobalhttpOptions);
   }
 
-  updatePostComment (postComment: PostComment) {
+  updatePostComment(postComment: PostComment) {
     const url = `${this.urlNovelsDb}/update-post-comment`;
     return this.http.put(url , postComment, this.GlobalhttpOptions);
   }

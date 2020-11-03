@@ -1,9 +1,9 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HelperService } from './helper.service';
 import { PostComment } from '../models/post-comment';
 import { User, Novel, Genre, Advertisement, Volume, Chapter } from '../models/models';
-import { Globals } from '../config/config';
+import { Dev, Prod } from '../config/config';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
@@ -16,11 +16,16 @@ export class AdminService {
 
   constructor(private http: HttpClient,
               private hs: HelperService,
-              private globals: Globals,
+              private dev: Dev,
+              private prod: Prod,
               @Inject(PLATFORM_ID) private platformId) {
 
               this.isBrowser = isPlatformBrowser(this.platformId);
-              this.urlCredentialsNovelsDb = this.globals.urlCredentialsNovelsDb;
+              if (isDevMode()) {
+                this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
+              } else {
+                this.urlCredentialsNovelsDb = this.prod.urlCredentialsNovelsDb;
+              }
   }
 
   userIsAdmin() {

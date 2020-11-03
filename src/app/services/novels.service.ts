@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Novel, NovelRating, Volume, Chapter } from '../models/models';
-import { Globals } from '../config/config';
+import { Dev, Prod } from '../config/config';
 
 
 @Injectable({
@@ -20,9 +20,16 @@ export class NovelsService {
   };
 
   constructor(private http: HttpClient,
-              private globals: Globals) {
-    this.urlNovelsDb = this.globals.urlNovelsDb;
-    this.urlCredentialsNovelsDb = this.globals.urlCredentialsNovelsDb;
+              private dev: Dev,
+              private prod: Prod) {
+    if (isDevMode()) {
+      console.log('desarrollo');
+      this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
+      this.urlNovelsDb = this.dev.urlNovelsDb;
+    } else {
+      this.urlCredentialsNovelsDb = this.prod.urlCredentialsNovelsDb;
+      this.urlNovelsDb = this.prod.urlNovelsDb;
+    }
   }
 
     // Novels

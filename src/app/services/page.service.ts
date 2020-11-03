@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Reply, Comment, User, Like } from '../models/models';
 import { HelperService } from './helper.service';
 import { NgForm } from '@angular/forms';
-import { Globals } from '../config/config';
+import { Dev, Prod } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +21,15 @@ export class PageService {
 
   constructor(private http: HttpClient,
               private hs: HelperService,
-              private globals: Globals) {
-    this.urlNovelsDb = this.globals.urlNovelsDb;
-    this.urlCredentialsNovelsDb = this.globals.urlCredentialsNovelsDb;
+              private dev: Dev,
+              private prod: Prod) {
+                if (isDevMode()) {
+                  this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
+                  this.urlNovelsDb = this.dev.urlNovelsDb;
+                } else {
+                  this.urlCredentialsNovelsDb = this.prod.urlCredentialsNovelsDb;
+                  this.urlNovelsDb = this.prod.urlNovelsDb;
+                }
   }
 
   createCommentFunction(user: User, object: any, objectType: 'chp_id' | 'adv_id') {

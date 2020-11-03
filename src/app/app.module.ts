@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TransferHttpCacheModule } from '@nguniversal/common';
-import { Globals } from './config/config';
+import { Dev, Prod } from './config/config';
 // Material
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -190,7 +190,8 @@ const config: SwiperConfigInterface = {
       useValue: config
     },
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
-    Globals
+    Prod,
+    Dev
   ],
   bootstrap: [AppComponent]
 })

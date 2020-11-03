@@ -1,7 +1,7 @@
-import { Injectable  } from '@angular/core';
+import { Injectable, isDevMode  } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Like, User } from '../models/models';
-import { Globals } from '../config/config';
+import { Dev, Prod } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,13 @@ export class LikesService {
   };
 
   constructor(private http: HttpClient,
-              private globals: Globals) {
-    this.urlCredentialsNovelsDb = this.globals.urlCredentialsNovelsDb;
+              private dev: Dev,
+              private prod: Prod) {
+                if (isDevMode()) {
+                  this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
+                } else {
+                  this.urlCredentialsNovelsDb = this.prod.urlCredentialsNovelsDb;
+                }
   }
 
   switchLike(user: User, object: any, objectType: 'adv_id' | 'novel_rating_id' | 'comment_id' | 'reply_id') {

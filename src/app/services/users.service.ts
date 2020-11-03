@@ -1,7 +1,7 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Novel, User, Invitation, LoginUser, NewUser, Bookmark } from '../models/models';
-import { Globals } from '../config/config';
+import { Dev, Prod } from '../config/config';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
@@ -20,12 +20,18 @@ export class UsersService {
   };
 
   constructor(private http: HttpClient,
-              private globals: Globals,
+              private dev: Dev,
+              private prod: Prod,
               @Inject(PLATFORM_ID) private platformId) {
 
               this.isBrowser = isPlatformBrowser(this.platformId);
-              this.urlNovelsDb = this.globals.urlNovelsDb;
-              this.urlCredentialsNovelsDb = this.globals.urlCredentialsNovelsDb;
+              if (isDevMode()) {
+                this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
+                this.urlNovelsDb = this.dev.urlNovelsDb;
+              } else {
+                this.urlCredentialsNovelsDb = this.prod.urlCredentialsNovelsDb;
+                this.urlNovelsDb = this.prod.urlNovelsDb;
+              }
   }
 
   getUserLoged() {

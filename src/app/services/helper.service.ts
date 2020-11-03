@@ -1,6 +1,6 @@
-import { Injectable, EventEmitter  } from '@angular/core';
+import { Injectable, EventEmitter, isDevMode  } from '@angular/core';
 import * as moment from 'moment';
-import { Globals } from '../config/config';
+import { Dev, Prod } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,13 @@ export class HelperService {
   sendCurrentComponnent = new EventEmitter();
 
   private urlCredentialsNovelsDb: string;
-  constructor(private globals: Globals) {
-    this.urlCredentialsNovelsDb = this.globals.urlCredentialsNovelsDb;
+  constructor(private dev: Dev,
+              private prod: Prod) {
+                if (isDevMode()) {
+                  this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
+                } else {
+                  this.urlCredentialsNovelsDb = this.prod.urlCredentialsNovelsDb;
+                }
   }
 
 
