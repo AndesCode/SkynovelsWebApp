@@ -16,6 +16,10 @@ export function app() {
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
   if (isDevMode()) {
     server.use('/api', createProxyMiddleware({ target: 'http://localhost:3000', changeOrigin: true }));
+    console.log('Proxy created to http://localhost:3000');
+  } else {
+    server.use('/api', createProxyMiddleware({ target: 'https://skynovelstesting.a2hosted.com:40000', changeOrigin: true, secure: true }));
+    console.log('Proxy created to https://skynovelstesting.a2hosted.com:40000');
   }
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
