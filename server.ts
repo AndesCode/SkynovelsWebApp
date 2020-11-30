@@ -18,7 +18,7 @@ export function app() {
     server.use('/api', createProxyMiddleware({ target: 'http://localhost:3000', changeOrigin: true }));
     console.log('Proxy created to http://localhost:3000');
   } else {
-    server.use('/api', createProxyMiddleware({ target: 'https://skynovelstesting.a2hosted.com:40000', changeOrigin: true, secure: true }));
+    server.use('/api', createProxyMiddleware({ target: 'https://skynovelstesting.a2hosted.com:40000', changeOrigin: true }));
     console.log('Proxy created to https://skynovelstesting.a2hosted.com:40000');
   }
 
