@@ -7,6 +7,6 @@ export class Dev {
 }
 
 export class Prod {
-    urlNovelsDb = 'https://skynovelstesting.a2hosted.com:40000/api';
+    urlNovelsDb = 'https://skynovelstesting.a2hosted.com/api';
     urlCredentialsNovelsDb = '/api';
 }
