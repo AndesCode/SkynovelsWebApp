@@ -5,54 +5,54 @@
                 <img src="../../../assets/img/008 - SkyNovels V.1/logo/1x/simbolo_rojos.png" height="30">
             </div>
             <hr>
-            <div class="skn-mobile-navbar-section">
+            <div class="skn-mobile-navbar-section" (click)="navigate()">
                 <span class="material-icons md-30">home</span>
-                <a routerLink="" (click)="navigate()" class="nav-mobile-text">Inicio</a>
+                <a routerLink="" class="nav-mobile-text">Inicio</a>
             </div>
             <hr>
-            <div class="skn-mobile-navbar-section">
+            <div class="skn-mobile-navbar-section" (click)="navigate()">
                 <span class="material-icons md-30">library_books</span>
-                <a routerLink="novelas" (click)="navigate()" class="nav-mobile-text" routerLinkActive="nav-link-selected">Novelas</a>
+                <a routerLink="novelas" class="nav-mobile-text" routerLinkActive="nav-link-selected">Novelas</a>
             </div>
             <hr>
-            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()" (click)="navigate()">
                 <span class="material-icons md-30">star</span>
-                <a (click)="navigate()" routerLink="lista-de-lectura" class="nav-mobile-text skn-link" routerLinkActive="nav-link-selected">Lista de lectura</a>
+                <a routerLink="lista-de-lectura" class="nav-mobile-text" routerLinkActive="nav-link-selected">Lista de lectura</a>
             </div>
             <hr *ngIf="us.userIsLoged()">
-            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()" (click)="navigate()">
                 <span class="material-icons md-30">account_circle</span>
-                <a (click)="navigate()" routerLink="{{'perfil/' + this.us.getUserLoged().id + '/' + this.us.getUserLoged().user_login}}" class="nav-mobile-text skn-link" routerLinkActive="nav-link-selected">Perfil</a>
+                <a routerLink="{{'perfil/' + this.us.getUserLoged().id + '/' + this.us.getUserLoged().user_login}}" class="nav-mobile-text" routerLinkActive="nav-link-selected">Perfil</a>
             </div>
             <hr *ngIf="us.userIsLoged()">
-            <div class="skn-mobile-navbar-section" *ngIf="us.userIsEditor()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsEditor()" (click)="navigate()">
                 <span class="material-icons md-30">create</span>
-                <a routerLink="mis-novelas" (click)="navigate()" class="nav-mobile-text" routerLinkActive="nav-link-selected">Mis novelas</a>
+                <a routerLink="mis-novelas" class="nav-mobile-text" routerLinkActive="nav-link-selected">Mis novelas</a>
             </div>
             <hr *ngIf="us.userIsEditor()">
-            <div class="skn-mobile-navbar-section" *ngIf="!us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="!us.userIsLoged()" (click)="openLoginForm(); closeMobileNavbarForm()">
                 <span class="material-icons md-30">face</span>
-                <a (click)="openLoginForm(); closeMobileNavbarForm()" class="nav-mobile-text skn-link">Iniciar Sesión</a>
+                <p class="nav-mobile-text">Iniciar Sesión</p>
             </div>
             <hr *ngIf="!us.userIsLoged()">
-            <div class="skn-mobile-navbar-section" *ngIf="!us.userIsLoged()">
-                <span class="material-icons md-30 skn-link">account_box</span>
-                <a (click)="openRegisterForm(); navigate()" class="nav-mobile-text">Registrarse</a>
+            <div class="skn-mobile-navbar-section" *ngIf="!us.userIsLoged()" (click)="openRegisterForm(); navigate()">
+                <span class="material-icons md-30">account_box</span>
+                <p class="nav-mobile-text">Registrarse</p>
             </div>
             <hr *ngIf="!us.userIsLoged()">
-            <div class="skn-mobile-navbar-section" *ngIf="this.as.userIsAdmin()">
+            <div class="skn-mobile-navbar-section" *ngIf="this.as.userIsAdmin()" (click)="navigate()">
                 <span class="material-icons md-30">settings</span>
-                <a routerLink="panel" (click)="navigate()" class="nav-mobile-text" routerLinkActive="nav-link-selected">Panel de control</a>
+                <a routerLink="panel" class="nav-mobile-text" routerLinkActive="nav-link-selected">Panel de control</a>
             </div>
             <hr *ngIf="this.as.userIsAdmin()">
-            <div class="skn-mobile-navbar-section" *ngIf="us.userIsEditor()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsEditor()" (click)="navigate()">
                 <span class="material-icons md-30">mail</span>
-                <a routerLink="invitaciones" (click)="navigate()" class="nav-mobile-text" routerLinkActive="nav-link-selected">Invitaciones</a>
+                <a routerLink="invitaciones" class="nav-mobile-text" routerLinkActive="nav-link-selected">Invitaciones</a>
             </div>
             <hr *ngIf="us.userIsEditor()">
-            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()" (click)="logout()">
                 <span class="material-icons md-30">block</span>
-                <a (click)="logout()" class="nav-mobile-text skn-link">Cerrar sesión</a>
+                <p class="nav-mobile-text">Cerrar sesión</p>
             </div>
             <hr *ngIf="us.userIsLoged()">
         </div>

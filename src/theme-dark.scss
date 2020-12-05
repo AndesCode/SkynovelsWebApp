@@ -147,6 +147,8 @@ body[theme=dark] {
     .nav-mobile-text {
         color: #626973;
         text-decoration: none;
+        margin: unset;
+        white-space: nowrap;
     }
     .skn-novel-presentation-image-mobile {
         color: #d32f2f!important;
