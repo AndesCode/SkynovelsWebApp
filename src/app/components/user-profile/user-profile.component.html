@@ -1,7 +1,7 @@
 <div class="skn-loading" *ngIf="loading">
     <mat-spinner></mat-spinner>
 </div>
-<main class="container" *ngIf="!loading">
+<article class="container" *ngIf="!loading">
     <div class="skn-secondary skn-user-profile">
         <div class="skn-user-profile-image">
             <img src={{this.imgURL}} [ngStyle]="{height: user?.id === userData.id ? '90%' : '100%'}">
@@ -30,23 +30,26 @@
             <div *ngIf="userData.collaborations.length === 1"> <span class="material-icons">people</span> 1 colaboraciones</div>
         </div>
     </div>
-</main>
-<mat-tab-group style="align-items: center;" dynamicHeight *ngIf="!loading">
-    <mat-tab label="Novelas" *ngIf="userData.novels.length > 0">
-        <div class="container">
-            <section class="row" style="justify-content: center;">
-                <app-novel-card [novels]="userData.novels" [clickRoute]="'novel'"></app-novel-card>
-            </section>
-        </div>
-    </mat-tab>
-    <mat-tab label="Colaboraciones" *ngIf="userData.collaborations.length > 0">
-        <div class="container">
-            <section class="row" style="justify-content: center;">
-                <app-novel-card [novels]="userData.collaborations" [clickRoute]="'novel'"></app-novel-card>
-            </section>
-        </div>
-    </mat-tab>
-</mat-tab-group>
+</article>
+<section>
+    <mat-tab-group style="align-items: center;" dynamicHeight *ngIf="!loading">
+        <mat-tab label="Novelas" *ngIf="userData.novels.length > 0">
+            <div class="container">
+                <section class="row" style="justify-content: center;">
+                    <app-novel-card [novels]="userData.novels" [clickRoute]="'novel'"></app-novel-card>
+                </section>
+            </div>
+        </mat-tab>
+        <mat-tab label="Colaboraciones" *ngIf="userData.collaborations.length > 0">
+            <div class="container">
+                <section class="row" style="justify-content: center;">
+                    <app-novel-card [novels]="userData.collaborations" [clickRoute]="'novel'"></app-novel-card>
+                </section>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</section>
+
 <ng-template #successSnack>
     <div class="skn-snack-success-notification">
         <div class="skn-snack-notification-text">{{successSnackMessage}}</div>

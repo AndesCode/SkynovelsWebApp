@@ -3,6 +3,7 @@ import { UsersService } from '../../services/users.service';
 import { Invitation } from '../../models/models';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'app-invitations',
@@ -21,9 +22,11 @@ export class InvitationsComponent implements OnInit {
 
   constructor(private us: UsersService,
               private router: Router,
-              public matSnackBar: MatSnackBar) { }
+              public matSnackBar: MatSnackBar,
+              private hs: HelperService) { }
 
   ngOnInit(): void {
+    this.hs.updateBrowserMeta('description', 'Invitaciones para colaboración en novelas', 'SkyNovels | Invitaciones');
     this.us.getUserInvitations().subscribe((data: any) => {
       this.userInvitations = data.invitations;
       this.loading = false;

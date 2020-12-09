@@ -11,7 +11,6 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Novel, User } from 'src/app/models/models';
-import { Meta, Title } from '@angular/platform-browser';
 import { PageService } from '../../services/page.service';
 
 @Component({
@@ -45,9 +44,7 @@ export class NovelComponent implements OnInit {
                 public matSnackBar: MatSnackBar,
                 public hs: HelperService,
                 public bottomSheet: MatBottomSheet,
-                public dialog: MatDialog,
-                private meta: Meta,
-                private title: Title) {
+                public dialog: MatDialog) {
                   this.newRatingForm = new FormGroup({
                     novel_id: new FormControl(''),
                     rate_value: new FormControl('0', [Validators.required, Validators.min(1), Validators.max(5)]),
@@ -76,8 +73,7 @@ export class NovelComponent implements OnInit {
     this.ns.getNovel(urlId, 'reading').subscribe((data: any) => {
       this.novel = data.novel[0];
       this.novel.user_bookmark = null;
-      this.title.setTitle(this.novel.nvl_title);
-      this.meta.updateTag({name: this.novel.nvl_content});
+      this.hs.updateBrowserMeta('description', this.novel.nvl_content, this.novel.nvl_title);
       this.calculateNovelRatingAvarage();
       this.novel.date_data = this.hs.getRelativeTime(this.novel.nvl_last_update);
       if (this.novel.nvl_status === 'Finished') {

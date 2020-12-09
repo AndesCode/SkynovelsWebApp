@@ -18,8 +18,3 @@ export class CdkOverlayContainer extends OverlayContainer {
       this._containerElement = container;
     }
 }
-
-// https://stackblitz.com/edit/angular-material-overlay-in-app-root?file=app%2Fin-app-root-overlay-container.ts
-// https://blog.bbogdanov.net/post/angular-material-overlay-hack-overlay-container/
-// https://stackblitz.com/edit/angular-material2-issue-ansnt5?file=app%2Fcustom-overlay-container.ts
-// https://stackblitz.com/edit/angular-material2-issue-6nzwws?embed=1&file=app/app.component.html

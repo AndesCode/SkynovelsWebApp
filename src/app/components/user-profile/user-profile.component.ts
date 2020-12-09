@@ -54,6 +54,7 @@ export class UserProfileComponent implements OnInit {
       }*/
       console.log(data);
       this.loading = false;
+      this.hs.updateBrowserMeta('description', `${this.userData.user_login}, perfil de usuario`, 'SkyNovels | ' + this.userData.user_login);
       this.getUser();
     }, error => {
       this.router.navigate(['']);

@@ -19,9 +19,11 @@ export class UserNovelsComponent implements OnInit {
   componentName = 'UserNovelsComponent';
 
   constructor(private router: Router,
-              private us: UsersService) {}
+              private us: UsersService,
+              private hs: HelperService) {}
 
   ngOnInit() {
+    this.hs.updateBrowserMeta('description', 'Catalogo de novelas de usuario', 'SkyNovels | Mis novelas');
     this.us.getUserNovels().subscribe((data: any) => {
       this.userNovels = data.novels;
       this.userCollaborations = data.collaborations;

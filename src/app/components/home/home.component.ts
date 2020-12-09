@@ -45,6 +45,7 @@ export class HomeComponent implements OnInit {
   mobile: boolean;
   swiperConfigured = false;
   loading = true;
+  loadingError = false;
   componentName = 'HomeComponent';
 
   constructor(
@@ -56,9 +57,8 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.breakpointObserver
-    .observe('(max-width: 1151px)')
-    .subscribe((state: BreakpointState) => {
+    this.hs.updateBrowserMeta('description', 'Skynovels, el catálogo más extenso y completo de novelas web en español, con traducciones literarias originales. Disfruta de los títulos más destacados como Against The Gods (ATG), Tales of Demons and Gods (TDG) o A Will Eternal (AWE). Con las mejores traducciones de la web.', 'SkyNovels | ¡Asciende a Mundos Increíbles!');
+    this.breakpointObserver.observe('(max-width: 1151px)').subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.mobile = true;
       } else {
@@ -117,11 +117,12 @@ export class HomeComponent implements OnInit {
           }, 100);
         }
         this.loading = false;
+    }, error => {
+      this.loadingError = true;
     });
 
     this.ps.getAdvertisements().subscribe((data: any) => {
       this.advertisements = data.advertisements;
-      console.log(this.advertisements);
     });
   }
 

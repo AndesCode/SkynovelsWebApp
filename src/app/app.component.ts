@@ -1,10 +1,11 @@
 import { Component, ViewChild, AfterViewInit, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
-import { ViewportScroller } from '@angular/common';
-import { Router, NavigationEnd, Routes, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { HelperService } from './services/helper.service';
 import { filter } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import * as Cookies from 'js-cookie';
+import { Meta } from '@angular/platform-browser';
+import { Prod } from './config/config';
 
 @Component({
   selector: 'app-root',
@@ -13,21 +14,27 @@ import * as Cookies from 'js-cookie';
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild('skynovelBody') skynovelBodyRef: ElementRef;
-  title = 'SkynovelsWebPage';
   themeToggled = false;
   currentComponent = null;
   scrollPosition = 0;
   isBrowser: boolean;
-  constructor(public hs: HelperService,
+  constructor(private hs: HelperService,
               private router: Router,
-              private activatedRoute: ActivatedRoute,
-              // private renderer: Renderer2,
+              private meta: Meta,
+              private prod: Prod,
               @Inject(PLATFORM_ID) private platformId) {
 
               this.isBrowser = isPlatformBrowser(this.platformId);
               const navEndEvents$ = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
               navEndEvents$.subscribe((event: NavigationEnd) => {
-                   console.log(event.urlAfterRedirects);
+                  const canonicalUrl = document.querySelector('[rel="canonical"]');
+                  if (event.urlAfterRedirects === '/') {
+                    this.meta.updateTag({content: this.prod.url}, 'name=urlskn');
+                    canonicalUrl.setAttribute('href', this.prod.url + '/');
+                  } else {
+                    this.meta.updateTag({content: this.prod.url + event.urlAfterRedirects}, 'name=urlskn');
+                    canonicalUrl.setAttribute('href', this.prod.url + event.urlAfterRedirects + '/');
+                  }
                   /*gtag('config', 'xxxxxx', {
                     'page_path': event.urlAfterRedirects
                   });*/
@@ -47,17 +54,16 @@ export class AppComponent implements AfterViewInit {
 
   toggleTheme() {
     if (this.isBrowser) {
-      console.log('toogling');
       if (!this.themeToggled) {
         this.themeToggled = true;
         // this.renderer.setAttribute(this.skynovelBodyRef.nativeElement, 'theme', 'dark');
         document.body.setAttribute('theme', 'dark');
-        Cookies.set('presence', 'dark');
+        Cookies.set('presence', 'dark', { expires: 65 });
       } else {
         this.themeToggled = false;
         // this.renderer.setAttribute(this.skynovelBodyRef.nativeElement, 'theme', 'light');
         document.body.setAttribute('theme', 'light');
-        Cookies.set('presence', 'light');
+        Cookies.set('presence', 'light', { expires: 65 });
       }
     } else {
       return;

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
 import { UsersService } from '../../services/users.service';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -19,9 +20,11 @@ export class AdminPanelComponent implements OnInit {
   constructor(public router: Router,
               public breakpointObserver: BreakpointObserver,
               private us: UsersService,
-              private as: AdminService) { }
+              private as: AdminService,
+              private hs: HelperService) { }
 
   ngOnInit(): void {
+    this.hs.updateBrowserMeta('description', 'Panel de control de skynovels', 'SkyNovels | Panel de control');
     this.breakpointObserver
     .observe([Breakpoints.Large = '(max-width: 1151px)'])
     .subscribe((state: BreakpointState) => {

@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'app-password-recovery',
@@ -27,8 +28,8 @@ export class PasswordRecoveryComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private us: UsersService,
-              private router: Router,
-              public matSnackBar: MatSnackBar) {
+              public matSnackBar: MatSnackBar,
+              private hs: HelperService) {
 
                 this.UpdatePasswordForm = new FormGroup({
                   user_pass: new FormControl('', [Validators.required,
@@ -39,6 +40,7 @@ export class PasswordRecoveryComponent implements OnInit {
 
   ngOnInit(): void {
     this.urlToken = String(this.activatedRoute.snapshot.paramMap.get('token'));
+    this.hs.updateBrowserMeta('description', 'Restablecer contraseña', 'SkyNovels | Recuperación de contraseña');
     this.us.passwordResetAccess(this.urlToken).subscribe((data: any) => {
       this.loading = false;
     }, error => {

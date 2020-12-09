@@ -1,7 +1,8 @@
-<div class="skn-loading" *ngIf="loading">
+<div class="skn-loading" *ngIf="loading && !loadingError">
     <mat-spinner></mat-spinner>
 </div>
-<main *ngIf="!loading">
+<app-loading-error *ngIf="loadingError"></app-loading-error>
+<article *ngIf="!loading">
 
     <section style="margin: 0.5rem;">
         <div class="swiper-container skn-home-swiper skn-secondary" [swiper]="swiperHomeConfig">
@@ -38,7 +39,8 @@
                     </a>
                 </div>
 
-                <!-- eliminar-->
+                <!-- eliminar, son replicas de el primero-->
+
                 <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let topNovel of topNovels">
                     <a class="unstyled-a-tag" [routerLink]="['/novelas', topNovel.id, topNovel.nvl_name]">
                         <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
@@ -88,7 +90,7 @@
                     </a>
                 </div>
 
-                <!-- eliminar-->
+                <!-- eliminar, son replicas de el primero-->
 
                 <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let recentNovel of recentNovels">
                     <a class="unstyled-a-tag" [routerLink]="['/novelas', recentNovel.id, recentNovel.nvl_name]">
@@ -120,7 +122,7 @@
             <div class="swiper-button-next" *ngIf="!mobile"></div>
         </div>
 
-        <div class="skn-home-title">
+        <div class="skn-home-title" *ngIf="recomendedNovel">
             <h2>Recomendación de la Semana</h2>
         </div>
 
@@ -207,4 +209,4 @@
             </div>
         </div>
     </section>
-</main>
+</article>

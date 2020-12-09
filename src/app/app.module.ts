@@ -80,8 +80,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { InViewportModule } from 'ng-in-viewport';
 import { AdsenseModule } from 'ng2-adsense';
-// Test Eliminar
-import { TestComponent } from './components/test/test.component';
+import { LoadingErrorComponent } from './components/loading-error/loading-error.component';
 
 const config: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -115,7 +114,6 @@ const config: SwiperConfigInterface = {
     ForumPostComponent,
     ForumManagementComponent,*/
     UserProfileComponent,
-    TestComponent,
     ChaptersComponent,
     UserChapterComponent,
     FooterComponent,
@@ -135,6 +133,7 @@ const config: SwiperConfigInterface = {
     NoAdvertisementImagePipe,
     NoUserImagePipe,
     NovelFilterPipe,
+    LoadingErrorComponent,
   ],
   imports: [
     // Angular

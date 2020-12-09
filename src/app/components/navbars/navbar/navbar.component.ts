@@ -72,17 +72,14 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.breakpointObserver
-      .observe([Breakpoints.Large = '(max-width: 1151px)'])
-      .subscribe((state: BreakpointState) => {
-        if (state.matches) {
-          this.mobile = true;
-
-        } else {
-          this.mobile = false;
-          this.closeMobileNavbarForm();
-        }
-      });
+    this.breakpointObserver.observe([Breakpoints.Large = '(max-width: 1151px)']).subscribe((state: BreakpointState) => {
+      if (state.matches) {
+        this.mobile = true;
+      } else {
+        this.mobile = false;
+        this.closeMobileNavbarForm();
+      }
+    });
 
     this.hs.sendCurrentComponnent.subscribe((data: any) => {
       this.currentComponent = data;

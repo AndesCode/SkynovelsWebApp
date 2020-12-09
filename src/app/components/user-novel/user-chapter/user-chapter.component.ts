@@ -7,6 +7,7 @@ import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import { HelperService } from '../../../services/helper.service';
 
 @Component({
   selector: 'app-user-chapter',
@@ -38,6 +39,7 @@ export class UserChapterComponent implements OnInit {
               private router: Router,
               public dialog: MatDialog,
               public matSnackBar: MatSnackBar,
+              private hs: HelperService,
               @Inject(PLATFORM_ID) private platformId) {
 
               this.isBrowser = isPlatformBrowser(this.platformId);
@@ -78,6 +80,8 @@ export class UserChapterComponent implements OnInit {
               .subscribe((data: any) => {
                 this.chapter = data.chapter;
                 console.log(this.chapter);
+                this.hs.updateBrowserMeta('description',
+                'Edición de capitulo ' + this.chapter.chp_title,  this.novel.nvl_title + ' | ' + this.chapter.chp_title);
                 this.location.replaceState('/mis-novelas/' + this.novel.id + '/' +
                 this.novel.nvl_name + '/' + this.volume.id + '/' + this.chapter.id + '/' + this.chapter.chp_name);
                 this.loading = false;

@@ -5,30 +5,30 @@
                 <img src="../../../assets/img/008 - SkyNovels V.1/logo/1x/simbolo_rojos.png" height="30">
             </div>
             <hr>
-            <div class="skn-mobile-navbar-section" (click)="navigate()">
+            <a routerLink="" class="unstyled-a-tag skn-mobile-navbar-section" (click)="navigate()">
                 <span class="material-icons md-30">home</span>
                 <a routerLink="" class="nav-mobile-text">Inicio</a>
-            </div>
+            </a>
             <hr>
-            <div class="skn-mobile-navbar-section" (click)="navigate()">
+            <a routerLink="novelas" class="unstyled-a-tag skn-mobile-navbar-section" (click)="navigate()">
                 <span class="material-icons md-30">library_books</span>
                 <a routerLink="novelas" class="nav-mobile-text" routerLinkActive="nav-link-selected">Novelas</a>
-            </div>
+            </a>
             <hr>
-            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()" (click)="navigate()">
+            <a routerLink="lista-de-lectura" class="unstyled-a-tag skn-mobile-navbar-section" *ngIf="us.userIsLoged()" (click)="navigate()">
                 <span class="material-icons md-30">star</span>
                 <a routerLink="lista-de-lectura" class="nav-mobile-text" routerLinkActive="nav-link-selected">Lista de lectura</a>
-            </div>
+            </a>
             <hr *ngIf="us.userIsLoged()">
-            <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()" (click)="navigate()">
+            <a routerLink="{{'perfil/' + this.us.getUserLoged().id + '/' + this.us.getUserLoged().user_login}}" class="unstyled-a-tag skn-mobile-navbar-section" *ngIf="us.userIsLoged()" (click)="navigate()">
                 <span class="material-icons md-30">account_circle</span>
                 <a routerLink="{{'perfil/' + this.us.getUserLoged().id + '/' + this.us.getUserLoged().user_login}}" class="nav-mobile-text" routerLinkActive="nav-link-selected">Perfil</a>
-            </div>
+            </a>
             <hr *ngIf="us.userIsLoged()">
-            <div class="skn-mobile-navbar-section" *ngIf="us.userIsEditor()" (click)="navigate()">
+            <a routerLink="mis-novelas" class="unstyled-a-tag skn-mobile-navbar-section" *ngIf="us.userIsEditor()" (click)="navigate()">
                 <span class="material-icons md-30">create</span>
                 <a routerLink="mis-novelas" class="nav-mobile-text" routerLinkActive="nav-link-selected">Mis novelas</a>
-            </div>
+            </a>
             <hr *ngIf="us.userIsEditor()">
             <div class="skn-mobile-navbar-section" *ngIf="!us.userIsLoged()" (click)="openLoginForm(); closeMobileNavbarForm()">
                 <span class="material-icons md-30">face</span>
@@ -40,15 +40,15 @@
                 <p class="nav-mobile-text">Registrarse</p>
             </div>
             <hr *ngIf="!us.userIsLoged()">
-            <div class="skn-mobile-navbar-section" *ngIf="this.as.userIsAdmin()" (click)="navigate()">
+            <a routerLink="panel" class="unstyled-a-tag skn-mobile-navbar-section" *ngIf="this.as.userIsAdmin()" (click)="navigate()">
                 <span class="material-icons md-30">settings</span>
                 <a routerLink="panel" class="nav-mobile-text" routerLinkActive="nav-link-selected">Panel de control</a>
-            </div>
+            </a>
             <hr *ngIf="this.as.userIsAdmin()">
-            <div class="skn-mobile-navbar-section" *ngIf="us.userIsEditor()" (click)="navigate()">
+            <a routerLink="invitaciones" class="unstyled-a-tag skn-mobile-navbar-section" *ngIf="us.userIsEditor()" (click)="navigate()">
                 <span class="material-icons md-30">mail</span>
                 <a routerLink="invitaciones" class="nav-mobile-text" routerLinkActive="nav-link-selected">Invitaciones</a>
-            </div>
+            </a>
             <hr *ngIf="us.userIsEditor()">
             <div class="skn-mobile-navbar-section" *ngIf="us.userIsLoged()" (click)="logout()">
                 <span class="material-icons md-30">block</span>

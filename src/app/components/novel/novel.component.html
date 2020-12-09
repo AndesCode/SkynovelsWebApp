@@ -1,7 +1,7 @@
 <div class="skn-loading" *ngIf="loading">
     <mat-spinner></mat-spinner>
 </div>
-<main *ngIf="!loading">
+<article *ngIf="!loading">
     <ng-template #deleteBookmark>
         <div class="skn-bottom-sheet-modal">
             <div class="modal-header">
@@ -407,7 +407,7 @@
             </div>
         </div>
     </section>
-</main>
+</article>
 <ng-template #successSnack>
     <div class="skn-snack-success-notification">
         <div class="skn-snack-notification-text">{{successSnackMessage}}</div>

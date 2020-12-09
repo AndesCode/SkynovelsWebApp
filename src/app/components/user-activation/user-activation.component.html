@@ -1,24 +1,22 @@
 <div class="skn-loading" *ngIf="loading">
     <mat-spinner></mat-spinner>
 </div>
-<main *ngIf="!loading">
-    <section>
-        <div class="skn-secondary skn-user-activation-main">
-            <h1 style="color: green!important">
-                ¡Usuario activado con exito!
-            </h1>
-            <h2>
-                Bienvenido {{userActivated}}
-            </h2>
-            <hr>
-            <p>
-                Desde el equipo de skynovels te damos una cordial bienvenida
-            </p>
-            <p>
-                Ya puedes iniciar sesión en skynovels y comenzar una nueva aventura hacia mundos increibles
-            </p>
-            <hr>
-            <a class="skn-link unstyled-a-tag" style="font-size: 0.8rem;" routerLink="">Regresar al inicio</a>
-        </div>
-    </section>
-</main>
+<article *ngIf="!loading">
+    <div class="skn-secondary skn-user-activation-main">
+        <h1 style="color: green!important">
+            ¡Usuario activado con exito!
+        </h1>
+        <h2>
+            Bienvenido {{userActivated}}
+        </h2>
+        <hr>
+        <p>
+            Desde el equipo de skynovels te damos una cordial bienvenida
+        </p>
+        <p>
+            Ya puedes iniciar sesión en skynovels y comenzar una nueva aventura hacia mundos increibles
+        </p>
+        <hr>
+        <a class="skn-link unstyled-a-tag" style="font-size: 0.8rem;" routerLink="">Regresar al inicio</a>
+    </div>
+</article>

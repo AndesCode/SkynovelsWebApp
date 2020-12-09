@@ -1,26 +1,28 @@
 <div class="skn-loading" *ngIf="loading">
     <mat-spinner></mat-spinner>
 </div>
-<mat-tab-group style="align-items: center;" dynamicHeight *ngIf="!loading">
-    <mat-tab label="Mis novelas">
-        <div class="container">
-            <div class="d-flex justify-content-end" style="margin: 4px;">
-                <a [routerLink]="['nuevo']">
-                    <button type="button" mat-raised-button color="primary">Añadir novela</button>
-                </a>
+<article>
+    <mat-tab-group style="align-items: center;" dynamicHeight *ngIf="!loading">
+        <mat-tab label="Mis novelas">
+            <div class="container">
+                <div class="d-flex justify-content-end" style="margin: 4px;">
+                    <a [routerLink]="['nuevo']">
+                        <button type="button" mat-raised-button color="primary">Añadir novela</button>
+                    </a>
+                </div>
+                <section class="row" style="justify-content: center;">
+                    <app-novel-card [novels]="userNovels" [clickRoute]="'userNovel'"></app-novel-card>
+                    <h2 class="text-center" style="margin-top: 20vh;" *ngIf="userNovels.length === 0">No tienes novelas creadas</h2>
+                </section>
             </div>
-            <section class="row" style="justify-content: center;">
-                <app-novel-card [novels]="userNovels" [clickRoute]="'userNovel'"></app-novel-card>
-                <h2 class="text-center" style="margin-top: 20vh;" *ngIf="userNovels.length === 0">No tienes novelas creadas</h2>
-            </section>
-        </div>
-    </mat-tab>
-    <mat-tab label="Colaboraciones">
-        <div class="container">
-            <section class="row" style="justify-content: center;">
-                <app-novel-card [novels]="userCollaborations" [clickRoute]="'userNovel'"></app-novel-card>
-                <h2 class="text-center" style="margin-top: 20vh;" *ngIf="userCollaborations.length === 0">No eres colaborador de ninguna novela</h2>
-            </section>
-        </div>
-    </mat-tab>
-</mat-tab-group>
+        </mat-tab>
+        <mat-tab label="Colaboraciones">
+            <div class="container">
+                <section class="row" style="justify-content: center;">
+                    <app-novel-card [novels]="userCollaborations" [clickRoute]="'userNovel'"></app-novel-card>
+                    <h2 class="text-center" style="margin-top: 20vh;" *ngIf="userCollaborations.length === 0">No eres colaborador de ninguna novela</h2>
+                </section>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</article>

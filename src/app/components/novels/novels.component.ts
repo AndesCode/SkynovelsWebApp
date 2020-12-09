@@ -24,19 +24,22 @@ export class NovelsComponent implements OnInit {
   mobile: boolean;
   loading = true;
   componentName = 'NovelsComponent';
+  loadingError = false;
 
   constructor(private ns: NovelsService,
               public hs: HelperService,
               private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
+    this.hs.updateBrowserMeta('description', 'Catálogo de Novelas en SkyNovels', 'SkyNovels | Catalogo de novelas');
     this.ns.getGenres().subscribe((genres: any) => {
       this.genres = genres.genres;
     });
     this.ns.getNovels().subscribe((data: any) => {
       this.novels = data.novels;
-      console.log(this.novels);
       this.loading = false;
+    }, error => {
+      this.loadingError = true;
     });
 
     this.breakpointObserver
@@ -44,7 +47,6 @@ export class NovelsComponent implements OnInit {
     .subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.mobile = true;
-        console.log(this.mobile);
       } else {
         this.mobile = false;
       }

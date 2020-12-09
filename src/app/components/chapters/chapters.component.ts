@@ -95,7 +95,7 @@ export class ChaptersComponent implements AfterViewInit {
       this.novel = data.novel[0];
       this.novel.user_bookmark = null;
       this.allChapters = this.novel.chapters;
-      console.log(this.allChapters);
+      this.hs.updateBrowserMeta('description', 'Sección de lectura de ' + this.novel.nvl_title, this.novel.nvl_title);
       this.getUser();
       this.loadNovelDataChapters();
     }, error => {

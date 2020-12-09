@@ -27,23 +27,6 @@ import { AdvertisementComponent } from './components/advertisement/advertisement
 import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { UserActivationComponent } from './components/user-activation/user-activation.component';
-// Test
-import { TestComponent } from './components/test/test.component';
-/*
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { LoginComponent } from './components/login/login.component';
-import { MyNovelComponent } from './components/my-novel/my-novel.component';
-import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
-import { NewPasswordFormComponent } from './components/new-password-form/new-password-form.component';
-import { AnalyticsComponent } from './components/admin-panel/analytics/analytics.component';
-import { ForumManagementComponent } from './components/admin-panel/forum-management/forum-management.component';
-import { NovelManagementComponent } from './components/admin-panel/novel-management/novel-management.component';
-import { NovelAdminEditionComponent } from './components/admin-panel/novel-management/novel-admin-edition/novel-admin-edition.component';
-import { InvitationsComponent } from './components/invitations/invitations.component';
-import { DevStylesTestComponent } from './components/dev-styles-test/dev-styles-test.component';
-import { ForumCategoryComponent } from './components/forum/forum-category/forum-category.component';
-import { ForumPostComponent } from './components/forum/forum-category/forum-post/forum-post.component';*/
-
 
 const routes: Routes = [
   // home
@@ -98,8 +81,6 @@ const routes: Routes = [
   { path: 'nueva-contraseña/:token', component: PasswordRecoveryComponent },
   // User activation
   { path: 'activacion-de-usuario/:key', component: UserActivationComponent },
-  // Test
-  { path: 'test', component: TestComponent },
   // redirects
   { path: '**', pathMatch: 'full', redirectTo: '' }
 ];

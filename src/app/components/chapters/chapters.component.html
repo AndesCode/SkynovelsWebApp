@@ -142,17 +142,13 @@
 
                 <div class="skn-nvl-user-rating skn-secondary" *ngFor="let comment of LoadedChapter.comments | slice: 0:3">
                     <div class="skn-user-image">
-                        <div>
-                            <img [src]="comment.user_profile_image | noUserImage" alt="">
-                        </div>
+                        <img [src]="comment.user_profile_image | noUserImage" alt="">
                     </div>
                     <div class="skn-nvl-user-rating-user-rating">
                         <div class="skn-nvl-user-rating-login">
                             <div style="display: flex;">
                                 <div class="skn-user-image-mobile">
-                                    <div>
-                                        <img [src]="comment.user_profile_image | noUserImage" alt="">
-                                    </div>
+                                    <img [src]="comment.user_profile_image | noUserImage" alt="">
                                 </div>
                                 <strong style="margin: auto 6px">{{comment.user_login}}</strong>
                             </div>
@@ -226,17 +222,13 @@
                         </div>
                         <div class="skn-nvl-user-rating skn-secondary" *ngFor="let comment of LoadedChapter.comments">
                             <div class="skn-user-image">
-                                <div>
-                                    <img [src]="comment.user_profile_image | noUserImage" alt="">
-                                </div>
+                                <img [src]="comment.user_profile_image | noUserImage" alt="">
                             </div>
                             <div class="skn-nvl-user-rating-user-rating">
                                 <div class="skn-nvl-user-rating-login">
                                     <div style="display: flex;">
                                         <div class="skn-user-image-mobile">
-                                            <div>
-                                                <img [src]="comment.user_profile_image | noUserImage" alt="">
-                                            </div>
+                                            <img [src]="comment.user_profile_image | noUserImage" alt="">
                                         </div>
                                         <strong style="margin: auto 6px">{{comment.user_login}}</strong>
                                     </div>
@@ -288,9 +280,7 @@
                                     <form *ngIf="user">
                                         <div class="skn-nvl-rating-comment-textarea" style="align-items: unset;">
                                             <div class="skn-user-image" style="margin-right: 15px;">
-                                                <div>
-                                                    <img [src]="user.user_profile_image | noUserImage" alt="">
-                                                </div>
+                                                <img [src]="user.user_profile_image | noUserImage" alt="">
                                             </div>
                                             <div class="skn-nvl-rating-comment-textarea-input">
                                                 <mat-form-field style="width: 100%;">
@@ -303,17 +293,13 @@
                                     </form>
                                     <div class="skn-nvl-user-rating" *ngFor="let reply of comment.replys" style="padding: 0px!important;">
                                         <div class="skn-user-image">
-                                            <div>
-                                                <img [src]="reply.user_profile_image | noUserImage" alt="">
-                                            </div>
+                                            <img [src]="reply.user_profile_image | noUserImage" alt="">
                                         </div>
                                         <div class="skn-nvl-user-rating-user-rating">
                                             <div class="skn-nvl-user-rating-login" style="margin-bottom: 5px;">
                                                 <div style="display: flex;">
                                                     <div class="skn-user-image-mobile">
-                                                        <div>
-                                                            <img [src]="reply.user_profile_image | noUserImage" alt="">
-                                                        </div>
+                                                        <img [src]="reply.user_profile_image | noUserImage" alt="">
                                                     </div>
                                                     <div class="skn-nvl-user-rating-login-name">
                                                         <strong style="margin-right: 5px;">{{reply.user_login}}</strong>
@@ -388,9 +374,7 @@
                         <form *ngIf="user" #commentForm="ngForm">
                             <div class="skn-nvl-rating-comment-textarea">
                                 <div class="skn-user-image" style="margin-right: 15px;">
-                                    <div>
-                                        <img [src]="user.user_profile_image | noUserImage">
-                                    </div>
+                                    <img [src]="user.user_profile_image | noUserImage">
                                 </div>
                                 <div class="skn-nvl-rating-comment-textarea-input">
                                     <mat-form-field style="width: 100%;">

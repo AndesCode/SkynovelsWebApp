@@ -1,34 +1,36 @@
 .page-footer {
     background: #131E2C;
-    margin-top: 1em;
     color: #DB3836;
-}
-
-.footer-background{
-    background: #131E2C;
+    padding: 0.7rem;
 }
 
 .icons {
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
 }
 
+.footer-left-elements {
+    display: flex;
+}
+
 .material-icons {
-    margin:1rem;
+    margin: 1rem;
     background: white;
-    border-radius:1em;
-    padding:0.1em;
+    border-radius: 1em;
+    padding: 0.1em;
     user-select: none;
     cursor: pointer;
-    color:#DB3836;
+    color: #DB3836;
 }
 
 .logo-f {
-    margin:1rem;
+    margin: auto 10px auto 0px;
+    height: 2.5rem;
 }
 
-.py-5 {
-    padding-bottom:0!important;
+.skn-footer-elements {
+    display: flex;
+    justify-content: space-between;
 }

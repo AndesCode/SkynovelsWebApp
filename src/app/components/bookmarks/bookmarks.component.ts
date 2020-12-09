@@ -14,6 +14,7 @@ export class BookmarksComponent implements OnInit {
 
   bookmarks: Array<Novel> = [];
   loading = true;
+  loadingError = false;
   componentName = 'BookmarksComponent';
 
   constructor(private us: UsersService,
@@ -22,6 +23,7 @@ export class BookmarksComponent implements OnInit {
               private hs: HelperService) { }
 
   ngOnInit(): void {
+    this.hs.updateBrowserMeta('description', 'novelas en lista de lectura', 'SkyNovels | Lista de lectura');
     this.hs.invokeExternalFunction.subscribe((data: any) => {
       if (data === 'reloadUser') {
         this.router.navigate(['']);
@@ -50,7 +52,7 @@ export class BookmarksComponent implements OnInit {
           }
         }
       }, error => {
-        this.router.navigate(['']);
+        this.loadingError = true;
       });
     } else {
       this.router.navigate(['']);

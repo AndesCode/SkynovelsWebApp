@@ -1,8 +1,0 @@
-.main-panel {
-    height: 100%;
-    overflow-y: scroll;
-}
-
-.visible {
-    background-color: blueviolet;
-}

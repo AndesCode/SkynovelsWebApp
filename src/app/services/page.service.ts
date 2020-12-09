@@ -1,9 +1,10 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { Injectable, isDevMode, Inject  } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Reply, Comment, User, Like } from '../models/models';
 import { HelperService } from './helper.service';
 import { NgForm } from '@angular/forms';
 import { Dev, Prod } from '../config/config';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class PageService {
   constructor(private http: HttpClient,
               private hs: HelperService,
               private dev: Dev,
-              private prod: Prod) {
+              private prod: Prod,
+              @Inject(DOCUMENT) private doc) {
                 if (isDevMode()) {
                   this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
                   this.urlNovelsDb = this.dev.urlNovelsDb;

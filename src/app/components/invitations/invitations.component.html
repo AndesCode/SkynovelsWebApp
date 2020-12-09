@@ -1,9 +1,9 @@
-<main>
+<article>
     <div class="skn-loading" *ngIf="loading">
         <mat-spinner></mat-spinner>
     </div>
-    <div class="container" *ngIf="!loading">
-        <h1 class="text-center skn-component-title" *ngIf="userInvitations.length === 0">No tienes invitaciones pendientes</h1>
+    <section class="container" *ngIf="!loading">
+        <h1 class="text-center skn-component-title" *ngIf="userInvitations.length === 0" style="margin-top: 20%;">No tienes invitaciones pendientes</h1>
         <h1 class="text-center skn-component-title" *ngIf="userInvitations.length > 0">invitaciones:</h1>
         <mat-card class="skn-invitation-card" *ngFor="let userInvitation of userInvitations" style="margin-bottom: 0.5rem;">
             <mat-card-header>
@@ -20,8 +20,8 @@
                 <button mat-raised-button class="skn-cancel-button" (click)="declineOrAcceptInvitation(userInvitation, 'Rejected')">Rechazar</button>
             </mat-card-actions>
         </mat-card>
-    </div>
-</main>
+    </section>
+</article>
 
 <ng-template #successSnack>
     <div class="skn-snack-success-notification">

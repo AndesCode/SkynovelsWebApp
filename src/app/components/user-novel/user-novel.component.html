@@ -1,7 +1,7 @@
 <div class="skn-loading" *ngIf="loading">
     <mat-spinner></mat-spinner>
 </div>
-<main class="container" *ngIf="!loading">
+<article class="container" *ngIf="!loading">
     <section>
         <form #novelForm="ngForm">
             <div class="skn-novel-edition-presentation">
@@ -200,11 +200,11 @@
             </mat-card>
         </div>
         <div class="d-flex justify-content-end" style="margin: 15px 0px;">
-            <button type="button" mat-raised-button color="warn" style="margin-right: 5px;" (click)="openDialogSheet(deletenovelModal)" *ngIf="editableNovel && novel.id">Eliminar novela</button>
+            <button type="button" mat-raised-button color="warn" style="margin-right: 20px;" (click)="openDialogSheet(deletenovelModal)" *ngIf="editableNovel && novel.id">Eliminar novela</button>
             <button type="submit" mat-raised-button color="primary" (click)="save(novelForm)" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">{{novel?.id ? 'Guardar cambios' : 'Crear novela'}}</button>
         </div>
     </section>
-</main>
+</article>
 <ng-template #deletenovelModal>
     <div class="skn-dialong-modal">
         <div class="modal-header">

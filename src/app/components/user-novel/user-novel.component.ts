@@ -91,6 +91,7 @@ export class UserNovelComponent implements OnInit {
           this.user = novelData.authorized_user;
           console.log(this.user);
           this.novel = novelData.novel[0];
+          this.hs.updateBrowserMeta('description', this.novel.nvl_content, this.novel.nvl_title);
           this.location.replaceState('/mis-novelas/' + this.novel.id + '/' + this.novel.nvl_name);
           this.novel.genres = this.novel.genres.map(genre => genre.id);
           this.collaborators = this.novel.collaborators.slice();

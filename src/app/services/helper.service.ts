@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter, isDevMode  } from '@angular/core';
 import * as moment from 'moment';
 import { Dev, Prod } from '../config/config';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class HelperService {
 
   private urlCredentialsNovelsDb: string;
   constructor(private dev: Dev,
-              private prod: Prod) {
+              private prod: Prod,
+              private meta: Meta,
+              private title: Title) {
                 if (isDevMode()) {
                   this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
                 } else {
@@ -27,6 +30,17 @@ export class HelperService {
 
   getCurrentComponent(component: any) {
     this.sendCurrentComponnent.emit(component);
+  }
+
+  getCurrentYear() {
+    return moment().year();
+  }
+
+  updateBrowserMeta(nameString: string, contentString: string, title?: string) {
+    if (title) {
+      this.title.setTitle(title);
+    }
+    this.meta.updateTag({name: nameString, content: contentString});
   }
 
   getRelativeTime(date: Date, update?: boolean, format?: string) {
@@ -110,7 +124,7 @@ export class HelperService {
   }
 
   mostPopularNovelSorter(a, b) {
-        return  (b.nvl_rating) - (a.nvl_rating);
+    return  (b.nvl_rating) - (a.nvl_rating);
   }
 
   chpNumberSorter(a, b) {
