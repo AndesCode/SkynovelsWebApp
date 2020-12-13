@@ -29,7 +29,6 @@ export class UserNovelsComponent implements OnInit {
       this.userCollaborations = data.collaborations;
       this.loading = false;
     }, error => {
-      console.log(error);
       this.router.navigate(['']);
     });
   }

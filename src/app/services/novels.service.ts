@@ -23,7 +23,6 @@ export class NovelsService {
               private dev: Dev,
               private prod: Prod) {
     if (isDevMode()) {
-      console.log('desarrollo');
       this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
       this.urlNovelsDb = this.dev.urlNovelsDb;
     } else {
@@ -135,13 +134,11 @@ export class NovelsService {
         vlm_title: vlmTitle,
         nvl_id: nvlId
       };
-      console.log(volume);
       const url = `${ this.urlCredentialsNovelsDb }/create-novel-volume`;
       return this.http.post(url, volume, this.GlobalhttpOptions);
     }
 
     updateNovelVolume(volume: Volume) {
-      console.log(volume);
       const url = `${ this.urlCredentialsNovelsDb }/update-novel-volume`;
       return this.http.put(url , volume, this.GlobalhttpOptions);
     }

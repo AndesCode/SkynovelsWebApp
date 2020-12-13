@@ -226,7 +226,6 @@ export class HelperService {
       oldAppendType = 'old_user_profile_image';
     }
     if (imageType !== 'user' && imageType !== 'novel') {
-      console.log('Cancelando subida de archivo');
       return;
     }
     return new Promise((resolve, reject) => {

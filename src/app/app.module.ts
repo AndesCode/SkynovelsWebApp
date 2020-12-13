@@ -69,7 +69,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Pipes
 import { NoUserImagePipe } from './pipes/no-user-image.pipe';
 import { NoimagePipe } from './pipes/noimage.pipe';
-import { NoimagePipeThumb } from './pipes/noimagethumb.pipe';
 import { NovelFilterPipe } from './pipes/novel-filter.pipe';
 import { NoAdvertisementImagePipe} from './pipes/no-advertisement-image.pipe';
 // Installations
@@ -128,7 +127,6 @@ const config: SwiperConfigInterface = {
     PasswordRecoveryComponent,
     UserActivationComponent,
     // pipes
-    NoimagePipeThumb,
     NoimagePipe,
     NoAdvertisementImagePipe,
     NoUserImagePipe,

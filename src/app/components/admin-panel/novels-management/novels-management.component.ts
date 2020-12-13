@@ -112,7 +112,6 @@ export class NovelsManagementComponent implements OnInit {
   }
 
   editGenre(genre: Genre) {
-    console.log(genre);
     this.genre = genre;
   }
 

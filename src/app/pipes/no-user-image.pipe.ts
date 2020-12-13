@@ -9,7 +9,7 @@ export class NoUserImagePipe implements PipeTransform {
     if (userProfileImage && userProfileImage.length > 0) {
       return 'http://localhost:3000/api/user-profile-img/' + userProfileImage + '/false';
     } else {
-      return '../../../assets/img/noimage.jpg';
+      return '../../../assets/img/usernoimage.jpg';
     }
   }
 }

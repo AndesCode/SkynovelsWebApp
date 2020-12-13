@@ -68,7 +68,6 @@ export class AdminService {
       withCredentials: true
     };
     const url = `${ this.urlCredentialsNovelsDb }/admin-update-genre`;
-    console.log(genre);
     return this.http.put(url , genre, httpOptions);
   }
 
@@ -93,7 +92,6 @@ export class AdminService {
       withCredentials: true
     };
     const url = `${ this.urlCredentialsNovelsDb}/admin-novel/${id}`;
-    console.log(url);
     return this.http.get(url, httpOptions);
   }
 
@@ -107,7 +105,6 @@ export class AdminService {
       withCredentials: true
     };
     const url = `${ this.urlCredentialsNovelsDb}/admin-novels`;
-    console.log(url);
     return this.http.get(url, httpOptions);
   }
 
@@ -168,7 +165,6 @@ export class AdminService {
       withCredentials: true
     };
     const url = `${ this.urlCredentialsNovelsDb}/admin-get-chapter/${id}`;
-    console.log(url);
     return this.http.get(url, httpOptions);
   }
 
@@ -206,7 +202,6 @@ export class AdminService {
       withCredentials: true
     };
     const url = `${ this.urlCredentialsNovelsDb}/admin-users`;
-    console.log(url);
     return this.http.get(url, httpOptions);
   }
 
@@ -219,7 +214,6 @@ export class AdminService {
       withCredentials: true
     };
     const url = `${ this.urlCredentialsNovelsDb}/admin-user/${id}`;
-    console.log(url);
     return this.http.get(url, httpOptions);
   }
 
@@ -257,7 +251,6 @@ export class AdminService {
       withCredentials: true
     };
     const url = `${ this.urlCredentialsNovelsDb}/admin-get-forum-posts`;
-    console.log(url);
     return this.http.get(url, httpOptions);
   }
 
@@ -318,7 +311,6 @@ export class AdminService {
       withCredentials: true
     };
     const url = `${ this.urlCredentialsNovelsDb}/admin-get-categories`;
-    console.log(url);
     return this.http.get(url, httpOptions);
   }
 
@@ -331,7 +323,6 @@ export class AdminService {
       }),
       withCredentials: true
     };
-    console.log(url);
     return this.http.post(url, category, httpOptions);
   }
 

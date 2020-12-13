@@ -35,7 +35,7 @@
 
                 <ng-container matColumnDef="nvl_status">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header class="skn-text"> <strong>Estado</strong> </th>
-                    <td mat-cell *matCellDef="let element" [ngStyle]="{'color':element.nvl_status === 'Active' || element.nvl_status === 'Finished'? 'green' : 'red' }"> {{element.nvl_status === 'Active' || element.nvl_status === 'Finished'? 'Activa' : 'Oculta'}} </td>
+                    <td mat-cell *matCellDef="let element" [ngStyle]="{'color':element.nvl_status === 'Active' || element.nvl_status === 'Finished'? 'green' : 'red' }"> {{element.nvl_status === 'Active' || element.nvl_status === 'Finished'? 'Publicada' : 'Oculta'}} </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="novelsDisplayedColumns" class="skn-main"></tr>

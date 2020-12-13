@@ -75,12 +75,9 @@ export class ChapterManagementComponent implements OnInit {
             this.loading = false;
           });
         } else {
-          console.log('no existe el capitulo');
           this.router.navigate(['panel/administracion-de-novelas', this.novel.id]);
         }
-        console.log(this.volume);
       } else {
-        console.log('no existe el volumen');
         this.router.navigate(['panel/administracion-de-novelas', this.novel.id]);
       }
     }, error => {
@@ -106,9 +103,7 @@ export class ChapterManagementComponent implements OnInit {
       return;
     }
     this.uploading = true;
-    console.log(chapterForm);
     this.as.adminUpdateChapter(this.us.getUserLoged().token, this.chapter).subscribe((resp: any) => {
-      console.log(resp);
       this.chapter.chp_title = resp.chapter.chp_title;
       this.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Cambios guardados!';
@@ -132,7 +127,6 @@ export class ChapterManagementComponent implements OnInit {
 
   evaluateEditableNovelStatus() {
     for (const [i, volume] of this.novel.volumes.entries()) {
-      console.log(i);
       const chaptersStatus = volume.chapters.map(
         chapterStatus => chapterStatus.chp_status);
       if (chaptersStatus.includes('Active')) {
@@ -164,7 +158,6 @@ export class ChapterManagementComponent implements OnInit {
   }
 
   goBackToNovel(chapterForm?: NgForm, confirmed?: boolean) {
-    console.log(chapterForm?.dirty);
     if (chapterForm?.dirty && !confirmed) {
       this.dialog.open(this.confirmExitComponentModalref);
     } else {

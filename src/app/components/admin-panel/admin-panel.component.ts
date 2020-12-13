@@ -47,7 +47,6 @@ export class AdminPanelComponent implements OnInit {
         this.as.adminPanelErrorHandler(null, true);
       }
     }, error => {
-      console.log(error);
       this.router.navigate(['']);
       this.as.adminPanelErrorHandler(error, false);
     });

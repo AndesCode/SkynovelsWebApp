@@ -114,7 +114,6 @@ export class UsersService {
 
   createUser(user: NewUser) {
     const url = `${ this.urlNovelsDb }/create-user`;
-    console.log(user);
     return this.http.post(url, user);
   }
 
@@ -213,7 +212,6 @@ export class UsersService {
       user_login: userLogin,
       invitation_novel: novelId
     };
-    console.log(invitation);
     const url = `${ this.urlCredentialsNovelsDb }/create-user-invitation`;
     return this.http.post(url, invitation, this.GlobalhttpOptions);
   }

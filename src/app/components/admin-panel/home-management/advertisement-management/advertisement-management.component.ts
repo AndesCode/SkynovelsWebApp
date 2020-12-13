@@ -61,7 +61,6 @@ export class AdvertisementManagementComponent implements OnInit {
         this.advertisement = data.advertisement;
         this.location.replaceState('/panel/administracion-de-pagina-de-inicio/noticias/'
          + this.advertisement.id + '/' + this.advertisement.adv_name);
-        console.log(this.advertisement);
         this.loading = false;
         if (this.advertisement.adv_img && this.advertisement.adv_img.length > 0) {
           this.imgURL = 'http://localhost:3000/api/advertisement/image/' + this.advertisement.adv_img;
@@ -88,7 +87,6 @@ export class AdvertisementManagementComponent implements OnInit {
   fileChangeEvent(fileInput: any) {
     if (fileInput.target.files.length > 0) {
       this.fileToUpload = fileInput.target.files[0];
-      console.log(this.fileToUpload);
       this.imageSelected = this.fileToUpload.name;
     } else {
       fileInput = null;
@@ -99,7 +97,6 @@ export class AdvertisementManagementComponent implements OnInit {
       return;
     }
     const mimeType =  this.fileToUpload.type;
-    console.log(mimeType);
     if (mimeType.match(/image\/*/) == null) {
         this.imageSelected = 'Solo puedes seleccionar imagenes .jpg';
         this.fileToUpload = null;
@@ -126,11 +123,9 @@ export class AdvertisementManagementComponent implements OnInit {
     if ( this.advertisement.id ) {
       request = this.as.adminUpdateAdvertisement(this.us.getUserLoged().token, this.advertisement);
     } else {
-      console.log('creando novela...');
       request = this.as.adminCreateAdvertisement(this.us.getUserLoged().token, this.advertisement);
     }
     request.subscribe((resp: any) => {
-      console.log(resp);
       this.location.replaceState('/panel/administracion-de-pagina-de-inicio/noticias/'
       + resp.advertisement.id + '/' + resp.advertisement.adv_name);
       if (this.advertisement.id === undefined
@@ -158,7 +153,6 @@ export class AdvertisementManagementComponent implements OnInit {
         this.successSnackMessage = '¡Cambios guardados!';
       }
     }, error => {
-      console.log(error);
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });

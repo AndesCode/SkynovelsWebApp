@@ -14,8 +14,6 @@ export class GuardService implements CanActivate {
               private as: AdminService) { }
 
   canActivate(route: ActivatedRouteSnapshot) {
-    console.log(route);
-    console.log(route.routeConfig.path);
     if (
       route.routeConfig.path === 'panel'
       || route.routeConfig.path === 'panel/administracion-de-novelas'

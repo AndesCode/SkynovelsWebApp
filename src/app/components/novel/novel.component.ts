@@ -58,7 +58,6 @@ export class NovelComponent implements OnInit {
     .subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.mobile = true;
-        console.log(this.mobile);
       } else {
         this.mobile = false;
       }
@@ -100,7 +99,6 @@ export class NovelComponent implements OnInit {
           }
         }
       }
-      console.log(this.novel.volumes);
       const lastVolume = this.novel.volumes[this.novel.volumes.length - 1];
       this.novel.nvl_last_chapter = lastVolume.chapters[lastVolume.chapters.length - 1];
       this.getUser();
@@ -155,7 +153,6 @@ export class NovelComponent implements OnInit {
 
   getUser() {
     this.user = this.us.getUserLoged();
-    console.log(this.user);
     this.novel.nvl_rated = false;
     for (const novelRating of this.novel.novel_ratings) {
       novelRating.liked = false;
@@ -203,11 +200,9 @@ export class NovelComponent implements OnInit {
   }
 
   updateRating(updateRatingForm: NgForm, rating: any) {
-    console.log(updateRatingForm);
     if (updateRatingForm.dirty) {
       if (updateRatingForm.valid) {
         this.ns.updateNovelRating(rating).subscribe((data: any) => {
-          console.log(data);
           rating.edition = false;
         }, error => {
           this.openMatSnackBar(this.errorSnackRef);
@@ -230,7 +225,6 @@ export class NovelComponent implements OnInit {
     this.ns.deleteNovelRating(rating.id).subscribe((data: any) => {
       this.novel.novel_ratings.splice(this.novel.novel_ratings.findIndex(x => x.id === rating.id), 1);
       this.novel.nvl_rated = false;
-      console.log(data);
       this.calculateNovelRatingAvarage();
     });
   }
@@ -248,7 +242,6 @@ export class NovelComponent implements OnInit {
       data.novel_rating.likes = [];
       data.novel_rating.rating_comments = [];
       this.novel.nvl_rated = true;
-      console.log(data.novel_rating);
       this.novel.novel_ratings.push(data.novel_rating);
       this.calculateNovelRatingAvarage();
       this.newRatingForm.reset();

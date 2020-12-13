@@ -30,7 +30,6 @@ export class HomeManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.as.adminGetAdvertisements(this.us.getUserLoged().token).subscribe((data: any) => {
-      console.log(data.advertisements);
       this.advertisements = data.advertisements;
       this.advertisementsDataSource = new MatTableDataSource(this.advertisements);
       this.advertisementsDataSource.paginator = this.advertisementPaginator;

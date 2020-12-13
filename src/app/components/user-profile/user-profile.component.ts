@@ -20,11 +20,10 @@ export class UserProfileComponent implements OnInit {
   public fileToUpload: File = null;
   public imageSelected: string;
   public imagePath;
-  public imgURL: any = '../../../assets/img/noimage.jpg';
+  public imgURL: any = '../../../assets/img/usernoimage.jpg';
   currentWindow = 'profile';
   userData: User;
   user: User = null;
-  editableProfile = false;
   loading = true;
   edition = false;
   componentName = 'UserProfileComponent';
@@ -49,10 +48,6 @@ export class UserProfileComponent implements OnInit {
       if (this.userData.user_profile_image && this.userData.user_profile_image.length > 0) {
         this.imgURL = 'http://localhost:3000/api/user-profile-img/' + this.userData.user_profile_image + '/false';
       }
-      /*if (data.self_user) {
-        this.editableProfile = true;
-      }*/
-      console.log(data);
       this.loading = false;
       this.hs.updateBrowserMeta('description', `${this.userData.user_login}, perfil de usuario`, 'SkyNovels | ' + this.userData.user_login);
       this.getUser();
@@ -69,7 +64,6 @@ export class UserProfileComponent implements OnInit {
     this.edition = false;
     if (userForm.valid && userForm.dirty) {
       this.us.updateUser(this.userData).subscribe((data: any) => {
-        console.log(data);
         userForm.reset(userForm.value);
         this.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Cambios guardados!';
@@ -91,7 +85,6 @@ export class UserProfileComponent implements OnInit {
   fileChangeEvent(fileInput: any) {
     if (fileInput.target.files.length > 0) {
       this.fileToUpload = fileInput.target.files[0];
-      console.log(this.fileToUpload);
       this.imageSelected = this.fileToUpload.name;
     } else {
       fileInput = null;
@@ -102,7 +95,6 @@ export class UserProfileComponent implements OnInit {
       return;
     }
     const mimeType =  this.fileToUpload.type;
-    console.log(mimeType);
     if (mimeType.match(/image\/*/) == null) {
         this.imageSelected = 'Solo puedes seleccionar imagenes .jpg';
         this.fileToUpload = null;
@@ -122,7 +114,6 @@ export class UserProfileComponent implements OnInit {
           this.successSnackMessage = '¡Cambios guardados!';
           return;
         }).catch(error => {
-          console.log(error);
           this.openMatSnackBar(this.errorSnackRef);
           this.errorSnackMessage = error.error.message;
         });

@@ -40,7 +40,6 @@ export class AdvertisementComponent implements OnInit {
     this.ps.getAdvertisement(Number(id)).subscribe((data: any) => {
       this.advertisement = data.advertisement;
       this.location.replaceState('/noticias/' + this.advertisement.id + '/' + this.advertisement.adv_name);
-      console.log(this.advertisement);
       for (const comment of  this.advertisement.comments) {
         comment.show_more = false;
         comment.edition = false;
@@ -65,7 +64,6 @@ export class AdvertisementComponent implements OnInit {
 
   getUser() {
     this.user = this.us.getUserLoged();
-    console.log(this.user);
     this.advertisement.liked = false;
     this.advertisement.like_id = null;
     if (this.user) {

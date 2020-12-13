@@ -53,12 +53,10 @@ export class PasswordRecoveryComponent implements OnInit {
   }
 
   updatePassword() {
-    console.log(this.UpdatePasswordForm);
     this.formLoading = true;
     if (this.UpdatePasswordForm.valid) {
       this.us.updateUserPassword(this.UpdatePasswordForm.value.user_pass, this.urlToken).subscribe((data: any) => {
         this.passwordUpdated = true;
-        console.log(data);
         this.formLoading = false;
         this.UpdatePasswordForm.reset();
       }, error => {

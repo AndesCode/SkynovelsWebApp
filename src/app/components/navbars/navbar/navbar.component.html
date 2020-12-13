@@ -126,8 +126,13 @@
                     </button>
                     <mat-error *ngIf="registerForm.get('user_pass').hasError('pattern')">Contraseña invalida</mat-error>
                 </mat-form-field>
-                <div class="text-left" style="font-size: 0.8rem;">
-                    <p>La contraseña debe tener:</p>
+                <div class="d-flex skn-register-form-conditions-check-container">
+                    <mat-checkbox color="primary" style="margin-right: 5px;" [(ngModel)]="termsAndConditionsAccepted" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                    <p style="font-size: 0.75rem; margin: 0px;">he leído y acepto el <span class="skn-link" style="text-decoration: underline!important;" (click)="openBottomSheet(termsAndConditionsBox)">acuerdo de terminos y condiciones.</span></p>
+                </div>
+
+                <div class="text-left" style="font-size: 0.75rem;">
+                    <p style="margin: 0 0 5px;">La contraseña debe tener:</p>
                     <ul style="padding-inline-start: 20px;">
                         <li>De 8 a 16 caracteres</li>
                         <li>Al menos una letra mayuscula</li>
@@ -156,7 +161,7 @@
         </div>
         <div class="skn-login-button">
             <button mat-raised-button color="primary" (click)="login()" *ngIf="currentForm === 'login'" [disabled]="loginForm.invalid || loginFormLoading">Iniciar sesión</button>
-            <button mat-raised-button color="primary" (click)="register()" *ngIf="currentForm === 'register' && !registerCompleted" [disabled]="registerForm.invalid || loginFormLoading">Registrarse</button>
+            <button mat-raised-button color="primary" (click)="register()" *ngIf="currentForm === 'register' && !registerCompleted" [disabled]="registerForm.invalid || loginFormLoading || !termsAndConditionsAccepted">Registrarse</button>
             <button mat-raised-button color="primary" (click)="passwordRecovery()" *ngIf="currentForm === 'passwordRecovery' && !passwordRecoveryCompleted" [disabled]="passwordRecoveryForm.invalid || loginFormLoading">Enviar correo</button>
         </div>
         <div class="skn-loading" style="height: unset; margin: 1rem 0px;" *ngIf="loginFormLoading">
@@ -166,6 +171,19 @@
             <p class="skn-link" *ngIf="currentForm === 'login'" (click)="swichtTab('passwordRecovery')" style="font-size: 0.8rem;">¿Olvidaste tu contraseña?</p>
             <p class="skn-link" *ngIf="currentForm === 'login' && !registerCompleted" (click)="swichtTab('register')" style="font-size: 0.8rem;">¿No tienes cuenta? ¡Registrate aquí!</p>
             <p class="skn-link" *ngIf="currentForm === 'register' || currentForm === 'passwordRecovery'" (click)="swichtTab('login')" style="font-size: 0.8rem;">Regresar a inicio</p>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #termsAndConditionsBox>
+    <div class="skn-bottom-sheet-modal" style="height: 100vh;">
+        <div class="skn-modal-top-close-button">
+            <button mat-icon-button (click)="bottomSheet.dismiss()" [attr.aria-label]="'close'">
+                <span class="material-icons skn-text">close</span>
+            </button>
+        </div>
+        <div class="modal-header">
+            <h2 class="modal-title">Acuerdo de terminos y condiciones de uso de Skynovels</h2>
         </div>
     </div>
 </ng-template>

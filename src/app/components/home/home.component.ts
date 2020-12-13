@@ -101,7 +101,6 @@ export class HomeComponent implements OnInit {
                 chapter.new = true;
               }
             }
-            console.log(this.updatedNovels);
           });
         }
         if (this.mobile) {
@@ -109,7 +108,6 @@ export class HomeComponent implements OnInit {
           setTimeout(() => {
             this.setSwiperSlidesPerView(3);
           }, 200);
-          console.log(this.mobile);
         } else {
           this.mobile = false;
           setTimeout(() => {
@@ -135,7 +133,6 @@ export class HomeComponent implements OnInit {
   }
 
   setSwiperSlidesPerView(slides: number) {
-    console.log(this.swiperTopConfig);
     this.swiperTopConfig.slidesPerView = slides;
     this.swiperConfigured = true;
   }

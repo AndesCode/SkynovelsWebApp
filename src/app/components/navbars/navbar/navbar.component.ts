@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, ElementRef, TemplateRef, Renderer2, ViewChild, Directive, Inject, PLATFORM_ID } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ElementRef, TemplateRef, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsersService } from '../../../services/users.service';
 import { AdminService } from '../../../services/admin.service';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
@@ -9,6 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Invitation } from 'src/app/models/models';
 import { isPlatformBrowser } from '@angular/common';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class NavbarComponent implements OnInit {
   passwordRecoveryForm: FormGroup;
   loginFormLoading = false;
   registerCompleted = false;
+  termsAndConditionsAccepted = false;
   passwordRecoveryCompleted = false;
   isBrowser: boolean;
 
@@ -45,8 +47,8 @@ export class NavbarComponent implements OnInit {
               public matSnackBar: MatSnackBar,
               public breakpointObserver: BreakpointObserver,
               public el: ElementRef,
-              private re: Renderer2,
               public dialog: MatDialog,
+              public bottomSheet: MatBottomSheet,
               @Inject(PLATFORM_ID) private platformId) {
 
               this.isBrowser = isPlatformBrowser(this.platformId);
@@ -83,7 +85,6 @@ export class NavbarComponent implements OnInit {
 
     this.hs.sendCurrentComponnent.subscribe((data: any) => {
       this.currentComponent = data;
-      console.log(this.currentComponent);
     });
     this.hs.invokeExternalFunction.subscribe((data: any) => {
       if (data === 'closeSideNavBarCall') {
@@ -115,12 +116,14 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  openBottomSheet(item): void {
+    this.bottomSheet.open(item);
+  }
+
   login() {
-    console.log(this.loginForm);
     this.loginFormLoading = true;
     if (this.loginForm.valid) {
       this.us.logIn(this.loginForm.value).subscribe((data: any) => {
-        console.log(data);
         if (data.sknvl_s && this.isBrowser) {
           localStorage.setItem('sknvl_s', data.sknvl_s);
         }
@@ -142,12 +145,10 @@ export class NavbarComponent implements OnInit {
   }
 
   register() {
-    console.log(this.registerForm);
     this.loginFormLoading = true;
-    if (this.registerForm.valid) {
+    if (this.registerForm.valid && this.termsAndConditionsAccepted === true) {
       this.us.createUser(this.registerForm.value).subscribe((data: any) => {
         this.registerCompleted = true;
-        console.log(data);
         this.loginFormLoading = false;
         this.registerForm.reset();
       }, error => {
@@ -163,7 +164,6 @@ export class NavbarComponent implements OnInit {
   }
 
   passwordRecovery() {
-    console.log(this.passwordRecoveryForm);
     this.loginFormLoading = true;
     if (this.passwordRecoveryForm.valid) {
       this.us.passwordResetRequest(this.passwordRecoveryForm.value.user_email).subscribe((data: any) => {

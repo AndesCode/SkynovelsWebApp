@@ -78,7 +78,6 @@ export class ChaptersComponent implements AfterViewInit {
     .subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.mobile = true;
-        console.log(this.mobile);
       } else {
         this.mobile = false;
       }
@@ -91,7 +90,6 @@ export class ChaptersComponent implements AfterViewInit {
     });
     const nvlId = Number(this.activatedRoute.snapshot.paramMap.get('nid'));
     this.ns.getNovelChapters(nvlId).subscribe((data: any) => {
-      console.log(data);
       this.novel = data.novel[0];
       this.novel.user_bookmark = null;
       this.allChapters = this.novel.chapters;
@@ -101,7 +99,6 @@ export class ChaptersComponent implements AfterViewInit {
     }, error => {
       this.router.navigate(['novelas']);
     });
-    console.log(this.mainpanelRef);
     this.renderer.listen(this.mainpanelRef.nativeElement, 'scroll', () => {
       clearTimeout(this.scrolling);
       this.scrolling = setTimeout(() => {
@@ -137,7 +134,6 @@ export class ChaptersComponent implements AfterViewInit {
   updateUserBookmark() {
     this.novel.user_bookmark.chp_id = this.chapterId;
     this.us.updateUserBookmark(this.novel.user_bookmark).subscribe((data: any) => {
-      console.log('bookmark actualizado');
     }, error => {
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
@@ -154,7 +150,6 @@ export class ChaptersComponent implements AfterViewInit {
       chpId = Number(this.activatedRoute.snapshot.paramMap.get('cid'));
     }
     this.loadPortrait = false;
-    console.log(chpId);
     this.currentChapter = this.allChapters.findIndex(x => x.id === Number(chpId));
     if (this.currentChapter === -1) {
       this.router.navigate(['novelas', this.novel.id, this.novel.nvl_name]);
@@ -168,7 +163,6 @@ export class ChaptersComponent implements AfterViewInit {
           this.loadPortrait = true;
         }
         this.initializeComment(data.chapter[0].comments);
-        console.log(this.allChapters[this.currentChapter]);
         this.novel.nvl_currentChapter = data.chapter[0].chp_index_title;
         this.novel.nvl_currentChapterN = data.chapter[0].chp_number;
         this.LoadedChapters.push(this.allChapters[this.currentChapter]);
@@ -221,7 +215,6 @@ export class ChaptersComponent implements AfterViewInit {
 
   getUser() {
     this.user = this.us.getUserLoged();
-    console.log(this.user);
     this.novel.nvl_rated = false;
     this.novel.user_bookmark = null;
     for (const loadadChapter of this.LoadedChapters) {
@@ -259,7 +252,6 @@ export class ChaptersComponent implements AfterViewInit {
   onScrollDown(event) {
     if (event.visible) {
       this.currentPageDown = this.currentPageDown + 1;
-      console.log(this.currentChapter);
       if (this.allChapters[this.currentPageDown]) {
         this.loading = true;
         this.ns.getNovelChapter(this.allChapters[this.currentPageDown].id).subscribe((data: any) => {
@@ -267,7 +259,6 @@ export class ChaptersComponent implements AfterViewInit {
           this.initializeComment(data.chapter[0].comments);
           this.LoadedChapters.push(this.allChapters[this.currentPageDown]);
           this.loading = false;
-          console.log(this.LoadedChapters);
         });
       } else {
         return;
@@ -278,7 +269,6 @@ export class ChaptersComponent implements AfterViewInit {
   onScrollUp() {
     const canLoadPortrait = false;
     this.currentPageUp = this.currentPageUp - 1;
-    console.log(this.currentChapter);
     if (this.allChapters[this.currentPageUp]) {
       this.loading = true;
       if (this.currentPageUp === 0 && this.currentChapter !== 0) {
@@ -292,7 +282,6 @@ export class ChaptersComponent implements AfterViewInit {
         this.initializeComment(data.chapter[0].comments);
         this.LoadedChapters.unshift(this.allChapters[this.currentPageUp]);
         this.loading = false;
-        console.log(this.LoadedChapters);
       });
     } else {
       return;

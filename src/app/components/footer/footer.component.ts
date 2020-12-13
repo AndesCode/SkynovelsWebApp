@@ -19,7 +19,6 @@ export class FooterComponent implements OnInit {
     this.breakpointObserver.observe('(max-width: 449px)').subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.mobile = true;
-        console.log(this.mobile);
       } else {
         this.mobile = false;
       }

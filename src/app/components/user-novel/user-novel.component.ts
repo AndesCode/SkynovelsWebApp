@@ -89,29 +89,23 @@ export class UserNovelComponent implements OnInit {
       this.ns.getNovel(Number(nid), 'edition').subscribe((novelData: any) => {
         if (novelData.authorized_user) {
           this.user = novelData.authorized_user;
-          console.log(this.user);
           this.novel = novelData.novel[0];
           this.hs.updateBrowserMeta('description', this.novel.nvl_content, this.novel.nvl_title);
           this.location.replaceState('/mis-novelas/' + this.novel.id + '/' + this.novel.nvl_name);
           this.novel.genres = this.novel.genres.map(genre => genre.id);
           this.collaborators = this.novel.collaborators.slice();
-          console.log(this.novel);
           if (this.user === this.novel.nvl_author) {
             this.editableNovel = true;
           }
           if (this.novel.nvl_img && this.novel.nvl_img.length > 0) {
-            console.log(this.novel.nvl_img.length);
             this.imgURL = 'http://localhost:3000/api/novel/image/' + this.novel.nvl_img + '/false';
           }
           this.evaluateEditableNovelStatus();
         } else {
-          console.log('no autorizado');
           this.router.navigate(['mis-novelas']);
         }
         this.loading = false;
       }, error => {
-        console.log('no autorizado');
-        console.log(error);
         this.router.navigate(['mis-novelas']);
       });
     } else {
@@ -157,7 +151,6 @@ export class UserNovelComponent implements OnInit {
       request = this.ns.createNovel(this.novel);
     }
     request.subscribe((resp: any) => {
-      console.log(resp);
       this.location.replaceState('/mis-novelas/' + resp.novel.id + '/' + resp.novel.nvl_name);
       if (this.novel.id === undefined
         || this.novel.id === null) {
@@ -168,7 +161,6 @@ export class UserNovelComponent implements OnInit {
       }
       novelForm.form.markAsPristine();
       if ( this.fileToUpload ) {
-        console.log('Hay archivo a subir, se ejecuta consulta al servidor');
         this.hs.uploadImage(this.novel.id, this.fileToUpload, this.novel.nvl_img, 'novel').then((img: any) => {
           this.novel.nvl_img = img.image;
           this.fileToUpload = null;
@@ -177,7 +169,6 @@ export class UserNovelComponent implements OnInit {
           this.successSnackMessage = '¡Cambios guardados!';
           return;
         }).catch(error => {
-          console.log(error);
           this.openMatSnackBar(this.errorSnackRef);
           this.errorSnackMessage = error.message;
         });
@@ -187,7 +178,6 @@ export class UserNovelComponent implements OnInit {
         this.successSnackMessage = '¡Cambios guardados!';
       }
     }, error => {
-      console.log(error);
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
@@ -244,7 +234,6 @@ export class UserNovelComponent implements OnInit {
 
   evaluateEditableNovelStatus() {
     for (const [i, volume] of this.novel.volumes.entries()) {
-      console.log(i);
       const chaptersStatus = volume.chapters.map(
         chapterStatus => chapterStatus.chp_status);
       if (chaptersStatus.includes('Active')) {
@@ -262,7 +251,6 @@ export class UserNovelComponent implements OnInit {
   fileChangeEvent(fileInput: any) {
     if (fileInput.target.files.length > 0) {
       this.fileToUpload = fileInput.target.files[0];
-      console.log(this.fileToUpload);
       this.imageSelected = this.fileToUpload.name;
     } else {
       fileInput = null;
@@ -273,7 +261,6 @@ export class UserNovelComponent implements OnInit {
       return;
     }
     const mimeType =  this.fileToUpload.type;
-    console.log(mimeType);
     if (mimeType.match(/image\/*/) == null) {
         this.imageSelected = 'Solo puedes seleccionar imagenes .jpg';
         this.fileToUpload = null;
@@ -290,22 +277,18 @@ export class UserNovelComponent implements OnInit {
 
   createUserInvitation() {
     this.us.sendInvitation(this.collaboratorForm.value.user_login, this.novel.id).subscribe((data: any) => {
-      console.log(data.invitation);
       this.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Invitación enviada!';
     }, error => {
-      console.log(error);
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
 
   createVolume() {
-    console.log(this.volumeForm.value);
     if (this.volumeForm.valid) {
       this.uploading = true;
       this.ns.createNovelVolume(this.volumeForm.value.vlm_title, this.novel.id).subscribe((data: any) => {
-        console.log(data);
         this.novel.volumes.push(data.volume);
         this.dialog.closeAll();
         this.volumeForm.reset();
@@ -327,7 +310,6 @@ export class UserNovelComponent implements OnInit {
     if (editVolumeForm.valid) {
       this.uploading = true;
       this.ns.updateNovelVolume(volume).subscribe((data: any) => {
-        console.log(data);
         this.dialog.closeAll();
         this.uploading = false;
         this.openMatSnackBar(this.successSnackRef);
@@ -355,7 +337,6 @@ export class UserNovelComponent implements OnInit {
     }, error => {
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
-      console.log(error.error.message);
       this.uploading = false;
     });
   }

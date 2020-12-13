@@ -70,8 +70,6 @@ export class UserChapterComponent implements OnInit {
       if (novelData.authorized_user) {
         this.user = novelData.authorized_user;
         this.novel = novelData.novel[0];
-        console.log(this.user);
-        console.log(this.novel.nvl_author);
         if (this.novel.volumes.findIndex(x => x.id === vid) !== -1) {
           this.volume = this.novel.volumes[this.novel.volumes.findIndex(x => x.id === vid)];
           if (cid !== 'nuevo') {
@@ -79,7 +77,6 @@ export class UserChapterComponent implements OnInit {
               this.ns.getNovelChapterEdition(this.volume.chapters[this.volume.chapters.findIndex(x => x.id === Number(cid))].id)
               .subscribe((data: any) => {
                 this.chapter = data.chapter;
-                console.log(this.chapter);
                 this.hs.updateBrowserMeta('description',
                 'Edición de capitulo ' + this.chapter.chp_title,  this.novel.nvl_title + ' | ' + this.chapter.chp_title);
                 this.location.replaceState('/mis-novelas/' + this.novel.id + '/' +
@@ -90,10 +87,9 @@ export class UserChapterComponent implements OnInit {
                 }
               });
             } else {
-              console.log('no existe el capitulo');
+              this.router.navigate(['mis-novelas', this.novel.id, this.novel.nvl_name]);
             }
           } else {
-            console.log('nuevo capitulo');
             this.chapter = new Chapter();
             this.chapter.nvl_id = this.novel.id;
             this.location.replaceState('/mis-novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' + this.volume.id + '/nuevo');
@@ -106,18 +102,10 @@ export class UserChapterComponent implements OnInit {
             this.editableChapter = true;
             this.loading = false;
           }
-          console.log(this.volume);
         } else {
-          console.log('no existe el volumen');
-          this.router.navigate(['mis-novelas']);
+          this.router.navigate(['mis-novelas', this.novel.id, this.novel.nvl_name]);
         }
-        // this.location.replaceState('/mis-novelas/' + this.novel.id + '/' + this.novel.nvl_name);
-        console.log(this.novel);
-        /*if (this.user === this.novel.nvl_author || this.user === chp_author ) {
-          this.editablechapter = true;
-        }*/
       } else {
-        console.log('no autorizado');
         this.router.navigate(['mis-novelas']);
       }
     }, error => {
@@ -148,7 +136,6 @@ export class UserChapterComponent implements OnInit {
       return;
     }
     this.uploading = true;
-    console.log(chapterForm);
     let request: Observable<any>;
     if (this.chapter.id) {
       request = this.ns.updateChapter(this.chapter);
@@ -156,16 +143,12 @@ export class UserChapterComponent implements OnInit {
       request = this.ns.createChapter(this.chapter);
     }
     request.subscribe( resp => {
-      console.log(resp);
       this.chapter.chp_title = resp.chapter.chp_title;
       if (this.chapter.id === undefined || this.chapter.id === null) {
-          console.log('creando caputlo');
-          console.log(resp);
           this.chapter.id = resp.chapter.id;
           this.volume.chapters.push(this.chapter);
           this.openMatSnackBar(this.successSnackRef);
           this.successSnackMessage = '¡Capitulo creado!';
-          console.log(this.chapter);
       } else {
         this.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Cambios guardados!';
@@ -192,7 +175,6 @@ export class UserChapterComponent implements OnInit {
 
   evaluateEditableNovelStatus() {
     for (const [i, volume] of this.novel.volumes.entries()) {
-      console.log(i);
       const chaptersStatus = volume.chapters.map(
         chapterStatus => chapterStatus.chp_status);
       if (chaptersStatus.includes('Active')) {
@@ -230,7 +212,6 @@ export class UserChapterComponent implements OnInit {
   }
 
   goBackToNovel(chapterForm?: NgForm, confirmed?: boolean) {
-    console.log(chapterForm?.dirty);
     if (chapterForm?.dirty && !confirmed) {
       this.dialog.open(this.confirmExitComponentModalref);
     } else {
