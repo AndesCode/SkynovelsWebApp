@@ -39,20 +39,24 @@ export class PageService {
       [objectType]: object.id,
       comment_content: object.comment
     };
-    this.createComment(comment).subscribe((data: any) => {
-      data.comment.user_login = user.user_login;
-      data.comment.user_profile_image = user.user_profile_image;
-      data.comment.liked = false;
-      data.comment.show_more = false;
-      data.comment.edition = false;
-      data.comment.likes = [];
-      data.comment.replys = [];
-      data.comment.show_replys = false;
-      data.comment.reply = null;
-      data.comment.date_data = this.hs.getRelativeTime(data.comment.createdAt);
-      object.comments.push(data.comment);
-      object.comment = null;
-    });
+    if (comment.comment_content && comment.comment_content.length > 1) {
+      this.createComment(comment).subscribe((data: any) => {
+        data.comment.user_login = user.user_login;
+        data.comment.user_profile_image = user.user_profile_image;
+        data.comment.liked = false;
+        data.comment.show_more = false;
+        data.comment.edition = false;
+        data.comment.likes = [];
+        data.comment.replys = [];
+        data.comment.show_replys = false;
+        data.comment.reply = null;
+        data.comment.date_data = this.hs.getRelativeTime(data.comment.createdAt);
+        object.comments.push(data.comment);
+        object.comment = null;
+      });
+    } else {
+      return;
+    }
   }
 
   updateCommentFunction(form: NgForm, comment: Comment) {
@@ -80,17 +84,21 @@ export class PageService {
       [objectType]: object.id,
       reply_content: object.reply
     };
-    this.createReply(reply).subscribe((data: any) => {
-      data.reply.user_login = user.user_login;
-      data.reply.user_profile_image = user.user_profile_image;
-      data.reply.liked = false;
-      data.reply.show_more = false;
-      data.reply.edition = false;
-      data.reply.likes = [];
-      data.reply.date_data = this.hs.getRelativeTime(data.reply.createdAt);
-      object.replys.unshift(data.reply);
-      object.reply = null;
-    });
+    if (reply.reply_content && reply.reply_content.length > 1) {
+      this.createReply(reply).subscribe((data: any) => {
+        data.reply.user_login = user.user_login;
+        data.reply.user_profile_image = user.user_profile_image;
+        data.reply.liked = false;
+        data.reply.show_more = false;
+        data.reply.edition = false;
+        data.reply.likes = [];
+        data.reply.date_data = this.hs.getRelativeTime(data.reply.createdAt);
+        object.replys.unshift(data.reply);
+        object.reply = null;
+      });
+    } else {
+      return;
+    }
   }
 
   getReplysFunction(user: User, object: any, objectType: 'comment_id' | 'novel_rating_id') {

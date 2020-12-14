@@ -150,7 +150,11 @@
                                 <div class="skn-user-image-mobile">
                                     <img [src]="comment.user_profile_image | noUserImage" alt="">
                                 </div>
-                                <strong style="margin: auto 6px">{{comment.user_login}}</strong>
+                                <div class="skn-nvl-user-rating-login-name">
+                                    <strong style="margin-right: 5px;">{{comment.user_login}}</strong>
+                                    <small>{{hs.getRelativeTime(comment.createdAt).message}}</small>
+                                </div>
+
                             </div>
                             <button mat-mini-fab *ngIf="!comment.edition && user?.id === comment.user_id" [matMenuTriggerFor]="userMenu"><span class="material-icons">more_vert</span></button>
                             <mat-menu #userMenu="matMenu">
@@ -230,7 +234,10 @@
                                         <div class="skn-user-image-mobile">
                                             <img [src]="comment.user_profile_image | noUserImage" alt="">
                                         </div>
-                                        <strong style="margin: auto 6px">{{comment.user_login}}</strong>
+                                        <div class="skn-nvl-user-rating-login-name">
+                                            <strong style="margin-right: 5px;">{{comment.user_login}}</strong>
+                                            <small>{{hs.getRelativeTime(comment.createdAt).message}}</small>
+                                        </div>
                                     </div>
                                     <button mat-mini-fab *ngIf="!comment.edition && user?.id === comment.user_id" [matMenuTriggerFor]="userMenu"><span class="material-icons">more_vert</span></button>
                                     <mat-menu #userMenu="matMenu">
@@ -288,7 +295,7 @@
                                                     <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #reply="ngModel" name="comment.reply" [(ngModel)]="comment.reply"></textarea>
                                                 </mat-form-field>
                                             </div>
-                                            <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" (click)="ps.createReplyFunction(user, comment, 'comment_id')">Publicar</button>
+                                            <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" [disabled]="comment.reply === null || comment.reply.length < 2" (click)="ps.createReplyFunction(user, comment, 'comment_id')">Publicar</button>
                                         </div>
                                     </form>
                                     <div class="skn-nvl-user-rating" *ngFor="let reply of comment.replys" style="padding: 0px!important;">

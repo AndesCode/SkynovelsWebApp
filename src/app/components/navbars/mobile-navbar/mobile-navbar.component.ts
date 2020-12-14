@@ -53,12 +53,13 @@ export class MobileNavbarComponent implements OnInit {
     }
   }
 
-  closeNav(manteinScroll: boolean) {
+  closeNav(maintainScrollPosition: boolean) {
+    this.hs.openExternalFunction('closeSideNavBarCall');
     this.open = false;
     if (isPlatformBrowser(this.platformId)) {
       document.documentElement.classList.remove('cdk-global-scrollblock');
       document.documentElement.removeAttribute('style');
-      if (manteinScroll) {
+      if (maintainScrollPosition) {
         window.scrollTo(0, this.scrollPosition);
       } else {
         window.scrollTo(0, 0);
@@ -70,16 +71,6 @@ export class MobileNavbarComponent implements OnInit {
 
   goToMyProfile() {
     this.router.navigate(['/perfil', this.us.getUserLoged().id, this.us.getUserLoged().user_login]);
-  }
-
-  closeMobileNavbarForm() {
-    this.hs.openExternalFunction('closeSideNavBarCall');
-    this.closeNav(true);
-  }
-
-  navigate() {
-    this.hs.openExternalFunction('closeSideNavBarCall');
-    this.closeNav(false);
   }
 
   toggleTheme() {

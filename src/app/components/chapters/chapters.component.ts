@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Novel, User } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
 import { Chapter } from '../../models/models';
+import * as Cookies from 'js-cookie';
 
 @Component({
   selector: 'app-chapters',
@@ -73,15 +74,17 @@ export class ChaptersComponent implements AfterViewInit {
               }
 
   ngAfterViewInit(): void {
-    this.breakpointObserver
-    .observe('(max-width: 1152px)')
-    .subscribe((state: BreakpointState) => {
+    this.breakpointObserver.observe('(max-width: 1152px)').subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.mobile = true;
       } else {
         this.mobile = false;
       }
     });
+
+    if (Cookies.get('font')) {
+      this.fontSize = Number(Cookies.get('font'));
+    }
 
     this.hs.invokeExternalFunction.subscribe((data: any) => {
       if (data === 'reloadUser') {
@@ -125,9 +128,11 @@ export class ChaptersComponent implements AfterViewInit {
   changeFontSize(value: 'plus' | 'substract') {
     if (value === 'plus' && this.fontSize < 24) {
       this.fontSize = this.fontSize + 1;
+      Cookies.set('font', String(this.fontSize), { expires: 65 });
     }
     if (value === 'substract' && this.fontSize > 1) {
       this.fontSize = this.fontSize - 1;
+      Cookies.set('font', String(this.fontSize), { expires: 65 });
     }
   }
 
@@ -197,6 +202,7 @@ export class ChaptersComponent implements AfterViewInit {
       comment.liked = false;
       comment.chapter_comment_reply = null;
       comment.replys = [];
+      comment.reply = null;
       if (this.user) {
         for (const commentLike of comment.likes) {
           if (commentLike.user_id === this.user.id) {

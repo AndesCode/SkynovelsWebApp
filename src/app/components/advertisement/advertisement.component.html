@@ -48,7 +48,10 @@
                         <div class="skn-user-image-mobile">
                             <img [src]="comment.user_profile_image | noUserImage" alt="">
                         </div>
-                        <strong style="margin: auto 6px">{{comment.user_login}}</strong>
+                        <div class="skn-nvl-user-rating-login-name">
+                            <strong style="margin-right: 5px;">{{comment.user_login}}</strong>
+                            <small>{{hs.getRelativeTime(comment.createdAt).message}}</small>
+                        </div>
                     </div>
                     <button mat-mini-fab *ngIf="!comment.edition && user?.id === comment.user_id" [matMenuTriggerFor]="userMenu"><span class="material-icons">more_vert</span></button>
                     <mat-menu #userMenu="matMenu">
