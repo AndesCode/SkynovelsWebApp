@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID, isDevMode } from '@angular/core';
 import { UsersService } from '../../../../services/users.service';
 import { AdminService } from '../../../../services/admin.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,6 +8,7 @@ import { Advertisement } from '../../../../models/models';
 import { Location, isPlatformBrowser } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { Dev, Prod } from 'src/app/config/config';
 
 @Component({
   selector: 'app-advertisement-management',
@@ -26,7 +27,7 @@ export class AdvertisementManagementComponent implements OnInit {
   public imageSelected: string;
   public imagePath;
   public imgURL: any  = '../../../../../assets/img/noimage.jpg';
-
+  apiURL: string;
   uploading = false;
   loading = true;
 
@@ -40,8 +41,16 @@ export class AdvertisementManagementComponent implements OnInit {
               public matSnackBar: MatSnackBar,
               private activatedRoute: ActivatedRoute,
               private router: Router,
+              private dev: Dev,
+              private prod: Prod,
               private location: Location,
               @Inject(PLATFORM_ID) private platformId) {
+
+              if (isDevMode()) {
+                this.apiURL = this.dev.apiURL
+              } else {
+                this.apiURL = this.prod.apiURL
+              }
 
               this.isBrowser = isPlatformBrowser(this.platformId);
               if (this.isBrowser) {
@@ -63,7 +72,7 @@ export class AdvertisementManagementComponent implements OnInit {
          + this.advertisement.id + '/' + this.advertisement.adv_name);
         this.loading = false;
         if (this.advertisement.adv_img && this.advertisement.adv_img.length > 0) {
-          this.imgURL = 'http://localhost:3000/api/advertisement/image/' + this.advertisement.adv_img;
+          this.imgURL = this.apiURL + '/api/advertisement/image/' + this.advertisement.adv_img;
         }
       }, error => {
         this.router.navigate(['panel']);
@@ -135,7 +144,7 @@ export class AdvertisementManagementComponent implements OnInit {
       }
       advertisementForm.form.markAsPristine();
       if ( this.fileToUpload ) {
-        this.as.AdminUploadImage(this.us.getUserLoged().token, this.advertisement.id, this.fileToUpload, this.advertisement.adv_img)
+        this.as.AdminUploadImage(this.us.getUserLoged().token, this.advertisement.id, this.fileToUpload)
         .then((img: any) => {
           this.advertisement.adv_img = img.advertisement.adv_img;
           this.fileToUpload = null;

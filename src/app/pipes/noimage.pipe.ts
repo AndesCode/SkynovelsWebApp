@@ -1,13 +1,25 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { isDevMode, Pipe, PipeTransform } from '@angular/core';
+import { Dev, Prod } from '../config/config';
 
 @Pipe({
   name: 'noimage'
 })
 export class NoimagePipe implements PipeTransform {
 
+  apiURL: string
+
+  constructor(private dev: Dev, private prod: Prod) {
+    if (isDevMode()) {
+      this.apiURL = this.dev.apiURL
+    } else {
+      this.apiURL = this.prod.apiURL
+    }
+    
+  }
+
   transform(nvlImg: string) {
     if (nvlImg && nvlImg.length > 0) {
-      return 'http://localhost:3000/api/novel/image/' + nvlImg + '/false';
+      return this.apiURL + '/api/novel/image/' + nvlImg + '/false';
     } else {
       return '../../../assets/img/noimage.jpg';
     }

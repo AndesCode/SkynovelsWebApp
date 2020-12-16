@@ -24,21 +24,23 @@ export class AppComponent implements AfterViewInit {
               private prod: Prod,
               @Inject(PLATFORM_ID) private platformId) {
 
-              this.isBrowser = isPlatformBrowser(this.platformId);
-              const navEndEvents$ = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
-              navEndEvents$.subscribe((event: NavigationEnd) => {
-                  const canonicalUrl = document.querySelector('[rel="canonical"]');
-                  if (event.urlAfterRedirects === '/') {
-                    this.meta.updateTag({content: this.prod.url}, 'name=urlskn');
-                    canonicalUrl.setAttribute('href', this.prod.url + '/');
-                  } else {
-                    this.meta.updateTag({content: this.prod.url + event.urlAfterRedirects}, 'name=urlskn');
-                    canonicalUrl.setAttribute('href', this.prod.url + event.urlAfterRedirects + '/');
-                  }
-                  /*gtag('config', 'xxxxxx', {
-                    'page_path': event.urlAfterRedirects
-                  });*/
-                });
+                this.isBrowser = isPlatformBrowser(this.platformId);
+                if (this.isBrowser) {
+                  const navEndEvents$ = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
+                  navEndEvents$.subscribe((event: NavigationEnd) => {
+                    const canonicalUrl = document.querySelector('[rel="canonical"]');
+                    if (event.urlAfterRedirects === '/') {
+                      this.meta.updateTag({content: this.prod.url}, 'name=urlskn');
+                      canonicalUrl.setAttribute('href', this.prod.url + '/');
+                    } else {
+                      this.meta.updateTag({content: this.prod.url + event.urlAfterRedirects}, 'name=urlskn');
+                      canonicalUrl.setAttribute('href', this.prod.url + event.urlAfterRedirects + '/');
+                    }
+                    /*gtag('config', 'xxxxxx', {
+                      'page_path': event.urlAfterRedirects
+                    });*/
+                  });
+                }
               }
 
   ngAfterViewInit() {

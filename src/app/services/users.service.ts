@@ -1,6 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Novel, User, Invitation, LoginUser, NewUser, Bookmark } from '../models/models';
+import { User, Invitation, LoginUser, NewUser, Bookmark } from '../models/models';
 import { Dev, Prod } from '../config/config';
 import { isPlatformBrowser } from '@angular/common';
 

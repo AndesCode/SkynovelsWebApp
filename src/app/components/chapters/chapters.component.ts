@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, ViewChildren, TemplateRef  } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, ViewChildren, TemplateRef, Inject, PLATFORM_ID  } from '@angular/core';
+import { Location, isPlatformBrowser } from '@angular/common';
 import { NovelsService } from '../../services/novels.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
@@ -45,6 +45,7 @@ export class ChaptersComponent implements AfterViewInit {
   chapterId: number;
   fontSize = 16;
   componentName = 'ChaptersComponent';
+  isBrowser: boolean;
 
   @ViewChildren('chaptersElement') chaptersElementRef;
 
@@ -60,8 +61,9 @@ export class ChaptersComponent implements AfterViewInit {
               private activatedRoute: ActivatedRoute,
               private router: Router,
               public dialog: MatDialog,
-              public bottomSheet: MatBottomSheet) {
-
+              public bottomSheet: MatBottomSheet,
+              @Inject(PLATFORM_ID) private platformId) {
+                this.isBrowser = isPlatformBrowser(this.platformId);
                 this.newRatingForm = new FormGroup({
                   novel_id: new FormControl(''),
                   rate_value: new FormControl('0', [Validators.required, Validators.min(1), Validators.max(5)]),
@@ -82,7 +84,7 @@ export class ChaptersComponent implements AfterViewInit {
       }
     });
 
-    if (Cookies.get('font')) {
+    if (this.isBrowser && Cookies.get('font')) {
       this.fontSize = Number(Cookies.get('font'));
     }
 
@@ -128,11 +130,15 @@ export class ChaptersComponent implements AfterViewInit {
   changeFontSize(value: 'plus' | 'substract') {
     if (value === 'plus' && this.fontSize < 24) {
       this.fontSize = this.fontSize + 1;
-      Cookies.set('font', String(this.fontSize), { expires: 65 });
+      if (this.isBrowser) {
+        Cookies.set('font', String(this.fontSize), { expires: 65 });
+      }    
     }
     if (value === 'substract' && this.fontSize > 1) {
       this.fontSize = this.fontSize - 1;
-      Cookies.set('font', String(this.fontSize), { expires: 65 });
+      if (this.isBrowser) {
+        Cookies.set('font', String(this.fontSize), { expires: 65 });
+      }     
     }
   }
 

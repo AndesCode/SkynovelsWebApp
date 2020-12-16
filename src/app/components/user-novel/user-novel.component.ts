@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID, isDevMode } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -11,6 +11,7 @@ import { Location, isPlatformBrowser } from '@angular/common';
 import { UsersService } from '../../services/users.service';
 import { Novel, Genre, User, Chapter, Volume } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
+import { Dev, Prod } from '../../config/config';
 
 @Component({
   selector: 'app-user-novel',
@@ -43,6 +44,7 @@ export class UserNovelComponent implements OnInit {
   volumeForm: FormGroup;
   isBrowser: boolean;
   componentName = 'UserNovelComponent';
+  apiURL: string;
 
     constructor( private activatedRoute: ActivatedRoute,
                  public ns: NovelsService,
@@ -53,7 +55,15 @@ export class UserNovelComponent implements OnInit {
                  public dialog: MatDialog,
                  public matSnackBar: MatSnackBar,
                  private location: Location,
+                 private dev: Dev,
+                 private prod: Prod,
                  @Inject(PLATFORM_ID) private platformId) {
+
+                  if (isDevMode()) {
+                    this.apiURL = this.dev.apiURL
+                  } else {
+                    this.apiURL = this.prod.apiURL
+                  }
 
                   this.isBrowser = isPlatformBrowser(this.platformId);
                   if (this.isBrowser) {
@@ -98,7 +108,7 @@ export class UserNovelComponent implements OnInit {
             this.editableNovel = true;
           }
           if (this.novel.nvl_img && this.novel.nvl_img.length > 0) {
-            this.imgURL = 'http://localhost:3000/api/novel/image/' + this.novel.nvl_img + '/false';
+            this.imgURL = this.apiURL + '/api/novel/image/' + this.novel.nvl_img + '/false';
           }
           this.evaluateEditableNovelStatus();
         } else {
@@ -161,7 +171,7 @@ export class UserNovelComponent implements OnInit {
       }
       novelForm.form.markAsPristine();
       if ( this.fileToUpload ) {
-        this.hs.uploadImage(this.novel.id, this.fileToUpload, this.novel.nvl_img, 'novel').then((img: any) => {
+        this.hs.uploadImage(this.novel.id, this.fileToUpload, 'novel').then((img: any) => {
           this.novel.nvl_img = img.image;
           this.fileToUpload = null;
           this.uploading = false;

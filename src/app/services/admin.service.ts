@@ -443,18 +443,14 @@ export class AdminService {
     return this.http.post(url, null, httpOptions);
   }
 
-  AdminUploadImage(jwt: string, id: number, file: File, img: string) {
+  AdminUploadImage(jwt: string, id: number, file: File) {
     console.log(id);
     const url = `${ this.urlCredentialsNovelsDb }/admin-upload-advertisement-img/${id}`;
     const appendType = 'advertisement_image';
-    const oldAppendType = 'old_advertisement_image';
     return new Promise((resolve, reject) => {
       const formData: any = new FormData();
       const xhr = new XMLHttpRequest();
       formData.append(appendType, file, file.name);
-      if (img && img !== undefined &&  img !== null && img.length > 0) {
-        formData.append(oldAppendType, img);
-      }
       xhr.withCredentials = true;
       xhr.open('POST', url, true);
       xhr.setRequestHeader('Authorization', jwt);

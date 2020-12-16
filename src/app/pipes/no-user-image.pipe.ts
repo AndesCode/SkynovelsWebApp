@@ -1,13 +1,24 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { isDevMode, Pipe, PipeTransform } from '@angular/core';
+import { Dev, Prod } from '../config/config';
 
 @Pipe({
   name: 'noUserImage'
 })
 export class NoUserImagePipe implements PipeTransform {
 
+  apiURL: string
+
+  constructor(private dev: Dev, private prod: Prod) {
+    if (isDevMode()) {
+      this.apiURL = this.dev.apiURL
+    } else {
+      this.apiURL = this.prod.apiURL
+    }
+  }
+
   transform(userProfileImage: string) {
     if (userProfileImage && userProfileImage.length > 0) {
-      return 'http://localhost:3000/api/user-profile-img/' + userProfileImage + '/false';
+      return this.apiURL + '/api/user-profile-img/' + userProfileImage + '/false';
     } else {
       return '../../../assets/img/usernoimage.jpg';
     }

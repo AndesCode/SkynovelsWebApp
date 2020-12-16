@@ -211,19 +211,16 @@ export class HelperService {
     }, 500);
   }
 
-  uploadImage(id: any, file: File, img: string, imageType: 'novel' | 'user') {
+  uploadImage(id: any, file: File, imageType: 'novel' | 'user') {
     let url: string;
     let appendType: string;
-    let oldAppendType: string;
     if (imageType === 'novel') {
       url = `${ this.urlCredentialsNovelsDb }/upload-novel-img/${id}`;
       appendType = 'novel_image';
-      oldAppendType = 'old_novel_image';
     }
     if (imageType === 'user') {
       url = `${ this.urlCredentialsNovelsDb }/upload-user-profile-img/${id}`;
       appendType = 'user_profile_image';
-      oldAppendType = 'old_user_profile_image';
     }
     if (imageType !== 'user' && imageType !== 'novel') {
       return;
@@ -232,9 +229,6 @@ export class HelperService {
       const formData: any = new FormData();
       const xhr = new XMLHttpRequest();
       formData.append(appendType, file, file.name);
-      if (img && img !== undefined &&  img !== null && img.length > 0) {
-        formData.append(oldAppendType, img);
-      }
       xhr.withCredentials = true;
       xhr.open('POST', url, true);
       xhr.send(formData);

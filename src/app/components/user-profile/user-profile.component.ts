@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, isDevMode } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { HelperService } from '../../services/helper.service';
@@ -6,6 +6,7 @@ import { User } from 'src/app/models/models';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
+import { Dev, Prod } from 'src/app/config/config';
 
 @Component({
   selector: 'app-user-profile',
@@ -27,13 +28,24 @@ export class UserProfileComponent implements OnInit {
   loading = true;
   edition = false;
   componentName = 'UserProfileComponent';
+  apiURL: string;
 
   constructor(private activatedRoute: ActivatedRoute,
               private us: UsersService,
               private router: Router,
               private location: Location,
               public matSnackBar: MatSnackBar,
-              public hs: HelperService) {}
+              public hs: HelperService,
+              private dev: Dev,
+              private prod: Prod) {
+
+               if (isDevMode()) {
+                 this.apiURL = this.dev.apiURL
+               } else {
+                 this.apiURL = this.prod.apiURL
+               }
+
+              }
 
   ngOnInit(): void {
     this.hs.invokeExternalFunction.subscribe((data: any) => {
@@ -46,7 +58,7 @@ export class UserProfileComponent implements OnInit {
       this.userData = data.user[0];
       this.location.replaceState('/perfil/' + this.userData.id + '/' + this.userData.user_login);
       if (this.userData.user_profile_image && this.userData.user_profile_image.length > 0) {
-        this.imgURL = 'http://localhost:3000/api/user-profile-img/' + this.userData.user_profile_image + '/false';
+        this.imgURL = this.apiURL + '/api/user-profile-img/' + this.userData.user_profile_image + '/false';
       }
       this.loading = false;
       this.hs.updateBrowserMeta('description', `${this.userData.user_login}, perfil de usuario`, 'SkyNovels | ' + this.userData.user_login);
@@ -107,7 +119,7 @@ export class UserProfileComponent implements OnInit {
     reader.onload = (_event) => {
     this.imgURL = reader.result;
     };
-    this.hs.uploadImage(this.userData.id, this.fileToUpload, this.userData.user_profile_image, 'user').then((img: any) => {
+    this.hs.uploadImage(this.userData.id, this.fileToUpload, 'user').then((img: any) => {
           this.userData.user_profile_image = img.image;
           this.fileToUpload = null;
           this.openMatSnackBar(this.successSnackRef);

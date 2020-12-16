@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID, isDevMode } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -11,6 +11,7 @@ import { Novel, Genre, User, Chapter, Volume } from 'src/app/models/models';
 import { AdminService } from '../../../../services/admin.service';
 import { PageService } from '../../../../services/page.service';
 import { isPlatformBrowser } from '@angular/common';
+import { Dev, Prod } from 'src/app/config/config';
 
 
 @Component({
@@ -40,6 +41,7 @@ export class NovelManagementComponent implements OnInit {
   novelPublished = false;
   chapterEdition = false;
   isBrowser: boolean;
+  apiURL: string;
 
     constructor(private activatedRoute: ActivatedRoute,
                 public ns: NovelsService,
@@ -50,7 +52,15 @@ export class NovelManagementComponent implements OnInit {
                 private router: Router,
                 public dialog: MatDialog,
                 public matSnackBar: MatSnackBar,
+                private dev: Dev,
+                private prod: Prod,
                 @Inject(PLATFORM_ID) private platformId) {
+
+                 if (isDevMode()) {
+                   this.apiURL = this.dev.apiURL
+                 } else {
+                   this.apiURL = this.prod.apiURL
+                 }
 
                 this.isBrowser = isPlatformBrowser(this.platformId);
                 if (this.isBrowser) {
@@ -80,7 +90,7 @@ export class NovelManagementComponent implements OnInit {
       this.novel.genres = this.novel.genres.map(genre => genre.id);
       this.collaborators = this.novel.collaborators.slice();
       if (this.novel.nvl_img) {
-        this.imgURL = 'http://localhost:3000/api/novel/image/' + this.novel.nvl_img + '/false';
+        this.imgURL = this.apiURL + '/api/novel/image/' + this.novel.nvl_img + '/false';
       }
       if (this.novel.nvl_status === 'Active' || this.novel.nvl_status === 'Finished') {
         this.novelPublished = true;
@@ -114,7 +124,7 @@ export class NovelManagementComponent implements OnInit {
         this.novel.nvl_status = 'Disabled';
       }
       if ( this.fileToUpload ) {
-        this.hs.uploadImage(this.novel.id, this.fileToUpload, this.novel.nvl_img, 'novel')
+        this.hs.uploadImage(this.novel.id, this.fileToUpload, 'novel')
         .then((img: any) => {
           this.novel.nvl_img = img.novel.nvl_img;
           this.fileToUpload = null;
