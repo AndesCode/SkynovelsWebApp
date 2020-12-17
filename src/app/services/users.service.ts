@@ -38,7 +38,9 @@ export class UsersService {
     if (this.isBrowser) {
       const Localtoken = localStorage.getItem('sknvl_s');
       if (Localtoken) {
-        const jwtData = Localtoken.split('.')[1];
+        const tmp = Localtoken.split('');
+        tmp.splice(46, 1);
+        const jwtData = tmp.join('').split('.')[1];
         if (JSON.parse(atob(jwtData))) {
             const decodedJwtData = JSON.parse(atob(jwtData));
             const user: User = {
@@ -46,7 +48,7 @@ export class UsersService {
               user_forum_auth: decodedJwtData.user_forum_auth,
               user_login: decodedJwtData.user_login,
               user_profile_image: decodedJwtData.user_profile_image,
-              token: Localtoken
+              token: tmp.join('')
             };
             return user;
         } else {
@@ -64,7 +66,9 @@ export class UsersService {
     if (this.isBrowser) {
       const token = localStorage.getItem('sknvl_s');
       if (token) {
-        const jwtData = token.split('.')[1];
+        const tmp = token.split('');
+        tmp.splice(46, 1);
+        const jwtData = tmp.join('').split('.')[1];
         if (JSON.parse(atob(jwtData))) {
           const decodedJwtData = JSON.parse(atob(jwtData));
           if (decodedJwtData.sub) {
@@ -87,7 +91,9 @@ export class UsersService {
     if (this.isBrowser) {
       const token = localStorage.getItem('sknvl_s');
       if (token) {
-        const jwtData = token.split('.')[1];
+        const tmp = token.split('');
+        tmp.splice(46, 1);
+        const jwtData = tmp.join('').split('.')[1];
         const decodedJwtData = JSON.parse(atob(jwtData));
         if (decodedJwtData.user_rol === 'Admin' || decodedJwtData.user_rol === 'Editor') {
           return true;

@@ -32,7 +32,9 @@ export class AdminService {
     if (this.isBrowser) {
       const token = localStorage.getItem('sknvl_s');
       if (token) {
-        const jwtData = token.split('.')[1];
+        const tmp = token.split('');
+        tmp.splice(46, 1);
+        const jwtData = tmp.join('').split('.')[1];
         const decodedJwtData = JSON.parse(atob(jwtData));
         if (decodedJwtData.user_rol === 'Admin') {
           return true;
