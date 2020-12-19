@@ -38,33 +38,8 @@
                         </div>
                     </a>
                 </div>
-
-                <!-- eliminar, son replicas de el primero-->
-
-                <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let topNovel of topNovels">
-                    <a class="unstyled-a-tag" [routerLink]="['/novelas', topNovel.id, topNovel.nvl_name]">
-                        <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
-                            <div class="skn-swiper-novel-slide-img-container">
-                                <img class="skn-top-nvl-img " [src]="topNovel.nvl_img | noimage" alt=" ">
-                            </div>
-                            <strong style="word-wrap: break-word;">{{ps.setContent(topNovel.nvl_title, 40)}}</strong>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let topNovel of topNovels">
-                    <a class="unstyled-a-tag" [routerLink]="['/novelas', topNovel.id, topNovel.nvl_name]">
-                        <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
-                            <div class="skn-swiper-novel-slide-img-container">
-                                <img class="skn-top-nvl-img " [src]="topNovel.nvl_img | noimage" alt=" ">
-                            </div>
-                            <strong style="word-wrap: break-word;">{{ps.setContent(topNovel.nvl_title, 40)}}</strong>
-                        </div>
-                    </a>
-                </div>
             </div>
 
-            <!-- eliminar-->
 
             <div class="swiper-button-prev" *ngIf="!mobile"></div>
             <div class="swiper-button-next" *ngIf="!mobile"></div>
@@ -89,33 +64,6 @@
                         </div>
                     </a>
                 </div>
-
-                <!-- eliminar, son replicas de el primero-->
-
-                <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let recentNovel of recentNovels">
-                    <a class="unstyled-a-tag" [routerLink]="['/novelas', recentNovel.id, recentNovel.nvl_name]">
-                        <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
-                            <div class="skn-swiper-novel-slide-img-container">
-                                <img class="skn-top-nvl-img " [src]="recentNovel.nvl_img | noimage" alt=" ">
-                            </div>
-                            <strong style="word-wrap: break-word;">{{ps.setContent(recentNovel.nvl_title, 40)}}</strong>
-                        </div>
-                    </a>
-                </div>
-
-
-                <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let recentNovel of recentNovels">
-                    <a class="unstyled-a-tag" [routerLink]="['/novelas', recentNovel.id, recentNovel.nvl_name]">
-                        <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
-                            <div class="skn-swiper-novel-slide-img-container">
-                                <img class="skn-top-nvl-img " [src]="recentNovel.nvl_img | noimage" alt=" ">
-                            </div>
-                            <strong style="word-wrap: break-word;">{{ps.setContent(recentNovel.nvl_title, 40)}}</strong>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- eliminar-->
             </div>
 
             <div class="swiper-button-prev" *ngIf="!mobile"></div>
