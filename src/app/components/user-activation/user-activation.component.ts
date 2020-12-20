@@ -20,12 +20,13 @@ export class UserActivationComponent implements OnInit {
               private hs: HelperService) { }
 
   ngOnInit(): void {
-    this.hs.updateBrowserMeta('description', 'Activación y verificación de usuario', 'SkyNovels | ¡Asciende a Mundos Increíbles!');
     const urlKey = String(this.activatedRoute.snapshot.paramMap.get('key'));
     this.us.activateUser(urlKey).subscribe((data: any) => {
       this.loading = false;
       this.userActivated = data.user_login;
+      this.hs.updateBrowserMeta('description', 'Activación y verificación de usuario', 'SkyNovels | ¡Asciende a Mundos Increíbles!');
     }, error => {
+      console.log(error);
       this.router.navigate(['']);
     });
   }
