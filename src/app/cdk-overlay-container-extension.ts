@@ -1,6 +1,5 @@
 import { Injectable, InjectionToken } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 export const OVERLAY_PARENT_HTML = new InjectionToken<string>('OVERLAY_PARENT_HTML');
 

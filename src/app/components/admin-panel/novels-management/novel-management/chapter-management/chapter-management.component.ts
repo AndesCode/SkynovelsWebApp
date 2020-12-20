@@ -43,10 +43,22 @@ export class ChapterManagementComponent implements OnInit {
 
               this.isBrowser = isPlatformBrowser(this.platformId);
               if (this.isBrowser) {
-                const ClassicEditor = require('@ckeditor/ckeditor5-build-classic');
+                const ClassicEditor = require('@ckeditor/ckeditor5-cutom-build/build/ckeditor.js');
                 this.Editor = ClassicEditor;
                 this.ckEditorConfig = {
-                  toolbar: [ 'heading', '|', 'bold', 'italic' ]
+                  toolbar: [
+                    'heading', '|',
+                    // 'fontfamily', 'fontsize', '|',
+                    // 'fontColor', 'fontBackgroundColor', '|',
+                    'bold', 'italic', 'link', '|',
+                    // 'strikethrough', 'superscript', 'subscript', '|',
+                    'outdent', 'indent', '|',
+                    'bulletedList', 'numberedList', '|',
+                    // 'todoList'
+                    'blockQuote', '|',
+                    'undo', 'redo', '|',
+                    // 'imageUpload'
+                ]
                 };
               }
               this.componentName = 'ChaptersComponent';

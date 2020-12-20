@@ -6,6 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
 import * as Cookies from 'js-cookie';
 import { Meta } from '@angular/platform-browser';
 import { Prod } from './config/config';
+import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
 @Component({
   selector: 'app-root',
@@ -22,10 +23,12 @@ export class AppComponent implements AfterViewInit {
               private router: Router,
               private meta: Meta,
               private prod: Prod,
+              private gtmService: GoogleTagManagerService,
               @Inject(PLATFORM_ID) private platformId) {
 
                 this.isBrowser = isPlatformBrowser(this.platformId);
                 if (this.isBrowser) {
+                  //this.gtmService.addGtmToDom();
                   const navEndEvents$ = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
                   navEndEvents$.subscribe((event: NavigationEnd) => {
                     const canonicalUrl = document.querySelector('[rel="canonical"]');
@@ -36,9 +39,11 @@ export class AppComponent implements AfterViewInit {
                       this.meta.updateTag({content: this.prod.url + event.urlAfterRedirects}, 'name=urlskn');
                       canonicalUrl.setAttribute('href', this.prod.url + event.urlAfterRedirects + '/');
                     }
-                    /*gtag('config', 'xxxxxx', {
-                      'page_path': event.urlAfterRedirects
-                    });*/
+                    const gtmTag = {
+                      event: 'page',
+                      pageName: event.urlAfterRedirects
+                    };
+                    this.gtmService.pushTag(gtmTag);
                   });
                 }
               }

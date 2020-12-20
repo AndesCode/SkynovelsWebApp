@@ -47,6 +47,7 @@
         </div>
     </div>
 
+
     <section *ngIf="!mobile">
         <div class="container">
             <div class="skn-novel-presentation">
@@ -128,7 +129,7 @@
                     <div> <span class="material-icons">access_time</span> {{hs.getRelativeTime(novel.nvl_last_update).message}}</div>
                 </div>
                 <h4>Sinopsis</h4>
-                <p [innerHTML]="novel.nvl_content"></p>
+                <markdown [data]="novel.nvl_content"></markdown>
             </div>
             <div class="skn-nvl-info" *ngIf="currentTab === 'content'">
                 <p><strong>Ultimo capitulo: </strong><a class="skn-link unstyled-a-tag" [routerLink]="[novel.nvl_last_chapter?.id, novel.nvl_last_chapter?.chp_name]" style="color: #d32f2f;">{{novel.nvl_last_chapter?.chp_index_title}}</a><small> {{novel.nvl_last_chapter?.date_data.message}}</small></p>
@@ -278,8 +279,8 @@
                         </div>
                     </div>
                     <div>
-                        <p [innerHTML]="ps.setContent(rating.rate_comment, 360)" *ngIf="(!rating.show_more && rating.rate_comment.length > 360) && !rating.edition"></p>
-                        <p [innerHTML]="rating.rate_comment" *ngIf="(rating.show_more || rating.rate_comment.length < 360) && !rating.edition"></p>
+                        <markdown [data]="ps.setContent(rating.rate_comment, 360)" *ngIf="(!rating.show_more && rating.rate_comment.length > 360) && !rating.edition"></markdown>
+                        <markdown [data]="rating.rate_comment" *ngIf="(rating.show_more || rating.rate_comment.length < 360) && !rating.edition"></markdown>
                         <form autocomplete="off" #updateRatingForm="ngForm">
                             <div class="form-group" *ngIf="rating.edition" style="width: 100%;">
                                 <textarea class="form-control skn-text-area" #rate_comment="ngModel" name="rating.rate_comment" [(ngModel)]="rating.rate_comment" rows="3" maxlength="2000" minlength="2"></textarea>
@@ -348,8 +349,9 @@
                                     <button mat-mini-fab *ngIf="reply.edition && user?.id === reply.user_id" (click)="ps.updateReplyFunction(updateRatingCommentForm, reply)"><i class="material-icons">done</i></button>
                                 </div>
                                 <div>
-                                    <p [innerHTML]="ps.setContent(reply.reply_content, 360)" *ngIf="(!reply.show_more && reply.reply_content.length > 360) && !reply.edition"></p>
-                                    <p [innerHTML]="reply.reply_content" *ngIf="(reply.show_more || reply.reply_content.length < 360) && !reply.edition"></p>
+                                    <markdown [data]="ps.setContent(reply.reply_content, 360)" *ngIf="(!reply.show_more && reply.reply_content.length > 360) && !reply.edition"></markdown>
+                                    <markdown [data]="reply.reply_content" *ngIf="(reply.show_more || reply.reply_content.length < 360) && !reply.edition"></markdown>
+
                                     <form autocomplete="off" #updateRatingCommentForm="ngForm">
                                         <div class="form-group" *ngIf="reply.edition" style="width: 100%;">
                                             <textarea class="form-control skn-text-area" #reply_content="ngModel" name="reply.reply_content" [(ngModel)]="reply.reply_content" rows="3" required></textarea>

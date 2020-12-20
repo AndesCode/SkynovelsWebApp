@@ -81,6 +81,9 @@ import { InViewportModule } from 'ng-in-viewport';
 import { AdsenseModule } from 'ng2-adsense';
 import { LoadingErrorComponent } from './components/loading-error/loading-error.component';
 
+
+import { MarkdownModule } from 'ngx-markdown';
+
 const config: SwiperConfigInterface = {
   direction: 'horizontal',
   observer: true,
@@ -134,6 +137,7 @@ const config: SwiperConfigInterface = {
     LoadingErrorComponent,
   ],
   imports: [
+    MarkdownModule.forRoot(),
     // Angular
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserTransferStateModule,
@@ -187,6 +191,7 @@ const config: SwiperConfigInterface = {
       useValue: config
     },
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
+    { provide: 'googleTagManagerId', useValue: 'GTM-M74RWWL' },
     Prod,
     Dev,
     NoimagePipe
