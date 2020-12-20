@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -29,12 +29,14 @@ export class PasswordRecoveryComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private us: UsersService,
               public matSnackBar: MatSnackBar,
-              private hs: HelperService) {
+              private hs: HelperService,
+              private router: Router) {
 
                 this.UpdatePasswordForm = new FormGroup({
                   user_pass: new FormControl('', [Validators.required,
                     Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,"'#{}()¡¿])[A-Za-z\d@$!%*?&.,"'#{}()¡¿]{8,16}$/),
-                    Validators.minLength(8), Validators.maxLength(16)])
+                    Validators.minLength(8), Validators.maxLength(16)]),
+                  user_confirm_pass: new FormControl('')
                 });
               }
 
@@ -44,7 +46,7 @@ export class PasswordRecoveryComponent implements OnInit {
     this.us.passwordResetAccess(this.urlToken).subscribe((data: any) => {
       this.loading = false;
     }, error => {
-      // this.router.navigate(['']);
+      this.router.navigate(['']);
     });
   }
 
@@ -54,7 +56,7 @@ export class PasswordRecoveryComponent implements OnInit {
 
   updatePassword() {
     this.formLoading = true;
-    if (this.UpdatePasswordForm.valid) {
+    if (this.UpdatePasswordForm.valid && (this.UpdatePasswordForm.value.user_pass === this.UpdatePasswordForm.value.user_confirm_pass || !this.hide)) {
       this.us.updateUserPassword(this.UpdatePasswordForm.value.user_pass, this.urlToken).subscribe((data: any) => {
         this.passwordUpdated = true;
         this.formLoading = false;
