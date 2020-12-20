@@ -54,7 +54,7 @@ export class NavbarComponent implements OnInit {
               this.isBrowser = isPlatformBrowser(this.platformId);
 
               this.loginForm = new FormGroup({
-                user_login: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(12)]),
+                user_login: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(75)]),
                 user_pass: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)])
               });
 
@@ -62,9 +62,9 @@ export class NavbarComponent implements OnInit {
                 user_login: new FormControl('', [Validators.required,
                                             Validators.pattern('^[a-zA-Z\u00d1\u00f1]{3}(?=.{2,12}$)(?![0-9])[a-zA-Z0-9\\u00d1\\u00f1]+$'),
                                             Validators.minLength(5), Validators.maxLength(12)]),
-                user_email: new FormControl('', [Validators.required, Validators.email]),
+                user_email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(75)]),
                 user_pass: new FormControl('', [Validators.required,
-                                                Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,"'#{}()¡¿])[A-Za-z\d@$!%*?&.,"'#{}()¡¿]{8,16}$/),
+                                                Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$_\-!%*?&.,"'#{}()¡¿])[A-Za-z\d@$_\-!%*?&.,"'#{}()¡¿]{8,16}$/),
                                                 Validators.minLength(8), Validators.maxLength(16)])
               });
 

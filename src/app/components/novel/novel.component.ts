@@ -34,27 +34,6 @@ export class NovelComponent implements OnInit {
   novelChaptersForWeeks = 0;
   componentName = 'NovelComponent';
 
-  markdown = `## Markdown __rulez__!
----
-<p>holis</p>
-
-### Syntax highlight
-\`\`\`typescript
-const language = 'typescript';
-\`\`\`
-
-### Lists
-1. Ordered list
-2. Another bullet point
-  - Unordered list
-  - Another unordered bullet point
-
-<script>console.log('soy codigo maligno');</script>
-<p>abc<iframe//src=jAva&Tab;script:alert(3)>def</p>
-
-### Blockquote
-> Blockquote to the max`;
-
     constructor(private ns: NovelsService,
                 private activatedRoute: ActivatedRoute,
                 private breakpointObserver: BreakpointObserver,

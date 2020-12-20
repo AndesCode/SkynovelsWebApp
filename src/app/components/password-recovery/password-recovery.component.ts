@@ -34,7 +34,7 @@ export class PasswordRecoveryComponent implements OnInit {
 
                 this.UpdatePasswordForm = new FormGroup({
                   user_pass: new FormControl('', [Validators.required,
-                    Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,"'#{}()¡¿])[A-Za-z\d@$!%*?&.,"'#{}()¡¿]{8,16}$/),
+                    Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$_\-!%*?&.,"'#{}()¡¿])[A-Za-z\d@$_\-!%*?&.,"'#{}()¡¿]{8,16}$/),
                     Validators.minLength(8), Validators.maxLength(16)]),
                   user_confirm_pass: new FormControl('')
                 });
