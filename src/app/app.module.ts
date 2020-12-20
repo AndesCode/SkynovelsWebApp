@@ -188,7 +188,8 @@ const config: SwiperConfigInterface = {
     },
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
     Prod,
-    Dev
+    Dev,
+    NoimagePipe
   ],
   bootstrap: [AppComponent]
 })

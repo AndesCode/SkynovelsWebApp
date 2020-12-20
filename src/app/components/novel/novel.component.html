@@ -18,7 +18,7 @@
         </div>
     </ng-template>
 
-    <div class="skn-novel-presentation-image-mobile" style="background-image: url('../../../assets/img/23.jpg');" *ngIf="mobile">
+    <div class="skn-novel-presentation-image-mobile" *ngIf="mobile" [ngStyle]="{'background-image':'url('+novel.nvl_img+')'}">
         <div class="skn-novel-presentation-image-mobile-info-stats-box container">
             <h1 style="font-size: 30px; margin-bottom: 5px;">{{novel.nvl_title}}</h1>
             <div>Por: {{novel.nvl_writer}}</div>
@@ -51,7 +51,7 @@
         <div class="container">
             <div class="skn-novel-presentation">
                 <div class="skn-novel-presentation-image">
-                    <img [src]="novel.nvl_img | noimage" alt="">
+                    <img [src]="novel.nvl_img" alt="">
                     <div class="skn-secondary">
                         <h4 [ngStyle]="{'color':novel.nvl_status === 'Activa' || novel.nvl_status === 'Finalizada' ? 'green' : 'red' }">{{novel.nvl_status}}</h4>
                     </div>

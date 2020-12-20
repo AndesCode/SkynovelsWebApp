@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Novel, User } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
+import { NoimagePipe } from '../../pipes/noimage.pipe';
 
 @Component({
   selector: 'app-novel',
@@ -44,7 +45,8 @@ export class NovelComponent implements OnInit {
                 public matSnackBar: MatSnackBar,
                 public hs: HelperService,
                 public bottomSheet: MatBottomSheet,
-                public dialog: MatDialog) {
+                public dialog: MatDialog,
+                private noimagePipe: NoimagePipe) {
                   this.newRatingForm = new FormGroup({
                     novel_id: new FormControl(''),
                     rate_value: new FormControl('0', [Validators.required, Validators.min(1), Validators.max(5)]),
@@ -84,6 +86,7 @@ export class NovelComponent implements OnInit {
           this.novel.nvl_status = 'Activa';
         }
       }
+      this.novel.nvl_img =  this.noimagePipe.transform(this.novel.nvl_img);
       for (const novelRating of  this.novel.novel_ratings) {
         novelRating.show_more = false;
         novelRating.edition = false;
