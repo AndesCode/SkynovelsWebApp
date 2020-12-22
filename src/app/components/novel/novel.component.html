@@ -240,16 +240,22 @@
             <hr>
 
             <div class="skn-nvl-user-rating skn-secondary" *ngFor="let rating of novel.novel_ratings">
-                <div class="skn-user-image">
-                    <img [src]="rating.user_profile_image | noUserImage">
-                </div>
+                <a [routerLink]="['/perfil', rating.user_id, rating.user_login]" class="fit-height-content">
+                    <div class="skn-user-image">
+                        <img [src]="rating.user_profile_image | noUserImage">
+                    </div>
+                </a>
                 <div class="skn-nvl-user-rating-user-rating">
                     <div class="skn-nvl-user-rating-login">
                         <div style="display: flex;">
-                            <div class="skn-user-image-mobile">
-                                <img [src]="rating.user_profile_image | noUserImage">
-                            </div>
-                            <strong style="margin: auto 6px">{{rating.user_login}}</strong>
+                            <a [routerLink]="['/perfil', rating.user_id, rating.user_login]" class="fit-height-content">
+                                <div class="skn-user-image-mobile">
+                                    <img [src]="rating.user_profile_image | noUserImage">
+                                </div>
+                            </a>
+                            <a [routerLink]="['/perfil', rating.user_id, rating.user_login]" class="unstyled-a-tag skn-link">
+                                <strong style="margin: auto 6px">{{rating.user_login}}</strong>
+                            </a>
                         </div>
                         <button mat-mini-fab *ngIf="!rating.edition && user?.id === rating.user_id" [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
                         <mat-menu #userMenu="matMenu">
@@ -309,9 +315,11 @@
                     <div *ngIf="rating.show_replys">
                         <form *ngIf="user">
                             <div class="skn-nvl-rating-comment-textarea">
-                                <div class="skn-user-image" style="margin-right: 15px;">
-                                    <img [src]="user.user_profile_image | noUserImage" alt="">
-                                </div>
+                                <a [routerLink]="['/perfil', user.id, user.user_login]" class="fit-height-content">
+                                    <div class="skn-user-image" style="margin-right: 15px;">
+                                        <img [src]="user.user_profile_image | noUserImage" alt="">
+                                    </div>
+                                </a>
                                 <div class="skn-nvl-rating-comment-textarea-input">
                                     <mat-form-field style="width: 100%;">
                                         <mat-label>Añade un comentario</mat-label>
@@ -322,17 +330,24 @@
                             </div>
                         </form>
                         <div class="skn-nvl-user-rating" *ngFor="let reply of rating.replys" style="padding: 0px!important;">
-                            <div class="skn-user-image">
-                                <img [src]="reply.user_profile_image | noUserImage" alt="">
-                            </div>
+                            <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
+                                <div class="skn-user-image">
+                                    <img [src]="reply.user_profile_image | noUserImage" alt="">
+                                </div>
+                            </a>
                             <div class="skn-nvl-user-rating-user-rating">
                                 <div class="skn-nvl-user-rating-login" style="margin-bottom: 5px;">
                                     <div style="display: flex;">
-                                        <div class="skn-user-image-mobile">
-                                            <img [src]="reply.user_profile_image | noUserImage" alt="">
-                                        </div>
+                                        <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
+                                            <div class="skn-user-image-mobile">
+                                                <img [src]="reply.user_profile_image | noUserImage" alt="">
+                                            </div>
+                                        </a>
+
                                         <div class="skn-nvl-user-rating-login-name">
-                                            <strong style="margin-right: 5px;">{{reply.user_login}}</strong>
+                                            <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="unstyled-a-tag skn-link">
+                                                <strong style="margin-right: 5px;">{{reply.user_login}}</strong>
+                                            </a>
                                             <small>{{reply.date_data.message}}</small>
                                         </div>
                                     </div>

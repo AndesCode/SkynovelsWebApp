@@ -389,6 +389,10 @@ mat-expansion-panel-header {
     margin: 1.5rem;
 }
 
+.fit-height-content {
+    height: fit-content;
+}
+
 .ngx-pagination {
     padding: unset!important;
 }
@@ -523,7 +527,6 @@ mat-expansion-panel-header {
 .skn-nvl-rating-comment-textarea {
     display: flex;
     padding-left: 1px;
-    align-items: center;
     .skn-nvl-rating-comment-textarea-input {
         flex: auto;
     }

@@ -85,8 +85,8 @@ h3 {
 .skn-novel-presentation {
     display: flex;
     .skn-novel-presentation-image {
-        width: 308px;
-        height: 412px;
+        width: 16.88rem;
+        height: 25.75rem;
         img {
             border-radius: 10px 10px 0px 0px;
             width: 100%;
@@ -99,8 +99,8 @@ h3 {
             border-radius: 0px 0px 10px 10px;
         }
         @include subtract-media(desktop) {
-            width: 245.26px;
-            height: 360px;
+            width: 15.31rem;
+            height: 22.5rem;
         }
     }
     .skn-novel-presentation-info {

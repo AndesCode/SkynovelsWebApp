@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, TemplateRef, isDevMode } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, isDevMode, Inject, PLATFORM_ID } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { HelperService } from '../../services/helper.service';
 import { User } from 'src/app/models/models';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Location } from '@angular/common';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { Dev, Prod } from 'src/app/config/config';
 
 @Component({
@@ -29,6 +29,7 @@ export class UserProfileComponent implements OnInit {
   edition = false;
   componentName = 'UserProfileComponent';
   apiURL: string;
+  isBrowser: boolean;
 
   constructor(private activatedRoute: ActivatedRoute,
               private us: UsersService,
@@ -37,14 +38,14 @@ export class UserProfileComponent implements OnInit {
               public matSnackBar: MatSnackBar,
               public hs: HelperService,
               private dev: Dev,
-              private prod: Prod) {
-
-               if (isDevMode()) {
-                 this.apiURL = this.dev.apiURL
-               } else {
-                 this.apiURL = this.prod.apiURL
-               }
-
+              private prod: Prod,
+              @Inject(PLATFORM_ID) private platformId) {
+                this.isBrowser = isPlatformBrowser(this.platformId);
+                if (isDevMode()) {
+                  this.apiURL = this.dev.apiURL
+                } else {
+                  this.apiURL = this.prod.apiURL
+                }
               }
 
   ngOnInit(): void {
@@ -121,6 +122,9 @@ export class UserProfileComponent implements OnInit {
     };
     this.hs.uploadImage(this.userData.id, this.fileToUpload, 'user').then((img: any) => {
           this.userData.user_profile_image = img.image;
+          if (img.sknvl_s && this.isBrowser) {
+            localStorage.setItem('sknvl_s', img.sknvl_s);
+          }
           this.fileToUpload = null;
           this.openMatSnackBar(this.successSnackRef);
           this.successSnackMessage = '¡Cambios guardados!';

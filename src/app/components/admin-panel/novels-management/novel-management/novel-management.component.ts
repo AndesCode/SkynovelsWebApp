@@ -13,14 +13,13 @@ import { PageService } from '../../../../services/page.service';
 import { isPlatformBrowser } from '@angular/common';
 import { Dev, Prod } from 'src/app/config/config';
 
-
 @Component({
   selector: 'app-novel-management',
   templateUrl: './novel-management.component.html',
   styleUrls: ['./novel-management.component.scss']
 })
-export class NovelManagementComponent implements OnInit {
 
+export class NovelManagementComponent implements OnInit {
   public Editor;
   public ckEditorConfig;
   @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
@@ -55,34 +54,32 @@ export class NovelManagementComponent implements OnInit {
                 private dev: Dev,
                 private prod: Prod,
                 @Inject(PLATFORM_ID) private platformId) {
-
-                 if (isDevMode()) {
-                   this.apiURL = this.dev.apiURL
-                 } else {
-                   this.apiURL = this.prod.apiURL
-                 }
-
-                this.isBrowser = isPlatformBrowser(this.platformId);
-                if (this.isBrowser) {
-                  const ClassicEditor = require('@ckeditor/ckeditor5-cutom-build/build/ckeditor.js');
-                  this.Editor = ClassicEditor;
-                  this.ckEditorConfig = {
-                    toolbar: [
-                      'heading', '|',
-                      // 'fontfamily', 'fontsize', '|',
-                      // 'fontColor', 'fontBackgroundColor', '|',
-                      'bold', 'italic', 'link', '|',
-                      // 'strikethrough', 'superscript', 'subscript', '|',
-                      'outdent', 'indent', '|',
-                      'bulletedList', 'numberedList', '|',
-                      // 'todoList'
-                      'blockQuote', '|',
-                      'undo', 'redo', '|',
-                      // 'imageUpload'
-                  ]
-                  };
+                  if (isDevMode()) {
+                     this.apiURL = this.dev.apiURL
+                  } else {
+                    this.apiURL = this.prod.apiURL
+                  }
+                  this.isBrowser = isPlatformBrowser(this.platformId);
+                  if (this.isBrowser) {
+                    const ClassicEditor = require('@ckeditor/ckeditor5-cutom-build/build/ckeditor.js');
+                    this.Editor = ClassicEditor;
+                    this.ckEditorConfig = {
+                      toolbar: [
+                        'heading', '|',
+                        // 'fontfamily', 'fontsize', '|',
+                        // 'fontColor', 'fontBackgroundColor', '|',
+                        'bold', 'italic', 'link', '|',
+                        // 'strikethrough', 'superscript', 'subscript', '|',
+                        'outdent', 'indent', '|',
+                        'bulletedList', 'numberedList', '|',
+                        // 'todoList'
+                        'blockQuote', '|',
+                        'undo', 'redo', '|',
+                        // 'imageUpload'
+                    ]
+                    };
+                  }
                 }
-    }
 
   openDialogSheet(template: TemplateRef<any>): void {
     this.dialog.open(template);

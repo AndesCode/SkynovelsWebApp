@@ -90,7 +90,6 @@
                             <h3 class="skn-novel-presentation-info-title skn-link">{{recomendedNovel?.nvl_title}}<span class="skn-novel-acronym">{{recomendedNovel?.nvl_acronym}}</span></h3>
                         </a>
                         <div class="skn-novel-presentation-info-stats skn-main skn-text row" style="margin-left: 0px;">
-                            <div> <span class="material-icons">create</span> 2 Capitulos semanales</div>
                             <div *ngIf="recomendedNovel?.nvl_chapters === 1"> <span class="material-icons">format_align_left</span> {{recomendedNovel?.nvl_chapters}} Capitulo</div>
                             <div *ngIf="recomendedNovel?.nvl_chapters > 1"> <span class="material-icons">format_align_left</span> {{recomendedNovel?.nvl_chapters}} Capitulos</div>
                             <div> <span class="material-icons">access_time</span> {{hs.getRelativeTime(recomendedNovel?.nvl_last_update).message}}</div>

@@ -238,6 +238,7 @@ export class NovelComponent implements OnInit {
     });
     this.ns.createNovelRating(this.newRatingForm.value).subscribe((data: any) => {
       data.novel_rating.user_login = this.user.user_login;
+      data.novel_rating.user_profile_image = this.user.user_profile_image;
       data.novel_rating.liked = false;
       data.novel_rating.show_replys = false;
       data.novel_rating.show_more = false;

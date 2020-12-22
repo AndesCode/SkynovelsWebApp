@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
   loading = true;
   loadingError = false;
   componentName = 'HomeComponent';
+  novelChaptersForWeeks = 0;
 
   constructor(
     private ns: NovelsService,

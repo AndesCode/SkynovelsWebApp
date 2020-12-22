@@ -23,9 +23,11 @@
         <h2 style="text-align: center;">Comentarios</h2>
         <form *ngIf="user" #commentForm="ngForm">
             <div class="skn-nvl-rating-comment-textarea" style="align-items: unset;">
-                <div class="skn-user-image" style="margin-right: 15px;">
-                    <img [src]="user.user_profile_image | noUserImage" alt="">
-                </div>
+                <a [routerLink]="['/perfil', user.id, user.user_login]" class="fit-height-content">
+                    <div class="skn-user-image" style="margin-right: 15px;">
+                        <img [src]="user.user_profile_image | noUserImage" alt="">
+                    </div>
+                </a>
                 <div class="skn-nvl-rating-comment-textarea-input">
                     <mat-form-field style="width: 100%;">
                         <mat-label>Agregar un comentario</mat-label>
@@ -39,17 +41,23 @@
 
 
         <div class="skn-nvl-user-rating skn-secondary" *ngFor="let comment of advertisement.comments">
-            <div class="skn-user-image">
-                <img [src]="comment.user_profile_image | noUserImage" alt="">
-            </div>
+            <a [routerLink]="['/perfil', comment.user_id, comment.user_login]" class="fit-height-content">
+                <div class="skn-user-image">
+                    <img [src]="comment.user_profile_image | noUserImage" alt="">
+                </div>
+            </a>
             <div class="skn-nvl-user-rating-user-rating">
                 <div class="skn-nvl-user-rating-login">
                     <div style="display: flex;">
-                        <div class="skn-user-image-mobile">
-                            <img [src]="comment.user_profile_image | noUserImage" alt="">
-                        </div>
+                        <a [routerLink]="['/perfil', comment.user_id, comment.user_login]" class="fit-height-content">
+                            <div class="skn-user-image-mobile">
+                                <img [src]="comment.user_profile_image | noUserImage" alt="">
+                            </div>
+                        </a>
                         <div class="skn-nvl-user-rating-login-name">
-                            <strong style="margin-right: 5px;">{{comment.user_login}}</strong>
+                            <a [routerLink]="['/perfil', comment.user_id, comment.user_login]" class="unstyled-a-tag skn-link">
+                                <strong style="margin-right: 5px;">{{comment.user_login}}</strong>
+                            </a>
                             <small>{{hs.getRelativeTime(comment.createdAt).message}}</small>
                         </div>
                     </div>
@@ -99,31 +107,39 @@
 
                 <div *ngIf="comment.show_replys">
                     <form *ngIf="user">
-                        <div class="skn-nvl-rating-comment-textarea" style="align-items: unset;">
-                            <div class="skn-user-image" style="margin-right: 15px;">
-                                <img [src]="user.user_profile_image | noUserImage" alt="">
-                            </div>
+                        <div class="skn-nvl-rating-comment-textarea">
+                            <a [routerLink]="['/perfil', user.id, user.user_login]" class="fit-height-content">
+                                <div class="skn-user-image" style="margin-right: 15px;">
+                                    <img [src]="user.user_profile_image | noUserImage" alt="">
+                                </div>
+                            </a>
                             <div class="skn-nvl-rating-comment-textarea-input">
                                 <mat-form-field style="width: 100%;">
                                     <mat-label>Responder a {{comment.user_login}}</mat-label>
                                     <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #reply="ngModel" name="comment.reply" [(ngModel)]="comment.reply"></textarea>
                                 </mat-form-field>
                             </div>
-                            <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" (click)="ps.createReplyFunction(user, comment, 'comment_id')">Publicar</button>
+                            <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" (click)="ps.createReplyFunction(user, comment, 'comment_id')" [disabled]="comment.reply === null || comment.reply.length < 2">Publicar</button>
                         </div>
                     </form>
                     <div class="skn-nvl-user-rating" *ngFor="let reply of comment.replys" style="padding: 0px!important;">
-                        <div class="skn-user-image">
-                            <img [src]="reply.user_profile_image | noUserImage" alt="">
-                        </div>
+                        <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
+                            <div class="skn-user-image">
+                                <img [src]="reply.user_profile_image | noUserImage" alt="">
+                            </div>
+                        </a>
                         <div class="skn-nvl-user-rating-user-rating">
                             <div class="skn-nvl-user-rating-login" style="margin-bottom: 5px;">
                                 <div style="display: flex;">
-                                    <div class="skn-user-image-mobile">
-                                        <img [src]="reply.user_profile_image | noUserImage" alt="">
-                                    </div>
+                                    <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
+                                        <div class="skn-user-image-mobile">
+                                            <img [src]="reply.user_profile_image | noUserImage" alt="">
+                                        </div>
+                                    </a>
                                     <div class="skn-nvl-user-rating-login-name">
-                                        <strong style="margin-right: 5px;">{{reply.user_login}}</strong>
+                                        <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="unstyled-a-tag skn-link">
+                                            <strong style="margin-right: 5px;">{{reply.user_login}}</strong>
+                                        </a>
                                         <small>{{reply.date_data.message}}</small>
                                     </div>
                                 </div>
