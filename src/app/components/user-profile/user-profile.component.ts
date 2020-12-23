@@ -58,8 +58,9 @@ export class UserProfileComponent implements OnInit {
     this.us.getUser(urlId).subscribe((data: any) => {
       this.userData = data.user[0];
       this.location.replaceState('/perfil/' + this.userData.id + '/' + this.userData.user_login);
-      if (this.userData.user_profile_image && this.userData.user_profile_image.length > 0) {
-        this.imgURL = this.apiURL + '/api/user-profile-img/' + this.userData.user_profile_image + '/false';
+      if (this.userData.image && this.userData.image.length > 0) {
+        this.imgURL = this.apiURL + '/api/get-image/' + this.userData.image + '/users/false';
+        
       }
       this.loading = false;
       this.hs.updateBrowserMeta('description', `${this.userData.user_login}, perfil de usuario`, 'SkyNovels | ' + this.userData.user_login);
@@ -121,7 +122,7 @@ export class UserProfileComponent implements OnInit {
     this.imgURL = reader.result;
     };
     this.hs.uploadImage(this.userData.id, this.fileToUpload, 'user').then((img: any) => {
-          this.userData.user_profile_image = img.image;
+          this.userData.image = img.image;
           if (img.sknvl_s && this.isBrowser) {
             localStorage.setItem('sknvl_s', img.sknvl_s);
           }

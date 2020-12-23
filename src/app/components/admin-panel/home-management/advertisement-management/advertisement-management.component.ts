@@ -83,8 +83,8 @@ export class AdvertisementManagementComponent implements OnInit {
         this.location.replaceState('/panel/administracion-de-pagina-de-inicio/noticias/'
          + this.advertisement.id + '/' + this.advertisement.adv_name);
         this.loading = false;
-        if (this.advertisement.adv_img && this.advertisement.adv_img.length > 0) {
-          this.imgURL = this.apiURL + '/api/advertisement/image/' + this.advertisement.adv_img;
+        if (this.advertisement.image && this.advertisement.image.length > 0) {
+          this.imgURL = this.apiURL + '/api/get-image/' + this.advertisement.image + '/advertisements/false'
         }
       }, error => {
         this.router.navigate(['panel']);
@@ -158,7 +158,7 @@ export class AdvertisementManagementComponent implements OnInit {
       if ( this.fileToUpload ) {
         this.as.AdminUploadImage(this.us.getUserLoged().token, this.advertisement.id, this.fileToUpload)
         .then((img: any) => {
-          this.advertisement.adv_img = img.advertisement.adv_img;
+          this.advertisement.image = img.image;
           this.fileToUpload = null;
           this.openMatSnackBar(this.successSnackRef);
           this.successSnackMessage = '¡Cambios guardados!';

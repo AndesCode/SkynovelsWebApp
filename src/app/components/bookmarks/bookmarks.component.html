@@ -12,7 +12,7 @@
     <div *ngFor="let novel of bookmarks">
         <a class="skn-nvl-card unstyled-a-tag" [routerLink]="['/novelas', novel.id, novel.nvl_name]">
             <div class="skn-nvl-card-img">
-                <img [src]="novel.nvl_img | noimage" alt="">
+                <img [src]="novel.image | noimage" alt="">
             </div>
             <ul class="skn-nvl-card-info">
                 <li>

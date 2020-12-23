@@ -120,8 +120,8 @@ export class UserNovelComponent implements OnInit {
           if (this.user === this.novel.nvl_author) {
             this.editableNovel = true;
           }
-          if (this.novel.nvl_img && this.novel.nvl_img.length > 0) {
-            this.imgURL = this.apiURL + '/api/novel/image/' + this.novel.nvl_img + '/false';
+          if (this.novel.image && this.novel.image.length > 0) {
+            this.imgURL = this.apiURL + '/api/get-image/' + this.novel.image + '/novels/false';
           }
           this.evaluateEditableNovelStatus();
         } else {
@@ -185,7 +185,7 @@ export class UserNovelComponent implements OnInit {
       novelForm.form.markAsPristine();
       if ( this.fileToUpload ) {
         this.hs.uploadImage(this.novel.id, this.fileToUpload, 'novel').then((img: any) => {
-          this.novel.nvl_img = img.image;
+          this.novel.image = img.image;
           this.fileToUpload = null;
           this.uploading = false;
           this.openMatSnackBar(this.successSnackRef);

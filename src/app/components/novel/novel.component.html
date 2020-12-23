@@ -18,7 +18,7 @@
         </div>
     </ng-template>
 
-    <div class="skn-novel-presentation-image-mobile" *ngIf="mobile" [ngStyle]="{'background-image':'url('+novel.nvl_img+')'}">
+    <div class="skn-novel-presentation-image-mobile" *ngIf="mobile" [ngStyle]="{'background-image':'url('+imgURL+')'}">
         <div class="skn-novel-presentation-image-mobile-info-stats-box container">
             <h1 style="font-size: 30px; margin-bottom: 5px;">{{novel.nvl_title}}</h1>
             <div>Por: {{novel.nvl_writer}}</div>
@@ -51,7 +51,7 @@
         <div class="container">
             <div class="skn-novel-presentation">
                 <div class="skn-novel-presentation-image">
-                    <img [src]="novel.nvl_img" alt="">
+                    <img [src]="imgURL" alt="">
                     <div class="skn-secondary">
                         <h4 [ngStyle]="{'color':novel.nvl_status === 'Activa' || novel.nvl_status === 'Finalizada' ? 'green' : 'red' }">{{novel.nvl_status}}</h4>
                     </div>
@@ -242,7 +242,7 @@
             <div class="skn-nvl-user-rating skn-secondary" *ngFor="let rating of novel.novel_ratings">
                 <a [routerLink]="['/perfil', rating.user_id, rating.user_login]" class="fit-height-content">
                     <div class="skn-user-image">
-                        <img [src]="rating.user_profile_image | noUserImage">
+                        <img [src]="rating.image | noUserImage">
                     </div>
                 </a>
                 <div class="skn-nvl-user-rating-user-rating">
@@ -250,7 +250,7 @@
                         <div style="display: flex;">
                             <a [routerLink]="['/perfil', rating.user_id, rating.user_login]" class="fit-height-content">
                                 <div class="skn-user-image-mobile">
-                                    <img [src]="rating.user_profile_image | noUserImage">
+                                    <img [src]="rating.image | noUserImage">
                                 </div>
                             </a>
                             <a [routerLink]="['/perfil', rating.user_id, rating.user_login]" class="unstyled-a-tag skn-link">
@@ -317,7 +317,7 @@
                             <div class="skn-nvl-rating-comment-textarea">
                                 <a [routerLink]="['/perfil', user.id, user.user_login]" class="fit-height-content">
                                     <div class="skn-user-image" style="margin-right: 15px;">
-                                        <img [src]="user.user_profile_image | noUserImage" alt="">
+                                        <img [src]="user.image | noUserImage" alt="">
                                     </div>
                                 </a>
                                 <div class="skn-nvl-rating-comment-textarea-input">
@@ -332,7 +332,7 @@
                         <div class="skn-nvl-user-rating" *ngFor="let reply of rating.replys" style="padding: 0px!important;">
                             <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
                                 <div class="skn-user-image">
-                                    <img [src]="reply.user_profile_image | noUserImage" alt="">
+                                    <img [src]="reply.image | noUserImage" alt="">
                                 </div>
                             </a>
                             <div class="skn-nvl-user-rating-user-rating">
@@ -340,7 +340,7 @@
                                     <div style="display: flex;">
                                         <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
                                             <div class="skn-user-image-mobile">
-                                                <img [src]="reply.user_profile_image | noUserImage" alt="">
+                                                <img [src]="reply.image | noUserImage" alt="">
                                             </div>
                                         </a>
 

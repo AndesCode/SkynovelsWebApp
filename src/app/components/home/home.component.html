@@ -9,7 +9,7 @@
             <div class="swiper-wrapper" style="max-height: 500px;">
                 <div class="swiper-slide skn-swiper-banner-slide" *ngFor="let advertisement of advertisements">
                     <a [routerLink]="['/noticias', advertisement.id, advertisement.adv_name]">
-                        <img class="skn-home-img" [src]="advertisement.adv_img | noAdvertisementImage" alt="" class="skn-home-img mx-auto d-block">
+                        <img class="skn-home-img" [src]="advertisement.image | noAdvertisementImage" alt="" class="skn-home-img mx-auto d-block">
                     </a>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                     <a class="unstyled-a-tag" [routerLink]="['/novelas', topNovel.id, topNovel.nvl_name]">
                         <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
                             <div class="skn-swiper-novel-slide-img-container">
-                                <img class="skn-top-nvl-img " [src]="topNovel.nvl_img | noimage" alt=" ">
+                                <img class="skn-top-nvl-img " [src]="topNovel.image | noimage" alt=" ">
                             </div>
                             <strong style="word-wrap: break-word;">{{ps.setContent(topNovel.nvl_title, 40)}}</strong>
                         </div>
@@ -58,7 +58,7 @@
                     <a class="unstyled-a-tag" [routerLink]="['/novelas', recentNovel.id, recentNovel.nvl_name]">
                         <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
                             <div class="skn-swiper-novel-slide-img-container">
-                                <img class="skn-top-nvl-img " [src]="recentNovel.nvl_img | noimage" alt=" ">
+                                <img class="skn-top-nvl-img " [src]="recentNovel.image | noimage" alt=" ">
                             </div>
                             <strong style="word-wrap: break-word;">{{ps.setContent(recentNovel.nvl_title, 40)}}</strong>
                         </div>
@@ -78,7 +78,7 @@
             <div class="skn-novel-presentation">
                 <div class="skn-novel-presentation-image">
                     <a [routerLink]="['/novelas', recomendedNovel?.id, recomendedNovel?.nvl_name]">
-                        <img [src]="recomendedNovel?.nvl_img | noimage" alt="" style="cursor: pointer;">
+                        <img [src]="recomendedNovel?.image | noimage" alt="" style="cursor: pointer;">
                     </a>
                     <div class="skn-main">
                         <h4 [ngStyle]="{'color':recomendedNovel?.nvl_status === 'Activa' || recomendedNovel?.nvl_status === 'Finalizada' ? 'green' : 'red' }">{{recomendedNovel?.nvl_status}}</h4>
@@ -132,7 +132,7 @@
                 <div class="skn-nvl-card">
                     <div class="skn-nvl-card-img">
                         <a [routerLink]="['/novelas', updatedNovel.id, updatedNovel.nvl_name]" class="unstyled-a-tag">
-                            <img [src]="updatedNovel.nvl_img | noimage" alt="">
+                            <img [src]="updatedNovel.image | noimage" alt="">
                         </a>
                     </div>
                     <ul class="skn-nvl-updated-novels-chapters-list">

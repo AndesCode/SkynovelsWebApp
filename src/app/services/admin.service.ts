@@ -446,13 +446,11 @@ export class AdminService {
   }
 
   AdminUploadImage(jwt: string, id: number, file: File) {
-    console.log(id);
     const url = `${ this.urlCredentialsNovelsDb }/admin-upload-advertisement-img/${id}`;
-    const appendType = 'advertisement_image';
     return new Promise((resolve, reject) => {
       const formData: any = new FormData();
       const xhr = new XMLHttpRequest();
-      formData.append(appendType, file, file.name);
+      formData.append('image', file, file.name);
       xhr.withCredentials = true;
       xhr.open('POST', url, true);
       xhr.setRequestHeader('Authorization', jwt);

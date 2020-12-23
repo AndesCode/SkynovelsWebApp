@@ -4,7 +4,7 @@
 <article class="container" *ngIf="!loading">
     <div class="skn-secondary skn-user-profile">
         <div class="skn-user-profile-image">
-            <img src={{this.imgURL}} [ngStyle]="{height: user?.id === userData.id ? '90%' : '100%'}">
+            <img src={{this.imgURL}}>
             <input #file type="file" accept='image/*' (change)="fileChangeEvent($event)" hidden>
             <button type="button" mat-raised-button color="primary" class="skn-upload-image-button" (click)="file.click()" *ngIf="user?.id === userData.id">Subir imagen (.jpg)</button>
         </div>

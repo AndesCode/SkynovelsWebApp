@@ -5,36 +5,37 @@
     padding: 0.6rem;
     display: flex;
     .skn-user-profile-image {
-        width: 12.2rem;
-        height: 15.75rem;
+        width: 10.2rem;
+        height: 12.75rem;
         border-radius: 5px;
         padding: 2px;
         margin-right: 15px;
         @include subtract-media(desktop) {
             margin: auto;
-            width: 9.2rem;
-            height: 12.75rem;
+            width: 8.2rem;
+            height: 10.75rem;
         }
         img {
             width: 100%;
             height: 88%;
-            border-radius: 5px 5px 0px 0px;
+            border-radius: 10px 10px 0px 0px;
             @include subtract-media(desktop) {
                 width: 100%;
                 height: 85%;
-                border-radius: 5px 5px 0px 0px;
+                border-radius: 10px 10px 0px 0px;
             }
         }
         .skn-upload-image-button {
             line-height: 30px!important;
+            font-size: 0.75rem;
             width: 100%;
             height: 12%;
-            border-radius: 0px 0px 5px 5px;
+            border-radius: 0px 0px 10px 10px;
             @include subtract-media(desktop) {
                 line-height: 30px!important;
                 width: 100%;
                 height: 15%;
-                border-radius: 0px 0px 5px 5px;
+                border-radius: 0px 0px 10px 10px;
             }
         }
     }

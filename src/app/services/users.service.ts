@@ -47,7 +47,7 @@ export class UsersService {
               id: decodedJwtData.sub,
               user_forum_auth: decodedJwtData.user_forum_auth,
               user_login: decodedJwtData.user_login,
-              user_profile_image: decodedJwtData.user_profile_image,
+              image: decodedJwtData.image,
               token: tmp.join('')
             };
             return user;
@@ -201,11 +201,6 @@ export class UsersService {
       key: userKey
     };
     return this.http.post(url, body);
-  }
-
-  getUserImage(userProfileImage: string) {
-    const url = `${ this.urlNovelsDb }/user-profile-img/${userProfileImage}/false`;
-    return this.http.get( url, {responseType: 'blob'});
   }
 
   getUserInvitations() {

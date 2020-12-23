@@ -42,7 +42,7 @@ export class PageService {
     if (comment.comment_content && comment.comment_content.length > 1) {
       this.createComment(comment).subscribe((data: any) => {
         data.comment.user_login = user.user_login;
-        data.comment.user_profile_image = user.user_profile_image;
+        data.comment.image = user.image;
         data.comment.liked = false;
         data.comment.show_more = false;
         data.comment.edition = false;
@@ -87,7 +87,7 @@ export class PageService {
     if (reply.reply_content && reply.reply_content.length > 1) {
       this.createReply(reply).subscribe((data: any) => {
         data.reply.user_login = user.user_login;
-        data.reply.user_profile_image = user.user_profile_image;
+        data.reply.image = user.image;
         data.reply.liked = false;
         data.reply.show_more = false;
         data.reply.edition = false;

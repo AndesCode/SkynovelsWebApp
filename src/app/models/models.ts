@@ -7,7 +7,7 @@ export class Novel {
     nvl_name?: string;
     nvl_content?: string;
     nvl_writer?: string;
-    nvl_img?: string;
+    image?: string;
     nvl_status?: 'Active' | 'Disabled' | 'Finished' | 'Finalizada' | 'Activa' | 'Inactiva' | 'Oculta';
     nvl_translator_eng?: string;
     nvl_translator?: string;
@@ -50,7 +50,7 @@ export class NovelRating {
     user_login?: string;
     replys?: Array<Reply>;
     rate_comment?: string;
-    user_profile_image?: string;
+    image?: string;
     edition?: boolean;
     show_more?: boolean;
     show_replys?: boolean;
@@ -73,7 +73,7 @@ export class User {
     user_status?: 'Active' | 'Disabled';
     user_forum_auth?: 'Active' | 'Disabled';
     user_description?: string;
-    user_profile_image?: string;
+    image?: string;
     createdAt?: Date;
     updatedAt?: Date;
     token?: string;
@@ -135,7 +135,7 @@ export class Advertisement {
     user_id?: number;
     user_login?: string;
     adv_content?: string;
-    adv_img?: string;
+    image?: string;
     adv_order?: number;
     comments?: Array<Comment>;
     comment?: string;
@@ -198,7 +198,7 @@ export class Comment {
     replys_count?: number;
     user_id?: number;
     user_login?: string;
-    user_profile_image?: string;
+    image?: string;
     adv_id?: number;
     chp_id?: number;
     replys?: Array<Reply>;
@@ -221,7 +221,7 @@ export class Reply {
     replys_count?: number;
     user_id?: number;
     user_login?: string;
-    user_profile_image?: string;
+    image?: string;
     comment_id?: number;
     novel_rating_id?: number;
     likes?: Array<Like>;

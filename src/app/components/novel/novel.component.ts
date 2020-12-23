@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, isDevMode } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Novel, User } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
 import { NoimagePipe } from '../../pipes/noimage.pipe';
+import { Dev, Prod } from 'src/app/config/config';
 
 @Component({
   selector: 'app-novel',
@@ -33,6 +34,8 @@ export class NovelComponent implements OnInit {
   loading = true;
   novelChaptersForWeeks = 0;
   componentName = 'NovelComponent';
+  apiURL: string;
+  public imgURL: any  = '../../../assets/img/noimage.jpg';
 
     constructor(private ns: NovelsService,
                 private activatedRoute: ActivatedRoute,
@@ -46,7 +49,14 @@ export class NovelComponent implements OnInit {
                 public hs: HelperService,
                 public bottomSheet: MatBottomSheet,
                 public dialog: MatDialog,
+                private dev: Dev,
+                private prod: Prod,
                 private noimagePipe: NoimagePipe) {
+                  if (isDevMode()) {
+                    this.apiURL = this.dev.apiURL
+                  } else {
+                    this.apiURL = this.prod.apiURL
+                  }
                   this.newRatingForm = new FormGroup({
                     novel_id: new FormControl(''),
                     rate_value: new FormControl('0', [Validators.required, Validators.min(1), Validators.max(5)]),
@@ -86,7 +96,9 @@ export class NovelComponent implements OnInit {
           this.novel.nvl_status = 'Activa';
         }
       }
-      this.novel.nvl_img =  this.noimagePipe.transform(this.novel.nvl_img);
+      if (this.novel.image && this.novel.image.length > 0) {
+        this.imgURL = this.apiURL + '/api/get-image/' + this.novel.image + '/novels/false';
+      }
       for (const novelRating of  this.novel.novel_ratings) {
         novelRating.show_more = false;
         novelRating.edition = false;
@@ -238,7 +250,7 @@ export class NovelComponent implements OnInit {
     });
     this.ns.createNovelRating(this.newRatingForm.value).subscribe((data: any) => {
       data.novel_rating.user_login = this.user.user_login;
-      data.novel_rating.user_profile_image = this.user.user_profile_image;
+      data.novel_rating.image = this.user.image;
       data.novel_rating.liked = false;
       data.novel_rating.show_replys = false;
       data.novel_rating.show_more = false;

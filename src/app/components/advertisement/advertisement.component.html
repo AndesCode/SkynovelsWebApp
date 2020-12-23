@@ -4,7 +4,7 @@
 <article class="container" *ngIf="!loading" style="padding-top: 2%; padding-bottom: 2%">
     <section>
         <div class="skn-adversitement-image-container">
-            <img class="skn-adversitement-image" [src]="advertisement.adv_img | noAdvertisementImage" alt="">
+            <img class="skn-adversitement-image" [src]="advertisement.image | noAdvertisementImage" alt="">
         </div>
         <h1 style="text-align: center;">{{advertisement.adv_title}}</h1>
         <hr>
@@ -25,7 +25,7 @@
             <div class="skn-nvl-rating-comment-textarea" style="align-items: unset;">
                 <a [routerLink]="['/perfil', user.id, user.user_login]" class="fit-height-content">
                     <div class="skn-user-image" style="margin-right: 15px;">
-                        <img [src]="user.user_profile_image | noUserImage" alt="">
+                        <img [src]="user.image | noUserImage" alt="">
                     </div>
                 </a>
                 <div class="skn-nvl-rating-comment-textarea-input">
@@ -43,7 +43,7 @@
         <div class="skn-nvl-user-rating skn-secondary" *ngFor="let comment of advertisement.comments">
             <a [routerLink]="['/perfil', comment.user_id, comment.user_login]" class="fit-height-content">
                 <div class="skn-user-image">
-                    <img [src]="comment.user_profile_image | noUserImage" alt="">
+                    <img [src]="comment.image | noUserImage" alt="">
                 </div>
             </a>
             <div class="skn-nvl-user-rating-user-rating">
@@ -51,7 +51,7 @@
                     <div style="display: flex;">
                         <a [routerLink]="['/perfil', comment.user_id, comment.user_login]" class="fit-height-content">
                             <div class="skn-user-image-mobile">
-                                <img [src]="comment.user_profile_image | noUserImage" alt="">
+                                <img [src]="comment.image | noUserImage" alt="">
                             </div>
                         </a>
                         <div class="skn-nvl-user-rating-login-name">
@@ -110,7 +110,7 @@
                         <div class="skn-nvl-rating-comment-textarea">
                             <a [routerLink]="['/perfil', user.id, user.user_login]" class="fit-height-content">
                                 <div class="skn-user-image" style="margin-right: 15px;">
-                                    <img [src]="user.user_profile_image | noUserImage" alt="">
+                                    <img [src]="user.image | noUserImage" alt="">
                                 </div>
                             </a>
                             <div class="skn-nvl-rating-comment-textarea-input">
@@ -125,7 +125,7 @@
                     <div class="skn-nvl-user-rating" *ngFor="let reply of comment.replys" style="padding: 0px!important;">
                         <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
                             <div class="skn-user-image">
-                                <img [src]="reply.user_profile_image | noUserImage" alt="">
+                                <img [src]="reply.image | noUserImage" alt="">
                             </div>
                         </a>
                         <div class="skn-nvl-user-rating-user-rating">
@@ -133,7 +133,7 @@
                                 <div style="display: flex;">
                                     <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
                                         <div class="skn-user-image-mobile">
-                                            <img [src]="reply.user_profile_image | noUserImage" alt="">
+                                            <img [src]="reply.image | noUserImage" alt="">
                                         </div>
                                     </a>
                                     <div class="skn-nvl-user-rating-login-name">

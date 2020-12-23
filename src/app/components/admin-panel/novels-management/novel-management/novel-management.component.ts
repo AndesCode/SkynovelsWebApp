@@ -98,8 +98,8 @@ export class NovelManagementComponent implements OnInit {
       this.novel = novelData.novel[0];
       this.novel.genres = this.novel.genres.map(genre => genre.id);
       this.collaborators = this.novel.collaborators.slice();
-      if (this.novel.nvl_img) {
-        this.imgURL = this.apiURL + '/api/novel/image/' + this.novel.nvl_img + '/false';
+      if (this.novel.image) {
+        this.imgURL = this.apiURL + '/api/get-image/' + this.novel.image + '/novels/false';
       }
       if (this.novel.nvl_status === 'Active' || this.novel.nvl_status === 'Finished') {
         this.novelPublished = true;
@@ -135,7 +135,7 @@ export class NovelManagementComponent implements OnInit {
       if ( this.fileToUpload ) {
         this.hs.uploadImage(this.novel.id, this.fileToUpload, 'novel')
         .then((img: any) => {
-          this.novel.nvl_img = img.novel.nvl_img;
+          this.novel.image = img.novel.image;
           this.fileToUpload = null;
           this.uploading = false;
           this.openMatSnackBar(this.successSnackRef);

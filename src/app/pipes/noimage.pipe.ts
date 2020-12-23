@@ -19,7 +19,7 @@ export class NoimagePipe implements PipeTransform {
 
   transform(nvlImg: string) {
     if (nvlImg && nvlImg.length > 0) {
-      return this.apiURL + '/api/novel/image/' + nvlImg + '/false';
+      return this.apiURL + '/api/get-image/' + nvlImg + '/novels/false';
     } else {
       return '../../../assets/img/noimage.jpg';
     }

@@ -94,7 +94,7 @@
         </div>
         <div class="skn-chp-novel-portrait" *ngIf="loadPortrait">
             <div class="skn-chp-novel-portrait-image">
-                <img [src]="novel.nvl_img | noimage" alt="">
+                <img [src]="novel.image | noimage" alt="">
             </div>
             <div>
                 <h2>{{novel.nvl_title}}</h2>
@@ -143,7 +143,7 @@
                 <div class="skn-nvl-user-rating skn-secondary" *ngFor="let comment of LoadedChapter.comments | slice: 0:3">
                     <a [routerLink]="['/perfil', comment.user_id, comment.user_login]" class="fit-height-content">
                         <div class="skn-user-image">
-                            <img [src]="comment.user_profile_image | noUserImage" alt="">
+                            <img [src]="comment.image | noUserImage" alt="">
                         </div>
                     </a>
                     <div class="skn-nvl-user-rating-user-rating">
@@ -151,7 +151,7 @@
                             <div style="display: flex;">
                                 <a [routerLink]="['/perfil', comment.user_id, comment.user_login]" class="fit-height-content">
                                     <div class="skn-user-image-mobile">
-                                        <img [src]="comment.user_profile_image | noUserImage" alt="">
+                                        <img [src]="comment.image | noUserImage" alt="">
                                     </div>
                                 </a>
                                 <div class="skn-nvl-user-rating-login-name">
@@ -233,7 +233,7 @@
                         <div class="skn-nvl-user-rating skn-secondary" *ngFor="let comment of LoadedChapter.comments">
                             <a [routerLink]="['/perfil', comment.user_id, comment.user_login]" class="fit-height-content">
                                 <div class="skn-user-image">
-                                    <img [src]="comment.user_profile_image | noUserImage" alt="">
+                                    <img [src]="comment.image | noUserImage" alt="">
                                 </div>
                             </a>
                             <div class="skn-nvl-user-rating-user-rating">
@@ -241,7 +241,7 @@
                                     <div style="display: flex;">
                                         <a [routerLink]="['/perfil', comment.user_id, comment.user_login]" class="fit-height-content">
                                             <div class="skn-user-image-mobile">
-                                                <img [src]="comment.user_profile_image | noUserImage" alt="">
+                                                <img [src]="comment.image | noUserImage" alt="">
                                             </div>
                                         </a>
                                         <div class="skn-nvl-user-rating-login-name">
@@ -300,7 +300,7 @@
                                         <div class="skn-nvl-rating-comment-textarea" style="align-items: unset;">
                                             <a [routerLink]="['/perfil', user.id, user.user_login]" class="fit-height-content">
                                                 <div class="skn-user-image" style="margin-right: 15px;">
-                                                    <img [src]="user.user_profile_image | noUserImage" alt="">
+                                                    <img [src]="user.image | noUserImage" alt="">
                                                 </div>
                                             </a>
                                             <div class="skn-nvl-rating-comment-textarea-input">
@@ -315,7 +315,7 @@
                                     <div class="skn-nvl-user-rating" *ngFor="let reply of comment.replys" style="padding: 0px!important;">
                                         <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
                                             <div class="skn-user-image">
-                                                <img [src]="reply.user_profile_image | noUserImage" alt="">
+                                                <img [src]="reply.image | noUserImage" alt="">
                                             </div>
                                         </a>
                                         <div class="skn-nvl-user-rating-user-rating">
@@ -323,7 +323,7 @@
                                                 <div style="display: flex;">
                                                     <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
                                                         <div class="skn-user-image-mobile">
-                                                            <img [src]="reply.user_profile_image | noUserImage" alt="">
+                                                            <img [src]="reply.image | noUserImage" alt="">
                                                         </div>
                                                     </a>
                                                     <div class="skn-nvl-user-rating-login-name">
@@ -402,7 +402,7 @@
                             <div class="skn-nvl-rating-comment-textarea">
                                 <a [routerLink]="['/perfil', user.id, user.user_login]">
                                     <div class="skn-user-image" style="margin-right: 15px;">
-                                        <img [src]="user.user_profile_image | noUserImage">
+                                        <img [src]="user.image | noUserImage">
                                     </div>
                                 </a>
                                 <div class="skn-nvl-rating-comment-textarea-input">

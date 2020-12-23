@@ -213,14 +213,11 @@ export class HelperService {
 
   uploadImage(id: any, file: File, imageType: 'novel' | 'user') {
     let url: string;
-    let appendType: string;
     if (imageType === 'novel') {
       url = `${ this.urlCredentialsNovelsDb }/upload-novel-img/${id}`;
-      appendType = 'novel_image';
     }
     if (imageType === 'user') {
       url = `${ this.urlCredentialsNovelsDb }/upload-user-profile-img/${id}`;
-      appendType = 'user_profile_image';
     }
     if (imageType !== 'user' && imageType !== 'novel') {
       return;
@@ -228,7 +225,7 @@ export class HelperService {
     return new Promise((resolve, reject) => {
       const formData: any = new FormData();
       const xhr = new XMLHttpRequest();
-      formData.append(appendType, file, file.name);
+      formData.append('image', file, file.name);
       xhr.withCredentials = true;
       xhr.open('POST', url, true);
       xhr.send(formData);

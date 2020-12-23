@@ -18,7 +18,7 @@ export class NoAdvertisementImagePipe implements PipeTransform {
 
   transform(advImg: string) {
     if (advImg && advImg.length > 0) {
-      return this.apiURL + '/api/advertisement/image/' + advImg;
+      return this.apiURL + '/api/get-image/' + advImg + '/advertisements/false'
     } else {
       return '../../../assets/img/noimage.jpg';
     }

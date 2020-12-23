@@ -124,11 +124,6 @@ export class NovelsService {
       return this.http.delete(url, this.GlobalhttpOptions);
     }
 
-    getNovelImage(nvlImg: string) {
-      const url = `${ this.urlNovelsDb }/novel/image/${nvlImg}/false`;
-      return this.http.get( url, {responseType: 'blob'});
-    }
-
     createNovelVolume(vlmTitle: string, nvlId: number) {
       const volume: Volume = {
         vlm_title: vlmTitle,

@@ -18,9 +18,10 @@ export class NoUserImagePipe implements PipeTransform {
 
   transform(userProfileImage: string) {
     if (userProfileImage && userProfileImage.length > 0) {
-      return this.apiURL + '/api/user-profile-img/' + userProfileImage + '/false';
+      return this.apiURL + '/api/get-image/' + userProfileImage + '/users/false';
     } else {
       return '../../../assets/img/usernoimage.jpg';
+
     }
   }
 }
