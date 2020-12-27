@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TransferHttpCacheModule } from '@nguniversal/common';
-import { Dev, Prod } from './config/config';
 // Material
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -80,9 +79,12 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { InViewportModule } from 'ng-in-viewport';
 import { AdsenseModule } from 'ng2-adsense';
 import { LoadingErrorComponent } from './components/loading-error/loading-error.component';
-
-
 import { MarkdownModule } from 'ngx-markdown';
+import { ScriptHackComponent } from './components/script-hack/scripthack.component';
+import { Dev, Prod } from './config/config';
+import { Block1, Block2, Block3, Block4, Block5 } from './config/yieldlove';
+import { YieldLoveBlock1 } from './components/yieldlove-blocks/yieldlove-block1/yieldlove-block1';
+
 
 const config: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -97,6 +99,8 @@ const config: SwiperConfigInterface = {
 
 @NgModule({
   declarations: [
+    ScriptHackComponent,
+    YieldLoveBlock1,
     // components
     NovelComponent,
     AppComponent,
@@ -180,8 +184,8 @@ const config: SwiperConfigInterface = {
     InfiniteScrollModule,
     InViewportModule,
     AdsenseModule.forRoot({
-      adClient: 'ca-pub-7640562161899788',
-      adSlot: 7259870550,
+      adClient: 'ca-pub-7072642636403967'//,
+      //adSlot: 7259870550,
     }),
   ],
   providers: [
@@ -194,6 +198,11 @@ const config: SwiperConfigInterface = {
     { provide: 'googleTagManagerId', useValue: 'GTM-M74RWWL' },
     Prod,
     Dev,
+    Block1, 
+    Block2, 
+    Block3, 
+    Block4, 
+    Block5,
     NoimagePipe
   ],
   bootstrap: [AppComponent]

@@ -31,9 +31,7 @@
                             "src/styles.scss",
                             "./node_modules/bootstrap/dist/css/bootstrap.css"
                         ],
-                        "scripts": [
-                            "./node_modules/js-cookie/src/js.cookie.js"
-                        ]
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {
@@ -95,9 +93,7 @@
                             "src/styles.scss",
                             "./node_modules/bootstrap/dist/css/bootstrap.css"
                         ],
-                        "scripts": [
-                            "./node_modules/js-cookie/src/js.cookie.js"
-                        ]
+                        "scripts": []
                     }
                 },
                 "lint": {
@@ -135,12 +131,10 @@
                     "configurations": {
                         "production": {
                             "outputHashing": "media",
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
-                                }
-                            ],
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
                             "sourceMap": false,
                             "optimization": true
                         }

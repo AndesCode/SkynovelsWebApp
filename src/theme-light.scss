@@ -72,9 +72,6 @@ body[theme=light] {
     .skn-text {
         color: #212529!important;
     }
-    .skn-logo {
-        background-image: url('./assets/img/008 - SkyNovels V.1/logo/2x/logotipo_preferente@2x.png');
-    }
     .skn-all-chapters-nav {
         background-color: #ffffff;
         border-bottom: 1px solid #e5e5e5;
@@ -83,14 +80,17 @@ body[theme=light] {
         background-color: #ffffff;
         border-top: 1px solid #e5e5e5;
     }
+    .skn-logo {
+        background-image: url('./assets/img/logotipo_preferente.png');
+    }
     .skn-login-logo-image {
-        background-image: url('./assets/img/008 - SkyNovels V.1/logo/1x/simbolo_azules.png');
+        background-image: url('./assets/img/simbolo_azules.png');
     }
     .skn-reading-navbar-logo {
-        background-image: url('./assets/img/008 - SkyNovels V.1/logo/1x/SN_preferente.png');
+        background-image: url('./assets/img/SN_preferente.png');
     }
     .skn-chp-novel-portrait-signing-img {
-        background-image: url('./assets/img/008 - SkyNovels V.1/logo/1x/simbolo_azules.png');
+        background-image: url('./assets/img/simbolo_azules.png');
     }
     .skn-circle-buttons {
         i {

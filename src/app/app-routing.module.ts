@@ -31,6 +31,7 @@ import { UserActivationComponent } from './components/user-activation/user-activ
 const routes: Routes = [
   // home
   { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   // novels
   { path: 'novelas', component: NovelsComponent },
   { path: 'novelas/:nid', component: NovelComponent },

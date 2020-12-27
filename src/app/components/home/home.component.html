@@ -1,15 +1,19 @@
+<!--<script-hack type="text/javascript" *ngIf="!loading" style="display: none;">{{block1Desktop}}</script-hack>-->
+<!--<script-hack type="text/javascript" *ngIf="!loading" style="display: none;">{{block2Desktop}}</script-hack>-->
 <div class="skn-loading" *ngIf="loading && !loadingError">
     <mat-spinner></mat-spinner>
 </div>
 <app-loading-error *ngIf="loadingError"></app-loading-error>
 <article *ngIf="!loading">
 
+    <!--<ad-block1 [mobile]="mobile"></ad-block1>-->
+
     <section style="margin: 0.5rem;">
         <div class="swiper-container skn-home-swiper skn-secondary" [swiper]="swiperHomeConfig">
             <div class="swiper-wrapper" style="max-height: 500px;">
                 <div class="swiper-slide skn-swiper-banner-slide" *ngFor="let advertisement of advertisements">
                     <a [routerLink]="['/noticias', advertisement.id, advertisement.adv_name]">
-                        <img class="skn-home-img" [src]="advertisement.image | noAdvertisementImage" alt="" class="skn-home-img mx-auto d-block">
+                        <img [src]="advertisement.image | noAdvertisementImage" alt="" class="mx-auto d-block">
                     </a>
                 </div>
             </div>
@@ -17,6 +21,8 @@
             <div class="swiper-button-next unstyled-a-tag" *ngIf="!mobile" style="margin-right: 2rem;"></div>
         </div>
     </section>
+
+    <ng-adsense [adClient]="'ca-pub-7640562161899788'" [display]="'inline-block'" [width]="320" [height]="108"></ng-adsense>
 
     <!-- -------------------------------------------------------------------------- 
                                    TOP NOVELAS                               
@@ -32,7 +38,7 @@
                     <a class="unstyled-a-tag" [routerLink]="['/novelas', topNovel.id, topNovel.nvl_name]">
                         <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
                             <div class="skn-swiper-novel-slide-img-container">
-                                <img class="skn-top-nvl-img " [src]="topNovel.image | noimage" alt=" ">
+                                <img [src]="topNovel.image | noimage" alt=" ">
                             </div>
                             <strong style="word-wrap: break-word;">{{ps.setContent(topNovel.nvl_title, 40)}}</strong>
                         </div>
@@ -58,7 +64,7 @@
                     <a class="unstyled-a-tag" [routerLink]="['/novelas', recentNovel.id, recentNovel.nvl_name]">
                         <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
                             <div class="skn-swiper-novel-slide-img-container">
-                                <img class="skn-top-nvl-img " [src]="recentNovel.image | noimage" alt=" ">
+                                <img [src]="recentNovel.image | noimage" alt=" ">
                             </div>
                             <strong style="word-wrap: break-word;">{{ps.setContent(recentNovel.nvl_title, 40)}}</strong>
                         </div>
@@ -103,11 +109,9 @@
                         <div class="skn-nvl-card-votes" style="display: flex;">
                             <ngb-rating [(rate)]='recomendedNovel.nvl_rating' max='5' [readonly]="true" style="border: none !important; outline: none !important;">
                                 <ng-template let-fill="fill" let-index="index">
-                                    <span class="star" [class.filled]="fill === 100" [class.nfilled]="fill !== 100">
-                                        <span class="half" [style.width.%]="fill">
-                                            <i class="material-icons"></i>
-                                        </span>
-                                    </span>
+                                    <span class="material-icons rating-star" *ngIf="fill > 90">star</span>
+                                    <span class="material-icons rating-star" *ngIf="fill < 40">star_border</span>
+                                    <span class="material-icons rating-star" *ngIf="fill > 40 && fill < 90">star_half</span>
                                 </ng-template>
                             </ngb-rating>
                             <div style="margin-left: 9px; margin-top: 3px;">
@@ -158,4 +162,11 @@
             </div>
         </div>
     </section>
+
+    <div id='div-gpt-ad-1407836210062-0'>
+        <script-hack type="text/javascript" *ngIf="!loading" style="display: none;">
+            {{block2Div}}
+        </script-hack>
+    </div>
+
 </article>

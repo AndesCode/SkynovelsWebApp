@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Novel, User } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
 import { Chapter } from '../../models/models';
-import * as Cookies from 'js-cookie';
+import { Block1, Block2, Block3, Block4, Block5 } from 'src/app/config/yieldlove';
 
 @Component({
   selector: 'app-chapters',
@@ -47,10 +47,33 @@ export class ChaptersComponent implements AfterViewInit {
   componentName = 'ChaptersComponent';
   isBrowser: boolean;
 
+    // yieldlove blocks
+    block1Desktop: string;
+    block1Mobile: string;
+    block1Div: string;
+    block2Desktop: string;
+    block2Mobile: string;
+    block2Div: string;
+    block3Desktop: string;
+    block3Mobile: string;
+    block3Div: string;
+    block4Desktop: string;
+    block4Mobile: string;
+    block4Div: string;
+    block5Desktop: string;
+    block5Mobile: string;
+    block5Div: string;
+    // end yieldlove blocks
+
   @ViewChildren('chaptersElement') chaptersElementRef;
 
 
   constructor(private ns: NovelsService,
+              private block1: Block1,
+              private block2: Block2,
+              private block3: Block3,
+              private block4: Block4,
+              private block5: Block5,
               private us: UsersService,
               public hs: HelperService,
               public ps: PageService,
@@ -84,8 +107,10 @@ export class ChaptersComponent implements AfterViewInit {
       }
     });
 
-    if (this.isBrowser && Cookies.get('font')) {
-      this.fontSize = Number(Cookies.get('font'));
+    if (this.isBrowser) {
+      if (localStorage.getItem('font')) {
+        this.fontSize = Number(localStorage.getItem('font'));
+      }  
     }
 
     this.hs.invokeExternalFunction.subscribe((data: any) => {
@@ -129,17 +154,14 @@ export class ChaptersComponent implements AfterViewInit {
 
   changeFontSize(value: 'plus' | 'substract') {
     if (value === 'plus' && this.fontSize < 24) {
-      this.fontSize = this.fontSize + 1;
-      if (this.isBrowser) {
-        Cookies.set('font', String(this.fontSize), { expires: 65 });
-      }    
+      this.fontSize = this.fontSize + 1;   
     }
     if (value === 'substract' && this.fontSize > 1) {
-      this.fontSize = this.fontSize - 1;
-      if (this.isBrowser) {
-        Cookies.set('font', String(this.fontSize), { expires: 65 });
-      }     
+      this.fontSize = this.fontSize - 1;    
     }
+    if (this.isBrowser) {
+      localStorage.setItem('font', String(this.fontSize));
+    } 
   }
 
   updateUserBookmark() {

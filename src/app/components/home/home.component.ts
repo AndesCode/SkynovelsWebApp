@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { SwiperConfigInterface} from 'ngx-swiper-wrapper';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { NovelsService } from '../../services/novels.service';
 import { HelperService } from '../../services/helper.service';
-import { UsersService } from 'src/app/services/users.service';
 import { Advertisement, Novel } from '../../models/models';
 import { PageService } from '../../services/page.service';
+import { Block1, Block2, Block3, Block4, Block5 } from 'src/app/config/yieldlove';
 
 @Component({
   selector: 'app-home',
@@ -36,6 +35,23 @@ export class HomeComponent implements OnInit {
     mousewheel: false,
 
   };
+  // yieldlove blocks
+  block1Desktop: string;
+  block1Mobile: string;
+  block1Div: string;
+  block2Desktop: string;
+  block2Mobile: string;
+  block2Div: string;
+  block3Desktop: string;
+  block3Mobile: string;
+  block3Div: string;
+  block4Desktop: string;
+  block4Mobile: string;
+  block4Div: string;
+  block5Desktop: string;
+  block5Mobile: string;
+  block5Div: string;
+  // end yieldlove blocks
 
   recentNovels: Array<Novel>;
   advertisements: Array<Advertisement>;
@@ -48,14 +64,25 @@ export class HomeComponent implements OnInit {
   loadingError = false;
   componentName = 'HomeComponent';
   novelChaptersForWeeks = 0;
+  loadingCompleted: boolean;
 
   constructor(
     private ns: NovelsService,
     private breakpointObserver: BreakpointObserver,
-    private router: Router,
     public hs: HelperService,
-    public ps: PageService
-  ) {}
+    public ps: PageService,
+    private block1: Block1,
+    private block2: Block2,
+    private block3: Block3,
+    private block4: Block4,
+    private block5: Block5
+  ) {
+    this.block1Desktop = block1.scriptDesktop
+    this.block1Mobile = block1.scriptMobile
+    this.block1Div = block1.divScript
+    this.block2Desktop = block2.scriptDesktop
+    this.block2Div = block2.divScript
+  }
 
   ngOnInit() {
     this.hs.updateBrowserMeta('description', 'Skynovels, el catálogo más extenso y completo de novelas web en español, con traducciones literarias originales. Disfruta de los títulos más destacados como Against The Gods (ATG), Tales of Demons and Gods (TDG) o A Will Eternal (AWE). Con las mejores traducciones de la web.', 'SkyNovels | ¡Asciende a Mundos Increíbles!');
@@ -123,14 +150,7 @@ export class HomeComponent implements OnInit {
     this.ps.getAdvertisements().subscribe((data: any) => {
       this.advertisements = data.advertisements;
     });
-  }
-
-  goToNovel(id: number, nvlName: string) {
-    this.router.navigate(['/novelas', id, nvlName]);
-  }
-
-  goToChapter(nid: number, nvlName: string, cid: number, chpName: string) {
-    this.router.navigate(['/novelas', nid, nvlName, cid, chpName]);
+    this.loadingCompleted = true;
   }
 
   setSwiperSlidesPerView(slides: number) {

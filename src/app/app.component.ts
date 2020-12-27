@@ -1,9 +1,8 @@
-import { Component, ViewChild, AfterViewInit, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { HelperService } from './services/helper.service';
 import { filter } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
-import * as Cookies from 'js-cookie';
 import { Meta } from '@angular/platform-browser';
 import { Prod } from './config/config';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
@@ -14,7 +13,6 @@ import { GoogleTagManagerService } from 'angular-google-tag-manager';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  @ViewChild('skynovelBody') skynovelBodyRef: ElementRef;
   themeToggled = false;
   currentComponent = null;
   scrollPosition = 0;
@@ -28,7 +26,6 @@ export class AppComponent implements AfterViewInit {
 
                 this.isBrowser = isPlatformBrowser(this.platformId);
                 if (this.isBrowser) {
-                  //this.gtmService.addGtmToDom();
                   const navEndEvents$ = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
                   navEndEvents$.subscribe((event: NavigationEnd) => {
                     const canonicalUrl = document.querySelector('[rel="canonical"]');
@@ -54,23 +51,34 @@ export class AppComponent implements AfterViewInit {
         this.toggleTheme();
       }
     });
-    if (Cookies.get('presence') && Cookies.get('presence') === 'dark') {
-      this.toggleTheme();
+    if (this.isBrowser) {
+      if (localStorage.getItem('presence') && localStorage.getItem('presence') === 'dark') {
+        this.toggleTheme();
+      }
     }
+
+    const wrapper = document.getElementById('main-wrapper')
+    const observer = new MutationObserver(function (mutations, observer) {
+      wrapper.style.height = ''
+      wrapper.style.minHeight = ''
+    })
+    observer.observe(wrapper, {
+    attributes: true,
+    attributeFilter: ['style']
+    })
+
   }
 
   toggleTheme() {
     if (this.isBrowser) {
       if (!this.themeToggled) {
         this.themeToggled = true;
-        // this.renderer.setAttribute(this.skynovelBodyRef.nativeElement, 'theme', 'dark');
         document.body.setAttribute('theme', 'dark');
-        Cookies.set('presence', 'dark', { expires: 65 });
+        localStorage.setItem('presence', 'dark');
       } else {
         this.themeToggled = false;
-        // this.renderer.setAttribute(this.skynovelBodyRef.nativeElement, 'theme', 'light');
         document.body.setAttribute('theme', 'light');
-        Cookies.set('presence', 'light', { expires: 65 });
+        localStorage.setItem('presence', 'light');
       }
     } else {
       return;
@@ -86,6 +94,8 @@ export class AppComponent implements AfterViewInit {
     }
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo(0, 0);
+      //const skynovelmain =  document.getElementById('skynovelmain');
+      // skynovelmain.style.minHeight = 'calc(100vh - 4.063rem) !important;';
     }
   }
 }

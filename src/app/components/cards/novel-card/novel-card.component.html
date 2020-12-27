@@ -23,11 +23,9 @@
                         <span>
                         <ngb-rating [(rate)]='novel.nvl_rating' max='5' [readonly]="true">
                             <ng-template let-fill="fill" let-index="index">
-                                <span class="star" [class.filled]="fill === 100"[class.nfilled]="fill !== 100">
-                                    <span class="half" [style.width.%]="fill">
-                                        <i class="material-icons"></i>
-                                    </span>
-                        </span>
+                                <span class="material-icons rating-star" *ngIf="fill > 90">star</span>
+                        <span class="material-icons rating-star" *ngIf="fill < 40">star_border</span>
+                        <span class="material-icons rating-star" *ngIf="fill > 40 && fill < 90">star_half</span>
                         </ng-template>
                         </ngb-rating>
                         </span>

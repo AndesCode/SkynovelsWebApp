@@ -26,9 +26,9 @@ $custom-typography: mat-typography-config( $font-family: 'Muli');
 
 @import "./theme-light.scss";
 @import "./theme-dark.scss";
-@import "../node_modules/swiper/css/swiper.min.css";
 @import url('https://fonts.googleapis.com/css2?family=Muli:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import "./app/common.scss";
+@import "../node_modules/swiper/css/swiper.min.css";
 html {
     height: auto;
     min-height: 100%;
@@ -546,11 +546,8 @@ mat-expansion-panel-header {
     text-align: right;
 }
 
-.star {
-    font-size: 1.5rem;
-    span {
-        color: sandybrown;
-    }
+.rating-star {
+    color: sandybrown;
 }
 
 .filled .material-icons::before {

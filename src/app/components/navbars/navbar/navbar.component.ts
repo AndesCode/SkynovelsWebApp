@@ -189,7 +189,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.us.logOut().subscribe((data: any) => {
       if (this.isBrowser) {
-        localStorage.clear();
+        localStorage.removeItem('sknvl_s');
       }
       if (this.currentComponent === 'UserNovelComponent'
       || this.currentComponent === 'UserNovelsComponent'
@@ -200,7 +200,7 @@ export class NavbarComponent implements OnInit {
       this.hs.openExternalFunction('reloadUser');
     }, error => {
       if (this.isBrowser) {
-        localStorage.clear();
+        localStorage.removeItem('sknvl_s');
       }
       if (this.currentComponent === 'UserNovelComponent'
       || this.currentComponent === 'UserNovelsComponent'
