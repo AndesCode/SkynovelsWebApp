@@ -9,8 +9,8 @@ export class Dev {
 }
 
 export class Prod {
-    url = 'https://snpruebas.skynovels.net';
-    apiURL = 'https://api.snpruebas.skynovels.net';
-    urlNovelsDb = 'https://api.snpruebas.skynovels.net/api';
-    urlCredentialsNovelsDb = 'https://api.snpruebas.skynovels.net/api';
+    url = 'https://beta.skynovels.net';
+    apiURL = 'https://api.beta.skynovels.net';
+    urlNovelsDb = 'https://api.beta.skynovels.net/api';
+    urlCredentialsNovelsDb = 'https://api.beta.skynovels.net/api';
 }
