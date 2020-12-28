@@ -135,6 +135,7 @@ export class Advertisement {
     user_id?: number;
     user_login?: string;
     adv_content?: string;
+    adv_status?: 'Active' | 'Disabled' | 'Finished' | 'Finalizada' | 'Activa' | 'Inactiva' | 'Oculta';
     image?: string;
     adv_order?: number;
     comments?: Array<Comment>;

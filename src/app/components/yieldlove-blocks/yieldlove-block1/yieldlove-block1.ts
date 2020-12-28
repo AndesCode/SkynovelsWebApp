@@ -17,15 +17,12 @@ export class YieldLoveBlock1 {
     mobile: boolean;
 
     constructor(private block1: Block1) {
-        console.log('se construye ad');
-        console.log(this.block1Desktop);
         this.block1Desktop = block1.scriptDesktop
         this.block1Mobile = block1.scriptMobile
         this.block1Div = block1.divScript
       }
 
     ngOnInit() {
-        console.log('se carga ad');
         if (this.mobile) {
             this.mainScript = this.block1Mobile
         } else {

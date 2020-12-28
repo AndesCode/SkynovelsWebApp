@@ -13,16 +13,26 @@
             </div>
             <mat-form-field class="w-100">
                 <mat-label>Titulo del anuncio*</mat-label>
-                <input matInput #nvl_title="ngModel" name="advertisement?.adv_title" autocomplete="off" [(ngModel)]="advertisement.adv_title" required minlength="5" maxlength="125">
+                <input matInput #adv_title="ngModel" name="advertisement?.adv_title" autocomplete="off" [(ngModel)]="advertisement.adv_title" required minlength="5" maxlength="125">
                 <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field style="margin-right: 20px;">
                 <mat-label>Orden de anuncio</mat-label>
-                <input matInput type="number" #chp_number="ngModel" name="advertisement?.adv_order" [(ngModel)]="advertisement.adv_order" required autocomplete="off" min="1">
+                <input matInput type="number" #adv_order="ngModel" name="advertisement?.adv_order" [(ngModel)]="advertisement.adv_order" required autocomplete="off" min="1">
             </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Estado de publicación*</mat-label>
+                <mat-select #adv_status="ngModel" name="advertisement?.adv_status" [(ngModel)]="advertisement.adv_status" required minlength="6" maxlength="8">
+                    <mat-option value="Disabled">Oculta</mat-option>
+                    <mat-option value="Active">Publicada</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
             <div class="form-group w-100">
                 <label for="skn-novel-sinopsis">Contenido*</label>
-                <ckeditor id="skn-novel-sinopsis" #nvl_content="ngModel" [(ngModel)]="advertisement.adv_content" data="{{advertisement.adv_content}}" name="advertisement.adv_content" [config]="ckEditorConfig" [editor]="Editor" class="skn-ck-editor-novel-content" required
+                <ckeditor id="skn-novel-sinopsis" #adv_content="ngModel" [(ngModel)]="advertisement.adv_content" data="{{advertisement.adv_content}}" name="advertisement.adv_content" [config]="ckEditorConfig" [editor]="Editor" class="skn-ck-editor-novel-content" required
                     minlength="15" maxlength="10000" autocomplete="off" *ngIf="isBrowser">
                 </ckeditor>
             </div>

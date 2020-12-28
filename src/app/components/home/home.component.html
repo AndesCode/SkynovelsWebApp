@@ -86,9 +86,6 @@
                     <a [routerLink]="['/novelas', recomendedNovel?.id, recomendedNovel?.nvl_name]">
                         <img [src]="recomendedNovel?.image | noimage" alt="" style="cursor: pointer;">
                     </a>
-                    <div class="skn-main">
-                        <h4 [ngStyle]="{'color':recomendedNovel?.nvl_status === 'Activa' || recomendedNovel?.nvl_status === 'Finalizada' ? 'green' : 'red' }">{{recomendedNovel?.nvl_status}}</h4>
-                    </div>
                 </div>
                 <div class="skn-novel-presentation-info">
                     <div class="skn-novel-presentation-info-stats-box">

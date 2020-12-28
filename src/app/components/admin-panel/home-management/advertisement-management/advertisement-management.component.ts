@@ -91,6 +91,7 @@ export class AdvertisementManagementComponent implements OnInit {
       });
     } else {
       this.advertisement = new Advertisement();
+      this.advertisement.adv_status = 'Disabled'
       this.location.replaceState('/panel/administracion-de-pagina-de-inicio/noticias/nuevo');
       this.loading = false;
       this.advertisement.adv_content = '';

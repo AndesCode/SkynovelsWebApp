@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
     spaceBetween: 12,
     observer: true,
     slidesPerView: 1,
-    loop: true,
+    // loop: true,
     roundLengths: true,
     centeredSlides: true,
     initialSlide: 0,

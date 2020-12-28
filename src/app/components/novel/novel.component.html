@@ -58,7 +58,7 @@
                     <div class="skn-novel-presentation-info-stats-box">
                         <h2 class="skn-novel-presentation-info-title">{{novel.nvl_title}}<span class="skn-novel-acronym">{{novel.nvl_acronym}}</span></h2>
                         <div class="skn-novel-presentation-info-stats skn-secondary skn-text row" style="margin-left: 0px;">
-                            <div> <span class="material-icons">create</span>{{novelChaptersForWeeks !== 1 ? novelChaptersForWeeks + ' Capitulos semanales' : '1 Capitulo semanal'}}</div>
+                            <div *ngIf="novel.nvl_status === 'Activa' || novel.nvl_status === 'Inactiva'"> <span class="material-icons">create</span>{{novelChaptersForWeeks !== 1 ? novelChaptersForWeeks + ' Capitulos semanales' : '1 Capitulo semanal'}}</div>
                             <div *ngIf="novel.nvl_chapters === 1"> <span class="material-icons">format_align_left</span> {{novel.nvl_chapters}} Capitulo</div>
                             <div *ngIf="novel.nvl_chapters > 1"> <span class="material-icons">format_align_left</span> {{novel.nvl_chapters}} Capitulos</div>
                             <div> <span class="material-icons">access_time</span> {{hs.getRelativeTime(novel.nvl_last_update).message}}</div>
@@ -118,7 +118,7 @@
                     <p *ngIf="!user" class="skn-red-text">Inicia sesión para agregar esta novela a tu biblioteca</p>
                 </div>
                 <div class="skn-novel-presentation-info-stats-mobile skn-secondary skn-text row" style="margin-left: 0px;" *ngIf="mobile">
-                    <div> <span class="material-icons">create</span> {{novelChaptersForWeeks !== 1 ? novelChaptersForWeeks + ' Capitulos semanales' : '1 Capitulo semanal'}}</div>
+                    <div *ngIf="novel.nvl_status === 'Activa' || novel.nvl_status === 'Inactiva'"> <span class="material-icons">create</span> {{novelChaptersForWeeks !== 1 ? novelChaptersForWeeks + ' Capitulos semanales' : '1 Capitulo semanal'}}</div>
                     <div *ngIf="novel.nvl_chapters === 1"> <span class="material-icons">format_align_left</span> {{novel.nvl_chapters}} Capitulo</div>
                     <div *ngIf="novel.nvl_chapters > 1"> <span class="material-icons">format_align_left</span> {{novel.nvl_chapters}} Capitulos</div>
                     <div> <span class="material-icons">access_time</span> {{hs.getRelativeTime(novel.nvl_last_update).message}}</div>

@@ -13,12 +13,12 @@
                 <div class="skn-novel-edition-main-form">
                     <mat-form-field class="w-100">
                         <mat-label>Titulo de novela*</mat-label>
-                        <input matInput #nvl_title="ngModel" name="novel?.nvl_title" autocomplete="off" [(ngModel)]="novel.nvl_title" required minlength="4" maxlength="60">
+                        <input matInput #nvl_title="ngModel" name="novel?.nvl_title" autocomplete="off" [(ngModel)]="novel.nvl_title" required minlength="4" maxlength="120">
                         <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                     </mat-form-field>
                     <mat-form-field class="w-100">
                         <mat-label>Autor de novela*</mat-label>
-                        <input matInput #nvl_writer="ngModel" name="novel.nvl_writer" autocomplete="off" [(ngModel)]="novel.nvl_writer" required required minlength="2" maxlength="25">
+                        <input matInput #nvl_writer="ngModel" name="novel.nvl_writer" autocomplete="off" [(ngModel)]="novel.nvl_writer" required required minlength="2" maxlength="60">
                         <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                     </mat-form-field>
                     <mat-form-field class="w-100">
@@ -46,12 +46,12 @@
             <div class="row skn-novel-edition-translators-form">
                 <mat-form-field>
                     <mat-label>Traductor</mat-label>
-                    <input matInput #nvl_translator="ngModel" name="novel.nvl_translator" [(ngModel)]="novel.nvl_translator" minlength="2" maxlength="25">
+                    <input matInput #nvl_translator="ngModel" name="novel.nvl_translator" [(ngModel)]="novel.nvl_translator" minlength="2" maxlength="60">
                     <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Traductor al Ingles</mat-label>
-                    <input matInput #nvl_translator_eng="ngModel" name="novel.nvl_translator_eng" [(ngModel)]="novel.nvl_translator_eng" minlength="2" maxlength="25">
+                    <input matInput #nvl_translator_eng="ngModel" name="novel.nvl_translator_eng" [(ngModel)]="novel.nvl_translator_eng" minlength="2" maxlength="60">
                     <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                 </mat-form-field>
             </div>
@@ -104,7 +104,11 @@
                 </mat-card>
             </mat-expansion-panel>
             <mat-card style="margin-top: 15px; padding: 16px 24px;">
-                <p>Capitulos*</p>
+                <p>Libros / Volumenes*</p>
+                <small *ngIf="novel?.volumes.length > 0">Añade capítulos dentro de los volúmenes o libros.</small>
+                <small *ngIf="novel?.volumes.length === 0">Nota: Debes crear un volumen o libro para empezar a añadir capítulos.</small>
+                <small *ngIf="novel?.volumes.length === 0">Si la novela no lleva volúmenes o libros, puedes crear un volumen con el nombre "Lista de capítulos".</small>
+
                 <mat-expansion-panel (opened)="volume.open = true" (closed)="hs.closeMatExpansionPanel(volume)" *ngFor="let volume of novel?.volumes" style="margin-bottom: 5px;">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
