@@ -132,12 +132,10 @@ export class HomeComponent implements OnInit {
           });
         }
         if (this.mobile) {
-          this.mobile = true;
           setTimeout(() => {
             this.setSwiperSlidesPerView(3);
           }, 200);
         } else {
-          this.mobile = false;
           setTimeout(() => {
             this.setSwiperSlidesPerView(5);
           }, 100);
