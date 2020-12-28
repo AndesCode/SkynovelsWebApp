@@ -160,6 +160,9 @@
             </form>
         </div>
         <div class="skn-login-button">
+            <small *ngIf="currentForm === 'login'"><strong style=" color: #d32f2f!important ">Nota: </strong>La migración a la app ha afectado las credenciales. Si presentas problemas para iniciar sesión, por favor, <strong class="skn-link " (click)="swichtTab(
+                'passwordRecovery') " style="color: #d32f2f!important ">cambia la contraseña</strong></small>
+            <hr *ngIf="currentForm==='login' ">
             <button mat-raised-button color="primary" (click)="login()" *ngIf="currentForm === 'login'" [disabled]="loginForm.invalid || loginFormLoading">Iniciar sesión</button>
             <button mat-raised-button color="primary" (click)="register()" *ngIf="currentForm === 'register' && !registerCompleted" [disabled]="registerForm.invalid || loginFormLoading || !termsAndConditionsAccepted">Registrarse</button>
             <button mat-raised-button color="primary" (click)="passwordRecovery()" *ngIf="currentForm === 'passwordRecovery' && !passwordRecoveryCompleted" [disabled]="passwordRecoveryForm.invalid || loginFormLoading">Enviar correo</button>
