@@ -75,10 +75,10 @@ export class UserChapterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const nid = this.activatedRoute.snapshot.paramMap.get('nid');
+    const nid = Number(this.activatedRoute.snapshot.paramMap.get('nid'));
     const vid = Number(this.activatedRoute.snapshot.paramMap.get('vid'));
     const cid = this.activatedRoute.snapshot.paramMap.get('cid');
-    this.ns.getNovel(Number(nid), 'edition').subscribe((novelData: any) => {
+    this.ns.getNovel(nid, 'edition').subscribe((novelData: any) => {
       if (novelData.authorized_user) {
         this.user = novelData.authorized_user;
         this.novel = novelData.novel[0];

@@ -74,8 +74,8 @@
                 </div>
                 <hr>
                 <div>
-                    <markdown [data]="ps.setContent(comment.comment_content, 160)" *ngIf="(!comment.show_more && comment.comment_content.length > 160) && !comment.edition"></markdown>
-                    <markdown [data]="comment.comment_content" *ngIf="(comment.show_more || comment.comment_content.length < 160) && !comment.edition"></markdown>
+                    <markdown [data]="ps.setContent(comment.comment_content, 360)" *ngIf="(!comment.show_more && comment.comment_content.length > 360) && !comment.edition"></markdown>
+                    <markdown [data]="comment.comment_content" *ngIf="(comment.show_more || comment.comment_content.length < 360) && !comment.edition"></markdown>
                     <form autocomplete="off" #updateCommentForm="ngForm">
                         <div class="form-group" style="width: 100%;" *ngIf="comment.edition">
                             <textarea class="form-control skn-text-area" id="exampleFormControlTextarea1" #comment_content="ngModel" name="comment.comment_content" [(ngModel)]="comment.comment_content" rows="3"></textarea>

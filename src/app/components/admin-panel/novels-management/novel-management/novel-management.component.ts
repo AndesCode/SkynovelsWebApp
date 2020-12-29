@@ -41,6 +41,7 @@ export class NovelManagementComponent implements OnInit {
   chapterEdition = false;
   isBrowser: boolean;
   apiURL: string;
+  collaboratorForm: FormGroup;
 
     constructor(private activatedRoute: ActivatedRoute,
                 public ns: NovelsService,
@@ -54,6 +55,11 @@ export class NovelManagementComponent implements OnInit {
                 private dev: Dev,
                 private prod: Prod,
                 @Inject(PLATFORM_ID) private platformId) {
+
+                  this.collaboratorForm = new FormGroup({
+                    user_login: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]),
+                  });
+
                   if (isDevMode()) {
                      this.apiURL = this.dev.apiURL
                   } else {
@@ -273,6 +279,18 @@ export class NovelManagementComponent implements OnInit {
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'Formulario invalido';
     }
+  }
+
+  createNovelCollaborator() {
+    this.as.adminCreateNovelCollaborator(this.us.getUserLoged().token, this.collaboratorForm.value.user_login, this.novel.id).subscribe((data: any) => {
+      this.openMatSnackBar(this.successSnackRef);
+      this.successSnackMessage = '¡Colaborador añadido!';
+      this.collaborators.push(data.collaborator);
+      this.dialog.closeAll();
+    }, error => {
+      this.openMatSnackBar(this.errorSnackRef);
+      this.errorSnackMessage = error.error.message;
+    });
   }
 
   deleteVolume(volume: Volume) {

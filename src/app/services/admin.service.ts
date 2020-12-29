@@ -2,7 +2,7 @@ import { Injectable, Inject, PLATFORM_ID, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HelperService } from './helper.service';
 import { PostComment } from '../models/post-comment';
-import { User, Novel, Genre, Advertisement, Volume, Chapter } from '../models/models';
+import { User, Novel, Genre, Advertisement, Volume, Chapter, novelCollaborator } from '../models/models';
 import { Dev, Prod } from '../config/config';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -445,6 +445,22 @@ export class AdminService {
     };
     const url = `${ this.urlCredentialsNovelsDb }/admin-create-recommended-novel/${id}`;
     return this.http.post(url, null, httpOptions);
+  }
+
+  adminCreateNovelCollaborator(jwt: string, userLogin: string, novelId: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: jwt
+      }),
+      withCredentials: true
+    };
+    const invitation: novelCollaborator = {
+      user_login: userLogin,
+      noveld_id: novelId
+    };
+    const url = `${ this.urlCredentialsNovelsDb }/admin-create-novel-collaborator`;
+    return this.http.post(url, invitation, httpOptions);
   }
 
   AdminUploadImage(jwt: string, id: number, file: File) {

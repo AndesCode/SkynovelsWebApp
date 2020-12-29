@@ -95,6 +95,7 @@
                         </div>
                     </ng-template>
                 </mat-expansion-panel>
+                <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="openDialogSheet(addCollaboratorModal)">Añadir un colaborador</button>
             </mat-expansion-panel>
             <mat-card style="margin-top: 15px;">
                 <p>Capitulos*</p>
@@ -173,6 +174,27 @@
         </div>
     </section>
 </main>
+
+<ng-template #addCollaboratorModal>
+    <div class="skn-dialong-modal">
+        <div class="modal-header">
+            <h4 class="modal-title">Busca un colaborador</h4>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="collaboratorForm">
+                <mat-form-field class="w-100">
+                    <mat-label>Colaborador</mat-label>
+                    <input matInput placeholder="Busca por usuario o correo electronico" formControlName="user_login">
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cerrar</button>
+            <button mat-raised-button color="primary" (click)="createNovelCollaborator()">Añadir</button>
+        </div>
+    </div>
+</ng-template>
+
 <ng-template #deletenovelModal>
     <div class="skn-dialong-modal">
         <div class="modal-header">

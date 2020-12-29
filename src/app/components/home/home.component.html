@@ -121,8 +121,11 @@
                     </div>
                 </div>
             </div>
-            <div style="margin-top: 15px;">
+            <div style="margin-top: 15px;" *ngIf="isBrowser">
                 <markdown class="variable-binding" [data]="recomendedNovel?.nvl_content"></markdown>
+            </div>
+            <div style="margin-top: 15px;" *ngIf="!isBrowser">
+                <p [innerHTML]="recomendedNovel?.nvl_content" *ngIf="!isBrowser"></p>
             </div>
         </div>
         <div class="skn-home-title" style="margin: 1.6rem;">

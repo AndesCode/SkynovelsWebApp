@@ -363,13 +363,5 @@ export class UserNovelComponent implements OnInit {
       this.uploading = false;
     });
   }
-
-  goToChapterEdition(newChapter: boolean, volume: Volume, chapter?: Chapter) {
-    if (newChapter) {
-      this.router.navigate(['mis-novelas', this.novel.id, this.novel.nvl_name, volume.id, 'nuevo']);
-    } else {
-      this.router.navigate(['mis-novelas', this.novel.id, this.novel.nvl_name, volume.id, chapter.id, chapter.chp_name]);
-    }
-  }
 }
 

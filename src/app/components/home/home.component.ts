@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { SwiperConfigInterface} from 'ngx-swiper-wrapper';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { NovelsService } from '../../services/novels.service';
@@ -6,6 +6,7 @@ import { HelperService } from '../../services/helper.service';
 import { Advertisement, Novel } from '../../models/models';
 import { PageService } from '../../services/page.service';
 import { Block1, Block2, Block3, Block4, Block5 } from 'src/app/config/yieldlove';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -65,8 +66,10 @@ export class HomeComponent implements OnInit {
   componentName = 'HomeComponent';
   novelChaptersForWeeks = 0;
   loadingCompleted: boolean;
+  isBrowser = false;
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId,
     private ns: NovelsService,
     private breakpointObserver: BreakpointObserver,
     public hs: HelperService,
@@ -77,6 +80,7 @@ export class HomeComponent implements OnInit {
     private block4: Block4,
     private block5: Block5
   ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
     this.block1Desktop = block1.scriptDesktop
     this.block1Mobile = block1.scriptMobile
     this.block1Div = block1.divScript

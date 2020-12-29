@@ -128,6 +128,11 @@ export class Invitation {
     invitation_nvl_title?: string;
 }
 
+export class novelCollaborator {
+    user_login?: string;
+    noveld_id?: number;
+}
+
 export class Advertisement {
     id?: number;
     adv_title?: string;
