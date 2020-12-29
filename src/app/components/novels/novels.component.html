@@ -6,33 +6,40 @@
     <div class="index-title">
         <h1 class="skn-component-title">Catálogo de Novelas</h1>
     </div>
-    <div class="pt-1 w-100 align-self-center">
-        <div>
-            <input class="form-control skn-text-area col-auto" type="search" name="inputSearch" [(ngModel)]="novelFilter.searchName" id="searchName" name="searchName" autocomplete="on" placeholder="Busca lo que quieras">
+    <mat-expansion-panel style="margin-bottom: 5px;">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h2 style="margin: unset;">Filtros</h2>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="pt-1 w-100 align-self-center">
+            <div>
+                <input class="form-control skn-text-area col-auto" type="search" name="inputSearch" [(ngModel)]="novelFilter.searchName" id="searchName" name="searchName" autocomplete="on" placeholder="Busca lo que quieras">
+            </div>
+            <div class="skn-filters">
+                <mat-button-toggle-group [vertical]="mobile" [(ngModel)]="novelFilter.searchStatus" name="novelFilter.searchStatus">
+                    <mat-button-toggle value="All">Todas</mat-button-toggle>
+                    <mat-button-toggle value="Activa">Activa</mat-button-toggle>
+                    <mat-button-toggle value="Inactiva">Inactiva</mat-button-toggle>
+                    <mat-button-toggle value="Finalizada">Finalizada</mat-button-toggle>
+                </mat-button-toggle-group>
+                <mat-button-toggle-group [vertical]="mobile" [(ngModel)]="novelFilter.orderBy" name="novelFilter.orderBy">
+                    <mat-button-toggle value="nvl_title">Nombre</mat-button-toggle>
+                    <mat-button-toggle value="nvl_rating">Popularidad</mat-button-toggle>
+                    <mat-button-toggle value="nvl_chapters">Capítulos</mat-button-toggle>
+                    <mat-button-toggle value="date_data">Actualización</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+            <div class="skn-search-box-genres w-100">
+                <mat-form-field class="genres-list">
+                    <mat-label>Géneros</mat-label>
+                    <mat-select multiple [(ngModel)]="novelFilter.searchGenres" name="novelFilter.searchGenres">
+                        <mat-option *ngFor="let genre of genres" [value]="genre.id">{{genre.genre_name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
         </div>
-        <div class="skn-filters">
-            <mat-button-toggle-group [vertical]="mobile" [(ngModel)]="novelFilter.searchStatus" name="novelFilter.searchStatus">
-                <mat-button-toggle value="All">Todas</mat-button-toggle>
-                <mat-button-toggle value="Activa">Activa</mat-button-toggle>
-                <mat-button-toggle value="Inactiva">Inactiva</mat-button-toggle>
-                <mat-button-toggle value="Finalizada">Finalizada</mat-button-toggle>
-            </mat-button-toggle-group>
-            <mat-button-toggle-group [vertical]="mobile" [(ngModel)]="novelFilter.orderBy" name="novelFilter.orderBy">
-                <mat-button-toggle value="nvl_title">Nombre</mat-button-toggle>
-                <mat-button-toggle value="nvl_rating">Popularidad</mat-button-toggle>
-                <mat-button-toggle value="nvl_chapters">Capítulos</mat-button-toggle>
-                <mat-button-toggle value="date_data">Actualización</mat-button-toggle>
-            </mat-button-toggle-group>
-        </div>
-        <div class="skn-search-box-genres w-100">
-            <mat-form-field class="genres-list">
-                <mat-label>Géneros</mat-label>
-                <mat-select multiple [(ngModel)]="novelFilter.searchGenres" name="novelFilter.searchGenres">
-                    <mat-option *ngFor="let genre of genres" [value]="genre.id">{{genre.genre_name}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-    </div>
+    </mat-expansion-panel>
 </section>
 <div class="container" *ngIf="!loading">
     <section>

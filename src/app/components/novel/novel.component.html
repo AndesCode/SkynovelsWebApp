@@ -35,11 +35,17 @@
             </div>
             <div class="skn-novel-presentation-info-user-buttons-box">
                 <a *ngIf="!novel.user_bookmark || novel.user_bookmark.chp_id === novel.volumes[0].chapters[0].id" [routerLink]="[novel.volumes[0].chapters[0].id, novel.volumes[0].chapters[0].chp_name]">
-                    <button mat-raised-button color="primary" style="height: 35px;">Leer</button>
+                    <button mat-raised-button color="primary" style="height: 35px; margin-right: 10px;">Leer</button>
                 </a>
                 <a *ngIf="novel.user_bookmark && novel.user_bookmark.chp_id !== novel.volumes[0].chapters[0].id" [routerLink]="[novel.user_bookmark.chp_id, novel.user_bookmark.chp_name]">
-                    <button mat-raised-button color="primary" style="height: 35px;">Continuar leyendo</button>
+                    <button mat-raised-button color="primary" style="height: 35px; ; margin-right: 10px;">Continuar leyendo</button>
                 </a>
+                <button mat-mini-fab *ngIf="user && novel.user_bookmark" [matMenuTriggerFor]="bookmarkMenu"><span class="material-icons">more_vert</span></button>
+                <mat-menu #bookmarkMenu="matMenu">
+                    <button mat-menu-item (click)="openBottomSheet(deleteBookmark)">
+                      <span>Quitar de la biblioteca</span>
+                    </button>
+                </mat-menu>
             </div>
 
         </div>
@@ -86,14 +92,24 @@
                         </div>
                     </div>
                     <div class="skn-novel-presentation-info-user-buttons-box">
-                        <button mat-raised-button color="primary" style="height: 41px;" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Añadir a la biblioteca</button>
-                        <button mat-raised-button color="primary" style="height: 41px;" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>
                         <a *ngIf="!novel.user_bookmark || novel.user_bookmark.chp_id === novel.volumes[0].chapters[0].id" [routerLink]="[novel.volumes[0].chapters[0].id, novel.volumes[0].chapters[0].chp_name]">
                             <button mat-raised-button color="primary" style="height: 41px;">Leer</button>
                         </a>
                         <a *ngIf="novel.user_bookmark && novel.user_bookmark.chp_id !== novel.volumes[0].chapters[0].id" [routerLink]="[novel.user_bookmark.chp_id, novel.user_bookmark.chp_name]">
                             <button mat-raised-button color="primary" style="height: 41px;">Continuar leyendo</button>
                         </a>
+                        <button mat-mini-fab *ngIf="user && novel.user_bookmark" [matMenuTriggerFor]="bookmarkMenu"><span class="material-icons">more_vert</span></button>
+                        <mat-menu #bookmarkMenu="matMenu">
+                            <button mat-menu-item (click)="openBottomSheet(deleteBookmark)">
+                              <span>Quitar de la biblioteca</span>
+                            </button>
+                        </mat-menu>
+                        <button mat-raised-button color="primary" style="height: 41px;" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Añadir a la biblioteca</button>
+                        <!--<button mat-raised-button color="primary" style="height: 41px;" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>-->
+
+
+
+
                         <p *ngIf="!user" class="skn-red-text">Inicia sesión para agregar esta novela a tu biblioteca</p>
                     </div>
                 </div>
@@ -114,7 +130,6 @@
             <div class="skn-nvl-info" *ngIf="currentTab === 'info'">
                 <div *ngIf="mobile" class="text-center">
                     <button mat-raised-button color="primary" style="height: 35px; margin-right: 5px;" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Añadir a la biblioteca</button>
-                    <button mat-raised-button color="primary" style="height: 35px; margin-right: 5px;" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>
                     <p *ngIf="!user" class="skn-red-text">Inicia sesión para agregar esta novela a tu biblioteca</p>
                 </div>
                 <div class="skn-novel-presentation-info-stats-mobile skn-secondary skn-text row" style="margin-left: 0px;" *ngIf="mobile">

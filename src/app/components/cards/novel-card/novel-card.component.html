@@ -10,7 +10,7 @@
             <ul class="skn-nvl-card-info">
                 <li>
                     <div class="skn-nvl-card-title">
-                        <strong>{{novel.nvl_title}}</strong>
+                        <strong>{{novel.nvl_title}} <span class="skn-novel-acronym" *ngIf="novel.nvl_acronym">{{novel.nvl_acronym}}</span></strong>
                     </div>
                 </li>
                 <li>
@@ -50,5 +50,5 @@
     </div>
 </div>
 <div class="text-center">
-    <pagination-controls (pageChange)="page = $event" maxSize="5" previousLabel="" nextLabel="" autoHide="true"></pagination-controls>
+    <pagination-controls (pageChange)="page = $event; scrollToTop();" maxSize="5" previousLabel="" nextLabel="" autoHide="true"></pagination-controls>
 </div>

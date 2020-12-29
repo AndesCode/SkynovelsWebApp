@@ -25,6 +25,15 @@
     animation: shadow-drop-2-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
+.skn-novel-acronym {
+    background-color: #d32f2f;
+    border-radius: 15px;
+    padding: 1px 6px;
+    text-transform: uppercase;
+    color: black;
+    font-size: 0.65rem;
+}
+
 .skn-nvl-card-img {
     grid-area: img;
     img {

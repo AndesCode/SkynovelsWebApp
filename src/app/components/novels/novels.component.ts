@@ -25,6 +25,7 @@ export class NovelsComponent implements OnInit {
   loading = true;
   componentName = 'NovelsComponent';
   loadingError = false;
+  open = false;
 
   constructor(private ns: NovelsService,
               public hs: HelperService,

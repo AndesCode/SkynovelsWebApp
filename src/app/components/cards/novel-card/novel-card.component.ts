@@ -59,6 +59,10 @@ export class NovelCardComponent implements OnChanges {
     }
   }
 
+  scrollToTop() {
+    window.scroll(0, 0)
+  }
+
 
   goToNovel(novel) {
     if (this.clickRoute === 'userNovel') {

@@ -10,11 +10,9 @@
                     <span style="margin-right: 5px" class="skn-text">Puntuación:</span>
                     <ngb-rating formControlName="rate_value" style="border: none !important; outline: none !important;" [max]="5">
                         <ng-template let-fill="fill" let-index="index">
-                            <span class="star" [class.filled]="fill === 100" [class.nfilled]="fill !== 100">
-                            <span class="half" [style.width.%]="fill">
-                                <i class="material-icons"></i>
-                            </span>
-                            </span>
+                            <span class="material-icons rating-star" *ngIf="fill > 90">star</span>
+                            <span class="material-icons rating-star" *ngIf="fill < 40">star_border</span>
+                            <span class="material-icons rating-star" *ngIf="fill > 40 && fill < 90">star_half</span>
                         </ng-template>
                     </ngb-rating>
                 </div>
@@ -440,8 +438,8 @@
                 <button mat-raised-button color="primary" (click)="openDialogSheet(createRatingModal); bottomSheet.dismiss()" *ngIf="user && !novel.nvl_rated">Calificar novela</button>
                 <button mat-raised-button color="primary" (click)="openDialogSheet(allChapters); bottomSheet.dismiss()">Lista de capitulos</button>
                 <button mat-raised-button color="primary" *ngIf="!user" (click)="openLoginForm(); bottomSheet.dismiss()">Iniciar Sesión</button>
-                <button mat-raised-button color="primary" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Agregar a lista de lectura</button>
-                <button mat-raised-button color="primary" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar a lista de lectura</button>
+                <button mat-raised-button color="primary" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Agregar a la biblioteca</button>
+                <button mat-raised-button color="primary" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>
                 <div class="justify-content-center d-flex skn-text" style="align-items: baseline;">
                     <button mat-icon-button style="width: 45px;" class="skn-text">
                             <span class="material-icons" (click)="changeFontSize('substract')">arrow_drop_down</span>
