@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HelperService } from '../../services/helper.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-password-recovery',
@@ -25,13 +26,16 @@ export class PasswordRecoveryComponent implements OnInit {
   formLoading = false;
   urlToken: string;
   componentName = 'PasswordRecoveryComponent';
+  isBrowser: boolean;
 
   constructor(private activatedRoute: ActivatedRoute,
               private us: UsersService,
               public matSnackBar: MatSnackBar,
               private hs: HelperService,
-              private router: Router) {
+              private router: Router,
+              @Inject(PLATFORM_ID) private platformId) {
 
+                this.isBrowser = isPlatformBrowser(this.platformId);
                 this.UpdatePasswordForm = new FormGroup({
                   user_pass: new FormControl('', [Validators.required,
                     Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$_\-!%*?&.,"'#{}()¡¿])[A-Za-z\d@$_\-!%*?&.,"'#{}()¡¿]{8,16}$/),
@@ -41,13 +45,17 @@ export class PasswordRecoveryComponent implements OnInit {
               }
 
   ngOnInit(): void {
-    this.urlToken = String(this.activatedRoute.snapshot.paramMap.get('token'));
-    this.hs.updateBrowserMeta('description', 'Restablecer contraseña', 'SkyNovels | Recuperación de contraseña');
-    this.us.passwordResetAccess(this.urlToken).subscribe((data: any) => {
-      this.loading = false;
-    }, error => {
-      this.router.navigate(['']);
-    });
+    if (this.isBrowser) {
+      this.urlToken = String(this.activatedRoute.snapshot.paramMap.get('token'));
+      this.hs.updateBrowserMeta('description', 'Restablecer contraseña', 'SkyNovels | Recuperación de contraseña');
+      this.us.passwordResetAccess(this.urlToken).subscribe((data: any) => {
+        this.loading = false;
+      }, error => {
+        this.router.navigate(['']);
+      });
+    } else {
+      return;
+    }
   }
 
   openMatSnackBar(template: TemplateRef<any>): void {

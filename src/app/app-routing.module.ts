@@ -79,7 +79,7 @@ const routes: Routes = [
   // Bookmarks
   { path: 'lista-de-lectura', component: BookmarksComponent, canActivate: [GuardService] },
   // Password recovery
-  { path: 'nueva-contraseña/:token', component: PasswordRecoveryComponent },
+  { path: 'nueva-contrasena/:token', component: PasswordRecoveryComponent },
   // User activation
   { path: 'activacion-de-usuario/:key', component: UserActivationComponent },
   // redirects
