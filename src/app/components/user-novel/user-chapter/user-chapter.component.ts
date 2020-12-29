@@ -65,14 +65,14 @@ export class UserChapterComponent implements OnInit {
 
   }
 
-    // modal service.
-    openDialogSheet(template: TemplateRef<any>): void {
-      this.dialog.open(template);
-    }
+  // modal service.
+  openDialogSheet(template: TemplateRef<any>): void {
+    this.dialog.open(template);
+  }
 
-    openMatSnackBar(template: TemplateRef<any>): void {
-      this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
-    }
+  openMatSnackBar(template: TemplateRef<any>): void {
+    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
+  }
 
   ngOnInit(): void {
     const nid = this.activatedRoute.snapshot.paramMap.get('nid');
@@ -109,8 +109,19 @@ export class UserChapterComponent implements OnInit {
             this.chapter.vlm_id = this.volume.id;
             this.chapter.chp_content = '';
             this.chapter.chp_review = '';
-            this.chapter.vlm_id = this.volume.id;
-            this.chapter.chp_number = this.novel.nvl_chapters + 1;
+            this.chapter.vlm_id = this.volume.id;  
+            const AllChaptersNumbers = []
+            for (const volume of this.novel.volumes) {
+              const ChaptersNumbers = volume.chapters.map( chapterNumber => chapterNumber.chp_number)
+              for (const ChapterNumber of ChaptersNumbers) {
+                AllChaptersNumbers.push(ChapterNumber);
+              }
+            }
+            if (AllChaptersNumbers.length > 0) {
+              this.chapter.chp_number = Math.max.apply(Math, AllChaptersNumbers) + 1;
+            } else {
+              this.chapter.chp_number = this.novel.nvl_chapters + 1;
+            } 
             this.editableChapter = true;
             this.loading = false;
           }

@@ -11,7 +11,7 @@
         </ul>
         <div [ngClass]="{'skn-hide': currentTab === 'genres'}">
             <mat-form-field class="w-100">
-                <mat-label>Filtrar</mat-label>
+                <mat-label>Buscar</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Buscar usuario" autocomplete="off">
             </mat-form-field>
             <div class="skn-loading" style="height: 15vh;" *ngIf="loading">

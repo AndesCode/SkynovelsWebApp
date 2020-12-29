@@ -2,7 +2,7 @@
     <div class="mat-elevation-z8" style="padding: 0.5rem">
         <h1>Gestión de usuarios</h1>
         <mat-form-field class="w-100">
-            <mat-label>Filtrar</mat-label>
+            <mat-label>Buscar</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Buscar usuario" autocomplete="off">
         </mat-form-field>
         <div class="skn-loading" style="height: 15vh;" *ngIf="loading">
