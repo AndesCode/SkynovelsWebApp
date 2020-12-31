@@ -17,6 +17,7 @@ export class AppComponent implements AfterViewInit {
   currentComponent = null;
   scrollPosition = 0;
   isBrowser: boolean;
+  isCopyPage: boolean;
   constructor(private hs: HelperService,
               private router: Router,
               private meta: Meta,
@@ -52,6 +53,9 @@ export class AppComponent implements AfterViewInit {
       }
     });
     if (this.isBrowser) {
+      if (!window.location.href.includes('skynovels.net') && !window.location.href.includes('localh')) {
+        this.isCopyPage = true;
+      }
       if (localStorage.getItem('presence') && localStorage.getItem('presence') === 'dark') {
         this.toggleTheme();
       }
@@ -88,14 +92,12 @@ export class AppComponent implements AfterViewInit {
   onActivate(event: any) {
     if (event.componentName) {
       this.currentComponent = event.componentName;
-      this.hs.getCurrentComponent(this.currentComponent); // modificando aqui
+      this.hs.getCurrentComponent(this.currentComponent);
     } else {
       this.currentComponent = null;
     }
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo(0, 0);
-      //const skynovelmain =  document.getElementById('skynovelmain');
-      // skynovelmain.style.minHeight = 'calc(100vh - 4.063rem) !important;';
     }
   }
 }

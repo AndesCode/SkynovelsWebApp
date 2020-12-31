@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { HelperService } from '../../../services/helper.service';
-import { NovelsService } from '../../../services/novels.service';
 import { Router } from '@angular/router';
 import { NovelFilter, Novel } from 'src/app/models/models';
 import { PageService } from '../../../services/page.service';

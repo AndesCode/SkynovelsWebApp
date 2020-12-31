@@ -12,7 +12,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Novel, User } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
-import { NoimagePipe } from '../../pipes/noimage.pipe';
 import { Dev, Prod } from 'src/app/config/config';
 
 @Component({
@@ -50,8 +49,7 @@ export class NovelComponent implements OnInit {
                 public bottomSheet: MatBottomSheet,
                 public dialog: MatDialog,
                 private dev: Dev,
-                private prod: Prod,
-                private noimagePipe: NoimagePipe) {
+                private prod: Prod) {
                   if (isDevMode()) {
                     this.apiURL = this.dev.apiURL
                   } else {

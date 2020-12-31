@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { HelperService } from '../services/helper.service';
-import { Novel } from '../models/models';
 
 @Pipe({
   name: 'novelFilter'
@@ -15,8 +14,6 @@ export class NovelFilterPipe implements PipeTransform {
             searchStatus: 'All' | 'Activa' | 'Inactiva' | 'Finalizada',
             orderBy: string): any {
     const resultNovels = [];
-    console.log(novels);
-    console.log(novelTitle);
     if (novels) {
       for (const novel of novels) {
         if (novelGenres.length > 0) {
