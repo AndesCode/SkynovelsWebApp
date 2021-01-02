@@ -8,10 +8,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Novel, Genre } from 'src/app/models/models';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { NovelsService } from '../../../services/novels.service';
-import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { PageService } from '../../../services/page.service';
 
 @Component({
   selector: 'app-novels-management',
@@ -44,18 +42,12 @@ export class NovelsManagementComponent implements OnInit {
               private as: AdminService,
               private us: UsersService,
               private ns: NovelsService,
-              public dialog: MatDialog,
-              public bottomSheet: MatBottomSheet,
-              private breakpointObserver: BreakpointObserver,
-              public matSnackBar: MatSnackBar) {
+              public ps: PageService,
+              private breakpointObserver: BreakpointObserver) {
 
                 this.NewGenreForm = new FormGroup({
                   genre_name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]),
                 });
-  }
-
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
   }
 
   ngOnInit(): void {
@@ -77,7 +69,7 @@ export class NovelsManagementComponent implements OnInit {
       this.genresDataSource.paginator = this.genresPaginator;
     }, error => {
       this.router.navigate(['']);
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
 
@@ -89,17 +81,9 @@ export class NovelsManagementComponent implements OnInit {
       this.loading = false;
     }, error => {
       this.router.navigate(['']);
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
-  }
-
-  openDialogSheet(template: TemplateRef<any>): void {
-    this.dialog.open(template);
-  }
-
-  openBottomSheet(item): void {
-    this.bottomSheet.open(item);
   }
 
   applyFilter(event: Event) {
@@ -122,13 +106,13 @@ export class NovelsManagementComponent implements OnInit {
       this.genresDataSource.data.push(data.genre);
       this.genresDataSource.data = this.genresDataSource.data.slice();
       this.uploading = false;
-      this.dialog.closeAll();
+      this.ps.dialogCloseAll();
       this.NewGenreForm.reset();
-      this.openMatSnackBar(this.successSnackRef);
+      this.ps.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '!Genero creado!';
     }, error => {
       this.uploading = false;
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -138,12 +122,12 @@ export class NovelsManagementComponent implements OnInit {
     this.as.adminUpdateGenre(this.us.getUserLoged().token, this.genre).subscribe((data: any) => {
       // this.genres.push(data.genre);
       this.uploading = false;
-      this.openMatSnackBar(this.successSnackRef);
-      this.dialog.closeAll();
+      this.ps.openMatSnackBar(this.successSnackRef);
+      this.ps.dialogCloseAll();
       this.successSnackMessage = '!Genero actualizado!';
     }, error => {
       this.uploading = false;
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -154,11 +138,11 @@ export class NovelsManagementComponent implements OnInit {
       this.genresDataSource.data.splice(this.genresDataSource.data.findIndex(x => x.id === this.genre.id), 1);
       this.genresDataSource.data = this.genresDataSource.data.slice();
       this.uploading = false;
-      this.openMatSnackBar(this.successSnackRef);
+      this.ps.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '!Genero eliminado!';
     }, error => {
       this.uploading = false;
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }

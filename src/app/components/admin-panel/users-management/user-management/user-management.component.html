@@ -8,7 +8,7 @@
                         <div>Guardar cambios</div>
                     </div>
                 </button>
-                <button mat-raised-button color="warn" type="button" (click)="openDialogSheet(disableUserModal)" *ngIf="user?.user_status === 'Active'">
+                <button mat-raised-button color="warn" type="button" (click)="ps.openDialogSheet(disableUserModal)" *ngIf="user?.user_status === 'Active'">
                     <div style="display: flex; align-items: center;">                            
                         <span class="material-icons">not_interested</span> 
                         <div>Desactivar usuario</div>
@@ -20,7 +20,7 @@
                         <div>Activar usuario</div>
                     </div>
                 </button>
-                <button mat-raised-button color="warn" type="button" *ngIf="user?.user_status !== 'Active' " (click)="openDialogSheet(deleteUserModal)">
+                <button mat-raised-button color="warn" type="button" *ngIf="user?.user_status !== 'Active' " (click)="ps.openDialogSheet(deleteUserModal)">
                     <div style="display: flex; align-items: center;">                            
                         <span class="material-icons">delete_forever</span> 
                         <div>Eliminar usuario</div>
@@ -84,8 +84,8 @@
                     <p>¿Seguro que deseas desactivar el usuario?</p>
                 </div>
                 <div class="modal-footer">
-                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                    <button mat-raised-button color="primary" (click)="swichtUserStatus('Disabled'); dialog.closeAll()">Desactivar</button>
+                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+                    <button mat-raised-button color="primary" (click)="swichtUserStatus('Disabled'); ps.dialogCloseAll()">Desactivar</button>
                 </div>
             </div>
         </ng-template>
@@ -100,26 +100,9 @@
                     <p>Todas sus novelas y capitulos asociados quedaran huerfanas mas no eliminados</p>
                 </div>
                 <div class="modal-footer">
-                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                    <button mat-raised-button color="warn" (click)="deleteUser(); dialog.closeAll()">Desactivar</button>
+                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+                    <button mat-raised-button color="warn" (click)="deleteUser(); ps.dialogCloseAll()">Desactivar</button>
                 </div>
-            </div>
-        </ng-template>
-
-        <ng-template #deleteUserModal let-modal>
-            <div class="modal-header">
-                <h4 class="modal-title">Eliminar usuario</h4>
-                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-            </div>
-            <div class="modal-body">
-                <p>¿Seguro que deseas eliminar el usuario?</p>
-                <p>El usuario y todas sus novelas y capitulos asociados seran eliminados</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" (click)="modal.close('Close click')" id="close_button">Cerrar</button>
-                <button type="button" class="btn btn-danger" (click)="deleteUser(); modal.close('Close click')">Eliminar</button>
             </div>
         </ng-template>
     </mat-card>
@@ -128,7 +111,7 @@
     <div class="skn-snack-success-notification">
         <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>
@@ -138,7 +121,7 @@
     <div class="skn-snack-error-notification">
         <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>

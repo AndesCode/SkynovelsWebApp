@@ -4,9 +4,9 @@ import { UsersService } from '../../services/users.service';
 import { HelperService } from '../../services/helper.service';
 import { User } from 'src/app/models/models';
 import { NgForm } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { Dev, Prod } from 'src/app/config/config';
+import { PageService } from '../../services/page.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -35,8 +35,8 @@ export class UserProfileComponent implements OnInit {
               private us: UsersService,
               private router: Router,
               private location: Location,
-              public matSnackBar: MatSnackBar,
               public hs: HelperService,
+              public ps: PageService,
               private dev: Dev,
               private prod: Prod,
               @Inject(PLATFORM_ID) private platformId) {
@@ -70,20 +70,16 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
-  }
-
   updateUser(userForm: NgForm) {
     this.edition = false;
     if (userForm.valid && userForm.dirty) {
       this.us.updateUser(this.userData).subscribe((data: any) => {
         userForm.reset(userForm.value);
-        this.openMatSnackBar(this.successSnackRef);
+        this.ps.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Cambios guardados!';
       }, error => {
         this.edition = true;
-        this.openMatSnackBar(this.errorSnackRef);
+        this.ps.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;
       });
     } else {
@@ -127,11 +123,11 @@ export class UserProfileComponent implements OnInit {
             localStorage.setItem('sknvl_s', img.sknvl_s);
           }
           this.fileToUpload = null;
-          this.openMatSnackBar(this.successSnackRef);
+          this.ps.openMatSnackBar(this.successSnackRef);
           this.successSnackMessage = '¡Cambios guardados!';
           return;
         }).catch(error => {
-          this.openMatSnackBar(this.errorSnackRef);
+          this.ps.openMatSnackBar(this.errorSnackRef);
           this.errorSnackMessage = error.error.message;
         });
   }

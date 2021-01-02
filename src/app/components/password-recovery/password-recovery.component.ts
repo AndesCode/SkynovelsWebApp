@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID } from '
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { HelperService } from '../../services/helper.service';
 import { isPlatformBrowser } from '@angular/common';
+import { PageService } from '../../services/page.service';
 
 @Component({
   selector: 'app-password-recovery',
@@ -13,12 +13,10 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class PasswordRecoveryComponent implements OnInit {
 
-  @ViewChild('loginModal') loginModalRef: TemplateRef<any>;
   @ViewChild('successSnack') successSnackRef: TemplateRef<any>;
   @ViewChild('errorSnack') errorSnackRef: TemplateRef<any>;
   public successSnackMessage: string;
   public errorSnackMessage: string;
-
   loading = false;
   hide = true;
   passwordUpdated = false;
@@ -30,7 +28,7 @@ export class PasswordRecoveryComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private us: UsersService,
-              public matSnackBar: MatSnackBar,
+              public ps: PageService,
               private hs: HelperService,
               private router: Router,
               @Inject(PLATFORM_ID) private platformId) {
@@ -58,10 +56,6 @@ export class PasswordRecoveryComponent implements OnInit {
     }
   }
 
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
-  }
-
   updatePassword() {
     this.formLoading = true;
     if (this.UpdatePasswordForm.valid && (this.UpdatePasswordForm.value.user_pass === this.UpdatePasswordForm.value.user_confirm_pass || !this.hide)) {
@@ -70,12 +64,12 @@ export class PasswordRecoveryComponent implements OnInit {
         this.formLoading = false;
         this.UpdatePasswordForm.reset();
       }, error => {
-        this.openMatSnackBar(this.errorSnackRef);
+        this.ps.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;
         this.formLoading = false;
       });
     } else {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'Debes indicar una contraseña valida';
       this.formLoading = false;
     }

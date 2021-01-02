@@ -1,7 +1,5 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Advertisement, User } from 'src/app/models/models';
@@ -23,8 +21,6 @@ export class AdvertisementComponent implements OnInit {
   constructor(private us: UsersService,
               public ps: PageService,
               public hs: HelperService,
-              public dialog: MatDialog,
-              public matSnackBar: MatSnackBar,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private location: Location) {}
@@ -52,14 +48,6 @@ export class AdvertisementComponent implements OnInit {
     }, error => {
       this.router.navigate(['']);
     });
-  }
-
-  openDialogSheet(item): void {
-    this.dialog.open(item);
-  }
-
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
   }
 
   getUser() {

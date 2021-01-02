@@ -23,8 +23,8 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-            <button mat-raised-button color="primary" (click)="createNovelRating(); dialog.closeAll()" [disabled]="newRatingForm.invalid">Publicar</button>
+            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+            <button mat-raised-button color="primary" (click)="createNovelRating(); ps.dialogCloseAll()" [disabled]="newRatingForm.invalid">Publicar</button>
         </div>
     </div>
 </ng-template>
@@ -35,10 +35,10 @@
         </div>
         <div class="skn-bottomSheet-buttons" style="padding: 1rem 1rem">
             <div>
-                <button mat-raised-button class="skn-cancel-button" (click)="bottomSheet.dismiss()">Cancelar</button>
+                <button mat-raised-button class="skn-cancel-button" (click)="ps.bottomSheetDismiss()">Cancelar</button>
             </div>
             <div>
-                <button mat-raised-button color="warn" (click)="switchBookMark(); bottomSheet.dismiss()">Eliminar</button>
+                <button mat-raised-button color="warn" (click)="switchBookMark(); ps.bottomSheetDismiss()">Eliminar</button>
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
 <ng-template #allChapters>
     <div class="skn-all-chapters-nav">
         <div class="skn-modal-top-close-button">
-            <button type="button" mat-icon-button (click)="dialog.closeAll()" [attr.aria-label]="'close'">
+            <button type="button" mat-icon-button (click)="ps.dialogCloseAll()" [attr.aria-label]="'close'">
                 <span class="material-icons skn-text">close</span>
             </button>
         </div>
@@ -55,7 +55,7 @@
     <div style="max-width: 25em!important; max-height: 72vh!important;">
         <div class="modal-body">
             <div class="skn-nvl-vlm-chapters-container row">
-                <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *ngFor="let chapter of novel.chapters" (click)="loadNovelDataChapters(chapter.id); dialog.closeAll();">
+                <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *ngFor="let chapter of novel.chapters" (click)="loadNovelDataChapters(chapter.id); ps.dialogCloseAll();">
                     <div class="skn-nvl-chp-element-content" style="padding: 10px;">
                         <div class="skn-nvl-chp-element-chp-number-index">
                             {{chapter.chp_number}}
@@ -81,7 +81,7 @@
             <small class="skn-link" *ngIf="mobile" (click)="goToNovel()" style="margin-top: 5px;"><strong>{{novel.nvl_acronym}} / {{novel.nvl_currentChapterN}}</strong></small>
         </div>
         <div class="skn-navbar-right-elements">
-            <button mat-button (click)="openBottomSheet(userOptionsModal)" class="skn-cancel-button"><span class="material-icons">menu</span></button>
+            <button mat-button (click)="ps.openBottomSheet(userOptionsModal)" class="skn-cancel-button"><span class="material-icons">menu</span></button>
         </div>
     </div>
 </nav>
@@ -165,7 +165,7 @@
                                 <button mat-menu-item (click)="ps.setEdition(comment)">
                                   <span>Editar</span>
                                 </button>
-                                <button mat-menu-item (click)="openDialogSheet(deleteCommentModal)">
+                                <button mat-menu-item (click)="ps.openDialogSheet(deleteCommentModal)">
                                   <span>Eliminar</span>
                                 </button>
                             </mat-menu>
@@ -202,15 +202,15 @@
                             <p>¿Seguro que deseas eliminar el comentario?</p>
                         </div>
                         <div class="modal-footer">
-                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                            <button mat-raised-button color="warn" (click)="ps.deleteCommentFunction(LoadedChapter, comment); dialog.closeAll()">Eliminar</button>
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+                            <button mat-raised-button color="warn" (click)="ps.deleteCommentFunction(LoadedChapter, comment); ps.dialogCloseAll()">Eliminar</button>
                         </div>
                     </ng-template>
                 </div>
             </div>
             <div class="skn-chp-chapter-allCommentsButton">
-                <button mat-raised-button color="primary" (click)="openBottomSheet(chapterCommentsModal)" *ngIf="mobile">Todos los comentarios</button>
-                <button mat-raised-button color="primary" (click)="openBottomSheet(chapterCommentsModal)" *ngIf="!mobile">Todos los comentarios</button>
+                <button mat-raised-button color="primary" (click)="ps.openBottomSheet(chapterCommentsModal)" *ngIf="mobile">Todos los comentarios</button>
+                <button mat-raised-button color="primary" (click)="ps.openBottomSheet(chapterCommentsModal)" *ngIf="!mobile">Todos los comentarios</button>
             </div>
 
 
@@ -219,7 +219,7 @@
                 <div class="skn-all-comments-content">
                     <div class="skn-chapter-comment-top-nav">
                         <div class="skn-modal-top-close-button">
-                            <button mat-icon-button (click)="bottomSheet.dismiss()" [attr.aria-label]="'close'">
+                            <button mat-icon-button (click)="ps.bottomSheetDismiss()" [attr.aria-label]="'close'">
                                 <span class="material-icons skn-text">close</span>
                             </button>
                         </div>
@@ -254,7 +254,7 @@
                                         <button mat-menu-item (click)="ps.setEdition(comment)">
                                           <span>Editar</span>
                                         </button>
-                                        <button mat-menu-item (click)="openDialogSheet(deleteCommentModal)">
+                                        <button mat-menu-item (click)="ps.openDialogSheet(deleteCommentModal)">
                                           <span>Eliminar</span>
                                         </button>
                                     </mat-menu>
@@ -336,7 +336,7 @@
                                                     <button mat-menu-item (click)="ps.setEdition(reply)">
                                                       <span>Editar</span>
                                                     </button>
-                                                    <button mat-menu-item (click)="openDialogSheet(deleteCommentReplyModal)">
+                                                    <button mat-menu-item (click)="ps.openDialogSheet(deleteCommentReplyModal)">
                                                       <span>Eliminar</span>
                                                     </button>
                                                 </mat-menu>
@@ -373,8 +373,8 @@
                                                     <p>¿Seguro que deseas eliminar el comentario?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                                                    <button mat-raised-button color="warn" style="color: black;" (click)="ps.deleteReplyFunction(comment, reply); dialog.closeAll()">Eliminar</button>
+                                                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+                                                    <button mat-raised-button color="warn" style="color: black;" (click)="ps.deleteReplyFunction(comment, reply); ps.dialogCloseAll()">Eliminar</button>
                                                 </div>
                                             </div>
                                         </ng-template>
@@ -389,8 +389,8 @@
                                     <p>¿Seguro que deseas eliminar el comentario?</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                                    <button mat-raised-button color="warn" (click)="ps.deleteCommentFunction(LoadedChapter, comment); dialog.closeAll()">Eliminar</button>
+                                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+                                    <button mat-raised-button color="warn" (click)="ps.deleteCommentFunction(LoadedChapter, comment); ps.dialogCloseAll()">Eliminar</button>
                                 </div>
                             </ng-template>
                         </div>
@@ -432,14 +432,14 @@
             <div>
                 <button mat-raised-button color="primary" (click)="toggleTheme();" class="hide-dark">Modo día</button>
                 <button mat-raised-button color="primary" (click)="toggleTheme();" class="hide-light">Modo noche</button>
-                <a [routerLink]="['/novelas', novel.id, novel.nvl_name]" (click)="bottomSheet.dismiss()">
+                <a [routerLink]="['/novelas', novel.id, novel.nvl_name]" (click)="ps.bottomSheetDismiss()">
                     <button mat-raised-button color="primary">Regresar a novela</button>
                 </a>
-                <button mat-raised-button color="primary" (click)="openDialogSheet(createRatingModal); bottomSheet.dismiss()" *ngIf="user && !novel.nvl_rated">Calificar novela</button>
-                <button mat-raised-button color="primary" (click)="openDialogSheet(allChapters); bottomSheet.dismiss()">Lista de capitulos</button>
-                <button mat-raised-button color="primary" *ngIf="!user" (click)="openLoginForm(); bottomSheet.dismiss()">Iniciar Sesión</button>
+                <button mat-raised-button color="primary" (click)="ps.openDialogSheet(createRatingModal); ps.bottomSheetDismiss()" *ngIf="user && !novel.nvl_rated">Calificar novela</button>
+                <button mat-raised-button color="primary" (click)="ps.openDialogSheet(allChapters); ps.bottomSheetDismiss()">Lista de capitulos</button>
+                <button mat-raised-button color="primary" *ngIf="!user" (click)="openLoginForm(); ps.bottomSheetDismiss()">Iniciar Sesión</button>
                 <button mat-raised-button color="primary" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Agregar a la biblioteca</button>
-                <button mat-raised-button color="primary" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>
+                <button mat-raised-button color="primary" *ngIf="user && novel.user_bookmark" (click)="ps.openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>
                 <div class="justify-content-center d-flex skn-text" style="align-items: baseline;">
                     <button mat-icon-button style="width: 45px;" class="skn-text">
                             <span class="material-icons" (click)="changeFontSize('substract')">arrow_drop_down</span>
@@ -457,7 +457,7 @@
                         <mat-error *ngIf="fontSizeControl.invalid">Tamaño minimo: 10px</mat-error>
                     </mat-form-field>-->
                 </div>
-                <button mat-raised-button class="skn-cancel-button" (click)="bottomSheet.dismiss()">Cerrar</button>
+                <button mat-raised-button class="skn-cancel-button" (click)="ps.bottomSheetDismiss()">Cerrar</button>
             </div>
         </div>
     </div>
@@ -466,7 +466,7 @@
     <div class="skn-snack-success-notification">
         <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>
@@ -476,7 +476,7 @@
     <div class="skn-snack-error-notification">
         <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>

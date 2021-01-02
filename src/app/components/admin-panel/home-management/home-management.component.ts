@@ -2,8 +2,6 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import { UsersService } from '../../../services/users.service';
 import { Advertisement } from 'src/app/models/models';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
@@ -23,8 +21,6 @@ export class HomeManagementComponent implements OnInit {
   loading = true;
 
   constructor(private as: AdminService,
-              public dialog: MatDialog,
-              public matSnackBar: MatSnackBar,
               private us: UsersService,
               private router: Router) { }
 

@@ -3,8 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AdminService } from '../../../../services/admin.service';
 import { UsersService } from '../../../../services/users.service';
 import { User } from 'src/app/models/models';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { PageService } from '../../../../services/page.service';
 
 @Component({
   selector: 'app-user-management',
@@ -21,8 +20,7 @@ export class UserManagementComponent implements OnInit {
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
-              public dialog: MatDialog,
-              public matSnackBar: MatSnackBar,
+              public ps: PageService,
               private as: AdminService,
               private us: UsersService) {
 }
@@ -36,14 +34,6 @@ export class UserManagementComponent implements OnInit {
     });
   }
 
-  openDialogSheet(template: TemplateRef<any>): void {
-    this.dialog.open(template);
-  }
-
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
-  }
-
   swichtUserStatus(status: 'Active' | 'Disabled') {
     const user: User = {
       id: this.user.id,
@@ -52,24 +42,24 @@ export class UserManagementComponent implements OnInit {
     this.as.adminUpdateUser(this.us.getUserLoged().token, user).subscribe((data: any) => {
       this.user.user_status = data.user.user_status;
       if (status === 'Active') {
-        this.openMatSnackBar(this.successSnackRef);
+        this.ps.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Usuario activado!';
       } else {
-        this.openMatSnackBar(this.successSnackRef);
+        this.ps.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Usuario desactivado!';
       }
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
 
   save() {
     this.as.adminUpdateUser(this.us.getUserLoged().token, this.user).subscribe(() => {
-      this.openMatSnackBar(this.successSnackRef);
+      this.ps.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Cambios guardados!';
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -78,7 +68,7 @@ export class UserManagementComponent implements OnInit {
     this.as.adminDeleteUser(this.us.getUserLoged().token, this.user.id).subscribe((data: any) => {
       this.router.navigate(['panel/administracion-de-usuarios']);
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }

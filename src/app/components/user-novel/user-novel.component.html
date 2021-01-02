@@ -77,7 +77,7 @@
                             {{collaborator.user_login}}
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <button mat-raised-button color="warn" (click)="openDialogSheet(deleteCollaboratorModal)">Eliminar</button>
+                    <button mat-raised-button color="warn" (click)="ps.openDialogSheet(deleteCollaboratorModal)">Eliminar</button>
                     <ng-template #deleteCollaboratorModal>
                         <div class="modal-header">
                             <h4 class="modal-title">Eliminar colaborador</h4>
@@ -86,12 +86,12 @@
                             <p>¿Seguro que deseas eliminar al colaborador {{collaborator.user_login}}?</p>
                         </div>
                         <div class="modal-footer">
-                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                            <button mat-raised-button color="warn" (click)="deleteCollaborator(collaborator); dialog.closeAll()">Eliminar</button>
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+                            <button mat-raised-button color="warn" (click)="deleteCollaborator(collaborator); ps.dialogCloseAll()">Eliminar</button>
                         </div>
                     </ng-template>
                 </mat-expansion-panel>
-                <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="openDialogSheet(addCollaboratorModal)">Añadir un colaborador</button>
+                <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="ps.openDialogSheet(addCollaboratorModal)">Añadir un colaborador</button>
             </mat-expansion-panel>
             <mat-expansion-panel *ngIf="!editableNovel">
                 <mat-expansion-panel-header>
@@ -124,10 +124,10 @@
                         <div>
                             <button mat-mini-fab *ngIf="editableNovel || volume.user_id === user" [matMenuTriggerFor]="userMenu"><i class="material-icons">more_vert</i></button>
                             <mat-menu #userMenu="matMenu">
-                                <button mat-menu-item (click)="openDialogSheet(editVolumeModal)">
+                                <button mat-menu-item (click)="ps.openDialogSheet(editVolumeModal)">
                                   <span>Editar</span>
                                 </button>
-                                <button mat-menu-item (click)="openDialogSheet(deleteVolumeModal)">
+                                <button mat-menu-item (click)="ps.openDialogSheet(deleteVolumeModal)">
                                   <span>Eliminar</span>
                                 </button>
                             </mat-menu>
@@ -162,7 +162,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
                             <button mat-raised-button color="primary" (click)="updateVolume(volume, editVolumeForm)" [disabled]="editVolumeForm.invalid || uploading">Guardar</button>
                         </div>
                     </ng-template>
@@ -175,13 +175,13 @@
                                 <p>¿Seguro que deseas eliminar el {{volume.vlm_title}}?</p>
                             </div>
                             <div class="modal-footer">
-                                <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                                <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
                                 <button mat-raised-button color="warn" (click)="deleteVolume(volume)" [disabled]="uploading">Eliminar</button>
                             </div>
                         </div>
                     </ng-template>
                 </mat-expansion-panel>
-                <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="openDialogSheet(addVolumeModal)">Añadir un volumen o libro</button>
+                <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="ps.openDialogSheet(addVolumeModal)">Añadir un volumen o libro</button>
                 <ng-template #addVolumeModal>
                     <div class="skn-dialong-modal">
                         <div class="modal-header">
@@ -196,7 +196,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
                             <button mat-raised-button color="primary" (click)="createVolume()" [disabled]="volumeForm.invalid || uploading">Añadir</button>
                         </div>
                     </div>
@@ -204,7 +204,7 @@
             </mat-card>
         </div>
         <div class="d-flex justify-content-end" style="margin: 15px 0px;">
-            <button type="button" mat-raised-button color="warn" style="margin-right: 20px;" (click)="openDialogSheet(deletenovelModal)" *ngIf="editableNovel && novel.id">Eliminar novela</button>
+            <button type="button" mat-raised-button color="warn" style="margin-right: 20px;" (click)="ps.openDialogSheet(deletenovelModal)" *ngIf="editableNovel && novel.id">Eliminar novela</button>
             <button type="submit" mat-raised-button color="primary" (click)="save(novelForm)" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">{{novel?.id ? 'Guardar cambios' : 'Crear novela'}}</button>
         </div>
     </section>
@@ -218,7 +218,7 @@
             <p>¿Seguro que deseas eliminar la novela?</p>
         </div>
         <div class="modal-footer">
-            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
             <button mat-raised-button color="warn" (click)="deleteNovel()" [disabled]="uploading">Eliminar</button>
         </div>
     </div>
@@ -237,7 +237,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cerrar</button>
+            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cerrar</button>
             <button mat-raised-button color="primary" (click)="createUserInvitation()">Añadir</button>
         </div>
     </div>
@@ -246,7 +246,7 @@
     <div class="skn-snack-success-notification">
         <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>
@@ -256,7 +256,7 @@
     <div class="skn-snack-error-notification">
         <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>

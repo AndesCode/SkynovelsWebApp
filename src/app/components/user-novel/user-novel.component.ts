@@ -5,8 +5,6 @@ import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { NovelsService } from '../../services/novels.service';
 import { HelperService } from 'src/app/services/helper.service';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location, isPlatformBrowser } from '@angular/common';
 import { UsersService } from '../../services/users.service';
 import { Novel, Genre, User, Chapter, Volume } from 'src/app/models/models';
@@ -52,8 +50,6 @@ export class UserNovelComponent implements OnInit {
                  public hs: HelperService,
                  public ps: PageService,
                  private router: Router,
-                 public dialog: MatDialog,
-                 public matSnackBar: MatSnackBar,
                  private location: Location,
                  private dev: Dev,
                  private prod: Prod,
@@ -95,13 +91,6 @@ export class UserNovelComponent implements OnInit {
                   });
 
     }
-  openDialogSheet(template: TemplateRef<any>): void {
-    this.dialog.open(template);
-  }
-
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
-  }
 
   ngOnInit(): void {
     const nid = this.activatedRoute.snapshot.paramMap.get('nid');
@@ -143,7 +132,7 @@ export class UserNovelComponent implements OnInit {
 
   save(novelForm: NgForm) {
     if (this.uploading || novelForm.invalid || (!novelForm.dirty && !this.fileToUpload)) {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'Formulario invalido';
       return;
     }
@@ -188,20 +177,20 @@ export class UserNovelComponent implements OnInit {
           this.novel.image = img.image;
           this.fileToUpload = null;
           this.uploading = false;
-          this.openMatSnackBar(this.successSnackRef);
+          this.ps.openMatSnackBar(this.successSnackRef);
           this.successSnackMessage = '¡Cambios guardados!';
           return;
         }).catch(error => {
-          this.openMatSnackBar(this.errorSnackRef);
+          this.ps.openMatSnackBar(this.errorSnackRef);
           this.errorSnackMessage = error.message;
         });
       } else {
         this.uploading = false;
-        this.openMatSnackBar(this.successSnackRef);
+        this.ps.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Cambios guardados!';
       }
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -222,7 +211,7 @@ export class UserNovelComponent implements OnInit {
         this.collaborators.findIndex(deletedCollaborator => deletedCollaborator.user_id === collaborator.user_id), 1
       );
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -232,11 +221,11 @@ export class UserNovelComponent implements OnInit {
     if (this.editableNovel && this.novel.id) {
       this.ns.deleteNovel(this.novel.id).subscribe((data: any) => {
         this.uploading = false;
-        this.dialog.closeAll();
+        this.ps.dialogCloseAll();
         this.router.navigate(['mis-novelas']);
       });
     } else {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'No autorizado';
       return;
     }
@@ -250,7 +239,7 @@ export class UserNovelComponent implements OnInit {
     this.ns.updateNovel(disableNovel).subscribe((data: any) => {
       this.novel.nvl_status = data.novel.nvl_status;
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -300,10 +289,10 @@ export class UserNovelComponent implements OnInit {
 
   createUserInvitation() {
     this.us.sendInvitation(this.collaboratorForm.value.user_login, this.novel.id).subscribe((data: any) => {
-      this.openMatSnackBar(this.successSnackRef);
+      this.ps.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Invitación enviada!';
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -313,18 +302,18 @@ export class UserNovelComponent implements OnInit {
       this.uploading = true;
       this.ns.createNovelVolume(this.volumeForm.value.vlm_title, this.novel.id).subscribe((data: any) => {
         this.novel.volumes.push(data.volume);
-        this.dialog.closeAll();
+        this.ps.dialogCloseAll();
         this.volumeForm.reset();
         this.uploading = false;
-        this.openMatSnackBar(this.successSnackRef);
+        this.ps.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Volumen creado!';
       }, error => {
-        this.openMatSnackBar(this.errorSnackRef);
+        this.ps.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;
         this.uploading = false;
       });
     } else {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'Formulario invalido';
     }
   }
@@ -333,17 +322,17 @@ export class UserNovelComponent implements OnInit {
     if (editVolumeForm.valid) {
       this.uploading = true;
       this.ns.updateNovelVolume(volume).subscribe((data: any) => {
-        this.dialog.closeAll();
+        this.ps.dialogCloseAll();
         this.uploading = false;
-        this.openMatSnackBar(this.successSnackRef);
+        this.ps.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Volumen actualizado!';
       }, error => {
-        this.openMatSnackBar(this.errorSnackRef);
+        this.ps.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;
         this.uploading = false;
       });
     } else {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'Formulario invalido';
     }
   }
@@ -352,13 +341,13 @@ export class UserNovelComponent implements OnInit {
     this.uploading = true;
     this.ns.deleteNovelVolume(volume.id).subscribe((data: Volume) => {
       this.novel.volumes.splice(this.novel.volumes.findIndex(x => x.id === volume.id), 1);
-      this.dialog.closeAll();
-      this.openMatSnackBar(this.successSnackRef);
+      this.ps.dialogCloseAll();
+      this.ps.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Volumen eliminado!';
       this.uploading = false;
       this.evaluateEditableNovelStatus();
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
       this.uploading = false;
     });

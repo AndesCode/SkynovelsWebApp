@@ -1,14 +1,13 @@
 import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID, isDevMode } from '@angular/core';
 import { UsersService } from '../../../../services/users.service';
 import { AdminService } from '../../../../services/admin.service';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Advertisement } from '../../../../models/models';
 import { Location, isPlatformBrowser } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Dev, Prod } from 'src/app/config/config';
+import { PageService } from '../../../../services/page.service';
 
 @Component({
   selector: 'app-advertisement-management',
@@ -37,8 +36,7 @@ export class AdvertisementManagementComponent implements OnInit {
 
   constructor(private us: UsersService,
               private as: AdminService,
-              public dialog: MatDialog,
-              public matSnackBar: MatSnackBar,
+              public ps: PageService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private dev: Dev,
@@ -98,14 +96,6 @@ export class AdvertisementManagementComponent implements OnInit {
     }
   }
 
-  openDialogSheet(template: TemplateRef<any>): void {
-    this.dialog.open(template);
-  }
-
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
-  }
-
   fileChangeEvent(fileInput: any) {
     if (fileInput.target.files.length > 0) {
       this.fileToUpload = fileInput.target.files[0];
@@ -135,7 +125,7 @@ export class AdvertisementManagementComponent implements OnInit {
 
   save(advertisementForm: NgForm) {
     if (this.uploading || advertisementForm.invalid || (!advertisementForm.dirty && !this.fileToUpload)) {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'Formulario invalido';
       return;
     }
@@ -161,21 +151,21 @@ export class AdvertisementManagementComponent implements OnInit {
         .then((img: any) => {
           this.advertisement.image = img.image;
           this.fileToUpload = null;
-          this.openMatSnackBar(this.successSnackRef);
+          this.ps.openMatSnackBar(this.successSnackRef);
           this.successSnackMessage = '¡Cambios guardados!';
           this.uploading = false;
           return;
         }).catch(error => {
-          this.openMatSnackBar(this.errorSnackRef);
+          this.ps.openMatSnackBar(this.errorSnackRef);
           this.errorSnackMessage = error.message;
         });
       } else {
         this.uploading = false;
-        this.openMatSnackBar(this.successSnackRef);
+        this.ps.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Cambios guardados!';
       }
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -184,10 +174,10 @@ export class AdvertisementManagementComponent implements OnInit {
     this.uploading = true;
     this.as.adminDeleteAdvertisement(this.us.getUserLoged().token, this.advertisement.id).subscribe((data: any) => {
       this.uploading = false;
-      this.dialog.closeAll();
+      this.ps.dialogCloseAll();
       this.router.navigate(['panel/administracion-de-pagina-de-inicio']);
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }

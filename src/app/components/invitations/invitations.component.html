@@ -27,7 +27,7 @@
     <div class="skn-snack-success-notification">
         <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>
@@ -37,7 +37,7 @@
     <div class="skn-snack-error-notification">
         <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>

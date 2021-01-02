@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { Invitation } from '../../models/models';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { HelperService } from '../../services/helper.service';
+import { PageService } from '../../services/page.service';
 
 @Component({
   selector: 'app-invitations',
@@ -22,7 +22,7 @@ export class InvitationsComponent implements OnInit {
 
   constructor(private us: UsersService,
               private router: Router,
-              public matSnackBar: MatSnackBar,
+              public ps: PageService,
               private hs: HelperService) { }
 
   ngOnInit(): void {
@@ -35,16 +35,12 @@ export class InvitationsComponent implements OnInit {
     });
   }
 
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
-  }
-
   declineOrAcceptInvitation(invitation: Invitation, status: 'Confirmed' | 'Rejected') {
     invitation.invitation_status = status;
     this.us.updateUserInvitation(invitation).subscribe((data: any) => {
       this.userInvitations.splice(this.userInvitations.findIndex(x => x.id === invitation.id), 1);
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }

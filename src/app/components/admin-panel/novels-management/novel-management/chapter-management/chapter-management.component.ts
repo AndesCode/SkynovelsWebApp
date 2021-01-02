@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild, TemplateRef, Inject, PLATFORM_ID } from '@angular/core';
-import { NovelsService } from '../../../../../services/novels.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Novel, Volume, Chapter } from 'src/app/models/models';
 import { Location, isPlatformBrowser } from '@angular/common';
 import { NgForm } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
 import { AdminService } from '../../../../../services/admin.service';
 import { UsersService } from '../../../../../services/users.service';
+import { PageService } from '../../../../../services/page.service';
 
 @Component({
   selector: 'app-chapter-management',
@@ -31,14 +29,12 @@ export class ChapterManagementComponent implements OnInit {
   componentName: string;
   isBrowser: boolean;
 
-  constructor(private ns: NovelsService,
-              private as: AdminService,
+  constructor(private as: AdminService,
               private us: UsersService,
               private activatedRoute: ActivatedRoute,
               private location: Location,
               private router: Router,
-              public dialog: MatDialog,
-              public matSnackBar: MatSnackBar,
+              public ps: PageService,
               @Inject(PLATFORM_ID) private platformId) {
 
               this.isBrowser = isPlatformBrowser(this.platformId);
@@ -62,13 +58,6 @@ export class ChapterManagementComponent implements OnInit {
                 };
               }
               this.componentName = 'ChaptersComponent';
-  }
-
-  openDialogSheet(template: TemplateRef<any>): void {
-    this.dialog.open(template);
-  }
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
   }
 
   ngOnInit(): void {
@@ -102,7 +91,7 @@ export class ChapterManagementComponent implements OnInit {
       this.volume = this.novel.volumes[this.novel.volumes.findIndex(x => x.id === vlmId)];
       this.location.replaceState('/panel/administracion-de-novelas/' + this.novel.id + '/' + this.volume.id + '/' + this.chapter.id);
     } else {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'Volumen invalido';
       return;
     }
@@ -110,14 +99,14 @@ export class ChapterManagementComponent implements OnInit {
 
   saveChapter(chapterForm: NgForm) {
     if ( this.uploading || chapterForm.invalid || !chapterForm.dirty ) {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'Formulario invalido';
       return;
     }
     this.uploading = true;
     this.as.adminUpdateChapter(this.us.getUserLoged().token, this.chapter).subscribe((resp: any) => {
       this.chapter.chp_title = resp.chapter.chp_title;
-      this.openMatSnackBar(this.successSnackRef);
+      this.ps.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Cambios guardados!';
       this.chapter.chp_title = resp.chapter.chp_title;
       this.chapter.chp_name = resp.chapter.chp_name;
@@ -131,7 +120,7 @@ export class ChapterManagementComponent implements OnInit {
       this.evaluateEditableNovelStatus();
       this.uploading = false;
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
       this.uploading = false;
     });
@@ -152,7 +141,7 @@ export class ChapterManagementComponent implements OnInit {
           this.as.adminUpdateNovel(this.us.getUserLoged().token, disableNovel).subscribe((data: any) => {
             this.novel.nvl_status = data.novel.nvl_status;
           }, error => {
-            this.openMatSnackBar(this.errorSnackRef);
+            this.ps.openMatSnackBar(this.errorSnackRef);
             this.errorSnackMessage = error.error.message;
           });
         }
@@ -164,14 +153,14 @@ export class ChapterManagementComponent implements OnInit {
     this.uploading = true;
     this.as.adminDeleteChapter(this.us.getUserLoged().token, this.chapter.id).subscribe((data: any) => {
       this.uploading = false;
-      this.dialog.closeAll();
+      this.ps.dialogCloseAll();
       this.router.navigate(['panel/administracion-de-novelas', this.novel.id]);
     });
   }
 
   goBackToNovel(chapterForm?: NgForm, confirmed?: boolean) {
     if (chapterForm?.dirty && !confirmed) {
-      this.dialog.open(this.confirmExitComponentModalref);
+      this.ps.openDialogSheet(this.confirmExitComponentModalref);
     } else {
       this.router.navigate(['panel/administracion-de-novelas', this.novel.id]);
     }

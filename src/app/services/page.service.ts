@@ -1,16 +1,20 @@
-import { Injectable, isDevMode, Inject  } from '@angular/core';
+import { Injectable, isDevMode, Inject, TemplateRef  } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Reply, Comment, User, Like } from '../models/models';
 import { HelperService } from './helper.service';
 import { NgForm } from '@angular/forms';
 import { Dev, Prod } from '../config/config';
-import { DOCUMENT } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageService {
 
+
+  bottomSheetOpened: boolean;
   private urlNovelsDb: string;
   private urlCredentialsNovelsDb: string;
   private GlobalhttpOptions = {
@@ -24,7 +28,9 @@ export class PageService {
               private hs: HelperService,
               private dev: Dev,
               private prod: Prod,
-              @Inject(DOCUMENT) private doc) {
+              private dialog: MatDialog,
+              private matSnackBar: MatSnackBar,
+              private bottomSheet: MatBottomSheet,) {
                 if (isDevMode()) {
                   this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
                   this.urlNovelsDb = this.dev.urlNovelsDb;
@@ -33,6 +39,44 @@ export class PageService {
                   this.urlNovelsDb = this.prod.urlNovelsDb;
                 }
   }
+
+  openDialogSheet(template: TemplateRef<any>): void {
+    this.dialog.open(template, {
+      closeOnNavigation: false
+    });
+  }
+
+  openMatSnackBar(template: TemplateRef<any>): void {
+    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
+  }
+
+  openBottomSheet(template: TemplateRef<any>): void {
+    this.bottomSheetOpened = true;
+    const bottomSheet = this.bottomSheet.open(template, {
+      closeOnNavigation: false
+    });
+    bottomSheet.backdropClick().subscribe(() => {
+      this.bottomSheetDismiss();
+    });
+  }
+
+  bottomSheetDismiss() {
+    this.bottomSheetOpened = false;
+    this.bottomSheet.dismiss();
+  }
+
+  dialogCloseAll() {
+    this.dialog.closeAll();
+  }
+
+  matSnackBarDismiss() {
+    this.matSnackBar.dismiss();
+  }
+
+  getBottomSheetState() {
+    return this.bottomSheetOpened
+  }
+  
 
   createCommentFunction(user: User, object: any, objectType: 'chp_id' | 'adv_id') {
     const comment: Comment = {

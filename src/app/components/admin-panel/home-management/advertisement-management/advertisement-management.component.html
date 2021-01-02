@@ -39,7 +39,7 @@
         </form>
     </section>
     <div class="d-flex justify-content-end" style="margin-top: 15px;">
-        <button type="button" mat-raised-button color="warn" style="margin-right: 5px;" (click)="openDialogSheet(deleteAdvertisementModal)">Eliminar anuncio</button>
+        <button type="button" mat-raised-button color="warn" style="margin-right: 5px;" (click)="ps.openDialogSheet(deleteAdvertisementModal)">Eliminar anuncio</button>
         <button type="submit" mat-raised-button color="primary" (click)="save(advertisementForm)" [disabled]="uploading || advertisementForm.invalid || (!advertisementForm.dirty && !fileToUpload)">{{advertisement?.id ? 'Guardar cambios' : 'Crear anuncio'}}</button>
     </div>
 </main>
@@ -53,7 +53,7 @@
             <p>¿Seguro que deseas eliminar el anuncio?</p>
         </div>
         <div class="modal-footer">
-            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
+            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
             <button mat-raised-button color="warn" (click)="deleteAdvertisement()" [disabled]="uploading">Eliminar</button>
         </div>
     </div>
@@ -62,7 +62,7 @@
     <div class="skn-snack-success-notification">
         <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>
@@ -72,7 +72,7 @@
     <div class="skn-snack-error-notification">
         <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>

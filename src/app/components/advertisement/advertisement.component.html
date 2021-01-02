@@ -66,7 +66,7 @@
                         <button mat-menu-item (click)="ps.setEdition(comment)">
                                       <span>Editar</span>
                                     </button>
-                        <button mat-menu-item (click)="openDialogSheet(deleteCommentModal)">
+                        <button mat-menu-item (click)="ps.openDialogSheet(deleteCommentModal)">
                                       <span>Eliminar</span>
                                     </button>
                     </mat-menu>
@@ -148,7 +148,7 @@
                                     <button mat-menu-item (click)="ps.setEdition(reply)">
                                                   <span>Editar</span>
                                                 </button>
-                                    <button mat-menu-item (click)="openDialogSheet(deleteCommentReplyModal)">
+                                    <button mat-menu-item (click)="ps.openDialogSheet(deleteCommentReplyModal)">
                                                   <span>Eliminar</span>
                                                 </button>
                                 </mat-menu>
@@ -188,8 +188,8 @@
                                     <p>¿Seguro que deseas eliminar el comentario?</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                                    <button mat-raised-button color="warn" style="color: black;" (click)="ps.deleteReplyFunction(comment, reply); dialog.closeAll()">Eliminar</button>
+                                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+                                    <button mat-raised-button color="warn" style="color: black;" (click)="ps.deleteReplyFunction(comment, reply); ps.dialogCloseAll()">Eliminar</button>
                                 </div>
                             </div>
                         </ng-template>
@@ -204,8 +204,8 @@
                     <p>¿Seguro que deseas eliminar el comentario?</p>
                 </div>
                 <div class="modal-footer">
-                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                    <button mat-raised-button color="warn" (click)="ps.deleteCommentFunction(advertisement, comment); dialog.closeAll()">Eliminar</button>
+                    <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+                    <button mat-raised-button color="warn" (click)="ps.deleteCommentFunction(advertisement, comment); ps.dialogCloseAll()">Eliminar</button>
                 </div>
             </ng-template>
         </div>

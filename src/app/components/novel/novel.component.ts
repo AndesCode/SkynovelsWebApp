@@ -7,9 +7,6 @@ import { HelperService } from '../../services/helper.service';
 import { LikesService } from '../../services/likes.service';
 import { UsersService } from '../../services/users.service';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Novel, User } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
 import { Dev, Prod } from 'src/app/config/config';
@@ -44,10 +41,7 @@ export class NovelComponent implements OnInit {
                 private us: UsersService,
                 private router: Router,
                 private location: Location,
-                public matSnackBar: MatSnackBar,
                 public hs: HelperService,
-                public bottomSheet: MatBottomSheet,
-                public dialog: MatDialog,
                 private dev: Dev,
                 private prod: Prod) {
                   if (isDevMode()) {
@@ -118,7 +112,7 @@ export class NovelComponent implements OnInit {
       this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name);
       this.loading = false;
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
       this.router.navigate(['novelas']);
     });
@@ -128,27 +122,15 @@ export class NovelComponent implements OnInit {
     this.novel.nvl_rating = this.hs.novelRatingAvarageCalculator(this.novel.novel_ratings);
   }
 
-  openBottomSheet(item): void {
-    this.bottomSheet.open(item);
-  }
-
-  openDialogSheet(item): void {
-    this.dialog.open(item);
-  }
-
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
-  }
-
   switchBookMark() {
     if (this.novel.user_bookmark === null) {
       this.us.createUserBookmark(this.novel.id, this.novel.volumes[0].chapters[0].id).subscribe((data: any) => {
         this.novel.user_bookmark = data.bookmark;
         this.novel.bookmarks.push(data.bookmark);
-        this.openMatSnackBar(this.successSnackRef);
+        this.ps.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Novela agregada a tu lista de lectura!';
       }, error => {
-        this.openMatSnackBar(this.errorSnackRef);
+        this.ps.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;
         return;
       });
@@ -157,7 +139,7 @@ export class NovelComponent implements OnInit {
         this.novel.bookmarks.splice(this.novel.bookmarks.findIndex(x => x.id === this.novel.user_bookmark.id), 1);
         this.novel.user_bookmark = null;
       }, error => {
-        this.openMatSnackBar(this.errorSnackRef);
+        this.ps.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;
         return;
       });
@@ -218,7 +200,7 @@ export class NovelComponent implements OnInit {
         this.ns.updateNovelRating(rating).subscribe((data: any) => {
           rating.edition = false;
         }, error => {
-          this.openMatSnackBar(this.errorSnackRef);
+          this.ps.openMatSnackBar(this.errorSnackRef);
           this.errorSnackMessage = error.error.message;
           return;
         });
@@ -260,11 +242,11 @@ export class NovelComponent implements OnInit {
       this.novel.novel_ratings.push(data.novel_rating);
       this.calculateNovelRatingAvarage();
       this.newRatingForm.reset();
-      this.openMatSnackBar(this.successSnackRef);
+      this.ps.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Calificación publicada!';
       return;
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
       return;
     });

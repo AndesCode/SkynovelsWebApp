@@ -3,16 +3,14 @@ import { Location, isPlatformBrowser } from '@angular/common';
 import { NovelsService } from '../../services/novels.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
-import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
 import { HelperService } from '../../services/helper.service';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Novel, User } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
 import { Chapter } from '../../models/models';
 import { Block1, Block2, Block3, Block4, Block5 } from 'src/app/config/yieldlove';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-chapters',
@@ -46,6 +44,8 @@ export class ChaptersComponent implements AfterViewInit {
   fontSize = 16;
   componentName = 'ChaptersComponent';
   isBrowser: boolean;
+  chapterChangeCount = 0;
+  url: string;
 
     // yieldlove blocks
     block1Desktop: string;
@@ -80,11 +80,8 @@ export class ChaptersComponent implements AfterViewInit {
               private renderer: Renderer2,
               private breakpointObserver: BreakpointObserver,
               private location: Location,
-              public matSnackBar: MatSnackBar,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog,
-              public bottomSheet: MatBottomSheet,
               @Inject(PLATFORM_ID) private platformId) {
                 this.isBrowser = isPlatformBrowser(this.platformId);
                 this.newRatingForm = new FormGroup({
@@ -126,6 +123,22 @@ export class ChaptersComponent implements AfterViewInit {
       this.hs.updateBrowserMeta('description', 'Sección de lectura de ' + this.novel.nvl_title, this.novel.nvl_title);
       this.getUser();
       this.loadNovelDataChapters();
+
+      fromEvent(window, 'popstate').subscribe((e) => {
+        if (!this.ps.getBottomSheetState()) {
+          while (this.chapterChangeCount > 0) {
+            this.chapterChangeCount = this.chapterChangeCount - 1;
+            this.location.back();
+          }  
+        } else {
+          if (this.chapterChangeCount > 0) {
+            this.router.navigate(['novelas']);
+            setTimeout(() => {
+              this.location.replaceState(this.url)
+            }, 60);
+          }
+        }  
+      });
     }, error => {
       this.router.navigate(['novelas']);
     });
@@ -140,9 +153,11 @@ export class ChaptersComponent implements AfterViewInit {
             this.novel.nvl_currentChapterN = chapterElementRef.nativeElement.firstElementChild.lastElementChild.lastElementChild.innerText;
             this.chapterId = Number(chapterElementRef.nativeElement.firstElementChild.lastElementChild.firstElementChild.innerText);
             // Location
-            this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' +
+            this.url = '/novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' +
             this.chapterId + '/' +
-            chapterElementRef.nativeElement.firstElementChild.firstElementChild.firstElementChild.innerText);
+            chapterElementRef.nativeElement.firstElementChild.firstElementChild.firstElementChild.innerText
+            this.location.go(this.url);
+            this.chapterChangeCount = this.chapterChangeCount + 1
             if (this.novel.user_bookmark) {
               this.updateUserBookmark();
             }
@@ -168,7 +183,7 @@ export class ChaptersComponent implements AfterViewInit {
     this.novel.user_bookmark.chp_id = this.chapterId;
     this.us.updateUserBookmark(this.novel.user_bookmark).subscribe((data: any) => {
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -208,18 +223,6 @@ export class ChaptersComponent implements AfterViewInit {
         this.router.navigate(['novelas']);
       });
     }
-  }
-
-  openDialogSheet(item): void {
-    this.dialog.open(item);
-  }
-
-  openBottomSheet(item): void {
-    this.bottomSheet.open(item);
-  }
-
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
   }
 
   initializeComment(comments: Array<any>) {
@@ -301,7 +304,6 @@ export class ChaptersComponent implements AfterViewInit {
   }
 
   onScrollUp() {
-    const canLoadPortrait = false;
     this.currentPageUp = this.currentPageUp - 1;
     if (this.allChapters[this.currentPageUp]) {
       this.loading = true;
@@ -350,10 +352,10 @@ export class ChaptersComponent implements AfterViewInit {
       this.novel.nvl_rated = true;
       this.novel.novel_ratings.push(data.novel_rating);
       this.newRatingForm.reset();
-      this.openMatSnackBar(this.successSnackRef);
+      this.ps.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Calificación publicada!';
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }

@@ -4,8 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { NovelsService } from '../../../../services/novels.service';
 import { HelperService } from 'src/app/services/helper.service';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { UsersService } from '../../../../services/users.service';
 import { Novel, Genre, User, Chapter, Volume } from 'src/app/models/models';
 import { AdminService } from '../../../../services/admin.service';
@@ -50,8 +48,6 @@ export class NovelManagementComponent implements OnInit {
                 private us: UsersService,
                 public hs: HelperService,
                 private router: Router,
-                public dialog: MatDialog,
-                public matSnackBar: MatSnackBar,
                 private dev: Dev,
                 private prod: Prod,
                 @Inject(PLATFORM_ID) private platformId) {
@@ -87,14 +83,6 @@ export class NovelManagementComponent implements OnInit {
                   }
                 }
 
-  openDialogSheet(template: TemplateRef<any>): void {
-    this.dialog.open(template);
-  }
-
-  openMatSnackBar(template: TemplateRef<any>): void {
-    this.matSnackBar.openFromTemplate(template, { duration: 2000, verticalPosition: 'top'});
-  }
-
   ngOnInit(): void {
     const nid = this.activatedRoute.snapshot.paramMap.get('id');
     this.ns.getGenres().subscribe((data: any) => {
@@ -119,7 +107,7 @@ export class NovelManagementComponent implements OnInit {
 
   save(novelForm: NgForm) {
     if (this.uploading || novelForm.invalid || (!novelForm.dirty && !this.fileToUpload)) {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'Formulario invalido';
       return;
     }
@@ -144,20 +132,20 @@ export class NovelManagementComponent implements OnInit {
           this.novel.image = img.novel.image;
           this.fileToUpload = null;
           this.uploading = false;
-          this.openMatSnackBar(this.successSnackRef);
+          this.ps.openMatSnackBar(this.successSnackRef);
           this.successSnackMessage = '¡Cambios guardados!';
           return;
         }).catch(error => {
-          this.openMatSnackBar(this.errorSnackRef);
+          this.ps.openMatSnackBar(this.errorSnackRef);
           this.errorSnackMessage = error.error.message;
         });
       } else {
         this.uploading = false;
-        this.openMatSnackBar(this.successSnackRef);
+        this.ps.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Cambios guardados!';
       }
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -165,10 +153,10 @@ export class NovelManagementComponent implements OnInit {
   setRecommendedNovel() {
     this.as.adminCreateRecommnededNovel(this.us.getUserLoged().token, this.novel.id).subscribe((data: any) => {
       this.novel.nvl_recommended = true;
-      this.openMatSnackBar(this.successSnackRef);
+      this.ps.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Novela recomendada!';
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -189,7 +177,7 @@ export class NovelManagementComponent implements OnInit {
         this.collaborators.findIndex(deletedCollaborator => deletedCollaborator.user_id === collaborator.user_id), 1
       );
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -198,10 +186,10 @@ export class NovelManagementComponent implements OnInit {
     this.uploading = true;
     this.as.adminDeleteNovel(this.us.getUserLoged().token, this.novel.id).subscribe((data: any) => {
       this.uploading = false;
-      this.dialog.closeAll();
+      this.ps.dialogCloseAll();
       this.router.navigate(['']);
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -214,7 +202,7 @@ export class NovelManagementComponent implements OnInit {
     this.as.adminUpdateNovel(this.us.getUserLoged().token, disableNovel).subscribe((data: any) => {
       this.novel.nvl_status = data.novel.nvl_status;
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -266,29 +254,29 @@ export class NovelManagementComponent implements OnInit {
     if (editVolumeForm.valid) {
       this.uploading = true;
       this.as.adminUpdateVolume(this.us.getUserLoged().token, volume).subscribe((data: any) => {
-        this.dialog.closeAll();
+        this.ps.dialogCloseAll();
         this.uploading = false;
-        this.openMatSnackBar(this.successSnackRef);
+        this.ps.openMatSnackBar(this.successSnackRef);
         this.successSnackMessage = '¡Volumen actualizado!';
       }, error => {
-        this.openMatSnackBar(this.errorSnackRef);
+        this.ps.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;
         this.uploading = false;
       });
     } else {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = 'Formulario invalido';
     }
   }
 
   createNovelCollaborator() {
     this.as.adminCreateNovelCollaborator(this.us.getUserLoged().token, this.collaboratorForm.value.user_login, this.novel.id).subscribe((data: any) => {
-      this.openMatSnackBar(this.successSnackRef);
+      this.ps.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Colaborador añadido!';
       this.collaborators.push(data.collaborator);
-      this.dialog.closeAll();
+      this.ps.dialogCloseAll();
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
   }
@@ -297,12 +285,12 @@ export class NovelManagementComponent implements OnInit {
     this.uploading = true;
     this.as.adminDeleteVolume(this.us.getUserLoged().token, volume.id).subscribe((data: Volume) => {
       this.novel.volumes.splice(this.novel.volumes.findIndex(x => x.id === volume.id), 1);
-      this.dialog.closeAll();
-      this.openMatSnackBar(this.successSnackRef);
+      this.ps.dialogCloseAll();
+      this.ps.openMatSnackBar(this.successSnackRef);
       this.successSnackMessage = '¡Volumen eliminado!';
       this.uploading = false;
     }, error => {
-      this.openMatSnackBar(this.errorSnackRef);
+      this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
       this.uploading = false;
     });

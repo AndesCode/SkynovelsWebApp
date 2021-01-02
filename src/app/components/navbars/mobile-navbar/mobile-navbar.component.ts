@@ -6,6 +6,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-mobile-navbar',
@@ -33,6 +34,12 @@ export class MobileNavbarComponent implements OnInit {
       if (data === 'closeSideNavBar') {
         this.closeNav(true);
       }
+    });
+
+    fromEvent(window, 'popstate').subscribe((e) => {
+      if (this.open) {
+        this.closeNav(true);
+      } 
     });
   }
 

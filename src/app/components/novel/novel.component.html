@@ -9,10 +9,10 @@
             </div>
             <div class="skn-bottomSheet-buttons" style="padding: 1rem 1rem">
                 <div>
-                    <button mat-raised-button class="skn-cancel-button" (click)="bottomSheet.dismiss()">Cancelar</button>
+                    <button mat-raised-button class="skn-cancel-button" (click)="ps.bottomSheetDismiss()">Cancelar</button>
                 </div>
                 <div>
-                    <button mat-raised-button color="warn" (click)="switchBookMark(); bottomSheet.dismiss()">Eliminar</button>
+                    <button mat-raised-button color="warn" (click)="switchBookMark(); ps.bottomSheetDismiss()">Eliminar</button>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
                 </a>
                 <button mat-mini-fab *ngIf="user && novel.user_bookmark" [matMenuTriggerFor]="bookmarkMenu"><span class="material-icons">more_vert</span></button>
                 <mat-menu #bookmarkMenu="matMenu">
-                    <button mat-menu-item (click)="openBottomSheet(deleteBookmark)">
+                    <button mat-menu-item (click)="ps.openBottomSheet(deleteBookmark)">
                       <span>Quitar de la biblioteca</span>
                     </button>
                 </mat-menu>
@@ -100,16 +100,11 @@
                         </a>
                         <button mat-mini-fab *ngIf="user && novel.user_bookmark" [matMenuTriggerFor]="bookmarkMenu"><span class="material-icons">more_vert</span></button>
                         <mat-menu #bookmarkMenu="matMenu">
-                            <button mat-menu-item (click)="openBottomSheet(deleteBookmark)">
+                            <button mat-menu-item (click)="ps.openBottomSheet(deleteBookmark)">
                               <span>Quitar de la biblioteca</span>
                             </button>
                         </mat-menu>
                         <button mat-raised-button color="primary" style="height: 41px;" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Añadir a la biblioteca</button>
-                        <!--<button mat-raised-button color="primary" style="height: 41px;" *ngIf="user && novel.user_bookmark" (click)="openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>-->
-
-
-
-
                         <p *ngIf="!user" class="skn-red-text">Inicia sesión para agregar esta novela a tu biblioteca</p>
                     </div>
                 </div>
@@ -205,7 +200,7 @@
                 <div class="skn-novel-presentation-info-user-buttons-box" style="margin-top: -7px; text-align: center;">
                     <div *ngIf="!this.novel.nvl_rated">
                         <div class="skn-text">Comparte tus pensamientos</div>
-                        <button mat-raised-button color="primary" style="color: black;" (click)="openDialogSheet(createRatingModal)" *ngIf="user">Escribe una calificación</button>
+                        <button mat-raised-button color="primary" style="color: black;" (click)="ps.openDialogSheet(createRatingModal)" *ngIf="user">Escribe una calificación</button>
                         <p *ngIf="!user" class="skn-red-text skn-link" (click)="openLoginForm()">Inicia sesión</p>
                     </div>
                     <div *ngIf="this.novel.nvl_rated">
@@ -238,8 +233,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                            <button mat-raised-button color="primary" (click)="createNovelRating(); dialog.closeAll()" [disabled]="newRatingForm.invalid">Publicar</button>
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+                            <button mat-raised-button color="primary" (click)="createNovelRating(); ps.dialogCloseAll()" [disabled]="newRatingForm.invalid">Publicar</button>
                         </div>
                     </div>
                 </ng-template>
@@ -269,7 +264,7 @@
                             <button mat-menu-item (click)="ps.setEdition(rating)">
                               <span>Editar</span>
                             </button>
-                            <button mat-menu-item (click)="openDialogSheet(deleteRatingModal)">
+                            <button mat-menu-item (click)="ps.openDialogSheet(deleteRatingModal)">
                               <span>Eliminar</span>
                             </button>
                         </mat-menu>
@@ -361,7 +356,7 @@
                                         <button mat-menu-item (click)="ps.setEdition(reply)">
                                           <span>Editar</span>
                                         </button>
-                                        <button mat-menu-item (click)="openDialogSheet(deleteRatingCommentModal)">
+                                        <button mat-menu-item (click)="ps.openDialogSheet(deleteRatingCommentModal)">
                                           <span>Eliminar</span>
                                         </button>
                                     </mat-menu>
@@ -402,8 +397,8 @@
                                         <p>¿Seguro que deseas eliminar el comentario?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                                        <button mat-raised-button color="warn" style="color: black;" (click)="ps.deleteReplyFunction(rating, reply); dialog.closeAll()">Eliminar</button>
+                                        <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+                                        <button mat-raised-button color="warn" style="color: black;" (click)="ps.deleteReplyFunction(rating, reply); ps.dialogCloseAll()">Eliminar</button>
                                     </div>
                                 </div>
                             </ng-template>
@@ -420,8 +415,8 @@
                             <p>¿Seguro que deseas eliminar la calificación?</p>
                         </div>
                         <div class="modal-footer">
-                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="dialog.closeAll()">Cancelar</button>
-                            <button mat-raised-button color="warn" style="color: black;" (click)="deleteRating(rating); dialog.closeAll()">Eliminar</button>
+                            <button mat-raised-button class="skn-cancel-button" style="margin-right: 15px;" (click)="ps.dialogCloseAll()">Cancelar</button>
+                            <button mat-raised-button color="warn" style="color: black;" (click)="deleteRating(rating); ps.dialogCloseAll()">Eliminar</button>
                         </div>
                     </div>
                 </ng-template>
@@ -433,7 +428,7 @@
     <div class="skn-snack-success-notification">
         <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>
@@ -443,7 +438,7 @@
     <div class="skn-snack-error-notification">
         <div class="skn-snack-notification-text">{{errorSnackMessage}}</div>
         <div>
-            <button mat-icon-button (click)="matSnackBar.dismiss()">
+            <button mat-icon-button (click)="ps.matSnackBarDismiss()">
                 <span class="material-icons">close</span>
             </button>
         </div>
