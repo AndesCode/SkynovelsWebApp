@@ -46,6 +46,7 @@ export class ChaptersComponent implements AfterViewInit {
   isBrowser: boolean;
   chapterChangeCount = 0;
   url: string;
+  canLoadPage = true;
 
     // yieldlove blocks
     block1Desktop: string;
@@ -286,8 +287,16 @@ export class ChaptersComponent implements AfterViewInit {
     }
   }
 
+  canLoadPageRefresh() {
+    setTimeout(() => {
+      this.canLoadPage = true;
+    }, 1000);
+  }
+
   onScrollDown(event) {
-    if (event.visible) {
+    if (event.visible && this.canLoadPage) {
+      this.canLoadPage = false;
+      this.canLoadPageRefresh();
       this.currentPageDown = this.currentPageDown + 1;
       if (this.allChapters[this.currentPageDown]) {
         this.loading = true;

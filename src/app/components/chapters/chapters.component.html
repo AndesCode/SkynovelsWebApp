@@ -133,7 +133,7 @@
             </div>
             <hr *ngIf="LoadedChapter.chp_review">
             <div class="skn-chp-chapter-preloaded-comments">
-                <p style="margin-bottom: 20px;"><strong>Comentarios: ({{LoadedChapter.comments?.length}})</strong></p>
+                <p style="margin-bottom: 20px;"><strong>Comentarios del capítulo: ({{LoadedChapter.comments?.length}})</strong></p>
 
 
                 <div class="skn-nvl-user-rating skn-secondary" *ngFor="let comment of LoadedChapter.comments | slice: 0:3">
@@ -415,10 +415,11 @@
             </ng-template>
             <hr>
         </div>
+        <div inViewport [inViewportOptions]="{ threshold: 5 }" (inViewportAction)="onScrollDown($event)" style="height: 50px;" *ngIf="LoadedChapters.length > 0"></div>
+        <div style="height: 25px;"></div>
         <div class="skn-chapter-loading" *ngIf="loading">
             <mat-spinner></mat-spinner>
         </div>
-        <div inViewport [inViewportOptions]="{ threshold: 5 }" (inViewportAction)="onScrollDown($event)" style="height: 50px;" *ngIf="LoadedChapters.length > 0"></div>
     </div>
     <div class="skn-loading" *ngIf="LoadedChapters.length === 0">
         <mat-spinner></mat-spinner>
