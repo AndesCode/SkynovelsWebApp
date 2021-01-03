@@ -33,6 +33,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 // Components
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbars/navbar/navbar.component';
@@ -174,6 +175,7 @@ const config: SwiperConfigInterface = {
     MatSnackBarModule,
     MatPaginatorModule,
     MatTableModule,
+    ScrollingModule,
     // bootstrap
     NgbModule,
     // Installations
@@ -184,8 +186,8 @@ const config: SwiperConfigInterface = {
     InfiniteScrollModule,
     InViewportModule,
     AdsenseModule.forRoot({
-      adClient: 'ca-pub-7072642636403967'//,
-      //adSlot: 7259870550,
+      adClient: 'ca-pub-7072642636403967',
+      adSlot: 7703017009,
     }),
   ],
   providers: [

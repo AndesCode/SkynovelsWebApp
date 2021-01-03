@@ -444,30 +444,36 @@ mat-expansion-panel-header {
 
 .skn-nvl-vlm-chapters-container {
     justify-content: center;
-    .skn-nvl-chp-element {
-        border-bottom: 1px solid #DB3836;
-        width: 26.25rem;
-        margin: 5px;
-        border-radius: 3px;
-        cursor: pointer;
-        .skn-nvl-chp-element-content {
-            display: flex;
-            padding: 0.6rem;
-            height: 100%;
-            width: 100%;
-            .skn-nvl-chp-element-chp-number-index {
-                min-width: 5px;
-                -webkit-text-decoration: solid;
-                text-decoration: solid;
-                margin-right: 15px;
-            }
+}
+
+.skn-nvl-chp-element {
+    border-bottom: 1px solid #DB3836;
+    width: 26.25rem;
+    margin: 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    .skn-nvl-chp-element-content {
+        display: flex;
+        padding: 0.6rem;
+        height: 100%;
+        width: 100%;
+        .skn-nvl-chp-element-chp-number-index {
+            min-width: 5px;
+            -webkit-text-decoration: solid;
+            text-decoration: solid;
+            margin-right: 15px;
         }
     }
-    .skn-nvl-chp-element:hover {
-        .skn-nvl-chp-element-title {
-            text-decoration: underline;
-        }
+}
+
+.skn-nvl-chp-element:hover {
+    .skn-nvl-chp-element-title {
+        text-decoration: underline;
     }
+}
+
+.cdk-virtual-scroll-content-wrapper {
+    position: unset!important;
 }
 
 .skn-nvl-user-rating {

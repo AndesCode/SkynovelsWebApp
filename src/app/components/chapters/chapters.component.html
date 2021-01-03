@@ -52,23 +52,21 @@
         </div>
         <h4 class="modal-title" style="margin: 12px;">Todos los capitulos</h4>
     </div>
-    <div style="max-width: 25em!important; max-height: 72vh!important;">
-        <div class="modal-body">
-            <div class="skn-nvl-vlm-chapters-container row">
-                <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *ngFor="let chapter of novel.chapters" (click)="loadNovelDataChapters(chapter.id); ps.dialogCloseAll();">
-                    <div class="skn-nvl-chp-element-content" style="padding: 10px;">
-                        <div class="skn-nvl-chp-element-chp-number-index">
-                            {{chapter.chp_number}}
-                        </div>
-                        <div>
-                            <div class="skn-nvl-chp-element-title"> {{ps.setContent(chapter.chp_index_title, 69)}}</div>
-                            <small>{{hs.getRelativeTime(chapter.createdAt).message}}</small>
-                        </div>
+    <cdk-virtual-scroll-viewport itemSize="64" class="modal-body skn-all-chapters-modal-container">
+        <div class="row">
+            <div class="skn-nvl-chp-element skn-text skn-secondary skn-secondary-hover" *cdkVirtualFor="let chapter of novel.chapters" (click)="loadNovelDataChapters(chapter.id); ps.dialogCloseAll();">
+                <div class="skn-nvl-chp-element-content" style="padding: 10px;">
+                    <div class="skn-nvl-chp-element-chp-number-index">
+                        {{chapter.chp_number}}
+                    </div>
+                    <div>
+                        <div class="skn-nvl-chp-element-title"> {{ps.setContent(chapter.chp_index_title, 69)}}</div>
+                        <small>{{hs.getRelativeTime(chapter.createdAt).message}}</small>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </cdk-virtual-scroll-viewport>
 </ng-template>
 <nav class="skn-main skn-reading-navbar" *ngIf="LoadedChapters.length > 0">
     <div class="skn-reading-navbar-logo-container">
