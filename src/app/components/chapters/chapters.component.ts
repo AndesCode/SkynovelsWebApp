@@ -11,6 +11,7 @@ import { PageService } from '../../services/page.service';
 import { Chapter } from '../../models/models';
 import { Block1, Block2, Block3, Block4, Block5 } from 'src/app/config/yieldlove';
 import { fromEvent } from 'rxjs';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-chapters',
@@ -83,6 +84,8 @@ export class ChaptersComponent implements AfterViewInit {
               private location: Location,
               private activatedRoute: ActivatedRoute,
               private router: Router,
+              private meta: Meta,
+              private title: Title,
               @Inject(PLATFORM_ID) private platformId) {
                 this.isBrowser = isPlatformBrowser(this.platformId);
                 this.newRatingForm = new FormGroup({
@@ -121,10 +124,9 @@ export class ChaptersComponent implements AfterViewInit {
       this.novel = data.novel[0];
       this.novel.user_bookmark = null;
       this.allChapters = this.novel.chapters;
-      this.hs.updateBrowserMeta('description', 'Sección de lectura de ' + this.novel.nvl_title, this.novel.nvl_title);
       this.getUser();
       this.loadNovelDataChapters();
-
+      this.meta.updateTag({name: 'description', content: 'Sección de lectura de ' + this.novel.nvl_title});
       fromEvent(window, 'popstate').subscribe((e) => {
         if (!this.ps.getBottomSheetState()) {
           while (this.chapterChangeCount > 0) {
@@ -153,11 +155,11 @@ export class ChaptersComponent implements AfterViewInit {
             this.novel.nvl_currentChapter = chapterElementRef.nativeElement.firstElementChild.firstElementChild.lastElementChild.innerText;
             this.novel.nvl_currentChapterN = chapterElementRef.nativeElement.firstElementChild.lastElementChild.lastElementChild.innerText;
             this.chapterId = Number(chapterElementRef.nativeElement.firstElementChild.lastElementChild.firstElementChild.innerText);
-            // Location
             this.url = '/novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' +
             this.chapterId + '/' +
             chapterElementRef.nativeElement.firstElementChild.firstElementChild.firstElementChild.innerText
             this.location.go(this.url);
+            this.title.setTitle(this.novel.nvl_title + ' | ' + this.novel.nvl_currentChapter);
             this.chapterChangeCount = this.chapterChangeCount + 1
             if (this.novel.user_bookmark) {
               this.updateUserBookmark();
@@ -204,9 +206,9 @@ export class ChaptersComponent implements AfterViewInit {
       this.router.navigate(['novelas', this.novel.id, this.novel.nvl_name]);
     } else {
       this.ns.getNovelChapter(chpId).subscribe((data: any) => {
+        this.title.setTitle(this.novel.nvl_title + ' | ' + data.chapter[0].chp_index_title);
         this.chapterId = Number(data.chapter[0].id);
-        this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' +
-          this.chapterId + '/' + data.chapter[0].chp_name);
+        this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' + this.chapterId + '/' + data.chapter[0].chp_name);
         this.allChapters[this.currentChapter] = data.chapter[0];
         if (this.currentChapter === 0) {
           this.loadPortrait = true;
