@@ -64,6 +64,7 @@ import { AdvertisementComponent } from './components/advertisement/advertisement
 import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { UserActivationComponent } from './components/user-activation/user-activation.component';
+import { CommentsComponent } from './components/comments/comments.component';
 // bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Pipes
@@ -140,6 +141,7 @@ const config: SwiperConfigInterface = {
     NoUserImagePipe,
     NovelFilterPipe,
     LoadingErrorComponent,
+    CommentsComponent,
   ],
   imports: [
     MarkdownModule.forRoot(),

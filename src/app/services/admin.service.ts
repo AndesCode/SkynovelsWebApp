@@ -398,7 +398,6 @@ export class AdminService {
   }
 
   adminCreateAdvertisement(jwt: string, advertisement: Advertisement) {
-    console.log(advertisement);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -411,7 +410,6 @@ export class AdminService {
   }
 
   adminUpdateAdvertisement(jwt: string, advertisement: Advertisement) {
-    console.log(advertisement);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',

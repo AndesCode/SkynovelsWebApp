@@ -57,6 +57,7 @@ export class NovelRating {
     liked?: boolean;
     like_id?: number;
     reply?: string;
+    replys_count?: number;
 }
 
 export class Genre {

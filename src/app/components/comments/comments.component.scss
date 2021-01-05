@@ -1,0 +1,25 @@
+@import "../../common.scss";
+.skn-nvl-user-rating {
+    border-radius: 15px;
+    margin-bottom: 5px;
+    display: flex;
+    padding: 3px 8px;
+    .skn-nvl-user-rating-login {
+        display: flex;
+        justify-content: space-between;
+        .skn-nvl-user-rating-login-name {
+            @include mobile {
+                padding: 13px 0px;
+                margin-left: 6px;
+            }
+        }
+        @include mobile {
+            margin-bottom: 10px;
+        }
+    }
+    .skn-nvl-user-rating-user-rating {
+        padding: 15px 0px 0px 10px;
+        flex: auto;
+        width: 1px;
+    }
+}

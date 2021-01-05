@@ -240,7 +240,9 @@
                 </ng-template>
             </div>
             <hr>
-
+            <div class="text-center">
+                <ng-adsense [adClient]="'ca-pub-7072642636403967'" [adSlot]="4241272383" [display]="'inline-block'" [width]="728" [height]="90"></ng-adsense>
+            </div>
             <div class="skn-nvl-user-rating skn-secondary" *ngFor="let rating of novel.novel_ratings">
                 <a [routerLink]="['/perfil', rating.user_id, rating.user_login]" class="fit-height-content">
                     <div class="skn-user-image">
@@ -299,7 +301,7 @@
 
                     <div style="display: flex; justify-content: space-between;">
                         <div>
-                            <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="ps.getReplysFunction(user, rating, 'novel_rating_id')" *ngIf="!rating.show_replys">Ver comentarios</span>
+                            <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="ps.getReplysFunction(user, rating, 'novel_rating_id')" *ngIf="!rating.show_replys">Ver respuestas ({{rating.replys_count}})</span>
                             <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="ps.hideReplys(rating)" *ngIf="rating.show_replys">Ocultar comentarios</span>
                         </div>
                         <div style="display: flex; align-items: center;">
@@ -322,7 +324,7 @@
                                 </a>
                                 <div class="skn-nvl-rating-comment-textarea-input">
                                     <mat-form-field style="width: 100%;">
-                                        <mat-label>Añade un comentario</mat-label>
+                                        <mat-label>Responder a {{rating.user_login}}</mat-label>
                                         <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #reply="ngModel" name="rating.reply" [(ngModel)]="rating.reply" maxlength="2000" minlength="2"></textarea>
                                     </mat-form-field>
                                 </div>
