@@ -65,6 +65,7 @@ import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { UserActivationComponent } from './components/user-activation/user-activation.component';
 import { CommentsComponent } from './components/comments/comments.component';
+import { AdsComponent } from './components/ads/ads.component';
 // bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Pipes
@@ -86,7 +87,6 @@ import { ScriptHackComponent } from './components/script-hack/scripthack.compone
 import { Dev, Prod } from './config/config';
 import { Block1, Block2, Block3, Block4, Block5 } from './config/yieldlove';
 import { YieldLoveBlock1 } from './components/yieldlove-blocks/yieldlove-block1/yieldlove-block1';
-
 
 const config: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -142,6 +142,7 @@ const config: SwiperConfigInterface = {
     NovelFilterPipe,
     LoadingErrorComponent,
     CommentsComponent,
+    AdsComponent,
   ],
   imports: [
     MarkdownModule.forRoot(),

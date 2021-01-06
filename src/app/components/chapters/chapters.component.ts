@@ -43,6 +43,7 @@ export class ChaptersComponent implements AfterViewInit {
   newCommentReply: FormGroup;
   chapterId: number;
   fontSize = 16;
+  textAlign = 'left';
   componentName = 'ChaptersComponent';
   isBrowser: boolean;
   chapterChangeCount = 0;
@@ -111,7 +112,11 @@ export class ChaptersComponent implements AfterViewInit {
     if (this.isBrowser) {
       if (localStorage.getItem('font')) {
         this.fontSize = Number(localStorage.getItem('font'));
+      }
+      if (localStorage.getItem('sknChpTextAlign')) {
+        this.textAlign = localStorage.getItem('sknChpTextAlign');
       }  
+
     }
 
     this.hs.invokeExternalFunction.subscribe((data: any) => {
@@ -179,6 +184,12 @@ export class ChaptersComponent implements AfterViewInit {
     }
     if (this.isBrowser) {
       localStorage.setItem('font', String(this.fontSize));
+    } 
+  }
+
+  TextAlignChanged() {
+    if (this.isBrowser) {
+      localStorage.setItem('sknChpTextAlign', this.textAlign);
     } 
   }
 

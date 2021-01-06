@@ -240,9 +240,7 @@
                 </ng-template>
             </div>
             <hr>
-            <div class="text-center">
-                <ng-adsense [adClient]="'ca-pub-7072642636403967'" [adSlot]="4241272383" [display]="'inline-block'" [width]="728" [height]="90"></ng-adsense>
-            </div>
+            <app-ads></app-ads>
             <div class="skn-nvl-user-rating skn-secondary" *ngFor="let rating of novel.novel_ratings">
                 <a [routerLink]="['/perfil', rating.user_id, rating.user_login]" class="fit-height-content">
                     <div class="skn-user-image">
@@ -426,6 +424,7 @@
         </div>
     </section>
 </article>
+<app-ads></app-ads>
 <ng-template #successSnack>
     <div class="skn-snack-success-notification">
         <div class="skn-snack-notification-text">{{successSnackMessage}}</div>

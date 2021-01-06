@@ -122,7 +122,7 @@
             <div class="skn-chp-chapter-translator" *ngIf="LoadedChapter.chp_translator">
                 <small>Traductor: <strong>{{LoadedChapter.chp_translator}}</strong></small>
             </div>
-            <div class="skn-chp-chapter-content">
+            <div class="skn-chp-chapter-content" [ngStyle]="{'text-align':textAlign === 'left' ? 'left' : 'justify' }">
                 <markdown [data]="LoadedChapter.chp_content" [style.fontSize.px]="fontSize"></markdown>
             </div>
             <hr>
@@ -248,6 +248,7 @@
                 </div>
             </ng-template>
             <hr>
+            <app-ads></app-ads>
         </div>
         <div inViewport [inViewportOptions]="{ threshold: 5 }" (inViewportAction)="onScrollDown($event)" style="height: 50px;" *ngIf="LoadedChapters.length > 0"></div>
         <div style="height: 25px;"></div>
@@ -273,6 +274,9 @@
                 <button mat-raised-button color="primary" *ngIf="!user" (click)="openLoginForm(); ps.bottomSheetDismiss()">Iniciar Sesión</button>
                 <button mat-raised-button color="primary" *ngIf="user && !novel.user_bookmark" (click)="switchBookMark()">Agregar a la biblioteca</button>
                 <button mat-raised-button color="primary" *ngIf="user && novel.user_bookmark" (click)="ps.openBottomSheet(deleteBookmark)">Quitar de la biblioteca</button>
+                <label class="text-center w-100" style="margin: 0px;">
+                    <small>Tamaño de fuente</small>
+                </label>
                 <div class="justify-content-center d-flex skn-text" style="align-items: baseline;">
                     <button mat-icon-button style="width: 45px;" class="skn-text">
                             <span class="material-icons" (click)="changeFontSize('substract')">arrow_drop_down</span>
@@ -283,6 +287,15 @@
                     <button mat-icon-button style="width: 45px;" class="skn-text">
                             <span class="material-icons"  (click)="changeFontSize('plus')">arrow_drop_up</span>
                     </button>
+                </div>
+                <div class="text-center">
+                    <mat-form-field>
+                        <mat-label>Alineación de texto</mat-label>
+                        <mat-select [(ngModel)]="textAlign" [ngModelOptions]="{standalone: true}" (selectionChange)="TextAlignChanged()">
+                            <mat-option value="left">Izquierda</mat-option>
+                            <mat-option value="justify">Justificado</mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
                 <button mat-raised-button class="skn-cancel-button" (click)="ps.bottomSheetDismiss()">Cerrar</button>
             </div>

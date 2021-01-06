@@ -1,12 +1,8 @@
-<!--<script-hack type="text/javascript" *ngIf="!loading" style="display: none;">{{block1Desktop}}</script-hack>-->
-<!--<script-hack type="text/javascript" *ngIf="!loading" style="display: none;">{{block2Desktop}}</script-hack>-->
 <div class="skn-loading" *ngIf="loading && !loadingError">
     <mat-spinner></mat-spinner>
 </div>
 <app-loading-error *ngIf="loadingError"></app-loading-error>
 <article *ngIf="!loading">
-
-    <!--<ad-block1 [mobile]="mobile"></ad-block1>-->
 
     <section style="margin: 0.5rem;">
         <div class="swiper-container skn-home-swiper skn-secondary" [swiper]="swiperHomeConfig">
@@ -21,8 +17,6 @@
             <div class="swiper-button-next unstyled-a-tag" *ngIf="!mobile" style="margin-right: 2rem;"></div>
         </div>
     </section>
-
-    <!--<ng-adsense [adClient]="'ca-pub-7640562161899788'" [display]="'inline-block'" [width]="320" [height]="108"></ng-adsense>-->
 
     <!-- -------------------------------------------------------------------------- 
                                    TOP NOVELAS                               
@@ -51,6 +45,8 @@
             <div class="swiper-button-next" *ngIf="!mobile"></div>
         </div>
 
+        <app-ads></app-ads>
+
         <!-- -------------------------------------------------------------------------- 
                                    Ultimas añadidas                               
      --------------------------------------------------------------------------  -->
@@ -58,7 +54,7 @@
         <div class="skn-home-title">
             <h2>Novelas Nuevas</h2>
         </div>
-        <div class="swiper-container" [swiper]="swiperTopConfig">
+        <div class="swiper-container" [swiper]="swiperRecentsConfig">
             <div class="swiper-wrapper">
                 <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let recentNovel of recentNovels">
                     <a class="unstyled-a-tag" [routerLink]="['/novelas', recentNovel.id, recentNovel.nvl_name]">
@@ -76,9 +72,6 @@
             <div class="swiper-button-next" *ngIf="!mobile"></div>
         </div>
 
-        <div class="text-center">
-            <ng-adsense [adClient]="'ca-pub-7072642636403967'" [adSlot]="4241272383" [display]="'inline-block'" [width]="728" [height]="90"></ng-adsense>
-        </div>
 
         <div class="skn-home-title" *ngIf="recomendedNovel">
             <h2>Recomendación de la Semana</h2>
@@ -132,6 +125,7 @@
                 <p [innerHTML]="recomendedNovel?.nvl_content" *ngIf="!isBrowser"></p>
             </div>
         </div>
+        <app-ads></app-ads>
         <div class="skn-home-title" style="margin: 1.6rem;">
             <h2>Capítulos Recientes</h2>
         </div>
@@ -166,11 +160,5 @@
             </div>
         </div>
     </section>
-
-    <div id='div-gpt-ad-1407836210062-0'>
-        <script-hack type="text/javascript" *ngIf="!loading" style="display: none;">
-            {{block2Div}}
-        </script-hack>
-    </div>
-
 </article>
+<app-ads></app-ads>

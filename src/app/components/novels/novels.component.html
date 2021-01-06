@@ -6,6 +6,7 @@
     <div class="text-center">
         <h1 class="skn-component-title">Catálogo de Novelas</h1>
     </div>
+    <app-ads></app-ads>
     <mat-expansion-panel style="margin-bottom: 5px;">
         <mat-expansion-panel-header>
             <mat-panel-title>
@@ -45,7 +46,5 @@
     <section>
         <app-novel-card [novels]="novels" [clickRoute]="'novel'" [novelFilter]="novelFilter"></app-novel-card>
     </section>
-    <div class="text-center">
-        <ng-adsense [adClient]="'ca-pub-7072642636403967'" [adSlot]="4241272383" [display]="'inline-block'" [width]="728" [height]="90"></ng-adsense>
-    </div>
+    <app-ads></app-ads>
 </div>

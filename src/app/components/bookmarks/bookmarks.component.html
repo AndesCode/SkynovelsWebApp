@@ -3,9 +3,7 @@
 </div>
 <app-loading-error *ngIf="loadingError"></app-loading-error>
 <h1 *ngIf="!loading" class="skn-component-title text-center">Tu lista de lectura:</h1>
-<div class="text-center">
-    <ng-adsense [adClient]="'ca-pub-7072642636403967'" [adSlot]="4241272383" [display]="'inline-block'" [width]="728" [height]="90"></ng-adsense>
-</div>
+<app-ads></app-ads>
 <div class="row justify-content-center" *ngIf="!loading">
     <div *ngIf="bookmarks.length === 0" style="margin-top: 20%;" class="text-center">
         <h2>No tienes novelas en tu lista de lectura</h2>
@@ -59,3 +57,4 @@
         </a>
     </div>
 </div>
+<app-ads></app-ads>

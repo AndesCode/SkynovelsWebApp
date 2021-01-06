@@ -34,7 +34,20 @@ export class HomeComponent implements OnInit {
     observer: true,
     spaceBetween: 0,
     mousewheel: false,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: true,
+    },
+  };
 
+  public swiperRecentsConfig: SwiperConfigInterface = {
+    observer: true,
+    spaceBetween: 0,
+    mousewheel: false,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: true,
+    },
   };
   // yieldlove blocks
   block1Desktop: string;
@@ -157,6 +170,7 @@ export class HomeComponent implements OnInit {
 
   setSwiperSlidesPerView(slides: number) {
     this.swiperTopConfig.slidesPerView = slides;
+    this.swiperRecentsConfig.slidesPerView = slides;
     this.swiperConfigured = true;
   }
 }
