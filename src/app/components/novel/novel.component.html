@@ -164,6 +164,7 @@
             </div>
         </div>
     </section>
+    <app-ads></app-ads>
     <section>
         <div class="container">
             <div *ngIf="mobile">
@@ -240,7 +241,6 @@
                 </ng-template>
             </div>
             <hr>
-            <app-ads></app-ads>
             <div class="skn-nvl-user-rating skn-secondary" *ngFor="let rating of novel.novel_ratings">
                 <a [routerLink]="['/perfil', rating.user_id, rating.user_login]" class="fit-height-content">
                     <div class="skn-user-image">
@@ -424,7 +424,7 @@
         </div>
     </section>
 </article>
-<app-ads></app-ads>
+<app-ads *ngIf="novel?.novel_ratings.length > 1"></app-ads>
 <ng-template #successSnack>
     <div class="skn-snack-success-notification">
         <div class="skn-snack-notification-text">{{successSnackMessage}}</div>

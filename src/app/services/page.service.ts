@@ -139,7 +139,7 @@ export class PageService {
         data.reply.date_data = this.hs.getRelativeTime(data.reply.createdAt);
         object.replys.unshift(data.reply);
         object.reply = null;
-        object.replys_count = object.replys_count + 1;
+        object.replys_count = Number(object.replys_count) + 1;
       });
     } else {
       return;
@@ -194,7 +194,7 @@ export class PageService {
   deleteReplyFunction(object: any, reply: Reply) {
     this.deleteReply(reply.id).subscribe((data: any) => {
       object.replys.splice(object.replys.findIndex(x => x.id === reply.id), 1);
-      object.replys_count = object.replys_count - 1;
+      object.replys_count = Number(object.replys_count) - 1;
     });
   }
 
