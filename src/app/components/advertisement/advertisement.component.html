@@ -9,6 +9,7 @@
         <h1 style="text-align: center;">{{advertisement.adv_title}}</h1>
         <hr>
         <app-ads></app-ads>
+        <small>{{hs.getRelativeTime(advertisement.createdAt).message}}</small>
         <markdown [data]="advertisement.adv_content"></markdown>
         <div class="d-flex justify-content-end">
             <div class="d-flex align-items-center">
@@ -18,7 +19,6 @@
                 <div style="margin-top: 3px;">{{advertisement.likes?.length}}</div>
             </div>
         </div>
-        <app-ads></app-ads>
         <hr>
     </section>
     <section>
@@ -44,3 +44,4 @@
         <app-comments [comments]="advertisement.comments"></app-comments>
     </section>
 </article>
+<app-ads *ngIf="advertisement?.comments.length > 1"></app-ads>

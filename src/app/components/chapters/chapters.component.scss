@@ -22,6 +22,11 @@
     }
 }
 
+.autor_comment {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
 .skn-reading-navbar {
     height: 45px;
     display: flex;
@@ -146,9 +151,9 @@
 
 .skn-chp-chapter {
     padding: 2%;
-    min-height: calc(101vh - 65px);
     .skn-chp-chapter-content {
         margin-top: 15px;
+        min-height: 100vh;
     }
     .skn-chp-chapter-allCommentsButton {
         text-align: center;

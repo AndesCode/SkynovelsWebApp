@@ -51,9 +51,9 @@ export class HelperService {
       };
       return dateDataEmpty;
     }
+    date = new Date(moment.utc(date).format());
     const today = new Date();
-    const creationTime = new Date(date);
-    const creationTimeDiff = Math.abs(today.getTime() - (creationTime.getTime() - 3600000));
+    const creationTimeDiff = Math.abs(today.getTime() - (date.getTime() - 3600000));
     const dateDiffSeconds = Math.ceil(((creationTimeDiff) / 1000));
     moment.locale('es');
     if (update && format !== 'short') {

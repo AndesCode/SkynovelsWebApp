@@ -126,7 +126,7 @@
                 <markdown [data]="LoadedChapter.chp_content" [style.fontSize.px]="fontSize"></markdown>
             </div>
             <hr>
-            <div class="autor_comment" *ngIf="LoadedChapter.chp_review">
+            <div class="autor_comment skn-secondary" *ngIf="LoadedChapter.chp_review">
                 <h3 class="autor_comment_title"><span class="material-icons md-24" style="margin-right: 0.5rem;">mode_comment</span>Comentario de {{LoadedChapter.chp_translator ? LoadedChapter.chp_translator : LoadedChapter.user_login}}</h3>
                 <markdown [data]="LoadedChapter.chp_review"></markdown>
             </div>

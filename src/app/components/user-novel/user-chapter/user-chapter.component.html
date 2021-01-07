@@ -38,13 +38,13 @@
         <div class="row skn-novel-edition-translators-form">
             <mat-form-field>
                 <mat-label>Traductor</mat-label>
-                <input matInput #chp_translator="ngModel" name="chapter.chp_translator" [(ngModel)]="chapter.chp_translator" minlength="2" maxlength="25" autocomplete="off">
+                <input matInput #chp_translator="ngModel" name="chapter.chp_translator" [(ngModel)]="chapter.chp_translator" minlength="2" maxlength="12" autocomplete="off">
             </mat-form-field>
         </div>
         <div class="skn-novel-edition-big-form">
             <div class="form-group w-100">
                 <label>Contenido*</label>
-                <ckeditor #chp_content="ngModel" [(ngModel)]="chapter.chp_content" data="{{chapter.chp_content}}" name="chapter.chp_content" [config]="ckEditorConfig" [editor]="Editor" class="skn-ck-editor-chapter-content" required minlength="15" maxlength="65535" autocomplete="off"
+                <ckeditor #chp_content="ngModel" [(ngModel)]="chapter.chp_content" data="{{chapter.chp_content}}" name="chapter.chp_content" [config]="ckEditorConfig" [editor]="Editor" class="skn-ck-editor-chapter-content" required minlength="50" maxlength="65535" autocomplete="off"
                     *ngIf="isBrowser">
                 </ckeditor>
             </div>
