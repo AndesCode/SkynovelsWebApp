@@ -98,6 +98,11 @@ export class AppComponent implements AfterViewInit {
     }
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo(0, 0);
+      if (this.currentComponent === 'ChaptersComponent') {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'auto';
+      }
     }
   }
 }
