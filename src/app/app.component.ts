@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, AfterViewInit, Inject, PLATFORM_ID, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { HelperService } from './services/helper.service';
 import { filter } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { GoogleTagManagerService } from 'angular-google-tag-manager';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
+  @ViewChild("app") appRef: ElementRef;
   themeToggled = false;
   currentComponent = null;
   scrollPosition = 0;
@@ -23,6 +24,7 @@ export class AppComponent implements AfterViewInit {
               private meta: Meta,
               private prod: Prod,
               private gtmService: GoogleTagManagerService,
+              private renderer: Renderer2,
               @Inject(PLATFORM_ID) private platformId) {
 
                 this.isBrowser = isPlatformBrowser(this.platformId);
@@ -100,8 +102,10 @@ export class AppComponent implements AfterViewInit {
       window.scrollTo(0, 0);
       if (this.currentComponent === 'ChaptersComponent') {
         document.body.style.overflow = 'hidden';
+        this.renderer.setStyle(this.appRef.nativeElement, 'margin-top', '0px');
       } else {
         document.body.style.overflow = 'auto';
+        this.renderer.setStyle(this.appRef.nativeElement, 'margin-top', '4.063rem');
       }
     }
   }

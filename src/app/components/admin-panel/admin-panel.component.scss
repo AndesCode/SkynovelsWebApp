@@ -76,7 +76,8 @@ hr {
     padding-bottom: 15px;
     overflow: auto;
     @include subtract-media(desktop) {
-        padding-bottom: 3.3rem;
+        padding-bottom: 1.3rem;
+        height: calc(100% - 3.125rem);
     }
 }
 

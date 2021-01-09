@@ -1,5 +1,6 @@
 .app-nav-bar {
-    position: sticky;
+    position: fixed;
+    width: 100%;
     top: 0;
     height: 4.063rem;
     z-index: 500;
@@ -9,6 +10,8 @@
     overflow: hidden;
     min-height: calc(100vh - 4.063rem) !important;
     height: unset !important;
+    margin-top: 4.063rem;
+    ;
 }
 
 .skn-body {

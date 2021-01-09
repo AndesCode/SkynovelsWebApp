@@ -2,7 +2,7 @@
     <header class="app-nav-bar skn-main" *ngIf="currentComponent !== 'ChaptersComponent'">
         <app-navbar></app-navbar>
     </header>
-    <main class="app skn-main" id="main-wrapper">
+    <main #app class="app skn-main" id="main-wrapper">
         <app-mobile-navbar style="position: absolute;"></app-mobile-navbar>
         <router-outlet (activate)='onActivate($event)'></router-outlet>
     </main>
