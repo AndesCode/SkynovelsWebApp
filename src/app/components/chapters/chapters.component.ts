@@ -111,12 +111,19 @@ export class ChaptersComponent implements AfterViewInit {
 
     if (this.isBrowser) {
       if (localStorage.getItem('font')) {
-        this.fontSize = Number(localStorage.getItem('font'));
+        if ((Number(localStorage.getItem('font')) < 12 || Number(localStorage.getItem('font')) > 24) || isNaN(Number(localStorage.getItem('font')))) {
+          localStorage.setItem('font', String(this.fontSize));
+        } else {
+          this.fontSize = Math.round(Number(localStorage.getItem('font')));
+        }   
       }
       if (localStorage.getItem('sknChpTextAlign')) {
-        this.textAlign = localStorage.getItem('sknChpTextAlign');
+        if (localStorage.getItem('sknChpTextAlign') === 'left' || localStorage.getItem('sknChpTextAlign') === 'justify') {
+          this.textAlign = localStorage.getItem('sknChpTextAlign');
+        } else {
+          localStorage.setItem('sknChpTextAlign', this.textAlign);     
+        }  
       }  
-
     }
 
     this.hs.invokeExternalFunction.subscribe((data: any) => {
@@ -179,7 +186,7 @@ export class ChaptersComponent implements AfterViewInit {
     if (value === 'plus' && this.fontSize < 24) {
       this.fontSize = this.fontSize + 1;   
     }
-    if (value === 'substract' && this.fontSize > 1) {
+    if (value === 'substract' && this.fontSize > 12) {
       this.fontSize = this.fontSize - 1;    
     }
     if (this.isBrowser) {

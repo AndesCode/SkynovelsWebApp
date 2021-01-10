@@ -278,14 +278,14 @@
                     <small>Tamaño de fuente</small>
                 </label>
                 <div class="justify-content-center d-flex skn-text" style="align-items: baseline;">
-                    <button mat-icon-button style="width: 45px;" class="skn-text">
-                            <span class="material-icons" (click)="changeFontSize('substract')">arrow_drop_down</span>
+                    <button mat-icon-button style="width: 45px;" class="skn-text" [disabled]="fontSize < 13" (click)="changeFontSize('substract')">
+                            <span class="material-icons">arrow_drop_down</span>
                     </button>
                     <div>
                         {{fontSize}}px
                     </div>
-                    <button mat-icon-button style="width: 45px;" class="skn-text">
-                            <span class="material-icons"  (click)="changeFontSize('plus')">arrow_drop_up</span>
+                    <button mat-icon-button style="width: 45px;" class="skn-text" [disabled]="fontSize > 23" (click)="changeFontSize('plus')">
+                            <span class="material-icons" >arrow_drop_up</span>
                     </button>
                 </div>
                 <div class="text-center">
