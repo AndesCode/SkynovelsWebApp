@@ -423,8 +423,8 @@
             </div>
         </div>
     </section>
+    <app-ads *ngIf="novel?.novel_ratings.length > 1"></app-ads>
 </article>
-<app-ads *ngIf="novel?.novel_ratings.length > 1"></app-ads>
 <ng-template #successSnack>
     <div class="skn-snack-success-notification">
         <div class="skn-snack-notification-text">{{successSnackMessage}}</div>
