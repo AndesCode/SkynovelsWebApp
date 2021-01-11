@@ -66,7 +66,10 @@ export class UserManagementComponent implements OnInit {
 
   deleteUser() {
     this.as.adminDeleteUser(this.us.getUserLoged().token, this.user.id).subscribe((data: any) => {
-      this.router.navigate(['panel/administracion-de-usuarios']);
+      this.ps.dialogCloseAll();
+      setTimeout(() => {
+        this.router.navigate(['panel/administracion-de-usuarios']);
+      }, 200); 
     }, error => {
       this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;

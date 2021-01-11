@@ -105,9 +105,9 @@
             </mat-expansion-panel>
             <mat-card style="margin-top: 15px; padding: 16px 24px;">
                 <p>Libros / Volumenes*</p>
-                <small *ngIf="novel?.volumes.length > 0">Añade capítulos dentro de los volúmenes o libros.</small>
-                <small *ngIf="novel?.volumes.length === 0">Nota: Debes crear un volumen o libro para empezar a añadir capítulos.</small>
-                <small *ngIf="novel?.volumes.length === 0">Si la novela no lleva volúmenes o libros, puedes crear un volumen con el nombre "Lista de capítulos".</small>
+                <p><small *ngIf="novel?.volumes.length > 0">Añade capítulos dentro de los volúmenes o libros.</small></p>
+                <p><small *ngIf="novel?.volumes.length === 0">Nota: Debes crear un volumen o libro para empezar a añadir capítulos.</small></p>
+                <p><small *ngIf="novel?.volumes.length === 0">Si la novela no lleva volúmenes o libros, puedes crear un volumen con el nombre "Lista de capítulos".</small></p>
 
                 <mat-expansion-panel (opened)="volume.open = true" (closed)="hs.closeMatExpansionPanel(volume)" *ngFor="let volume of novel?.volumes" style="margin-bottom: 5px;">
                     <mat-expansion-panel-header>
@@ -203,8 +203,13 @@
                 </ng-template>
             </mat-card>
         </div>
-        <div class="d-flex justify-content-end" style="margin: 15px 0px;">
-            <button type="button" mat-raised-button color="warn" style="margin-right: 20px;" (click)="ps.openDialogSheet(deletenovelModal)" *ngIf="editableNovel && novel.id">Eliminar novela</button>
+        <div class="d-flex justify-content-end align-items-center" style="margin: 15px 0px;">
+            <button mat-mini-fab *ngIf="editableNovel && novel.id" [matMenuTriggerFor]="deleteNovelMenu" style="margin-right: 20px;"><span class="material-icons">more_vert</span></button>
+            <mat-menu #deleteNovelMenu="matMenu">
+                <button mat-menu-item (click)="ps.openDialogSheet(deletenovelModal)" color="warn">
+                  <span>Eliminar novela</span>
+                </button>
+            </mat-menu>
             <button type="submit" mat-raised-button color="primary" (click)="save(novelForm)" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">{{novel?.id ? 'Guardar cambios' : 'Crear novela'}}</button>
         </div>
     </section>

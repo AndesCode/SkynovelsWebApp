@@ -70,7 +70,7 @@
                             <div> <span class="material-icons">access_time</span> {{hs.getRelativeTime(novel.nvl_last_update).message}}</div>
                         </div>
                         <div class="skn-nvl-card-genres row">
-                            <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:5">{{genre.genre_name}}</span>
+                            <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:10">{{genre.genre_name}}</span>
                         </div>
                         <div class="skn-text">Autor: <strong>{{novel.nvl_writer}}</strong></div>
                         <div class="skn-text" *ngIf="novel.nvl_translator">Traductor: <strong>{{novel.nvl_translator}}</strong></div>
@@ -172,7 +172,7 @@
                 <div class="skn-text" *ngIf="novel.nvl_translator">Traductor: <strong>{{novel.nvl_translator}}</strong></div>
                 <div class="skn-text" *ngIf="novel.nvl_translator_eng">Traductor al ingles: <strong>{{novel.nvl_translator_eng}}</strong></div>
                 <div class="skn-nvl-card-genres row">
-                    <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:5">{{genre.genre_name}}</span>
+                    <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:10">{{genre.genre_name}}</span>
                 </div>
             </div>
             <hr>

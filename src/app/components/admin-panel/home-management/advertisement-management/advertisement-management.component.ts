@@ -85,7 +85,7 @@ export class AdvertisementManagementComponent implements OnInit {
           this.imgURL = this.apiURL + '/api/get-image/' + this.advertisement.image + '/advertisements/false'
         }
       }, error => {
-        this.router.navigate(['panel']);
+        this.router.navigate(['panel/administracion-de-pagina-de-inicio']);
       });
     } else {
       this.advertisement = new Advertisement();
@@ -175,7 +175,9 @@ export class AdvertisementManagementComponent implements OnInit {
     this.as.adminDeleteAdvertisement(this.us.getUserLoged().token, this.advertisement.id).subscribe((data: any) => {
       this.uploading = false;
       this.ps.dialogCloseAll();
-      this.router.navigate(['panel/administracion-de-pagina-de-inicio']);
+      setTimeout(() => {
+        this.router.navigate(['panel/administracion-de-pagina-de-inicio']);
+      }, 200); 
     }, error => {
       this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;

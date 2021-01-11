@@ -72,6 +72,9 @@ section {
         white-space: nowrap;
         box-shadow: 4px 4px 9px -4px rgba(0, 0, 0, 0.67);
     }
+    @include subtract-media(desktop) {
+        justify-content: center;
+    }
 }
 
 .skn-novel-presentation {
@@ -105,8 +108,8 @@ section {
                 margin-bottom: 0.9rem;
             }
             .skn-novel-presentation-info-title {
-                font-size: 1.2rem;
-                margin-bottom: 10px;
+                font-size: 1.6rem;
+                margin-bottom: 5px;
                 @include tablet {
                     text-align: center;
                     margin-top: 10px;
@@ -132,6 +135,7 @@ section {
                 margin: 5px;
                 text-transform: uppercase;
                 color: black;
+                font-size: 16px;
             }
         }
         .skn-novel-presentation-info-user-buttons-box {

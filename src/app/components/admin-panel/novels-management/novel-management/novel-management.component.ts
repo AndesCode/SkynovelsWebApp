@@ -101,7 +101,7 @@ export class NovelManagementComponent implements OnInit {
       this.evaluateEditableNovelStatus();
       this.loading = false;
     }, error => {
-      this.router.navigate(['mis-novelas']);
+      this.router.navigate(['panel/administracion-de-novelas']);
     });
   }
 
@@ -187,7 +187,9 @@ export class NovelManagementComponent implements OnInit {
     this.as.adminDeleteNovel(this.us.getUserLoged().token, this.novel.id).subscribe((data: any) => {
       this.uploading = false;
       this.ps.dialogCloseAll();
-      this.router.navigate(['']);
+      setTimeout(() => {
+        this.router.navigate(['panel/administracion-de-novelas']);
+      }, 300); 
     }, error => {
       this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;

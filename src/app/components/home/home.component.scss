@@ -107,7 +107,8 @@ h3 {
                 margin-bottom: 15px;
             }
             .skn-novel-presentation-info-title {
-                margin-bottom: 10px;
+                font-size: 1.6rem;
+                margin-bottom: 5px;
                 @include subtract-media(desktop) {
                     text-align: center;
                     margin-top: 10px;
@@ -133,6 +134,7 @@ h3 {
                 margin: 5px;
                 text-transform: uppercase;
                 color: black;
+                font-size: 16px;
             }
             @include subtract-media(desktop) {
                 text-align: center;

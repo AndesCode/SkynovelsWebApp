@@ -12,24 +12,24 @@
                 </div>
                 <div class="skn-novel-edition-main-form">
                     <mat-form-field class="w-100">
-                        <mat-label>Titulo de novela*</mat-label>
+                        <mat-label>Titulo de novela</mat-label>
                         <input matInput #nvl_title="ngModel" name="novel?.nvl_title" autocomplete="off" [(ngModel)]="novel.nvl_title" required minlength="4" maxlength="60">
                         <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label>Autor de novela*</mat-label>
+                        <mat-label>Autor de novela</mat-label>
                         <input matInput #nvl_writer="ngModel" name="novel.nvl_writer" autocomplete="off" [(ngModel)]="novel.nvl_writer" required required minlength="2" maxlength="25">
                         <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label>Generos*</mat-label>
+                        <mat-label>Generos</mat-label>
                         <mat-select multiple [(ngModel)]="novel.genres" name="novel.genres" required>
                             <mat-option *ngFor="let genre of genres" [value]="genre.id">{{genre.genre_name}}</mat-option>
                         </mat-select>
                         <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                     </mat-form-field>
                     <mat-form-field class="w-100" hintLabel="{{novelStatusEditable ? '': 'Debe tener al menos un capitulo activo'}}" [ngStyle]="{'margin-bottom':novelStatusEditable? '0px' : '0.75rem' }">
-                        <mat-label>Estado de publicación*</mat-label>
+                        <mat-label>Estado de publicación</mat-label>
                         <mat-select #nvl_status="ngModel" name="novel.nvl_status" [(ngModel)]="novel.nvl_status" required minlength="6" maxlength="8" [disabled]="!novelStatusEditable">
                             <mat-option value="Disabled">Oculta</mat-option>
                             <mat-option value="Active">Publicada</mat-option>
@@ -40,7 +40,6 @@
                         <mat-form-field>
                             <mat-label>Acronimo</mat-label>
                             <input matInput #nvl_acronym="ngModel" name="novel.nvl_acronym" [(ngModel)]="novel.nvl_acronym" maxlength="8">
-                            <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                         </mat-form-field>
                         <button type="button" mat-raised-button color="primary" (click)="setRecommendedNovel()" *ngIf="novelPublished && !novel.nvl_recommended">Asignar como recomendada</button>
                         <p style="color: #17bd17;" *ngIf="novel.nvl_recommended">¡Novela recomendada!</p>
@@ -51,12 +50,10 @@
                 <mat-form-field>
                     <mat-label>Traductor</mat-label>
                     <input matInput #nvl_translator="ngModel" name="novel.nvl_translator" [(ngModel)]="novel.nvl_translator" minlength="2" maxlength="25">
-                    <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Traductor al Ingles</mat-label>
                     <input matInput #nvl_translator_eng="ngModel" name="novel.nvl_translator_eng" [(ngModel)]="novel.nvl_translator_eng" minlength="2" maxlength="25">
-                    <!--<mat-error *ngIf="novelForm.get('nvl_title').invalid">Invalido</mat-error>-->
                 </mat-form-field>
             </div>
             <div class="skn-novel-edition-big-form">
@@ -98,7 +95,7 @@
                 <button mat-raised-button color="primary" style="margin-top: 6px;" (click)="ps.openDialogSheet(addCollaboratorModal)">Añadir un colaborador</button>
             </mat-expansion-panel>
             <mat-card style="margin-top: 15px;">
-                <p>Capitulos*</p>
+                <p>Libros / Volumenes*</p>
                 <mat-expansion-panel (opened)="volume.open = true" (closed)="hs.closeMatExpansionPanel(volume)" *ngFor="let volume of novel?.volumes" style="margin-bottom: 5px;">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
@@ -168,8 +165,13 @@
                 </mat-expansion-panel>
             </mat-card>
         </div>
-        <div class="d-flex justify-content-end" style="margin-top: 15px;">
-            <button type="button" mat-raised-button color="warn" style="margin-right: 5px;" (click)="ps.openDialogSheet(deletenovelModal)">Eliminar novela</button>
+        <div class="d-flex justify-content-end align-items-center" style="margin: 15px 0px;">
+            <button mat-mini-fab [matMenuTriggerFor]="deleteNovelMenu" style="margin-right: 20px;"><span class="material-icons">more_vert</span></button>
+            <mat-menu #deleteNovelMenu="matMenu">
+                <button mat-menu-item (click)="ps.openDialogSheet(deletenovelModal)">
+                  <span>Eliminar novela</span>
+                </button>
+            </mat-menu>
             <button type="submit" mat-raised-button color="primary" (click)="save(novelForm)" [disabled]="uploading || novelForm.invalid || (!novelForm.dirty && !fileToUpload)">Guardar cambios</button>
         </div>
     </section>

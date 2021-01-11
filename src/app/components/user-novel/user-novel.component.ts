@@ -222,7 +222,9 @@ export class UserNovelComponent implements OnInit {
       this.ns.deleteNovel(this.novel.id).subscribe((data: any) => {
         this.uploading = false;
         this.ps.dialogCloseAll();
-        this.router.navigate(['mis-novelas']);
+        setTimeout(() => {
+          this.router.navigate(['mis-novelas']);
+        }, 300); 
       });
     } else {
       this.ps.openMatSnackBar(this.errorSnackRef);
