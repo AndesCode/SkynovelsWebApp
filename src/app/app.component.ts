@@ -104,8 +104,13 @@ export class AppComponent implements AfterViewInit {
         document.body.style.overflow = 'hidden';
         this.renderer.setStyle(this.appRef.nativeElement, 'margin-top', '0px');
       } else {
-        document.body.style.overflow = 'auto';
-        this.renderer.setStyle(this.appRef.nativeElement, 'margin-top', '4.063rem');
+        if (this.currentComponent === 'AdminPanelComponent') {
+          document.body.style.overflow = 'hidden';
+          this.renderer.setStyle(this.appRef.nativeElement, 'margin-top', '4.063rem');
+        } else {
+          document.body.style.overflow = 'auto';
+          this.renderer.setStyle(this.appRef.nativeElement, 'margin-top', '4.063rem');
+        }
       }
     }
   }
