@@ -455,7 +455,7 @@ export class AdminService {
     };
     const invitation: novelCollaborator = {
       user_login: userLogin,
-      noveld_id: novelId
+      novel_id: novelId
     };
     const url = `${ this.urlCredentialsNovelsDb }/admin-create-novel-collaborator`;
     return this.http.post(url, invitation, httpOptions);

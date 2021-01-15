@@ -20,12 +20,7 @@
     }
 }
 
-.skn-nvl-card:hover {
-    -webkit-animation: shadow-drop-2-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    animation: shadow-drop-2-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-
-.skn-novel-acronym {
+.skn-novel-card-acronym {
     background-color: #d32f2f;
     border-radius: 15px;
     padding: 1px 6px;
@@ -62,18 +57,24 @@
             box-shadow: 3px 3px 9px -4px rgba(0, 0, 0, 0.67);
         }
     }
-    .skn-nvl-card-votes {
-        display: inline;
-        span {
-            color: sandybrown;
-        }
-    }
     .skn-nvl-card-description {
         word-break: break-word;
         @include subtract-media (desktop) {
             display: none;
         }
     }
+}
+
+.skn-nvl-cards-container {
+    margin-bottom: 25px;
+}
+
+ngb-rating {
+    cursor: pointer!important;
+}
+
+.rating-star {
+    cursor: pointer!important;
 }
 
 .skn-nvl-card-update-time {

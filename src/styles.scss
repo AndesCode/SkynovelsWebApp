@@ -569,6 +569,15 @@ h1 {
     font-weight: 600!important;
 }
 
+.skn-nvl-card-votes {
+    display: inline;
+    outline: none;
+}
+
+ngb-rating {
+    outline: none;
+}
+
 // Material Icons Sizes
 .material-icons.md-18 {
     font-size: 1.125rem;

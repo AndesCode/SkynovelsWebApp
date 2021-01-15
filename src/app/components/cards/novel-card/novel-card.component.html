@@ -1,7 +1,7 @@
 <div class="text-center" style="margin-top: 1rem;">
     <pagination-controls (pageChange)="page = $event" maxSize="5" previousLabel="" nextLabel="" autoHide="true" screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Pagina" screenReaderCurrentLabel="Estas en la pagina"></pagination-controls>
 </div>
-<div class="row justify-content-center">
+<div class="row justify-content-center skn-nvl-cards-container">
     <div *ngFor="let novel of novels | novelFilter:novelFilter.searchName: novelFilter.searchGenres: novelFilter.searchStatus: novelFilter.orderBy | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
         <a class="skn-nvl-card unstyled-a-tag" [routerLink]="[goToNovelLink, novel.id, novel.nvl_name]">
             <div class="skn-nvl-card-img">
@@ -10,12 +10,12 @@
             <ul class="skn-nvl-card-info">
                 <li>
                     <div class="skn-nvl-card-title">
-                        <strong>{{novel.nvl_title}} <span class="skn-novel-acronym" *ngIf="novel.nvl_acronym">{{novel.nvl_acronym}}</span></strong>
+                        <strong>{{novel.nvl_title}} <span class="skn-novel-card-acronym" *ngIf="novel.nvl_acronym">{{novel.nvl_acronym}}</span></strong>
                     </div>
                 </li>
                 <li>
                     <div class="skn-nvl-card-genres" style="margin-bottom: 8px;">
-                        <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:3">{{genre.genre_name}}</span>
+                        <span class="skn-secondary skn-text" *ngFor="let genre of novel.genres | slice: 0:2">{{genre.genre_name}}</span>
                     </div>
                 </li>
                 <li>

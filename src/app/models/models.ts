@@ -131,7 +131,7 @@ export class Invitation {
 
 export class novelCollaborator {
     user_login?: string;
-    noveld_id?: number;
+    novel_id?: number;
 }
 
 export class Advertisement {
