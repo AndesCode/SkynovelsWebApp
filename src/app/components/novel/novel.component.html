@@ -25,9 +25,9 @@
             <div style="display: flex;">
                 <ngb-rating [(rate)]='novel.nvl_rating' max='5' [readonly]="true" style="border: none !important; outline: none !important;">
                     <ng-template let-fill="fill" let-index="index">
-                        <span class="material-icons rating-star" *ngIf="fill > 90">star</span>
+                        <span class="material-icons rating-star" *ngIf="fill >= 90">star</span>
                         <span class="material-icons rating-star" *ngIf="fill < 40">star_border</span>
-                        <span class="material-icons rating-star" *ngIf="fill > 40 && fill < 90">star_half</span>
+                        <span class="material-icons rating-star" *ngIf="fill >= 40 && fill < 90">star_half</span>
                     </ng-template>
                 </ngb-rating>
                 <p *ngIf="novel.novel_ratings?.length > 1 || novel.novel_ratings?.length === 0" style="padding: 4px;">{{novel.nvl_rating}} ({{novel.novel_ratings?.length}} votos)</p>
@@ -78,9 +78,9 @@
                         <div class="skn-nvl-card-votes" style="display: flex;">
                             <ngb-rating [(rate)]='novel.nvl_rating' max='5' [readonly]="true" style="border: none !important; outline: none !important;">
                                 <ng-template let-fill="fill" let-index="index">
-                                    <span class="material-icons rating-star" *ngIf="fill > 90">star</span>
+                                    <span class="material-icons rating-star" *ngIf="fill >= 90">star</span>
                                     <span class="material-icons rating-star" *ngIf="fill < 40">star_border</span>
-                                    <span class="material-icons rating-star" *ngIf="fill > 40 && fill < 90">star_half</span>
+                                    <span class="material-icons rating-star" *ngIf="fill >= 40 && fill < 90">star_half</span>
                                 </ng-template>
                             </ngb-rating>
                             <div style="margin-left: 9px; margin-top: 3px;">
@@ -188,9 +188,9 @@
                         </div>
                         <ngb-rating [(rate)]='novel.nvl_rating' max='5' [readonly]="true" style="border: none !important; outline: none !important;">
                             <ng-template let-fill="fill" let-index="index">
-                                <span class="material-icons rating-star" *ngIf="fill > 90">star</span>
+                                <span class="material-icons rating-star" *ngIf="fill >= 90">star</span>
                                 <span class="material-icons rating-star" *ngIf="fill < 40">star_border</span>
-                                <span class="material-icons rating-star" *ngIf="fill > 40 && fill < 90">star_half</span>
+                                <span class="material-icons rating-star" *ngIf="fill >= 40 && fill < 90">star_half</span>
                             </ng-template>
                         </ngb-rating>
                         <div style="margin-left: 7px; margin-top: 3px;">
@@ -221,9 +221,9 @@
                                     <span style="margin-right: 5px" class="skn-text">Puntuación:</span>
                                     <ngb-rating formControlName="rate_value" style="border: none !important; outline: none !important;" [max]="5">
                                         <ng-template let-fill="fill" let-index="index">
-                                            <span class="material-icons rating-star" *ngIf="fill > 90">star</span>
+                                            <span class="material-icons rating-star" *ngIf="fill >= 90">star</span>
                                             <span class="material-icons rating-star" *ngIf="fill < 40">star_border</span>
-                                            <span class="material-icons rating-star" *ngIf="fill > 40 && fill < 90">star_half</span>
+                                            <span class="material-icons rating-star" *ngIf="fill >= 40 && fill < 90">star_half</span>
                                         </ng-template>
                                     </ngb-rating>
                                 </div>
@@ -274,9 +274,9 @@
                     <div class="skn-nvl-card-votes" style="display: flex;">
                         <ngb-rating [(rate)]='rating.rate_value' max='5' [readonly]="true">
                             <ng-template let-fill="fill" let-index="index">
-                                <span class="material-icons rating-star" *ngIf="fill > 90">star</span>
+                                <span class="material-icons rating-star" *ngIf="fill >= 90">star</span>
                                 <span class="material-icons rating-star" *ngIf="fill < 40">star_border</span>
-                                <span class="material-icons rating-star" *ngIf="fill > 40 && fill < 90">star_half</span>
+                                <span class="material-icons rating-star" *ngIf="fill >= 40 && fill < 90">star_half</span>
                             </ng-template>
                         </ngb-rating>
                         <div style="margin-left: 7px; margin-top: 3px;">

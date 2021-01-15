@@ -10,9 +10,9 @@
                     <span style="margin-right: 5px" class="skn-text">Puntuación:</span>
                     <ngb-rating formControlName="rate_value" style="border: none !important; outline: none !important;" [max]="5">
                         <ng-template let-fill="fill" let-index="index">
-                            <span class="material-icons rating-star" *ngIf="fill > 90">star</span>
+                            <span class="material-icons rating-star" *ngIf="fill >= 90">star</span>
                             <span class="material-icons rating-star" *ngIf="fill < 40">star_border</span>
-                            <span class="material-icons rating-star" *ngIf="fill > 40 && fill < 90">star_half</span>
+                            <span class="material-icons rating-star" *ngIf="fill >= 40 && fill < 90">star_half</span>
                         </ng-template>
                     </ngb-rating>
                 </div>

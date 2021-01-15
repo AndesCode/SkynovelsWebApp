@@ -103,9 +103,9 @@
                         <div class="skn-nvl-card-votes" style="display: flex;">
                             <ngb-rating [(rate)]='recomendedNovel.nvl_rating' max='5' [readonly]="true" style="border: none !important; outline: none !important;">
                                 <ng-template let-fill="fill" let-index="index">
-                                    <span class="material-icons rating-star" *ngIf="fill > 90">star</span>
+                                    <span class="material-icons rating-star" *ngIf="fill >= 90">star</span>
                                     <span class="material-icons rating-star" *ngIf="fill < 40">star_border</span>
-                                    <span class="material-icons rating-star" *ngIf="fill > 40 && fill < 90">star_half</span>
+                                    <span class="material-icons rating-star" *ngIf="fill >= 40 && fill < 90">star_half</span>
                                 </ng-template>
                             </ngb-rating>
                             <div style="margin-left: 9px; margin-top: 3px;">
