@@ -221,4 +221,14 @@ export class UsersService {
     const url = `${ this.urlCredentialsNovelsDb }/update-user-invitation`;
     return this.http.put(url , invitation, this.GlobalhttpOptions);
   }
+
+  getUserNotifications() {
+    const url = `${ this.urlNovelsDb }/get-user-notifications`;
+    return this.http.get(url, this.GlobalhttpOptions);
+  }
+
+  getUserUnreadNotificationsCount() {
+    const url = `${ this.urlNovelsDb }/get-user-unread-notifications`;
+    return this.http.get(url, this.GlobalhttpOptions);
+  }
 }

@@ -49,6 +49,24 @@
                     </mat-card>
                 </mat-menu>
             </div>
+            <div class="skn-nav-link" *ngIf="us.userIsLoged()">
+                <a class="nav-link" [matMenuTriggerFor]="notifications" (click)="getUserNotifications()"><span class="material-icons md-30" matBadge="{{unreadNotifications}}" matBadgeSize="small" [matBadgeHidden]="notificationBadgehidden">notifications</span></a>
+                <mat-menu #notifications="matMenu">
+                    <div style="padding: 8px;" *ngIf="userNotifications.length === 0">
+                        <p style="margin: unset;">No tienes notificaciones</p>
+                    </div>
+                    <mat-card class="skn-invitation-card" *ngFor="let userNotification of userNotifications" style="margin-bottom: 0.5rem;" [ngClass]="{'skn-secondary': userNotification.readed === 0}">
+                        <mat-card-header>
+                            <div mat-card-avatar><img [src]="userNotification.user_image | noUserImage" alt=""></div>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p>
+                                {{userNotification.message}}
+                            </p>
+                        </mat-card-content>
+                    </mat-card>
+                </mat-menu>
+            </div>
             <div class="skn-nav-link">
                 <a class="nav-link" (click)="toggleTheme()">
                     <span class="material-icons md-30 hide-light">brightness_2</span>

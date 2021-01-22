@@ -92,7 +92,6 @@ export class AppComponent implements AfterViewInit {
   }
 
   onActivate(event: any) {
-    console.log(event);
     if (event.componentName) {
       this.currentComponent = event.componentName;
       this.hs.getCurrentComponent(this.currentComponent);

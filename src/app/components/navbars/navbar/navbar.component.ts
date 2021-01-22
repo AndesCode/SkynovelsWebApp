@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Invitation } from 'src/app/models/models';
 import { isPlatformBrowser } from '@angular/common';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { WebSocketService } from '../../../services/web-socket.service';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class NavbarComponent implements OnInit {
   public errorSnackMessage: string;
   currentComponent = null;
   userInvitations: Array<Invitation> = [];
+  userNotifications: Array<any> = [];
   mobile = false;
   hide = true;
   mobileNavbar = false;
@@ -39,6 +41,9 @@ export class NavbarComponent implements OnInit {
   termsAndConditionsAccepted = false;
   passwordRecoveryCompleted = false;
   isBrowser: boolean;
+  unreadNotifications = 0;
+  notificationBadgehidden = true;
+  userNotificationsRefresh: any;
 
   constructor(public us: UsersService,
               public as: AdminService,
@@ -49,6 +54,7 @@ export class NavbarComponent implements OnInit {
               public el: ElementRef,
               public dialog: MatDialog,
               public bottomSheet: MatBottomSheet,
+              private ws: WebSocketService,
               @Inject(PLATFORM_ID) private platformId) {
 
               this.isBrowser = isPlatformBrowser(this.platformId);
@@ -74,6 +80,21 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.ws.listen('test event').subscribe((data: any)=> {
+      console.log(data.user_unread_notifications_count)
+      this.unreadNotifications = data.user_unread_notifications_count;
+      if (Number(this.unreadNotifications) > 0) {
+        this.notificationBadgehidden = false;
+      }
+    })
+
+    this.ws.listen('test event user').subscribe((data: any)=> {
+      console.log(data)
+    })
+
+    
+
+
     this.breakpointObserver.observe([Breakpoints.Large = '(max-width: 1151px)']).subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.mobile = true;
@@ -250,5 +271,22 @@ export class NavbarComponent implements OnInit {
       this.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;
     });
+  }
+
+  getUserNotifications() {
+    if (!this.notificationBadgehidden || this.userNotifications.length === 0) {
+      this.us.getUserNotifications().subscribe((data: any) => {
+        this.userNotifications = data.notifications;
+        // this.unreadNotifications = 0;
+        this.notificationBadgehidden = true;
+        console.log(this.userNotifications)
+      }, error => {
+        this.openMatSnackBar(this.errorSnackRef);
+        this.errorSnackMessage = error.error.message;
+        this.loginFormLoading = false;
+      });
+    } else {
+      return
+    }
   }
 }

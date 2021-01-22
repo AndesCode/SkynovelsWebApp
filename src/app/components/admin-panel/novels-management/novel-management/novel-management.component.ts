@@ -114,7 +114,20 @@ export class NovelManagementComponent implements OnInit {
     this.uploading = true;
     this.novel.nvl_title = this.novel.nvl_title.replace(/^\s+|\s+$|\s+(?=\s)/g, '');
     this.novel.collaborators = this.collaborators.map(collaborator => collaborator.user_id);
-    this.as.adminUpdateNovel(this.us.getUserLoged().token, this.novel).subscribe((resp: any) => {
+    const novel: Novel = {
+      id: this.novel.id,
+      genres: this.novel.genres,
+      collaborators: this.novel.collaborators,
+      nvl_acronym: this.novel.nvl_acronym,
+      nvl_content: this.novel.nvl_content,
+      nvl_status: this.novel.nvl_status,
+      nvl_title: this.novel.nvl_title,
+      nvl_writer: this.novel.nvl_writer,
+      nvl_translator: this.novel.nvl_translator,
+      nvl_translator_eng: this.novel.nvl_translator_eng
+    };
+
+    this.as.adminUpdateNovel(this.us.getUserLoged().token, novel).subscribe((resp: any) => {
       this.novel.nvl_recommended = resp.novel.nvl_recommended;
       if (resp.novel.nvl_status === 'Active' || resp.novel.nvl_status === 'Finished') {
         this.novelPublished = true;
