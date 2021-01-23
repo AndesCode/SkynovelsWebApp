@@ -153,6 +153,7 @@ export class NavbarComponent implements OnInit {
         this.registerCompleted = false;
         this.loginFormLoading = false;
         this.loginForm.reset();
+        this.ws.emit('login', this.us.getUserLoged().id);
       }, error => {
         this.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;
@@ -210,6 +211,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.us.logOut().subscribe((data: any) => {
       if (this.isBrowser) {
+        this.ws.emit('logOut', this.us.getUserLoged().id);
         localStorage.removeItem('sknvl_s');
       }
       if (this.currentComponent === 'UserNovelComponent'

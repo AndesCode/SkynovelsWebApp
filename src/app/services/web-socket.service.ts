@@ -12,6 +12,7 @@ export class WebSocketService {
   constructor() { 
     this.socket = io(this.uri, {
       withCredentials: true,
+      forceNew: true
       /*extraHeaders: {
         "my-custom-header": "abcd"
         }*/
