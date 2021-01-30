@@ -94,6 +94,7 @@ export class PageService {
         data.comment.replys = [];
         data.comment.show_replys = false;
         data.comment.reply = null;
+        data.comment.replys_count = 0;
         data.comment.date_data = this.hs.getRelativeTime(data.comment.createdAt);
         object.comments.push(data.comment);
         object.comment = null;

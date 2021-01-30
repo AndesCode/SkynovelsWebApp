@@ -238,6 +238,7 @@ export class NovelComponent implements OnInit {
       data.novel_rating.likes = [];
       data.novel_rating.reply = null;
       data.novel_rating.replys = [];
+      data.novel_rating.replys_count = 0;
       this.novel.nvl_rated = true;
       this.novel.novel_ratings.push(data.novel_rating);
       this.calculateNovelRatingAvarage();

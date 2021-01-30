@@ -60,7 +60,7 @@ export class NavbarComponent implements OnInit {
               this.isBrowser = isPlatformBrowser(this.platformId);
 
               this.loginForm = new FormGroup({
-                user_login: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(75)]),
+                user_login: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(75)]),
                 user_pass: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)])
               });
 
@@ -80,20 +80,19 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ws.listen('test event').subscribe((data: any)=> {
-      console.log(data.user_unread_notifications_count)
+
+    this.ws.listen('userNotificationEvent').subscribe((data: any)=> {
       this.unreadNotifications = data.user_unread_notifications_count;
       if (Number(this.unreadNotifications) > 0) {
         this.notificationBadgehidden = false;
+        this.userNotifications = [];
+        console.log(this.userNotifications);
       }
     })
 
-    this.ws.listen('test event user').subscribe((data: any)=> {
-      console.log(data)
-    })
-
-    
-
+    if(this.us.userIsLoged()) {
+      this.getUnreadNotifications();
+    }
 
     this.breakpointObserver.observe([Breakpoints.Large = '(max-width: 1151px)']).subscribe((state: BreakpointState) => {
       if (state.matches) {
@@ -154,6 +153,7 @@ export class NavbarComponent implements OnInit {
         this.loginFormLoading = false;
         this.loginForm.reset();
         this.ws.emit('login', this.us.getUserLoged().id);
+        this.getUnreadNotifications();
       }, error => {
         this.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;
@@ -277,11 +277,10 @@ export class NavbarComponent implements OnInit {
 
   getUserNotifications() {
     if (!this.notificationBadgehidden || this.userNotifications.length === 0) {
+      this.notificationBadgehidden = true;
       this.us.getUserNotifications().subscribe((data: any) => {
         this.userNotifications = data.notifications;
-        // this.unreadNotifications = 0;
-        this.notificationBadgehidden = true;
-        console.log(this.userNotifications)
+        console.log(this.userNotifications);
       }, error => {
         this.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;
@@ -291,4 +290,15 @@ export class NavbarComponent implements OnInit {
       return
     }
   }
+
+  getUnreadNotifications() {
+    this.us.getUserUnreadNotificationsCount().subscribe((data: any) => {
+      this.unreadNotifications = data.user_unread_notifications_count;
+      if (Number(this.unreadNotifications) > 0) {
+        this.notificationBadgehidden = false;
+      }
+    })
+  }
+
+
 }
