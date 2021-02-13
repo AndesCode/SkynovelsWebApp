@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit {
   constructor(public us: UsersService,
               public as: AdminService,
               private router: Router,
-              private hs: HelperService,
+              public hs: HelperService,
               public matSnackBar: MatSnackBar,
               public breakpointObserver: BreakpointObserver,
               public el: ElementRef,

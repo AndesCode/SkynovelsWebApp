@@ -55,15 +55,21 @@
                     <div style="padding: 8px;" *ngIf="userNotifications.length === 0">
                         <p style="margin: unset;">No tienes notificaciones</p>
                     </div>
-                    <mat-card class="skn-invitation-card" *ngFor="let userNotification of userNotifications" style="margin-bottom: 0.5rem;" [ngClass]="{'skn-secondary': userNotification.readed === 0}">
-                        <mat-card-header>
-                            <div mat-card-avatar><img [src]="userNotification.user_image | noUserImage" alt=""></div>
-                        </mat-card-header>
-                        <mat-card-content>
-                            <p>
-                                {{userNotification.message}}
-                            </p>
-                        </mat-card-content>
+                    <mat-card class="skn-invitation-card" *ngFor="let userNotification of userNotifications" style="margin-bottom: 0.5rem; padding: 5px;" [ngClass]="{'skn-secondary': userNotification.readed === 0}">
+                        <a [routerLink]="[userNotification.url]" class="unstyled-a-tag" style="cursor: pointer;">
+                            <div class="d-flex">
+                                <div mat-card-avatar style="margin: 4px;">
+                                    <img [src]="userNotification.user_image | noUserImage" alt="">
+                                </div>
+                                <div>
+                                    <p style="margin-bottom: unset;">
+                                        {{userNotification.message}}
+                                    </p>
+                                    <small><small>{{hs.getRelativeTime(userNotification.createdAt).message}}</small></small>
+                                </div>
+
+                            </div>
+                        </a>
                     </mat-card>
                 </mat-menu>
             </div>
