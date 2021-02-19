@@ -41,7 +41,9 @@ export class GuardService implements CanActivate {
       route.routeConfig.path === 'mi-perfil'
       || route.routeConfig.path === 'mis-novelas'
       || route.routeConfig.path === 'lista-de-lectura'
-      || route.routeConfig.path === 'mi-novela/:id'
+      || route.routeConfig.path === 'mis-novelas/:id/:nvl_name'
+      || route.routeConfig.path === 'mis-novelas/:id'
+      || route.routeConfig.path === 'notificaciones'
       ) {
       if (this.us.userIsLoged()) {
         return true;

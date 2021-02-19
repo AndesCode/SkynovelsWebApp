@@ -87,6 +87,7 @@ import { ScriptHackComponent } from './components/script-hack/scripthack.compone
 import { Dev, Prod } from './config/config';
 import { Block1, Block2, Block3, Block4, Block5 } from './config/yieldlove';
 import { YieldLoveBlock1 } from './components/yieldlove-blocks/yieldlove-block1/yieldlove-block1';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 const config: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -143,6 +144,7 @@ const config: SwiperConfigInterface = {
     LoadingErrorComponent,
     CommentsComponent,
     AdsComponent,
+    NotificationsComponent,
   ],
   imports: [
     MarkdownModule.forRoot(),

@@ -140,3 +140,4 @@ pubmatic.com, 157752, RESELLER, 5d62403b186f2ace
 rubiconproject.com, 13894, RESELLER, 0bfd66d529a55807
 rubiconproject.com, 18008, RESELLER, 0bfd66d529a55807
 appnexus.com, 12475, RESELLER, f5ab79cb980f11d1
+google.com, pub-8878384316227462, DIRECT, f08c47fec0942fa0

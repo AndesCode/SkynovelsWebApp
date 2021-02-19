@@ -26,6 +26,7 @@ import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { UserActivationComponent } from './components/user-activation/user-activation.component';
 import { CloseDialogOnRouteService } from './services/close-dialog-on-route.service';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 // TODO: forum proyect
 /*import { ForumComponent } from './components/forum/forum.component';
 import { ForumManagementComponent } from './components/admin-panel/forum-management/forum-management.component';
@@ -86,6 +87,8 @@ const routes: Routes = [
   { path: 'nueva-contrasena/:token', component: PasswordRecoveryComponent },
   // User activation
   { path: 'activacion-de-usuario/:key', component: UserActivationComponent },
+  // notifications
+  { path: 'notificaciones', component: NotificationsComponent, canActivate: [GuardService] },
   // redirects
   { path: '**', pathMatch: 'full', redirectTo: '' }
 ];

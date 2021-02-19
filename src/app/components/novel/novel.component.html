@@ -241,7 +241,7 @@
                 </ng-template>
             </div>
             <hr>
-            <div class="skn-nvl-user-rating skn-secondary" *ngFor="let rating of novel.novel_ratings">
+            <div class="skn-nvl-user-rating skn-secondary" *ngFor="let rating of novel.novel_ratings" id="rating_{{rating.id}}">
                 <a [routerLink]="['/perfil', rating.user_id, rating.user_login]" class="fit-height-content">
                     <div class="skn-user-image">
                         <img [src]="rating.image | noUserImage">
@@ -329,7 +329,7 @@
                                 <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" [disabled]="rating.reply === null || rating.reply.length < 2" (click)="ps.createReplyFunction(user, rating, 'novel_rating_id')">Publicar</button>
                             </div>
                         </form>
-                        <div class="skn-nvl-user-rating" *ngFor="let reply of rating.replys" style="padding: 0px!important;">
+                        <div class="skn-nvl-user-rating" *ngFor="let reply of rating.replys" style="padding: 0px!important;" id="reply_{{reply.id}}">
                             <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
                                 <div class="skn-user-image">
                                     <img [src]="reply.image | noUserImage" alt="">

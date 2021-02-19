@@ -32,6 +32,8 @@ export class NovelComponent implements OnInit {
   componentName = 'NovelComponent';
   apiURL: string;
   public imgURL: any  = '../../../assets/img/noimage.jpg';
+  queryRating: string = null;
+  queryReply: string = null;
 
     constructor(private ns: NovelsService,
                 private activatedRoute: ActivatedRoute,
@@ -73,6 +75,15 @@ export class NovelComponent implements OnInit {
       }
     });
     const urlId = Number(this.activatedRoute.snapshot.paramMap.get('nid'));
+    this.activatedRoute.queryParamMap.subscribe((params: any) => {
+      console.log(params.params);
+      if (params.params.rating) {
+        this.queryRating = params.params.rating;
+      }
+      if (params.params.reply) {
+        this.queryReply = params.params.reply;
+      }
+    });
     this.ns.getNovel(urlId, 'reading').subscribe((data: any) => {
       this.novel = data.novel[0];
       this.novel.user_bookmark = null;
@@ -111,6 +122,21 @@ export class NovelComponent implements OnInit {
       this.getUser();
       this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name);
       this.loading = false;
+      if (this.queryRating !== null) {
+        setTimeout(() => {
+          console.log('hola');
+          console.log('rating_' + this.queryRating)
+          const ratingElement = document.getElementById('rating_' + this.queryRating);
+          console.log(ratingElement);
+          ratingElement.scrollIntoView();
+          if (this.queryReply !== null) {
+            const rating = this.novel.novel_ratings[this.novel.novel_ratings.findIndex(x => x.id === Number(this.queryRating))];
+            rating.show_replys = true;
+            this.ps.getReplysFunction(this.user, rating, 'novel_rating_id', 'reply_' + this.queryReply);
+          }
+        }, 500);
+
+      }
     }, error => {
       this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;

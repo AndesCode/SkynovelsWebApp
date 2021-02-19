@@ -7,6 +7,8 @@ import { Meta } from '@angular/platform-browser';
 import { Prod } from './config/config';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
+// ng generate component components/notifications --module=app.module
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

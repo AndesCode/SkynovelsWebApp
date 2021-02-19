@@ -1,0 +1,25 @@
+<article>
+    <div class="skn-loading" *ngIf="loading">
+        <mat-spinner></mat-spinner>
+    </div>
+    <section class="container" *ngIf="!loading">
+        <h1 class="text-center skn-component-title" *ngIf="userNotifications.length === 0" style="margin-top: 20%;">No tienes notificaciones pendientes</h1>
+        <h1 class="text-center skn-component-title" *ngIf="userNotifications.length > 0">Notificaciones:</h1>
+        <mat-card class="w-100" *ngFor="let userNotification of userNotifications" style="margin-bottom: 0.5rem; padding: 5px;" [ngClass]="{'skn-secondary': userNotification.readed === 0}">
+            <a [routerLink]="[userNotification.url]" class="unstyled-a-tag" style="cursor: pointer;">
+                <div class="d-flex">
+                    <div mat-card-avatar style="margin: 4px;">
+                        <img [src]="userNotification.user_image | noUserImage" alt="">
+                    </div>
+                    <div>
+                        <p style="margin-bottom: unset;">
+                            {{userNotification.message}}
+                        </p>
+                        <small><small>{{hs.getRelativeTime(userNotification.createdAt).message}}</small></small>
+                    </div>
+
+                </div>
+            </a>
+        </mat-card>
+    </section>
+</article>

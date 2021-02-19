@@ -4,8 +4,8 @@
     </div>
     <section class="container" *ngIf="!loading">
         <h1 class="text-center skn-component-title" *ngIf="userInvitations.length === 0" style="margin-top: 20%;">No tienes invitaciones pendientes</h1>
-        <h1 class="text-center skn-component-title" *ngIf="userInvitations.length > 0">invitaciones:</h1>
-        <mat-card class="skn-invitation-card" *ngFor="let userInvitation of userInvitations" style="margin-bottom: 0.5rem;">
+        <h1 class="text-center skn-component-title" *ngIf="userInvitations.length > 0">Invitaciones:</h1>
+        <mat-card class="w-100" *ngFor="let userInvitation of userInvitations" style="margin-bottom: 0.5rem;">
             <mat-card-header>
                 <div mat-card-avatar><img [src]="userInvitation.invitation_from_user_image | noUserImage" alt=""></div>
                 <mat-card-title>{{userInvitation.invitation_from_login}}</mat-card-title>

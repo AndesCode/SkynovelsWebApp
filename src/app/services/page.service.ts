@@ -1,4 +1,4 @@
-import { Injectable, isDevMode, Inject, TemplateRef  } from '@angular/core';
+import { Inject, Injectable, isDevMode, PLATFORM_ID, TemplateRef  } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Reply, Comment, User, Like } from '../models/models';
 import { HelperService } from './helper.service';
@@ -7,6 +7,7 @@ import { Dev, Prod } from '../config/config';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class PageService {
 
 
   bottomSheetOpened: boolean;
+  isBrowser: boolean;
   private urlNovelsDb: string;
   private urlCredentialsNovelsDb: string;
   private GlobalhttpOptions = {
@@ -30,7 +32,8 @@ export class PageService {
               private prod: Prod,
               private dialog: MatDialog,
               private matSnackBar: MatSnackBar,
-              private bottomSheet: MatBottomSheet,) {
+              private bottomSheet: MatBottomSheet,
+              @Inject(PLATFORM_ID) private platformId) {
                 if (isDevMode()) {
                   this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
                   this.urlNovelsDb = this.dev.urlNovelsDb;
@@ -38,6 +41,7 @@ export class PageService {
                   this.urlCredentialsNovelsDb = this.prod.urlCredentialsNovelsDb;
                   this.urlNovelsDb = this.prod.urlNovelsDb;
                 }
+                this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   openDialogSheet(template: TemplateRef<any>): void {
@@ -147,7 +151,7 @@ export class PageService {
     }
   }
 
-  getReplysFunction(user: User, object: any, objectType: 'comment_id' | 'novel_rating_id') {
+  getReplysFunction(user: User, object: any, objectType: 'comment_id' | 'novel_rating_id', scrollToHTMLElement?: any) {
     if (object.replys.length > 0) {
       object.show_replys = true;
     } else {
@@ -170,7 +174,29 @@ export class PageService {
         }
         object.show_replys = true;
         object.replys.sort(this.hs.dateDataSorter);
+        if (scrollToHTMLElement) {
+          this.scrollToHTMLElement(null, scrollToHTMLElement)
+        }
       });
+    }
+  }
+
+  scrollToHTMLElement(element: HTMLElement, htmlElementId: string) {
+    if (this.isBrowser) {
+      setTimeout(() => {
+        if (element) {
+          element.scrollIntoView();
+          return;
+        }
+        if (htmlElementId) {
+          const element = document.getElementById(htmlElementId);
+          element.scrollIntoView();
+          return;
+        }
+        return;
+      }, 1000);
+    } else {
+      return;
     }
   }
 
