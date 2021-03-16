@@ -273,29 +273,27 @@ export class ChaptersComponent implements AfterViewInit {
     //console.log(chapter.chp_content);
     let breakLineCharacter
     if (chapter.chp_content.search('\n') === -1) {
-      //console.log('esta en html')
+      // console.log('esta en html')
       if (chapter.chp_content.search('<br />') === -1) {
-        //console.log('esta en <br />')
+        // console.log('esta en <br />')
         breakLineCharacter = '<br>'
       } else {
-        //console.log('esta en <br />')
+        // console.log('esta en <br />')
         breakLineCharacter = '<br />'
       }
     } else {
-      //console.log('esta en ºn')
+      // console.log('esta en ºn')
       breakLineCharacter = '\n'
     }
     const chpContentSub = chapter.chp_content.split(breakLineCharacter);
-    //console.log(chpContentSub);
-    const paragraphAdLocation = 52;
+    const paragraphAdLocation = Math.round(chpContentSub.length / 2);
     const string1 = [];
-    for (var i = 0; i < paragraphAdLocation; i++) {
-      //console.log(chpContentSub[i]);
+    for (let i = 0; i < paragraphAdLocation; i++) {
+      // console.log(chpContentSub[i]);
       string1.push(chpContentSub[i]);
     }
     chpContentSub.splice(0, paragraphAdLocation);
     const string2 = chpContentSub.join(breakLineCharacter);
-
     chapter.chp_content_array = [string1.join(breakLineCharacter), string2];
   }
 
