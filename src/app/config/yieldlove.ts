@@ -65,3 +65,31 @@ export class Block5 {
     });`;
     divScript = `googletag.cmd.push(function() {googletag.display('div-gpt-ad-1407836116301-0');});`;
 }
+
+// scripts 03/03/2021
+
+export class Block6 {
+    scriptDesktop = `googletag.cmd.push(function() {
+        googletag.defineSlot('/53015287/skynovels.net_d_728x90_1', [728, 90], 'div-gpt-ad-1407836076303-0').addService(googletag.pubads());
+        googletag.display('div-gpt-ad-1407836076303-0');
+      });`;
+    scriptMobile = `googletag.cmd.push(function() {
+        googletag.defineSlot('/53015287/skynovels.net_m_320x50_1', [320, 50], 'div-gpt-ad-1407836076303-0').addService(googletag.pubads());
+        googletag.display('div-gpt-ad-1407836076303-0');
+      });`;
+}
+
+export class Block7 {
+    scriptDesktop = `googletag.cmd.push(function() {
+        googletag.defineSlot('/53015287/skynovels.net_d_728x90_2', [728, 90], 'div-gpt-ad-1407836258902-0').addService(googletag.pubads());
+        googletag.display('div-gpt-ad-1407836258902-0');
+      });`;
+    scriptMobile = `googletag.cmd.push(function() {
+        googletag.defineSlot('/53015287/skynovels.net_m_300x250_1', [300, 250], 'div-gpt-ad-1407836258902-0').addService(googletag.pubads());
+        googletag.display('div-gpt-ad-1407836258902-0');
+      });`;
+}
+
+
+
+

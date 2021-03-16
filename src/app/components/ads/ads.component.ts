@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdsComponent implements OnInit {
   mobile: boolean;
+  adBlock1 = false
+  adBlock2 = false
 
   constructor(private breakpointObserver: BreakpointObserver,) { }
 
@@ -19,6 +21,11 @@ export class AdsComponent implements OnInit {
         this.mobile = false;
       }
     });
+    if (Math.random() >= 0.5) {
+      this.adBlock1 = true
+    } else {
+      this.adBlock2 = true
+    }
   }
 
 }

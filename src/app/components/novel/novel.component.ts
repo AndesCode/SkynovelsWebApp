@@ -10,6 +10,7 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Novel, User } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
 import { Dev, Prod } from 'src/app/config/config';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-novel',
@@ -32,8 +33,9 @@ export class NovelComponent implements OnInit {
   componentName = 'NovelComponent';
   apiURL: string;
   public imgURL: any  = '../../../assets/img/noimage.jpg';
-  queryRating: string = null;
-  queryReply: string = null;
+  test = 0;
+  /*queryRating: string = null;
+  queryReply: string = null;*/
 
     constructor(private ns: NovelsService,
                 private activatedRoute: ActivatedRoute,
@@ -45,7 +47,8 @@ export class NovelComponent implements OnInit {
                 private location: Location,
                 public hs: HelperService,
                 private dev: Dev,
-                private prod: Prod) {
+                private prod: Prod,
+                protected sanitizer: DomSanitizer) {
                   if (isDevMode()) {
                     this.apiURL = this.dev.apiURL
                   } else {
@@ -75,7 +78,7 @@ export class NovelComponent implements OnInit {
       }
     });
     const urlId = Number(this.activatedRoute.snapshot.paramMap.get('nid'));
-    this.activatedRoute.queryParamMap.subscribe((params: any) => {
+    /*this.activatedRoute.queryParamMap.subscribe((params: any) => {
       console.log(params.params);
       if (params.params.rating) {
         this.queryRating = params.params.rating;
@@ -83,7 +86,7 @@ export class NovelComponent implements OnInit {
       if (params.params.reply) {
         this.queryReply = params.params.reply;
       }
-    });
+    });*/
     this.ns.getNovel(urlId, 'reading').subscribe((data: any) => {
       this.novel = data.novel[0];
       this.novel.user_bookmark = null;
@@ -122,7 +125,8 @@ export class NovelComponent implements OnInit {
       this.getUser();
       this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name);
       this.loading = false;
-      if (this.queryRating !== null) {
+
+      /*if (this.queryRating !== null) {
         setTimeout(() => {
           console.log('hola');
           console.log('rating_' + this.queryRating)
@@ -136,7 +140,7 @@ export class NovelComponent implements OnInit {
           }
         }, 500);
 
-      }
+      }*/
     }, error => {
       this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;

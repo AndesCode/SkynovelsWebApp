@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Block1 } from 'src/app/config/yieldlove';
 
 @Component({

@@ -85,9 +85,16 @@ import { LoadingErrorComponent } from './components/loading-error/loading-error.
 import { MarkdownModule } from 'ngx-markdown';
 import { ScriptHackComponent } from './components/script-hack/scripthack.component';
 import { Dev, Prod } from './config/config';
-import { Block1, Block2, Block3, Block4, Block5 } from './config/yieldlove';
-import { YieldLoveBlock1 } from './components/yieldlove-blocks/yieldlove-block1/yieldlove-block1';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { AddTestOneComponent } from './components/add-test-one/add-test-one.component';
+import { AddTestTwoComponent } from './components/add-test-two/add-test-two.component';
+// YieldLove Test
+import { YieldLoveBlock1 } from './components/yieldlove-blocks/yieldlove-block1/yieldlove-block1';
+import { YieldLoveBlock3 } from './components/yieldlove-blocks/yieldlove-block3/yieldlove-block3';
+import { YieldLoveBlock2 } from './components/yieldlove-blocks/yieldlove-block2/yieldlove-block2';
+import { YieldLoveBlock6 } from './components/yieldlove-blocks/yieldlove-block6/yieldlove-block6';
+import { YieldLoveBlock7 } from './components/yieldlove-blocks/yieldlove-block7/yieldlove-block7';
+import { Block1, Block2, Block3, Block4, Block5, Block6, Block7 } from './config/yieldlove';
 
 const config: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -102,8 +109,13 @@ const config: SwiperConfigInterface = {
 
 @NgModule({
   declarations: [
+    // Yieldlove
     ScriptHackComponent,
     YieldLoveBlock1,
+    YieldLoveBlock2,
+    YieldLoveBlock3,
+    YieldLoveBlock6,
+    YieldLoveBlock7,
     // components
     NovelComponent,
     AppComponent,
@@ -145,6 +157,8 @@ const config: SwiperConfigInterface = {
     CommentsComponent,
     AdsComponent,
     NotificationsComponent,
+    AddTestOneComponent,
+    AddTestTwoComponent,
   ],
   imports: [
     MarkdownModule.forRoot(),
@@ -210,6 +224,8 @@ const config: SwiperConfigInterface = {
     Block3, 
     Block4, 
     Block5,
+    Block6,
+    Block7,
     NoimagePipe
   ],
   bootstrap: [AppComponent]

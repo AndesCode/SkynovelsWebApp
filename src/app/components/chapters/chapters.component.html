@@ -123,7 +123,9 @@
                 <small>Traductor: <strong>{{LoadedChapter.chp_translator}}</strong></small>
             </div>
             <div class="skn-chp-chapter-content" [ngStyle]="{'text-align':textAlign === 'left' ? 'left' : 'justify' }">
-                <markdown [data]="LoadedChapter.chp_content" [style.fontSize.px]="fontSize"></markdown>
+                <markdown [data]="LoadedChapter.chp_content_array[0]" [style.fontSize.px]="fontSize"></markdown>
+                <app-ads></app-ads>
+                <markdown [data]="LoadedChapter.chp_content_array[1]" [style.fontSize.px]="fontSize"></markdown>
             </div>
             <hr>
             <div class="autor_comment skn-secondary" *ngIf="LoadedChapter.chp_review">

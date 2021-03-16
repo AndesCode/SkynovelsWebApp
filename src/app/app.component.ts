@@ -7,7 +7,7 @@ import { Meta } from '@angular/platform-browser';
 import { Prod } from './config/config';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
-// ng generate component components/notifications --module=app.module
+// ng generate component components/add-test-two --module=app.module
 
 @Component({
   selector: 'app-root',
@@ -63,18 +63,16 @@ export class AppComponent implements AfterViewInit {
       if (localStorage.getItem('presence') && localStorage.getItem('presence') === 'dark') {
         this.toggleTheme();
       }
+      const wrapper = document.getElementById('main-wrapper')
+      const observer = new MutationObserver(function (mutations, observer) {
+        wrapper.style.height = ''
+        wrapper.style.minHeight = ''
+      })
+      observer.observe(wrapper, {
+        attributes: true,
+        attributeFilter: ['style']
+      })
     }
-
-    const wrapper = document.getElementById('main-wrapper')
-    const observer = new MutationObserver(function (mutations, observer) {
-      wrapper.style.height = ''
-      wrapper.style.minHeight = ''
-    })
-    observer.observe(wrapper, {
-    attributes: true,
-    attributeFilter: ['style']
-    })
-
   }
 
   toggleTheme() {

@@ -231,6 +231,7 @@ export class ChaptersComponent implements AfterViewInit {
         if (this.currentChapter === 0) {
           this.loadPortrait = true;
         }
+        this.chapterContentArrayFill(data.chapter[0]);
         this.initializeComment(data.chapter[0].comments);
         this.novel.nvl_currentChapter = data.chapter[0].chp_index_title;
         this.novel.nvl_currentChapterN = data.chapter[0].chp_number;
@@ -266,6 +267,36 @@ export class ChaptersComponent implements AfterViewInit {
         }
       }
     }
+  }
+
+  chapterContentArrayFill(chapter) {
+    //console.log(chapter.chp_content);
+    let breakLineCharacter
+    if (chapter.chp_content.search('\n') === -1) {
+      //console.log('esta en html')
+      if (chapter.chp_content.search('<br />') === -1) {
+        //console.log('esta en <br />')
+        breakLineCharacter = '<br>'
+      } else {
+        //console.log('esta en <br />')
+        breakLineCharacter = '<br />'
+      }
+    } else {
+      //console.log('esta en ºn')
+      breakLineCharacter = '\n'
+    }
+    const chpContentSub = chapter.chp_content.split(breakLineCharacter);
+    //console.log(chpContentSub);
+    const paragraphAdLocation = 52;
+    const string1 = [];
+    for (var i = 0; i < paragraphAdLocation; i++) {
+      //console.log(chpContentSub[i]);
+      string1.push(chpContentSub[i]);
+    }
+    chpContentSub.splice(0, paragraphAdLocation);
+    const string2 = chpContentSub.join(breakLineCharacter);
+
+    chapter.chp_content_array = [string1.join(breakLineCharacter), string2];
   }
 
   toggleTheme() {
@@ -323,6 +354,7 @@ export class ChaptersComponent implements AfterViewInit {
         this.loading = true;
         this.ns.getNovelChapter(this.allChapters[this.currentPageDown].id).subscribe((data: any) => {
           this.allChapters[this.currentPageDown] = data.chapter[0];
+          this.chapterContentArrayFill(data.chapter[0]);
           this.initializeComment(data.chapter[0].comments);
           this.LoadedChapters.push(this.allChapters[this.currentPageDown]);
           this.loading = false;
@@ -345,6 +377,7 @@ export class ChaptersComponent implements AfterViewInit {
           this.loadPortrait = true;
         }
         this.allChapters[this.currentPageUp] = data.chapter[0];
+        this.chapterContentArrayFill(data.chapter[0]);
         this.initializeComment(data.chapter[0].comments);
         this.LoadedChapters.unshift(this.allChapters[this.currentPageUp]);
         this.loading = false;

@@ -1,4 +1,5 @@
-import { Component, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
     selector: 'script-hack',
@@ -8,11 +9,14 @@ export class ScriptHackComponent {
 
     @Input()
     src: string;
-
     @Input()
     type: string;
-
     @ViewChild('script') script: ElementRef;
+    isBrowser: boolean;
+
+    constructor(@Inject(PLATFORM_ID) private platformId) { 
+          this.isBrowser = isPlatformBrowser(this.platformId);
+    }
 
     convertToScript() {
         const element = this.script.nativeElement;
@@ -29,6 +33,8 @@ export class ScriptHackComponent {
     }
 
     ngAfterViewInit() {
-        this.convertToScript();
+        if (this.isBrowser) {
+            this.convertToScript();
+        }    
     }
 }

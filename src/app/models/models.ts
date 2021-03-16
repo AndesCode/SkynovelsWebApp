@@ -175,6 +175,7 @@ export class Chapter {
     vlm_id?: number;
     chp_number?: number;
     chp_content?: string;
+    chp_content_array?: Array<string>;
     chp_review?: string;
     chp_title?: string;
     chp_index_title?: string;

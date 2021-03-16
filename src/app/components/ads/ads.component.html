@@ -1,4 +1,15 @@
-<div class="skn-ad-margin">
+<!--Adssense Kike-->
+<div class="skn-ad-margin" *ngIf="adBlock1">
+    <div *ngIf="!mobile">
+        <ng-adsense [adClient]="'ca-pub-8878384316227462'" [adSlot]="1172989400" [display]="'block'" [adFormat]="'auto'" [fullWidthResponsive]="true" style="text-align: center;"></ng-adsense>
+    </div>
+
+    <div class="text-center" *ngIf="mobile">
+        <ng-adsense [adClient]="'ca-pub-8878384316227462'" [adSlot]="8628166960" [display]="'inline-block'" [width]="300" [height]="250"></ng-adsense>
+    </div>
+</div>
+<!--Adssense Miguel-->
+<div class="skn-ad-margin" *ngIf="adBlock2">
     <div *ngIf="!mobile">
         <ng-adsense [adClient]="'ca-pub-7072642636403967'" [adSlot]="7703017009" [display]="'block'" [adFormat]="'auto'" [fullWidthResponsive]="true" style="text-align: center;"></ng-adsense>
     </div>
