@@ -122,10 +122,17 @@
             <div class="skn-chp-chapter-translator" *ngIf="LoadedChapter.chp_translator">
                 <small>Traductor: <strong>{{LoadedChapter.chp_translator}}</strong></small>
             </div>
-            <div class="skn-chp-chapter-content" [ngStyle]="{'text-align':textAlign === 'left' ? 'left' : 'justify' }">
+            <div class="skn-chp-chapter-content" [ngStyle]="{'text-align':textAlign === 'left' ? 'left' : 'justify' }" *ngIf="LoadedChapter.chp_content_array.length === 2">
                 <markdown [data]="LoadedChapter.chp_content_array[0]" [style.fontSize.px]="fontSize"></markdown>
                 <app-ads></app-ads>
                 <markdown [data]="LoadedChapter.chp_content_array[1]" [style.fontSize.px]="fontSize"></markdown>
+            </div>
+            <div class="skn-chp-chapter-content" [ngStyle]="{'text-align':textAlign === 'left' ? 'left' : 'justify' }" *ngIf="LoadedChapter.chp_content_array.length === 3">
+                <markdown [data]="LoadedChapter.chp_content_array[0]" [style.fontSize.px]="fontSize"></markdown>
+                <app-ads></app-ads>
+                <markdown [data]="LoadedChapter.chp_content_array[1]" [style.fontSize.px]="fontSize"></markdown>
+                <app-ads></app-ads>
+                <markdown [data]="LoadedChapter.chp_content_array[2]" [style.fontSize.px]="fontSize"></markdown>
             </div>
             <hr>
             <div class="autor_comment skn-secondary" *ngIf="LoadedChapter.chp_review">

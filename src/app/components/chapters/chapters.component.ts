@@ -286,15 +286,31 @@ export class ChaptersComponent implements AfterViewInit {
       breakLineCharacter = '\n'
     }
     const chpContentSub = chapter.chp_content.split(breakLineCharacter);
-    const paragraphAdLocation = Math.round(chpContentSub.length / 2);
-    const string1 = [];
-    for (let i = 0; i < paragraphAdLocation; i++) {
-      // console.log(chpContentSub[i]);
-      string1.push(chpContentSub[i]);
+    if (chpContentSub.length <= 349) {
+      const paragraphAdLocation = Math.round(chpContentSub.length / 2);
+      const string1 = [];
+      for (let i = 0; i < paragraphAdLocation; i++) {
+        string1.push(chpContentSub[i]);
+      }
+      chpContentSub.splice(0, paragraphAdLocation);
+      const string2 = chpContentSub.join(breakLineCharacter);
+      chapter.chp_content_array = [string1.join(breakLineCharacter), string2];
+    } else {
+      const paragraphAdLocation = Math.round(chpContentSub.length / 3) + 1;
+      const string1 = [];
+      const string2 = [];
+      for (let i = 0; i < paragraphAdLocation; i++) {
+        string1.push(chpContentSub[i]);
+      }
+      chpContentSub.splice(0, paragraphAdLocation);
+      for (let i = 0; i < paragraphAdLocation; i++) {
+        string2.push(chpContentSub[i]);
+      }
+      chpContentSub.splice(0, paragraphAdLocation);
+      const string3 = chpContentSub.join(breakLineCharacter);
+      chapter.chp_content_array = [string1.join(breakLineCharacter), string2.join(breakLineCharacter), string3];
     }
-    chpContentSub.splice(0, paragraphAdLocation);
-    const string2 = chpContentSub.join(breakLineCharacter);
-    chapter.chp_content_array = [string1.join(breakLineCharacter), string2];
+
   }
 
   toggleTheme() {
