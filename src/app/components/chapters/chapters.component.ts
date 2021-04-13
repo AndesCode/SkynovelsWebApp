@@ -3,7 +3,7 @@ import { Location, isPlatformBrowser } from '@angular/common';
 import { NovelsService } from '../../services/novels.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
-import { FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HelperService } from '../../services/helper.service';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Novel, User } from 'src/app/models/models';
@@ -11,7 +11,6 @@ import { PageService } from '../../services/page.service';
 import { Chapter } from '../../models/models';
 import { Block1, Block2, Block3, Block4, Block5 } from 'src/app/config/yieldlove';
 import { fromEvent } from 'rxjs';
-import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-chapters',
@@ -85,8 +84,6 @@ export class ChaptersComponent implements AfterViewInit {
               private location: Location,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              private meta: Meta,
-              private title: Title,
               @Inject(PLATFORM_ID) private platformId) {
                 this.isBrowser = isPlatformBrowser(this.platformId);
                 this.newRatingForm = new FormGroup({
@@ -138,7 +135,6 @@ export class ChaptersComponent implements AfterViewInit {
       this.allChapters = this.novel.chapters;
       this.getUser();
       this.loadNovelDataChapters();
-      this.meta.updateTag({name: 'description', content: 'Sección de lectura de ' + this.novel.nvl_title});
       fromEvent(window, 'popstate').subscribe((e) => {
         if (!this.ps.getBottomSheetState()) {
           while (this.chapterChangeCount > 0) {
@@ -171,7 +167,11 @@ export class ChaptersComponent implements AfterViewInit {
             this.chapterId + '/' +
             chapterElementRef.nativeElement.firstElementChild.firstElementChild.firstElementChild.innerText
             this.location.go(this.url);
-            this.title.setTitle(this.novel.nvl_title + ' | ' + this.novel.nvl_currentChapter);
+            if (this.novel.image) {
+              this.hs.updateBrowserMeta(this.novel.nvl_title + ' | ' + this.novel.nvl_currentChapter, 'Sección de lectura de ' + this.novel.nvl_title, `https://api.skynovels.net/api/get-image/${this.novel.image}/novels/false`);
+            } else {
+              this.hs.updateBrowserMeta(this.novel.nvl_title + ' | ' + this.novel.nvl_currentChapter, 'Sección de lectura de ' + this.novel.nvl_title, null);
+            }
             this.chapterChangeCount = this.chapterChangeCount + 1
             if (this.novel.user_bookmark) {
               this.updateUserBookmark();
@@ -224,7 +224,11 @@ export class ChaptersComponent implements AfterViewInit {
       this.router.navigate(['novelas', this.novel.id, this.novel.nvl_name]);
     } else {
       this.ns.getNovelChapter(chpId).subscribe((data: any) => {
-        this.title.setTitle(this.novel.nvl_title + ' | ' + data.chapter[0].chp_index_title);
+        if (this.novel.image) {
+          this.hs.updateBrowserMeta(this.novel.nvl_title + ' | ' + data.chapter[0].chp_index_title, 'Sección de lectura de ' + this.novel.nvl_title, `https://api.skynovels.net/api/get-image/${this.novel.image}/novels/false`);
+        } else {
+          this.hs.updateBrowserMeta(this.novel.nvl_title + ' | ' + data.chapter[0].chp_index_title, 'Sección de lectura de ' + this.novel.nvl_title, null);
+        }
         this.chapterId = Number(data.chapter[0].id);
         this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' + this.chapterId + '/' + data.chapter[0].chp_name);
         this.allChapters[this.currentChapter] = data.chapter[0];
@@ -286,7 +290,7 @@ export class ChaptersComponent implements AfterViewInit {
       breakLineCharacter = '\n'
     }
     const chpContentSub = chapter.chp_content.split(breakLineCharacter);
-    if (chpContentSub.length <= 349) {
+    if (chpContentSub.length <= 279) {
       const paragraphAdLocation = Math.round(chpContentSub.length / 2);
       const string1 = [];
       for (let i = 0; i < paragraphAdLocation; i++) {

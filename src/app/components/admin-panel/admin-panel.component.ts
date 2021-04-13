@@ -24,7 +24,7 @@ export class AdminPanelComponent implements OnInit {
               private hs: HelperService) { }
 
   ngOnInit(): void {
-    this.hs.updateBrowserMeta('description', 'Panel de control de skynovels', 'SkyNovels | Panel de control');
+    this.hs.updateBrowserMeta('SkyNovels | Panel de control', 'Panel de control de skynovels', 'https://api.skynovels.net/img/banner1.jpg');
     this.breakpointObserver
     .observe([Breakpoints.Large = '(max-width: 1151px)'])
     .subscribe((state: BreakpointState) => {

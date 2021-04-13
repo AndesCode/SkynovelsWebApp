@@ -30,7 +30,7 @@ export class UserActivationComponent implements OnInit {
       this.us.activateUser(urlKey).subscribe((data: any) => {
         this.loading = false;
         this.userActivated = data.user_login;
-        this.hs.updateBrowserMeta('description', 'Activación y verificación de usuario', 'SkyNovels | ¡Asciende a Mundos Increíbles!');
+        this.hs.updateBrowserMeta('SkyNovels | ¡Asciende a Mundos Increíbles!', 'Activación y verificación de usuario', 'https://api.skynovels.net/img/banner1.jpg');
       }, error => {
         this.router.navigate(['']);
       });

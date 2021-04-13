@@ -26,7 +26,7 @@ export class InvitationsComponent implements OnInit {
               private hs: HelperService) { }
 
   ngOnInit(): void {
-    this.hs.updateBrowserMeta('description', 'Invitaciones para colaboración en novelas', 'SkyNovels | Invitaciones');
+    this.hs.updateBrowserMeta('SkyNovels | Invitaciones', 'Invitaciones para colaboración en novelas', 'https://api.skynovels.net/img/banner1.jpg');
     this.us.getUserInvitations().subscribe((data: any) => {
       this.userInvitations = data.invitations;
       this.loading = false;

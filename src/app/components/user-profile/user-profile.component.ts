@@ -59,11 +59,10 @@ export class UserProfileComponent implements OnInit {
       this.userData = data.user[0];
       this.location.replaceState('/perfil/' + this.userData.id + '/' + this.userData.user_login);
       if (this.userData.image && this.userData.image.length > 0) {
-        this.imgURL = this.apiURL + '/api/get-image/' + this.userData.image + '/users/false';
-        
+        this.imgURL = this.apiURL + '/api/get-image/' + this.userData.image + '/users/false'; 
       }
       this.loading = false;
-      this.hs.updateBrowserMeta('description', `${this.userData.user_login}, perfil de usuario`, 'SkyNovels | ' + this.userData.user_login);
+      this.hs.updateBrowserMeta('SkyNovels | ' + this.userData.user_login, `${this.userData.user_login}, perfil de usuario`, this.imgURL);
       this.getUser();
     }, error => {
       this.router.navigate(['']);

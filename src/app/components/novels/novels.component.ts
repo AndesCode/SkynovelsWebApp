@@ -32,7 +32,7 @@ export class NovelsComponent implements OnInit {
               private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
-    this.hs.updateBrowserMeta('description', 'Catálogo de Novelas en SkyNovels', 'SkyNovels | Catalogo de novelas');
+    this.hs.updateBrowserMeta('SkyNovels | Catalogo de novelas', 'Catálogo de Novelas en SkyNovels','https://api.skynovels.net/img/banner1.jpg');
     this.ns.getGenres().subscribe((genres: any) => {
       this.genres = genres.genres;
     });

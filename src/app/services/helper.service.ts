@@ -36,11 +36,23 @@ export class HelperService {
     return moment().year();
   }
 
-  updateBrowserMeta(nameString: string, contentString: string, title?: string) {
+  updateBrowserMeta(title?: string, description?: string, image?: string) {
     if (title) {
       this.title.setTitle(title);
+      this.meta.updateTag({name: 'title', content: title});
+      this.meta.updateTag({name: 'ogtitle', content: title});
+      this.meta.updateTag({name: 'twittertitle', content: title}); 
     }
-    this.meta.updateTag({name: nameString, content: contentString});
+    if (image) {
+      this.meta.updateTag({name: 'image', content: image});
+      this.meta.updateTag({name: 'ogdimage', content: image});
+      this.meta.updateTag({name: 'twitterimage', content: image}); 
+    }
+    if (description) {
+      this.meta.updateTag({name: 'description', content: description});
+      this.meta.updateTag({name: 'ogdescription', content: description});
+      this.meta.updateTag({name: 'twitterdescription', content: description}); 
+    }
   }
 
   getRelativeTime(date: Date, update?: boolean, format?: string) {

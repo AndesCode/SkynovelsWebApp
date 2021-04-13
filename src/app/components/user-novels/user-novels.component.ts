@@ -23,7 +23,7 @@ export class UserNovelsComponent implements OnInit {
               private hs: HelperService) {}
 
   ngOnInit() {
-    this.hs.updateBrowserMeta('description', 'Catalogo de novelas de usuario', 'SkyNovels | Mis novelas');
+    this.hs.updateBrowserMeta('SkyNovels | Novelas de usuario', 'Catálogo de novelas de usuario','https://api.skynovels.net/img/banner1.jpg');
     this.us.getUserNovels().subscribe((data: any) => {
       this.userNovels = data.novels;
       this.userCollaborations = data.collaborations;

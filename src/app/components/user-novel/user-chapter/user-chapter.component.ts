@@ -78,8 +78,7 @@ export class UserChapterComponent implements OnInit {
               this.ns.getNovelChapterEdition(this.volume.chapters[this.volume.chapters.findIndex(x => x.id === Number(cid))].id)
               .subscribe((data: any) => {
                 this.chapter = data.chapter;
-                this.hs.updateBrowserMeta('description',
-                'Edición de capitulo ' + this.chapter.chp_title,  this.novel.nvl_title + ' | ' + this.chapter.chp_title);
+                this.hs.updateBrowserMeta(this.novel.nvl_title + ' | ' + this.chapter.chp_title, 'Edición de capitulo ' + this.chapter.chp_title);
                 this.location.replaceState('/mis-novelas/' + this.novel.id + '/' +
                 this.novel.nvl_name + '/' + this.volume.id + '/' + this.chapter.id + '/' + this.chapter.chp_name);
                 this.loading = false;

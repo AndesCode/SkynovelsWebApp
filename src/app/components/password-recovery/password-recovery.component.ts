@@ -45,7 +45,7 @@ export class PasswordRecoveryComponent implements OnInit {
   ngOnInit(): void {
     if (this.isBrowser) {
       this.urlToken = String(this.activatedRoute.snapshot.paramMap.get('token'));
-      this.hs.updateBrowserMeta('description', 'Restablecer contraseña', 'SkyNovels | Recuperación de contraseña');
+      this.hs.updateBrowserMeta('SkyNovels | Recuperación de contraseña', 'Apartado para restablecer la contraseña');
       this.us.passwordResetAccess(this.urlToken).subscribe((data: any) => {
         this.loading = false;
       }, error => {

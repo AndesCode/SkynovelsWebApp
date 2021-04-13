@@ -45,6 +45,7 @@ export class AdvertisementComponent implements OnInit {
       }
       this.getUser();
       this.loading = false;
+      this.hs.updateBrowserMeta('SkyNovels | ' + this.advertisement.adv_title, 'Anuncio de Skynovels, ' + this.advertisement.adv_title, 'https://api.skynovels.net/img/banner1.jpg');
     }, error => {
       this.router.navigate(['']);
     });

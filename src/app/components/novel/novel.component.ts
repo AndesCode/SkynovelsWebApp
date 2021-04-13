@@ -90,7 +90,6 @@ export class NovelComponent implements OnInit {
     this.ns.getNovel(urlId, 'reading').subscribe((data: any) => {
       this.novel = data.novel[0];
       this.novel.user_bookmark = null;
-      this.hs.updateBrowserMeta('description', this.novel.nvl_content, this.novel.nvl_title);
       this.calculateNovelRatingAvarage();
       this.novel.date_data = this.hs.getRelativeTime(this.novel.nvl_last_update);
       if (this.novel.nvl_status === 'Finished') {
@@ -105,6 +104,7 @@ export class NovelComponent implements OnInit {
       if (this.novel.image && this.novel.image.length > 0) {
         this.imgURL = this.apiURL + '/api/get-image/' + this.novel.image + '/novels/false';
       }
+      this.hs.updateBrowserMeta(this.novel.nvl_title, this.novel.nvl_content, this.imgURL);
       for (const novelRating of  this.novel.novel_ratings) {
         novelRating.show_more = false;
         novelRating.edition = false;

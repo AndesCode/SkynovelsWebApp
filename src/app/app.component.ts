@@ -35,11 +35,13 @@ export class AppComponent implements AfterViewInit {
                   navEndEvents$.subscribe((event: NavigationEnd) => {
                     const canonicalUrl = document.querySelector('[rel="canonical"]');
                     if (event.urlAfterRedirects === '/') {
-                      this.meta.updateTag({content: this.prod.url}, 'name=urlskn');
                       canonicalUrl.setAttribute('href', this.prod.url + '/');
+                      this.meta.updateTag({name: 'ogurl', content: this.prod.url});
+                      this.meta.updateTag({name: 'twitterurl', content: this.prod.url}); 
                     } else {
-                      this.meta.updateTag({content: this.prod.url + event.urlAfterRedirects}, 'name=urlskn');
                       canonicalUrl.setAttribute('href', this.prod.url + event.urlAfterRedirects + '/');
+                      this.meta.updateTag({name: 'ogurl', content: this.prod.url + event.urlAfterRedirects});
+                      this.meta.updateTag({name: 'twitterurl', content: this.prod.url + event.urlAfterRedirects}); 
                     }
                     const gtmTag = {
                       event: 'page',
@@ -51,6 +53,7 @@ export class AppComponent implements AfterViewInit {
               }
 
   ngAfterViewInit() {
+
     this.hs.invokeExternalFunction.subscribe((data: any) => {
       if (data === 'toggleTheme') {
         this.toggleTheme();

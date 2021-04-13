@@ -23,7 +23,7 @@ export class BookmarksComponent implements OnInit {
               private hs: HelperService) { }
 
   ngOnInit(): void {
-    this.hs.updateBrowserMeta('description', 'novelas en lista de lectura', 'SkyNovels | Lista de lectura');
+    this.hs.updateBrowserMeta('SkyNovels | Lista de lectura', 'Novelas en lista de lectura de usuario', 'https://api.skynovels.net/img/banner1.jpg');
     this.hs.invokeExternalFunction.subscribe((data: any) => {
       if (data === 'reloadUser') {
         this.router.navigate(['']);

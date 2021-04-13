@@ -102,7 +102,6 @@ export class UserNovelComponent implements OnInit {
         if (novelData.authorized_user) {
           this.user = novelData.authorized_user;
           this.novel = novelData.novel[0];
-          this.hs.updateBrowserMeta('description', this.novel.nvl_content, this.novel.nvl_title);
           this.location.replaceState('/mis-novelas/' + this.novel.id + '/' + this.novel.nvl_name);
           this.novel.genres = this.novel.genres.map(genre => genre.id);
           this.collaborators = this.novel.collaborators.slice();
@@ -112,6 +111,7 @@ export class UserNovelComponent implements OnInit {
           if (this.novel.image && this.novel.image.length > 0) {
             this.imgURL = this.apiURL + '/api/get-image/' + this.novel.image + '/novels/false';
           }
+          this.hs.updateBrowserMeta(this.novel.nvl_title, this.novel.nvl_content, this.imgURL);
           this.evaluateEditableNovelStatus();
         } else {
           this.router.navigate(['mis-novelas']);
