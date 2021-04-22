@@ -45,8 +45,6 @@
             <div class="swiper-button-next" *ngIf="!mobile"></div>
         </div>
 
-        <app-ads></app-ads>
-
         <!-- -------------------------------------------------------------------------- 
                                    Ultimas añadidas                               
      --------------------------------------------------------------------------  -->
@@ -63,6 +61,33 @@
                                 <img [src]="recentNovel.image | noimage" alt=" ">
                             </div>
                             <strong style="word-wrap: break-word;">{{ps.setContent(recentNovel.nvl_title, 40)}}</strong>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="swiper-button-prev" *ngIf="!mobile"></div>
+            <div class="swiper-button-next" *ngIf="!mobile"></div>
+        </div>
+
+        <app-ads></app-ads>
+
+        <!-- -------------------------------------------------------------------------- 
+                                   Novelas Finalizadas                               
+     --------------------------------------------------------------------------  -->
+
+        <div class="skn-home-title">
+            <h2>Novelas Finalizadas</h2>
+        </div>
+        <div class="swiper-container" [swiper]="swiperRecentsConfig">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide skn-swiper-novel-slide" *ngFor="let finishedNovel of finishedNovels">
+                    <a class="unstyled-a-tag" [routerLink]="['/novelas', finishedNovel.id, finishedNovel.nvl_name]">
+                        <div class="skn-swiper-novel-slide-content skn-secondary skn-secondary-hover">
+                            <div class="skn-swiper-novel-slide-img-container">
+                                <img [src]="finishedNovel.image | noimage" alt=" ">
+                            </div>
+                            <strong style="word-wrap: break-word;">{{ps.setContent(finishedNovel.nvl_title, 40)}}</strong>
                         </div>
                     </a>
                 </div>

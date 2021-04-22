@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit {
   // end yieldlove blocks
 
   recentNovels: Array<Novel>;
+  finishedNovels: Array<Novel>;
   advertisements: Array<Advertisement>;
   topNovels: Array<Novel>;
   recomendedNovel: Novel;
@@ -120,6 +121,7 @@ export class HomeComponent implements OnInit {
     this.ns.getHome().subscribe((data: any) => {
         this.topNovels = data.topNovels;
         this.recentNovels = data.recentNovels;
+        this.finishedNovels = data.finishedNovels;
         this.recomendedNovel = data.recommendedNovel[0];
         if (this.recomendedNovel) {
           this.recomendedNovel.date_data = this.hs.getRelativeTime(this.recomendedNovel.nvl_last_update);
