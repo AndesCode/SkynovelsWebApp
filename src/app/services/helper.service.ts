@@ -41,17 +41,20 @@ export class HelperService {
       this.title.setTitle(title);
       this.meta.updateTag({name: 'title', content: title});
       this.meta.updateTag({name: 'ogtitle', content: title});
-      this.meta.updateTag({name: 'twittertitle', content: title}); 
+      this.meta.updateTag({name: 'twitter:title', content: title});
+      this.meta.updateTag({name: 'gsetitle', content: title}); 
     }
     if (image) {
       this.meta.updateTag({name: 'image', content: image});
       this.meta.updateTag({name: 'ogdimage', content: image});
-      this.meta.updateTag({name: 'twitterimage', content: image}); 
+      this.meta.updateTag({name: 'twitter:image', content: image});
+      this.meta.updateTag({name: 'gseimage', content: image});
     }
     if (description) {
       this.meta.updateTag({name: 'description', content: description});
       this.meta.updateTag({name: 'ogdescription', content: description});
-      this.meta.updateTag({name: 'twitterdescription', content: description}); 
+      this.meta.updateTag({name: 'twitter:description', content: description});
+      this.meta.updateTag({name: 'gsedescription', content: description});
     }
   }
 

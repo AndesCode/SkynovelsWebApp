@@ -37,11 +37,11 @@ export class AppComponent implements AfterViewInit {
                     if (event.urlAfterRedirects === '/') {
                       canonicalUrl.setAttribute('href', this.prod.url + '/');
                       this.meta.updateTag({name: 'ogurl', content: this.prod.url});
-                      this.meta.updateTag({name: 'twitterurl', content: this.prod.url}); 
+                      this.meta.updateTag({name: 'twitter:url', content: this.prod.url}); 
                     } else {
                       canonicalUrl.setAttribute('href', this.prod.url + event.urlAfterRedirects + '/');
                       this.meta.updateTag({name: 'ogurl', content: this.prod.url + event.urlAfterRedirects});
-                      this.meta.updateTag({name: 'twitterurl', content: this.prod.url + event.urlAfterRedirects}); 
+                      this.meta.updateTag({name: 'twitter:url', content: this.prod.url + event.urlAfterRedirects}); 
                     }
                     const gtmTag = {
                       event: 'page',
