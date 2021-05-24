@@ -34,8 +34,8 @@ export class NovelComponent implements OnInit {
   apiURL: string;
   public imgURL: any  = '../../../assets/img/noimage.jpg';
   test = 0;
-  /*queryRating: string = null;
-  queryReply: string = null;*/
+  queryRating: string = null;
+  queryReply: string = null;
 
     constructor(private ns: NovelsService,
                 private activatedRoute: ActivatedRoute,
@@ -78,7 +78,7 @@ export class NovelComponent implements OnInit {
       }
     });
     const urlId = Number(this.activatedRoute.snapshot.paramMap.get('nid'));
-    /*this.activatedRoute.queryParamMap.subscribe((params: any) => {
+    this.activatedRoute.queryParamMap.subscribe((params: any) => {
       console.log(params.params);
       if (params.params.rating) {
         this.queryRating = params.params.rating;
@@ -86,7 +86,7 @@ export class NovelComponent implements OnInit {
       if (params.params.reply) {
         this.queryReply = params.params.reply;
       }
-    });*/
+    });
     this.ns.getNovel(urlId, 'reading').subscribe((data: any) => {
       this.novel = data.novel[0];
       this.novel.user_bookmark = null;
@@ -126,7 +126,7 @@ export class NovelComponent implements OnInit {
       this.location.replaceState('/novelas/' + this.novel.id + '/' + this.novel.nvl_name);
       this.loading = false;
 
-      /*if (this.queryRating !== null) {
+      if (this.queryRating !== null) {
         setTimeout(() => {
           console.log('hola');
           console.log('rating_' + this.queryRating)
@@ -140,7 +140,7 @@ export class NovelComponent implements OnInit {
           }
         }, 500);
 
-      }*/
+      }
     }, error => {
       this.ps.openMatSnackBar(this.errorSnackRef);
       this.errorSnackMessage = error.error.message;

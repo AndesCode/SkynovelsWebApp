@@ -49,7 +49,7 @@
                     </mat-card>
                 </mat-menu>
             </div>
-            <!--<div class="skn-nav-link" *ngIf="us.userIsLoged()">
+            <div class="skn-nav-link" *ngIf="us.userIsLoged()">
                 <a class="nav-link" [matMenuTriggerFor]="notifications" (click)="getUserNotifications()"><span class="material-icons md-30" matBadge="{{unreadNotifications}}" matBadgeSize="small" [matBadgeHidden]="notificationBadgehidden">notifications</span></a>
                 <mat-menu #notifications="matMenu">
                     <div style="padding: 8px;" *ngIf="userNotifications.length === 0">
@@ -72,7 +72,7 @@
                         </a>
                     </mat-card>
                 </mat-menu>
-            </div>-->
+            </div>
             <div class="skn-nav-link">
                 <a class="nav-link" (click)="toggleTheme()">
                     <span class="material-icons md-30 hide-light">brightness_2</span>

@@ -5,7 +5,6 @@ import { NovelsService } from '../../services/novels.service';
 import { HelperService } from '../../services/helper.service';
 import { Advertisement, Novel } from '../../models/models';
 import { PageService } from '../../services/page.service';
-import { Block1, Block2, Block3, Block4, Block5 } from 'src/app/config/yieldlove';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
@@ -49,23 +48,6 @@ export class HomeComponent implements OnInit {
       disableOnInteraction: true,
     },
   };
-  // yieldlove blocks
-  block1Desktop: string;
-  block1Mobile: string;
-  block1Div: string;
-  block2Desktop: string;
-  block2Mobile: string;
-  block2Div: string;
-  block3Desktop: string;
-  block3Mobile: string;
-  block3Div: string;
-  block4Desktop: string;
-  block4Mobile: string;
-  block4Div: string;
-  block5Desktop: string;
-  block5Mobile: string;
-  block5Div: string;
-  // end yieldlove blocks
 
   recentNovels: Array<Novel>;
   finishedNovels: Array<Novel>;
@@ -88,18 +70,8 @@ export class HomeComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     public hs: HelperService,
     public ps: PageService,
-    private block1: Block1,
-    private block2: Block2,
-    private block3: Block3,
-    private block4: Block4,
-    private block5: Block5
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
-    this.block1Desktop = block1.scriptDesktop
-    this.block1Mobile = block1.scriptMobile
-    this.block1Div = block1.divScript
-    this.block2Desktop = block2.scriptDesktop
-    this.block2Div = block2.divScript
   }
 
   ngOnInit() {

@@ -26,14 +26,12 @@ import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { UserActivationComponent } from './components/user-activation/user-activation.component';
 import { CloseDialogOnRouteService } from './services/close-dialog-on-route.service';
-import { AddTestOneComponent } from './components/add-test-one/add-test-one.component';
-//import { NotificationsComponent } from './components/notifications/notifications.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 // TODO: forum proyect
 /*import { ForumComponent } from './components/forum/forum.component';
 import { ForumManagementComponent } from './components/admin-panel/forum-management/forum-management.component';
 import { ForumCategoryComponent } from './components/forum/forum-category/forum-category.component';
 import { ForumPostComponent } from './components/forum/forum-category/forum-post/forum-post.component';*/
-import { AddTestTwoComponent } from './components/add-test-two/add-test-two.component';
 
 const routes: Routes = [
   // home
@@ -90,10 +88,7 @@ const routes: Routes = [
   // User activation
   { path: 'activacion-de-usuario/:key', component: UserActivationComponent },
   // notifications
-  // { path: 'notificaciones', component: NotificationsComponent, canActivate: [GuardService] },
-  // add test
-  { path: 'ad-test-one', component: AddTestOneComponent },
-  { path: 'ad-test-two', component: AddTestTwoComponent },
+  { path: 'notificaciones', component: NotificationsComponent, canActivate: [GuardService] },
   // redirects
   { path: '**', pathMatch: 'full', redirectTo: '' }
 ];

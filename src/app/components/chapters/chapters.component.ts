@@ -9,7 +9,6 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Novel, User } from 'src/app/models/models';
 import { PageService } from '../../services/page.service';
 import { Chapter } from '../../models/models';
-import { Block1, Block2, Block3, Block4, Block5 } from 'src/app/config/yieldlove';
 import { fromEvent } from 'rxjs';
 
 @Component({
@@ -49,33 +48,10 @@ export class ChaptersComponent implements AfterViewInit {
   url: string;
   canLoadPage = true;
 
-    // yieldlove blocks
-    block1Desktop: string;
-    block1Mobile: string;
-    block1Div: string;
-    block2Desktop: string;
-    block2Mobile: string;
-    block2Div: string;
-    block3Desktop: string;
-    block3Mobile: string;
-    block3Div: string;
-    block4Desktop: string;
-    block4Mobile: string;
-    block4Div: string;
-    block5Desktop: string;
-    block5Mobile: string;
-    block5Div: string;
-    // end yieldlove blocks
-
   @ViewChildren('chaptersElement') chaptersElementRef;
 
 
   constructor(private ns: NovelsService,
-              private block1: Block1,
-              private block2: Block2,
-              private block3: Block3,
-              private block4: Block4,
-              private block5: Block5,
               private us: UsersService,
               public hs: HelperService,
               public ps: PageService,
