@@ -7,6 +7,13 @@ import { Meta } from '@angular/platform-browser';
 import { Prod } from './config/config';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
+// Obtenemos el valor de la variable declarada en el index.html llamada "canRunAds"
+/*declare global {
+  interface Window {
+    canRunAds:any;
+  }
+}*/
+
 // ng generate component components/add-test-two --module=app.module
 
 @Component({
@@ -21,6 +28,8 @@ export class AppComponent implements AfterViewInit {
   scrollPosition = 0;
   isBrowser: boolean;
   isCopyPage: boolean;
+  adBlockActive: boolean;
+
   constructor(private hs: HelperService,
               private router: Router,
               private meta: Meta,
@@ -28,7 +37,6 @@ export class AppComponent implements AfterViewInit {
               private gtmService: GoogleTagManagerService,
               private renderer: Renderer2,
               @Inject(PLATFORM_ID) private platformId) {
-
                 this.isBrowser = isPlatformBrowser(this.platformId);
                 if (this.isBrowser) {
                   const navEndEvents$ = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
@@ -60,6 +68,11 @@ export class AppComponent implements AfterViewInit {
       }
     });
     if (this.isBrowser) {
+      /*if (window.canRunAds === undefined) {
+        this.adBlockActive = true;
+      } else {
+        this.adBlockActive = false;
+      }*/
       if (!window.location.href.includes('skynovels.net') && !window.location.href.includes('localh')) {
         this.isCopyPage = true;
       }

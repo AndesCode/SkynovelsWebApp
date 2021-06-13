@@ -1,4 +1,15 @@
 <section id="content-container" class="skn-body" *ngIf="!isCopyPage">
+    <div class="skn-pre" *ngIf="adBlockActive">
+        <div class="skn-pro">
+            <p style="font-size: 32px; color: red; margin-bottom: 30px;">¡Desactiva Ad-Block!</p>
+            <p style="color: red;">
+                Nuestro sitio web obtiene dinero a base de anuncios, sin esto, sería imposible seguir trabajando para mantener la pagina nutrida de contenido.
+            </p>
+            <p style="color: red;">
+                Por favor, desactiva tu bloqueador de anuncios.
+            </p>
+        </div>
+    </div>
     <header class="app-nav-bar skn-main" *ngIf="currentComponent !== 'ChaptersComponent'">
         <app-navbar></app-navbar>
     </header>
