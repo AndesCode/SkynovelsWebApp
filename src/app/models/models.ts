@@ -12,7 +12,7 @@ export class Novel {
     nvl_translator_eng?: string;
     nvl_translator?: string;
     nvl_rating?: number;
-    nvl_publication_date?: Date;
+    nvl_publication_date?: string;
     nvl_chapters?: number;
     nvl_rated?: boolean;
     nvl_recommended?: boolean;
@@ -23,9 +23,9 @@ export class Novel {
     novel_ratings?: Array<NovelRating>;
     collaborators?: Array<any>;
     author?: any;
-    createdAt?: Date;
-    updatedAt?: Date;
-    nvl_last_update?: Date;
+    createdAt?: string;
+    updatedAt?: string;
+    nvl_last_update?: string;
     user_bookmark?: Bookmark;
     date_data?: any;
     nvl_last_chapter?: Chapter;
@@ -44,8 +44,8 @@ export class NovelRating {
     id: number;
     likes?: Array<Like>;
     user_id: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: string;
+    updatedAt?: string;
     rate_value?: number;
     user_login?: string;
     replys?: Array<Reply>;
@@ -75,8 +75,8 @@ export class User {
     user_forum_auth?: 'Active' | 'Disabled';
     user_description?: string;
     image?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: string;
+    updatedAt?: string;
     token?: string;
     forum_posts?: Array<any>;
     novels?: Array<any>;
@@ -111,8 +111,8 @@ export class Bookmark {
     chp_id: number;
     chp_name?: string;
     user_id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export class Invitation {
@@ -122,8 +122,8 @@ export class Invitation {
     invitation_to_id?: number;
     invitation_novel?: number;
     invitation_status?: 'Active' | 'Confirmed' | 'Rejected';
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: string;
+    updatedAt?: string;
     invitation_from_user_image?: string;
     invitation_from_login?: string;
     invitation_nvl_title?: string;
@@ -150,8 +150,8 @@ export class Advertisement {
     liked?: boolean;
     like_id?: number;
     date_data?: any;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export class Like {
@@ -182,8 +182,8 @@ export class Chapter {
     chp_status?: 'Active' | 'Disabled';
     chp_comment_status?: string;
     chp_name?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: string;
+    updatedAt?: string;
     chp_comment_count?: number;
     comments?: Array<Comment>;
     comment?: string;
@@ -212,8 +212,8 @@ export class Comment {
     replys?: Array<Reply>;
     likes?: Array<Like>;
     likes_count?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: string;
+    updatedAt?: string;
     edition?: boolean;
     show_more?: boolean;
     show_replys?: boolean;
@@ -234,8 +234,8 @@ export class Reply {
     novel_rating_id?: number;
     likes?: Array<Like>;
     likes_count?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: string;
+    updatedAt?: string;
     edition?: boolean;
     show_more?: boolean;
     show_replys?: boolean;

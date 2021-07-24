@@ -36,11 +36,13 @@ export class MobileNavbarComponent implements OnInit {
       }
     });
 
-    fromEvent(window, 'popstate').subscribe((e) => {
-      if (this.open) {
-        this.closeNav(true);
-      } 
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      fromEvent(window, 'popstate').subscribe((e) => {
+        if (this.open) {
+          this.closeNav(true);
+        } 
+      });
+    }
   }
 
   openNav() {

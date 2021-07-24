@@ -92,8 +92,24 @@ export class UserChapterComponent implements OnInit {
           } else {
             this.chapter = new Chapter();
             this.chapter.nvl_id = this.novel.id;
-            this.location.replaceState('/mis-novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' + this.volume.id + '/nuevo');
-            this.chapter.chp_status = 'Disabled';
+            this.location.replaceState('/mis-novelas/' + this.novel.id + '/' + this.novel.nvl_name + '/' + this.volume.id + '/nuevo'); 
+            if(this.novel.nvl_status === 'Active' || this.novel.nvl_status === 'Finished') {
+              this.chapter.chp_status = 'Active';
+            } else {
+              this.chapter.chp_status = 'Disabled';
+            }
+            const volumesWithChapters = [];
+            for(const volume of this.novel.volumes) {
+              if (volume.chapters.length > 0) {
+                volumesWithChapters.push(volume)
+              }
+            }
+            if (volumesWithChapters.length > 0) {
+              const lastTranslator = volumesWithChapters[volumesWithChapters.length - 1].chapters[volumesWithChapters[volumesWithChapters.length - 1].chapters.length - 1].chp_translator;
+              if (lastTranslator !== null && lastTranslator !== undefined && lastTranslator.length > 0) {
+                this.chapter.chp_translator = lastTranslator;
+              }
+            }
             this.chapter.vlm_id = this.volume.id;
             this.chapter.chp_content = '';
             this.chapter.chp_review = '';
@@ -213,7 +229,9 @@ export class UserChapterComponent implements OnInit {
       this.ns.deleteChapter(this.chapter.id).subscribe((data: any) => {
         this.uploading = false;
         this.ps.dialogCloseAll();
-        this.router.navigate(['mis-novelas', this.novel.id, this.novel.nvl_name]);
+        setTimeout(() => {
+          this.router.navigate(['mis-novelas', this.novel.id, this.novel.nvl_name]);
+        }, 300);
       });
     } else {
       this.ps.openMatSnackBar(this.errorSnackRef);

@@ -13,7 +13,7 @@ export class AdsComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver,) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {/*
     this.breakpointObserver.observe('(max-width: 500px)').subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.mobile = true;
@@ -26,6 +26,6 @@ export class AdsComponent implements OnInit {
     } else {
       this.adBlock2 = true
     }
-  }
+  */}
 
 }

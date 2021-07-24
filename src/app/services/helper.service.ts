@@ -58,15 +58,15 @@ export class HelperService {
     }
   }
 
-  getRelativeTime(date: Date, update?: boolean, format?: string) {
-    if (date === null || date === undefined || Object.prototype.toString.call(date) === '[object Date]') {
+  getRelativeTime(dateString: string, update?: boolean, format?: string) {
+    if (dateString === null || dateString === undefined || !moment(dateString, true).isValid()) {
       const dateDataEmpty =  {
         seconds: 0,
         message: 'Sin datos'
       };
       return dateDataEmpty;
     }
-    date = new Date(moment.utc(date).format());
+    const date = new Date(dateString)
     const today = new Date();
     const creationTimeDiff = Math.abs(today.getTime() - (date.getTime() - 3600000));
     const dateDiffSeconds = Math.ceil(((creationTimeDiff) / 1000));
@@ -124,11 +124,11 @@ export class HelperService {
         }
       });
     }
-    let sknmoment: any = moment(date);
-    sknmoment = moment((sknmoment).fromNow());
+    //let sknmoment: any = moment(date);
+    let sknmoment: any = moment(dateString);
     const dateData =  {
       seconds: dateDiffSeconds,
-      message: sknmoment._i
+      message: sknmoment.fromNow()
     };
     return dateData;
   }
