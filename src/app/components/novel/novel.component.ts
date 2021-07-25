@@ -131,7 +131,6 @@ export class NovelComponent implements OnInit {
       // Notificaciones
       if (this.queryRating !== null) {
         setTimeout(() => {
-          console.log('hola');
           console.log('rating_' + this.queryRating)
           const ratingElement = document.getElementById('rating_' + this.queryRating);
           console.log(ratingElement);

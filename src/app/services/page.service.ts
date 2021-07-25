@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { isPlatformBrowser } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,7 @@ export class PageService {
               private dialog: MatDialog,
               private matSnackBar: MatSnackBar,
               private bottomSheet: MatBottomSheet,
+              private activatedRoute: ActivatedRoute,
               @Inject(PLATFORM_ID) private platformId) {
                 if (isDevMode()) {
                   this.urlCredentialsNovelsDb = this.dev.urlCredentialsNovelsDb;
@@ -80,7 +82,6 @@ export class PageService {
   getBottomSheetState() {
     return this.bottomSheetOpened
   }
-  
 
   createCommentFunction(user: User, object: any, objectType: 'chp_id' | 'adv_id') {
     const comment: Comment = {

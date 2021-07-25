@@ -17,6 +17,8 @@ export class AdvertisementComponent implements OnInit {
   loading = true;
   user: User;
   componentName = 'AdvertisementComponent';
+  queryComment: string = null;
+  queryReply: string = null;
 
   constructor(private us: UsersService,
               public ps: PageService,
@@ -33,6 +35,18 @@ export class AdvertisementComponent implements OnInit {
     });
 
     const id = this.activatedRoute.snapshot.paramMap.get('id');
+    // Notificaciones
+    this.activatedRoute.queryParamMap.subscribe((params: any) => {
+      console.log(params.params);
+      if (params.params.comment) {
+        this.queryComment = params.params.comment;
+        console.log(this.queryComment);
+      }
+      if (params.params.reply) {
+        this.queryReply = params.params.reply;
+        console.log(this.queryReply);
+      }
+    });
     this.ps.getAdvertisement(Number(id)).subscribe((data: any) => {
       this.advertisement = data.advertisement;
       this.location.replaceState('/noticias/' + this.advertisement.id + '/' + this.advertisement.adv_name);
@@ -46,6 +60,27 @@ export class AdvertisementComponent implements OnInit {
       this.getUser();
       this.loading = false;
       this.hs.updateBrowserMeta('SkyNovels | ' + this.advertisement.adv_title, 'Anuncio de Skynovels, ' + this.advertisement.adv_title, 'https://api.skynovels.net/img/banner1.jpg');
+            // Notificaciones
+            if (this.queryComment !== null) {
+              setTimeout(() => {
+                console.log('comment_' + this.queryComment)
+                const ratingElement = document.getElementById('comment_' + this.queryComment);
+                console.log(ratingElement);
+                
+                if (this.queryReply !== null) {
+                  const comment = this.advertisement.comments[this.advertisement.comments.findIndex(x => x.id === Number(this.queryComment))];
+                  comment.show_replys = true;
+                  this.ps.getReplysFunction(this.user, comment, 'comment_id', 'reply_' + this.queryReply);
+                  setTimeout(() => {
+                  const replyElement = document.getElementById('reply_' + this.queryReply);
+                  replyElement.scrollIntoView();
+                  }, 200);
+                } else {
+                  ratingElement.scrollIntoView();
+                }
+              }, 500);
+      
+            }
     }, error => {
       this.router.navigate(['']);
     });

@@ -1,4 +1,4 @@
-<div class="skn-nvl-user-rating skn-secondary" *ngFor="let comment of comments">
+<div class="skn-nvl-user-rating skn-secondary" *ngFor="let comment of comments" id="comment_{{comment.id}}">
     <a [routerLink]="['/perfil', comment.user_id, comment.user_login]" class="fit-height-content">
         <div class="skn-user-image">
             <img [src]="comment.image | noUserImage" alt="">
@@ -78,7 +78,7 @@
                     <button class="skn-nvl-rating-comment-textarea-button" mat-raised-button color="primary" (click)="ps.createReplyFunction(user, comment, 'comment_id')" [disabled]="comment.reply === null || comment.reply.length < 2">Publicar</button>
                 </div>
             </form>
-            <div class="skn-nvl-user-rating" *ngFor="let reply of comment.replys" style="padding: 0px!important;">
+            <div class="skn-nvl-user-rating" *ngFor="let reply of comment.replys" style="padding: 0px!important;" id="reply_{{reply.id}}">
                 <a [routerLink]="['/perfil', reply.user_id, reply.user_login]" class="fit-height-content">
                     <div class="skn-user-image">
                         <img [src]="reply.image | noUserImage" alt="">
