@@ -37,14 +37,11 @@ export class AdvertisementComponent implements OnInit {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     // Notificaciones
     this.activatedRoute.queryParamMap.subscribe((params: any) => {
-      console.log(params.params);
       if (params.params.comment) {
         this.queryComment = params.params.comment;
-        console.log(this.queryComment);
       }
       if (params.params.reply) {
         this.queryReply = params.params.reply;
-        console.log(this.queryReply);
       }
     });
     this.ps.getAdvertisement(Number(id)).subscribe((data: any) => {
@@ -63,9 +60,7 @@ export class AdvertisementComponent implements OnInit {
             // Notificaciones
             if (this.queryComment !== null) {
               setTimeout(() => {
-                console.log('comment_' + this.queryComment)
-                const ratingElement = document.getElementById('comment_' + this.queryComment);
-                console.log(ratingElement);
+                const commentElement = document.getElementById('comment_' + this.queryComment);
                 
                 if (this.queryReply !== null) {
                   const comment = this.advertisement.comments[this.advertisement.comments.findIndex(x => x.id === Number(this.queryComment))];
@@ -76,7 +71,7 @@ export class AdvertisementComponent implements OnInit {
                   replyElement.scrollIntoView();
                   }, 200);
                 } else {
-                  ratingElement.scrollIntoView();
+                  commentElement.scrollIntoView();
                 }
               }, 500);
       

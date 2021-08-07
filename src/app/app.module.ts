@@ -85,6 +85,7 @@ import { LoadingErrorComponent } from './components/loading-error/loading-error.
 import { MarkdownModule } from 'ngx-markdown';
 import { Dev, Prod } from './config/config';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ChapterCommentComponent } from './components/chapter-comment/chapter-comment.component';
 
 const config: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -140,7 +141,8 @@ const config: SwiperConfigInterface = {
     LoadingErrorComponent,
     CommentsComponent,
     AdsComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    ChapterCommentComponent
   ],
   imports: [
     MarkdownModule.forRoot(),

@@ -187,6 +187,8 @@ export class Chapter {
     chp_comment_count?: number;
     comments?: Array<Comment>;
     comment?: string;
+    nvl_title?: string;
+    nvl_name?: string;
     new?: boolean;
     date_data?: any;
 }

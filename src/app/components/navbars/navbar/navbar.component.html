@@ -57,7 +57,7 @@
                         <p style="margin: unset;">No tienes notificaciones</p>
                     </div>
                     <mat-card class="skn-invitation-card" *ngFor="let userNotification of userNotifications" style="margin-bottom: 0.5rem; padding: 5px;" [ngClass]="{'skn-secondary': userNotification.readed === 0}">
-                        <a routerLink="{{userNotification.url}}" class="unstyled-a-tag" style="cursor: pointer;">
+                        <a [routerLink]="userNotification.url" [queryParams]="userNotification.params" class="unstyled-a-tag" style="cursor: pointer;">
                             <div class="d-flex">
                                 <div mat-card-avatar style="margin: 4px;">
                                     <img [src]="userNotification.user_image | noUserImage" alt="">

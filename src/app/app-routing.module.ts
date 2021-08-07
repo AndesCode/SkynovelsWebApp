@@ -27,6 +27,7 @@ import { PasswordRecoveryComponent } from './components/password-recovery/passwo
 import { UserActivationComponent } from './components/user-activation/user-activation.component';
 import { CloseDialogOnRouteService } from './services/close-dialog-on-route.service';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ChapterCommentComponent } from './components/chapter-comment/chapter-comment.component';
 // TODO: forum proyect
 /*import { ForumComponent } from './components/forum/forum.component';
 import { ForumManagementComponent } from './components/admin-panel/forum-management/forum-management.component';
@@ -83,6 +84,8 @@ const routes: Routes = [
   { path: 'noticias/:id/:name', component: AdvertisementComponent },
   // Bookmarks
   { path: 'lista-de-lectura', component: BookmarksComponent, canActivate: [GuardService] },
+  // Bookmarks
+  { path: 'comentarios-de-capitulo/:cid', component: ChapterCommentComponent },
   // Password recovery
   { path: 'nueva-contrasena/:token', component: PasswordRecoveryComponent },
   // User activation
