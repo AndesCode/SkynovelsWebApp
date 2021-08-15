@@ -43,7 +43,6 @@ export class NavbarComponent implements OnInit {
   isBrowser: boolean;
   unreadNotifications = 0;
   notificationBadgehidden = true;
-  userNotificationsRefresh: any;
 
   constructor(public us: UsersService,
               public as: AdminService,
@@ -86,7 +85,6 @@ export class NavbarComponent implements OnInit {
       if (Number(this.unreadNotifications) > 0) {
         this.notificationBadgehidden = false;
         this.userNotifications = [];
-        console.log(this.userNotifications);
       }
     })
 
@@ -277,12 +275,19 @@ export class NavbarComponent implements OnInit {
 
   // Notificaciones
 
+  hideNotificationsBadgeh() {
+    if (!this.notificationBadgehidden || this.userNotifications.length === 0) {
+      this.notificationBadgehidden = true;
+    } else {
+      return
+    }
+  }
+
   getUserNotifications() {
     if (!this.notificationBadgehidden || this.userNotifications.length === 0) {
       this.notificationBadgehidden = true;
       this.us.getUserNotifications().subscribe((data: any) => {
         this.userNotifications = data.notifications;
-        console.log(this.userNotifications);
       }, error => {
         this.openMatSnackBar(this.errorSnackRef);
         this.errorSnackMessage = error.error.message;

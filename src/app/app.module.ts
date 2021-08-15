@@ -34,6 +34,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 // Components
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbars/navbar/navbar.component';
@@ -179,6 +180,7 @@ const config: SwiperConfigInterface = {
     MatPaginatorModule,
     MatTableModule,
     ScrollingModule,
+    MatSlideToggleModule,
     // bootstrap
     NgbModule,
     // Installations

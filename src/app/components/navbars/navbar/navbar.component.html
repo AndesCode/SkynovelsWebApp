@@ -51,7 +51,7 @@
             </div>
             <!-- Notificaciones -->
             <div class="skn-nav-link" *ngIf="us.userIsLoged()">
-                <a class="nav-link" [matMenuTriggerFor]="notifications" (click)="getUserNotifications()"><span class="material-icons md-30" matBadge="{{unreadNotifications}}" matBadgeSize="small" [matBadgeHidden]="notificationBadgehidden">notifications</span></a>
+                <a class="nav-link" [matMenuTriggerFor]="notifications" (click)="getUserNotifications();"><span class="material-icons md-30" matBadge="{{unreadNotifications}}" matBadgeSize="small" [matBadgeHidden]="notificationBadgehidden">notifications</span></a>
                 <mat-menu #notifications="matMenu">
                     <div style="padding: 8px;" *ngIf="userNotifications.length === 0">
                         <p style="margin: unset;">No tienes notificaciones</p>
@@ -82,11 +82,18 @@
             </div>
         </div>
         <div class="skn-nav-links" *ngIf="mobile">
-            <div class="skn-nav-link">
+            <!--<div class="skn-nav-link">
                 <div class="nav-link" (click)="toggleTheme()">
                     <span class="material-icons md-30 hide-light">brightness_2</span>
                     <span class="material-icons md-30 hide-dark">brightness_7</span>
                 </div>
+            </div>-->
+            <div class="skn-nav-link" *ngIf="us.userIsLoged()">
+                <a class="nav-link" (click)="hideNotificationsBadgeh(); closeMobileNavbarForm();" routerLink="notificaciones">
+                    <span class="material-icons md-30" matBadge="{{unreadNotifications}}" matBadgeSize="small" [matBadgeHidden]="notificationBadgehidden">
+                        notifications
+                    </span>
+                </a>
             </div>
             <div class="skn-navbar-menu-toggler skn-text" (click)="openMobileNavbarForm()" *ngIf="!mobileNavbar" style="cursor: pointer;" aria-label="menu-toggler">
                 <span class="material-icons" unselectable="on">menu</span>

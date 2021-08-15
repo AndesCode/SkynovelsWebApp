@@ -307,7 +307,7 @@ body[theme=dark] {
         color: #6c7177;
     }
     .hide-light {
-        display: none;
+        display: none!important;
     }
     .top-title {
         color: #DB3836 !important;

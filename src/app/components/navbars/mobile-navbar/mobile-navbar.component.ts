@@ -15,6 +15,8 @@ import { fromEvent } from 'rxjs';
 })
 export class MobileNavbarComponent implements OnInit {
 
+  checked = false;
+
   constructor(public as: AdminService,
               private hs: HelperService,
               public us: UsersService,
@@ -34,6 +36,9 @@ export class MobileNavbarComponent implements OnInit {
       if (data === 'closeSideNavBar') {
         this.closeNav(true);
       }
+      if (data === 'getNotifications') {
+        this.closeNav(true);
+      }    
     });
 
     if (isPlatformBrowser(this.platformId)) {

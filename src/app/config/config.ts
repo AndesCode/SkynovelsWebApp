@@ -6,6 +6,7 @@ export class Dev {
     apiURL = 'http://localhost:3000';
     urlNovelsDb = 'http://localhost:3000/api';
     urlCredentialsNovelsDb = '/api';
+    ws = 'ws://localhost:3000';
 }
 
 export class Prod {
@@ -13,4 +14,5 @@ export class Prod {
     apiURL = 'https://api.skynovels.net';
     urlNovelsDb = 'https://api.skynovels.net/api';
     urlCredentialsNovelsDb = 'https://api.skynovels.net/api';
+    ws = 'ws://api.skynovels.net';
 }

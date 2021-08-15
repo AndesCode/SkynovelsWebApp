@@ -35,6 +35,14 @@ hr {
     margin-bottom: 0.5rem;
 }
 
+.hide-light {
+    color: #131E2C;
+}
+
+.hide-dark {
+    color: #d32f2f;
+}
+
 nav:hover {
     grid-template-columns: 15rem auto;
 }

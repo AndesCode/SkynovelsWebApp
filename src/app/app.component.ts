@@ -97,10 +97,12 @@ export class AppComponent implements AfterViewInit {
         this.themeToggled = true;
         document.body.setAttribute('theme', 'dark');
         localStorage.setItem('presence', 'dark');
+        this.hs.openExternalFunction('ThemeIsDark');
       } else {
         this.themeToggled = false;
         document.body.setAttribute('theme', 'light');
         localStorage.setItem('presence', 'light');
+        this.hs.openExternalFunction('ThemeIsLight');
       }
     } else {
       return;

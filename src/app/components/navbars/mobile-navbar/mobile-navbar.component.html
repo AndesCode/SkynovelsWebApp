@@ -1,10 +1,10 @@
 <nav style="top: 65px; position: fixed; z-index:9999; background-color: rgba(0,0,0,0.32); width: 100%; height: 100%;" *ngIf="open">
     <section class="skn-mobile-navbar skn-main">
         <div class="skn-mobile-navbar-content">
-            <div class="skn-mobile-navbar-header">
+            <!--<div class="skn-mobile-navbar-header">
                 <img src="../../../assets/img/simbolo_rojos.png" height="30">
             </div>
-            <hr>
+            <hr>-->
             <a routerLink="" class="unstyled-a-tag skn-mobile-navbar-section" (click)="closeNav(false)">
                 <span class="material-icons md-30">home</span>
                 <a routerLink="" class="nav-mobile-text">Inicio</a>
@@ -55,6 +55,12 @@
                 <p class="nav-mobile-text">Cerrar sesión</p>
             </div>
             <hr *ngIf="us.userIsLoged()">
+            <div class="skn-mobile-navbar-section" (click)="toggleTheme()">
+                <span class="material-icons md-30 hide-light">brightness_2</span>
+                <span class="material-icons md-30 hide-dark">brightness_7</span>
+                <p class="nav-mobile-text">Apariencia</p>
+            </div>
+            <hr>
         </div>
     </section>
     <div class="skn-mobile-navbar-disabled-content" (click)="closeNav(true)">
