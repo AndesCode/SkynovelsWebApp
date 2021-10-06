@@ -14,5 +14,5 @@ export class Prod {
     apiURL = 'https://api.skynovels.net';
     urlNovelsDb = 'https://api.skynovels.net/api';
     urlCredentialsNovelsDb = 'https://api.skynovels.net/api';
-    ws = 'ws://api.skynovels.net';
+    ws = 'wss://api.skynovels.net';
 }

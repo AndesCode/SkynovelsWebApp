@@ -10,7 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Invitation } from 'src/app/models/models';
 import { isPlatformBrowser } from '@angular/common';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { WebSocketService } from '../../../services/web-socket.service';
+// import { WebSocketService } from '../../../services/web-socket.service';
+import { PageService } from '../../../services/page.service';
 
 
 @Component({
@@ -53,7 +54,8 @@ export class NavbarComponent implements OnInit {
               public el: ElementRef,
               public dialog: MatDialog,
               public bottomSheet: MatBottomSheet,
-              private ws: WebSocketService,
+              // private ws: WebSocketService,
+              public ps: PageService,
               @Inject(PLATFORM_ID) private platformId) {
 
               this.isBrowser = isPlatformBrowser(this.platformId);
@@ -80,13 +82,16 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.ws.listen('userNotificationEvent').subscribe((data: any)=> {
-      this.unreadNotifications = data.user_unread_notifications_count;
-      if (Number(this.unreadNotifications) > 0) {
-        this.notificationBadgehidden = false;
-        this.userNotifications = [];
-      }
-    })
+    /*if(this.isBrowser) {
+      this.ws.listen('userNotificationEvent').subscribe((data: any)=> {
+        this.unreadNotifications = data.user_unread_notifications_count;
+        if (Number(this.unreadNotifications) > 0) {
+          this.notificationBadgehidden = false;
+          this.userNotifications = [];
+        }
+      })
+    }*/
+
 
     if(this.us.userIsLoged()) {
       this.getUnreadNotifications();
@@ -150,7 +155,9 @@ export class NavbarComponent implements OnInit {
         this.registerCompleted = false;
         this.loginFormLoading = false;
         this.loginForm.reset();
-        this.ws.emit('login', this.us.getUserLoged().id);
+        /*if(this.isBrowser) {
+          this.ws.emit('login', this.us.getUserLoged().id);
+        }*/
         this.getUnreadNotifications();
       }, error => {
         this.openMatSnackBar(this.errorSnackRef);
@@ -208,10 +215,10 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.us.logOut().subscribe((data: any) => {
-      if (this.isBrowser) {
+      /*if (this.isBrowser) {
         this.ws.emit('logOut', this.us.getUserLoged().id);
         localStorage.removeItem('sknvl_s');
-      }
+      }*/
       if (this.currentComponent === 'UserNovelComponent'
       || this.currentComponent === 'UserNovelsComponent'
       || this.currentComponent === 'UserChapterComponent'
@@ -286,7 +293,7 @@ export class NavbarComponent implements OnInit {
   getUserNotifications() {
     if (!this.notificationBadgehidden || this.userNotifications.length === 0) {
       this.notificationBadgehidden = true;
-      this.us.getUserNotifications().subscribe((data: any) => {
+      this.us.getUserNotifications(true).subscribe((data: any) => {
         this.userNotifications = data.notifications;
       }, error => {
         this.openMatSnackBar(this.errorSnackRef);
@@ -308,7 +315,6 @@ export class NavbarComponent implements OnInit {
   }
 
   goToNotification(url: string) {
-    console.log(url)
     this.router.navigate([encodeURIComponent(url)]);
   }
 

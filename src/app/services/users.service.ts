@@ -222,8 +222,13 @@ export class UsersService {
     return this.http.put(url , invitation, this.GlobalhttpOptions);
   }
 
-  getUserNotifications() {
-    const url = `${ this.urlNovelsDb }/get-user-notifications`;
+  getUserNotifications(limit: boolean) {
+    let url: string;
+    if (limit) {
+      url = `${ this.urlNovelsDb }/get-user-notifications/true`;
+    } else {
+      url = `${ this.urlNovelsDb }/get-user-notifications/false`;
+    } 
     return this.http.get(url, this.GlobalhttpOptions);
   }
 

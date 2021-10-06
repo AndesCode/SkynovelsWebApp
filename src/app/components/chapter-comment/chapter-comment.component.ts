@@ -94,7 +94,7 @@ export class ChapterCommentComponent implements OnInit {
       comment.chapter_comment_reply = null;
       comment.replys = [];
       comment.reply = null;
-      comment.replys_count = 0;
+      // comment.replys_count = 0;
       if (this.user) {
         for (const commentLike of comment.likes) {
           if (commentLike.user_id === this.user.id) {

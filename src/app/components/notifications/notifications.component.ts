@@ -21,11 +21,12 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.hs.updateBrowserMeta('description', 'Notificaciones de usuario', 'SkyNovels | Notificaciones');
-      this.us.getUserNotifications().subscribe((data: any) => {
+      this.us.getUserNotifications(false).subscribe((data: any) => {
       this.userNotifications = data.notifications;
       this.loading = false;
     }, error => {
-      this.router.navigate(['']);
+      console.log(error)
+      // this.router.navigate(['']);
     });
   }
 

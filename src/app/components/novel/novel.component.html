@@ -299,7 +299,8 @@
 
                     <div style="display: flex; justify-content: space-between;">
                         <div>
-                            <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="ps.getReplysFunction(user, rating, 'novel_rating_id')" *ngIf="!rating.show_replys">Ver respuestas ({{rating.replys_count}})</span>
+                            <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="ps.getReplysFunction(user, rating, 'novel_rating_id')" *ngIf="!rating.show_replys && (rating.replys_count && rating.replys_count > 0)">Ver respuestas ({{rating.replys_count}})</span>
+                            <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="ps.getReplysFunction(user, rating, 'novel_rating_id')" *ngIf="!rating.show_replys && (!rating.replys_count || rating.replys_count === '0')">Responder</span>
                             <span class="skn-nvl-user-rating-info-togler skn-red-text" (click)="ps.hideReplys(rating)" *ngIf="rating.show_replys">Ocultar comentarios</span>
                         </div>
                         <div style="display: flex; align-items: center;">

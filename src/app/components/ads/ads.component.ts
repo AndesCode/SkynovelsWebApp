@@ -1,5 +1,5 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { Component, isDevMode, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-ads',
@@ -13,19 +13,23 @@ export class AdsComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver,) { }
 
-  ngOnInit(): void {/*
-    this.breakpointObserver.observe('(max-width: 500px)').subscribe((state: BreakpointState) => {
-      if (state.matches) {
-        this.mobile = true;
+  ngOnInit(): void {
+    if (!isDevMode()) {
+      this.breakpointObserver.observe('(max-width: 500px)').subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.mobile = true;
+        } else {
+          this.mobile = false;
+        }
+      });
+      if (Math.random() >= 0.5) {
+        this.adBlock1 = true
       } else {
-        this.mobile = false;
+        this.adBlock2 = true
       }
-    });
-    if (Math.random() >= 0.5) {
-      this.adBlock1 = true
     } else {
-      this.adBlock2 = true
+      return;
     }
-  */}
+  }
 
 }

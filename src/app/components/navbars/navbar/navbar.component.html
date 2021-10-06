@@ -63,8 +63,8 @@
                                     <img [src]="userNotification.user_image | noUserImage" alt="">
                                 </div>
                                 <div>
-                                    <p style="margin-bottom: unset;">
-                                        {{userNotification.message}}
+                                    <p style="margin-bottom: unset; word-break: break-word;">
+                                        {{ps.setContent(userNotification.message, 120)}}
                                     </p>
                                     <small><small>{{hs.getRelativeTime(userNotification.createdAt).message}}</small></small>
                                 </div>
@@ -72,6 +72,9 @@
                             </div>
                         </a>
                     </mat-card>
+                    <div class="d-flex" *ngIf="userNotifications.length > 5">
+                        <a routerLink="notificaciones" class="skn-link unstyled-a-tag m-auto">Ver todas</a>
+                    </div>
                 </mat-menu>
             </div>
             <div class="skn-nav-link">

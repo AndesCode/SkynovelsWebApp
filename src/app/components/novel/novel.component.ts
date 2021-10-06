@@ -80,14 +80,11 @@ export class NovelComponent implements OnInit {
     const urlId = Number(this.activatedRoute.snapshot.paramMap.get('nid'));
     // Notificaciones
     this.activatedRoute.queryParamMap.subscribe((params: any) => {
-      console.log(params.params);
       if (params.params.rating) {
         this.queryRating = params.params.rating;
-        console.log(this.queryRating);
       }
       if (params.params.reply) {
         this.queryReply = params.params.reply;
-        console.log(this.queryReply);
       }
     });
     this.ns.getNovel(urlId, 'reading').subscribe((data: any) => {
@@ -131,10 +128,7 @@ export class NovelComponent implements OnInit {
       // Notificaciones
       if (this.queryRating !== null) {
         setTimeout(() => {
-          console.log('rating_' + this.queryRating)
-          const ratingElement = document.getElementById('rating_' + this.queryRating);
-          console.log(ratingElement);
-          
+          const ratingElement = document.getElementById('rating_' + this.queryRating);      
           if (this.queryReply !== null) {
             const rating = this.novel.novel_ratings[this.novel.novel_ratings.findIndex(x => x.id === Number(this.queryRating))];
             rating.show_replys = true;

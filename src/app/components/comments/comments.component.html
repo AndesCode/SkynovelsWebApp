@@ -47,7 +47,8 @@
 
         <div style="display: flex; justify-content: space-between;">
             <div>
-                <span class="skn-link skn-red-text" *ngIf="!comment.show_replys" (click)="ps.getReplysFunction(user, comment, 'comment_id')">Ver Respuestas ({{comment.replys_count}})</span>
+                <span class="skn-link skn-red-text" *ngIf="!comment.show_replys && (comment.replys_count && comment.replys_count > 0)" (click)="ps.getReplysFunction(user, comment, 'comment_id')">Ver Respuestas ({{comment.replys_count? comment.replys_count: 0}})</span>
+                <span class="skn-link skn-red-text" *ngIf="!comment.show_replys && (!comment.replys_count || comment.replys_count === '0')" (click)="ps.getReplysFunction(user, comment, 'comment_id')">Responder</span>
                 <span class="skn-link skn-red-text" *ngIf="comment.show_replys" (click)="ps.hideReplys(comment)">Ocultar Respuestas</span>
             </div>
             <div style="display: flex; align-items: center;">
