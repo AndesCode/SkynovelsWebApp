@@ -215,10 +215,10 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.us.logOut().subscribe((data: any) => {
-      /*if (this.isBrowser) {
-        this.ws.emit('logOut', this.us.getUserLoged().id);
+      if (this.isBrowser) {
+        // this.ws.emit('logOut', this.us.getUserLoged().id);
         localStorage.removeItem('sknvl_s');
-      }*/
+      }
       if (this.currentComponent === 'UserNovelComponent'
       || this.currentComponent === 'UserNovelsComponent'
       || this.currentComponent === 'UserChapterComponent'
